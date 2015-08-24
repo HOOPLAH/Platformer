@@ -1,0 +1,41 @@
+spawn_point: 200 -100
+
+tiled_platforms: 5 64 0 ammocrate -320 100      GROUND
+tiled_platforms: 15 64 0 ammocrate 0 100        GROUND
+tiled_platforms: 4 50 -12 blueplatform 236 88   LEFT STAIRS
+platform: ammocrate 448 36                      BETWEEN STAIRS
+tiled_platforms: 4 50 12 blueplatform 524 52    RIGHT STAIRS
+tiled_platforms: 3 50  0 blueplatform 50 0      TOP PLATFORM
+
+npc: pinkpeewee 706 -100
+
+waypoint: 906 80 -- 0
+waypoint: 706 78 -- 1
+waypoint: 480 26 -- 2
+waypoint: 311 66 -- 3 
+
+// top platform
+waypoint: 236 78  -- 4
+waypoint: 196 -10 -- 5
+waypoint: 125 -10 -- 6
+waypoint:  54 -10 -- 7
+
+// straight off left stairs
+waypoint:  123 80 -- 8
+waypoint:   54 80 -- 9
+waypoint:  -10 80 -- 10
+waypoint: -320 80 -- 11
+
+waypoint_edge: 0 1
+waypoint_edge: 1 2
+waypoint_edge: 2 3
+waypoint_edge: 3 4
+waypoint_edge: 4 5 jump
+waypoint_edge: 5 6
+waypoint_edge: 6 7
+waypoint_edge: 7 10
+
+waypoint_edge: 4 8
+waypoint_edge: 8 9
+waypoint_edge: 9 10
+waypoint_edge: 10 11

@@ -1,0 +1,10 @@
+spawn_point: 0 -100
+npc_spawn_point: 200 -100
+
+tiled_platforms: 5 64 0 ammocrate 0 100      GROUND
+
+waypoint: 10 26  -- 0
+waypoint: 138 26 -- 1
+waypoint: 310 26 -- 2
+
+waypoint_edge: 0 1
