@@ -17,7 +17,7 @@
 class World
 {
     public:
-        World(std::string name);
+        World();
         ~World();
 
         void update(int ticks);
@@ -46,7 +46,6 @@ class World
         template <class T>
         std::vector<T> removeWeakDeadObj(std::vector<T>& v);
 
-        std::string mName;
         WorldRef mWorldRef;
 
         sf::Vector2f mSpawnPoint;

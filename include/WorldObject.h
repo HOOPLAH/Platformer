@@ -21,14 +21,9 @@ class WorldObject : public SpriteObject, public ICollideable
         bool onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop);
         void onContactEnd(std::weak_ptr<ICollideable> object);
 
-        /*void setJumpPoint(std::tuple<bool, sf::Vector2f> pt){mJumpPoint=pt;}
-        std::tuple<bool, sf::Vector2f> getJumpPoint(){return mJumpPoint;}*/
-
     protected:
         HealthBar mHealth;
         bool mIndestructible;
-
-        //std::tuple<bool, sf::Vector2f> mJumpPoint; // should jump? pos?
 };
 
 #endif // WORLDOBJECT_H

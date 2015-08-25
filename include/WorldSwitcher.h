@@ -7,7 +7,7 @@
 class WorldSwitcher : public SpriteObject, public ICollideable
 {
     public:
-        WorldSwitcher(SpriteInfo& info, sf::Vector2f pos, std::string nextWorld);
+        WorldSwitcher(SpriteInfo& info, sf::Vector2f pos, int nextWorld);
         ~WorldSwitcher();
 
         void update();
@@ -17,12 +17,12 @@ class WorldSwitcher : public SpriteObject, public ICollideable
         void setPressed(bool pressed){mPressed=pressed;}
         bool isPressed(){return mPressed;}
 
-        std::string getNextWorld(){return mNextWorld;}
+        int getNextWorld(){return mNextWorld;}
 
     private:
         bool mPressed;
 
-        std::string mNextWorld; // which world to go to if im pressed
+        int mNextWorld; // which world to go to if im pressed
 };
 
 #endif // WORLDSWITCHER_H

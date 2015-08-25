@@ -10,6 +10,8 @@ void Assets::loadAssets()
     sprites["pistol"] = SpriteInfo("Content/Textures/pistol.png");
     sprites["bullet"] = SpriteInfo("Content/Textures/bullet.png");
 
+    sprites["kingkam"] = SpriteInfo("Content/Textures/kingkam.png", 12, 6);
+
     sprites["bluepeewee"] = SpriteInfo("Content/Textures/bluepeewee.png", 36, 6);
         sprites["bluepeewee"].mHitBox = sf::FloatRect(20.f, 10.f, 24.f, 44.f);
     sprites["pinkpeewee"] = SpriteInfo("Content/Textures/pinkpeewee.png", 36, 6);

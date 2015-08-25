@@ -11,9 +11,8 @@
 #include "NPC.h"
 #include "WayPoint.h"
 
-World::World(std::string name) :
-    mWorldRef(*this),
-    mName(name)
+World::World() :
+    mWorldRef(*this)
 {
     mSpawnPoint = sf::Vector2f(0.f, 0.f);
     mNextNPCSpawnPoint = 0;

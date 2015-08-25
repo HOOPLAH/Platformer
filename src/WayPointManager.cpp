@@ -16,19 +16,6 @@ WayPointManager::~WayPointManager()
 
 void WayPointManager::draw(sf::RenderTarget& target)
 {
-    for (auto& pt : mWayPoints)
-    {
-        sf::CircleShape circle(4.f);
-        circle.setFillColor(sf::Color::Red);
-        circle.setPosition(pt.mPosition);
-        target.draw(circle);
-
-        for (auto& edge : pt.mEdges)
-        {
-            Line line(pt.mPosition, mWayPoints[edge.mTargetIndex].mPosition, sf::Color::Red);
-            line.draw(target);
-        }
-    }
 }
 
 void WayPointManager::addWayPointEdge(int startIndex, int endIndex, int type)

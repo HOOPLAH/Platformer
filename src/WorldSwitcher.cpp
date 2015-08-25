@@ -2,7 +2,7 @@
 
 #include "EntityTags.h"
 
-WorldSwitcher::WorldSwitcher(SpriteInfo& info, sf::Vector2f pos, std::string nextWorld) :
+WorldSwitcher::WorldSwitcher(SpriteInfo& info, sf::Vector2f pos, int nextWorld) :
     SpriteObject(info, pos),
     ICollideable(info.mHitBox, info.mFrameDim, EntityTags::BUTTON),
     mPressed(false),

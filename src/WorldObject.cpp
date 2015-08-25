@@ -12,8 +12,6 @@ WorldObject::WorldObject(SpriteInfo& info, sf::Vector2f pos, WorldRef& worldRef,
     mIndestructible = true;
     mAlive = true;
     mHealth.mActive = true;
-
-    //mJumpPoint = std::make_tuple(false, sf::Vector2f(0.f, 0.f));
 }
 
 WorldObject::~WorldObject()
@@ -38,7 +36,8 @@ void WorldObject::draw(sf::RenderTarget& target, float alpha)
 {
     SpriteObject::draw(target, alpha);
 
-    mHealth.draw(target);
+    if (!mIndestructible)
+        mHealth.draw(target);
 }
 
 bool WorldObject::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop)
