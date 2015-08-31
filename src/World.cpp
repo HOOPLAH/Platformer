@@ -16,6 +16,7 @@ World::World() :
 {
     mSpawnPoint = sf::Vector2f(0.f, 0.f);
     mNextNPCSpawnPoint = 0;
+    mNPCSpawnCount = 0;
     mGravity = sf::Vector2f(0.f, 10.f);
 
     mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], mSpawnPoint, mWorldRef);
@@ -43,7 +44,7 @@ void World::update(int ticks)
         mCollideables.push_back(mHero);
     }
 
-    if (mNPCs.size() < 6 && mNPCSpawnPoints.size() > 0)
+    if (mNPCs.size() < mNPCSpawnCount && mNPCSpawnPoints.size() > 0)
     {
         auto npc = std::make_shared<NPC>(Assets::sprites["pinkpeewee"], mNPCSpawnPoints[mNextNPCSpawnPoint], mWorldRef);
         mNPCs.push_back(npc);
@@ -207,6 +208,11 @@ void World::loadWorld(std::string path)
                 float x = std::stof(split_line[1]);
                 float y = std::stof(split_line[2]);
                 mNPCSpawnPoints.push_back(sf::Vector2f(x, y));
+            }
+            else if (find_key("npc_spawn_count:", line))
+            {
+                int count = std::stof(split_line[1]);
+                mNPCSpawnCount = count;
             }
             else if (find_key("platform:", line))
             {

@@ -8,7 +8,7 @@ tiled_platforms: 4 50 -12 blueplatform 236 88   LEFT STAIRS
 platform: ammocrate 448 36                      BETWEEN STAIRS
 tiled_platforms: 4 50 12 blueplatform 524 52    RIGHT STAIRS
 tiled_platforms: 3 50  0 blueplatform 50 0      TOP PLATFORM
-platform: blueplatform 54 88
+platform: blueplatform -10 88
 
 waypoint: 906 80 -- 0
 waypoint: 706 78 -- 1

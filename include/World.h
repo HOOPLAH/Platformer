@@ -51,6 +51,7 @@ class World
         sf::Vector2f mSpawnPoint;
         std::vector<sf::Vector2f> mNPCSpawnPoints;
         std::size_t mNextNPCSpawnPoint;
+        std::size_t mNPCSpawnCount; // how many npcs should be out and about at one time
         sf::Vector2f mGravity;
         WayPointManager mWayPointManager;
 

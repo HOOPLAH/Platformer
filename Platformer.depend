@@ -180,7 +180,7 @@
 1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/SpriteInfo.h
 	<SFML/Graphics.hpp>
 
-1440480302 /home/lucas/Desktop/Programming/C++/Platformer/include/World.h
+1441004956 /home/lucas/Desktop/Programming/C++/Platformer/include/World.h
 	<vector>
 	<memory>
 	<SFML/Graphics.hpp>
@@ -299,7 +299,7 @@
 	"Constants.h"
 	"EntityTags.h"
 
-1440480300 source:/home/lucas/Desktop/Programming/C++/Platformer/src/World.cpp
+1441004930 source:/home/lucas/Desktop/Programming/C++/Platformer/src/World.cpp
 	"World.h"
 	<iostream>
 	<fstream>
@@ -325,7 +325,7 @@
 	"WorldObject.h"
 	"World.h"
 
-1438643343 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Player.cpp
+1440515614 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Player.cpp
 	"Player.h"
 	<iostream>
 	"Assets.h"
@@ -657,7 +657,7 @@
 1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/FontInfo.h
 	<SFML/Graphics/Font.hpp>
 
-1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldManager.h
+1440911582 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldManager.h
 	<vector>
 	<memory>
 	<SFML/Graphics.hpp>
@@ -667,7 +667,7 @@
 	"SpriteObject.h"
 	"ICollideable.h"
 
-1440476600 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldManager.cpp
+1440911599 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldManager.cpp
 	"WorldManager.h"
 	<fstream>
 	<array>
@@ -675,4 +675,18 @@
 1440476802 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldSwitcher.cpp
 	"WorldSwitcher.h"
 	"EntityTags.h"
+
+1440900937 /home/lucas/Desktop/Programming/C++/Platformer/include/LevelEditor.h
+	<vector>
+	<memory>
+	<SFML/Graphics.hpp>
+	"Projectile.h"
+	"NPC.h"
+	"World.h"
+	"WorldObject.h"
+	"WorldSwitcher.h"
+
+1440661872 source:/home/lucas/Desktop/Programming/C++/Platformer/src/LevelEditor.cpp
+	"LevelEditor.h"
+	"Assets.h"
 
