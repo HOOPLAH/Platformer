@@ -43,6 +43,7 @@
 			<Add library="sfml-system" />
 		</Linker>
 		<Unit filename="include/AIFollowModule.h" />
+		<Unit filename="include/Actions.h" />
 		<Unit filename="include/Assets.h" />
 		<Unit filename="include/Camera.h" />
 		<Unit filename="include/Constants.h" />
@@ -58,6 +59,7 @@
 		<Unit filename="include/NPC.h" />
 		<Unit filename="include/Player.h" />
 		<Unit filename="include/Projectile.h" />
+		<Unit filename="include/Quest.h" />
 		<Unit filename="include/SpriteInfo.h" />
 		<Unit filename="include/SpriteObject.h" />
 		<Unit filename="include/VecUtils.h" />

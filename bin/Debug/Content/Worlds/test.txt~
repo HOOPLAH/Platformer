@@ -1,6 +1,9 @@
 spawn_point: 200 -100
+npc_spawn_count: 6
 npc_spawnpoint: 706 -100
 npc_spawnpoint: 320 -100
+
+action: kill 6 1 --KILL 6 NPCs
 
 tiled_platforms: 5 64 0 ammocrate -320 100      GROUND
 tiled_platforms: 15 64 0 ammocrate 0 100        GROUND

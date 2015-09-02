@@ -36,6 +36,7 @@ class NPC : public SpriteObject, public ICollideable
         int getDirection(){return mDirection;}
         Weapon& getWeapon(){return mWeapon;}
         Player& getTarget(){return mTarget;}
+        int getKillerTag(){return mKillerTag;}
         float getWeaponAngle(){return mWeaponAngle;}
         sf::Vector2f getFeetPosition(){return (mRenderPosition+sf::Vector2f(mHitBox.width, mHitBox.height));}
 
@@ -54,6 +55,7 @@ class NPC : public SpriteObject, public ICollideable
 
         Weapon mWeapon;
         Player& mTarget;
+        int mKillerTag; // what kind of entity killed this npc
         float mWeaponAngle;
 };
 

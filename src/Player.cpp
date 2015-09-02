@@ -89,12 +89,27 @@ void Player::draw(sf::RenderTarget& target, float alpha)
 
 void Player::drawStationary(sf::RenderTarget& target)
 {
-    std::string weaponText = std::to_string(mWeapon.getMagazines());
-    weaponText.append("/");
-    weaponText.append(std::to_string(mWeapon.getAmmo()));
-    sf::Text text(weaponText, Assets::fonts["8bit"].mFont);
+    std::string sWeaponText = std::to_string(mWeapon.getMagazines());
+    sWeaponText.append("/");
+    sWeaponText.append(std::to_string(mWeapon.getAmmo()));
+    sf::Text weaponText(sWeaponText, Assets::fonts["8bit"].mFont);
+    target.draw(weaponText); // magazine / ammo_in_magazine
 
-    target.draw(text); // magazine / ammo_in_magazine
+    if (!mQuest.mActions.empty())
+    {
+        if (mQuest.mActions.top()->mTag == ActionTag::KILL)
+        {
+            auto action = std::static_pointer_cast<KillAction>(mQuest.mActions.top());
+
+            std::string sActionText = std::to_string(action->mTotalKillCount - action->mKillsLeftCount);
+            sActionText.append("/");
+            sActionText.append(std::to_string(action->mTotalKillCount));
+
+            sf::Text actionText(sActionText, Assets::fonts["8bit"].mFont);
+            actionText.setPosition(sf::Vector2f(SCREEN_WIDTH - actionText.getGlobalBounds().width, 0.f));
+            target.draw(actionText);
+        }
+    }
 }
 
 void Player::handleEvents(sf::Event& event, WorldRef& worldRef)

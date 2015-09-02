@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "NPC.h"
 #include "Camera.h"
+#include "Quest.h"
 #include "WayPointManager.h"
 #include "WorldObject.h"
 #include "WorldSwitcher.h"
@@ -48,11 +49,13 @@ class World
 
         WorldRef mWorldRef;
 
+        sf::Vector2f mGravity;
+
         sf::Vector2f mSpawnPoint;
         std::vector<sf::Vector2f> mNPCSpawnPoints;
         std::size_t mNextNPCSpawnPoint;
         std::size_t mNPCSpawnCount; // how many npcs should be out and about at one time
-        sf::Vector2f mGravity;
+
         WayPointManager mWayPointManager;
 
         Camera mCamera;

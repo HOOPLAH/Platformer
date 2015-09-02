@@ -30,12 +30,6 @@ World::~World()
 
 void World::update(int ticks)
 {
-    mCollideables = removeWeakDeadObj(mCollideables);
-    mNPCs = removeDeadObj(mNPCs);
-    mAliveProjectiles = removeDeadObj(mAliveProjectiles);
-    mWorldObjects = removeDeadObj(mWorldObjects);
-    mButtons = removeDeadObj(mButtons);
-
     mHero->update();
     mHero->setVelocity(mHero->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
     if (!mHero->isAlive())
@@ -65,6 +59,22 @@ void World::update(int ticks)
 
         if (!npc->isStatic())
             npc->setVelocity(npc->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
+
+        if (!npc->isAlive() && npc->getKillerTag() == EntityTags::PLAYER) // playah killed npc
+        {
+            if (!mHero->getQuest().mActions.empty())
+            {
+                if (mHero->getQuest().mActions.top()->mTag == ActionTag::KILL)
+                {
+                    auto action = std::static_pointer_cast<KillAction>(mHero->getQuest().mActions.top());
+
+                    if (action->mKillsLeftCount > 1)
+                        action->mKillsLeftCount--;
+                    else
+                        mHero->getQuest().mActions.pop();
+                }
+            }
+        }
     }
 
     for (auto& proj : mAliveProjectiles)
@@ -82,7 +92,8 @@ void World::update(int ticks)
 
     for (auto& button : mButtons)
     {
-        button->update();
+        if (mHero->getQuest().mActions.empty())
+            button->update();
     }
 
     // check collisions
@@ -109,6 +120,12 @@ void World::update(int ticks)
     }
 
     mCamera.follow(mHero->getRenderPosition());
+
+    mCollideables = removeWeakDeadObj(mCollideables);
+    mNPCs = removeDeadObj(mNPCs);
+    mAliveProjectiles = removeDeadObj(mAliveProjectiles);
+    mWorldObjects = removeDeadObj(mWorldObjects);
+    mButtons = removeDeadObj(mButtons);
 }
 
 void World::draw(sf::RenderTarget& target, float alpha)
@@ -137,12 +154,14 @@ void World::draw(sf::RenderTarget& target, float alpha)
 
     for (auto& button : mButtons)
     {
-        if (windowCoords.intersects(button->getSprite().getGlobalBounds()))
-            button->draw(target, alpha);
+        if (mHero->getQuest().mActions.empty())
+        {
+            if (windowCoords.intersects(button->getSprite().getGlobalBounds()))
+                button->draw(target, alpha);
+        }
     }
 
     mHero->draw(target, alpha);
-
     mWayPointManager.draw(target);
 
     target.setView(target.getDefaultView());
@@ -207,7 +226,8 @@ void World::loadWorld(std::string path)
             {
                 float x = std::stof(split_line[1]);
                 float y = std::stof(split_line[2]);
-                mNPCSpawnPoints.push_back(sf::Vector2f(x, y));
+                sf::Vector2f pt(x, y);
+                mNPCSpawnPoints.push_back(pt);
             }
             else if (find_key("npc_spawn_count:", line))
             {
@@ -250,6 +270,16 @@ void World::loadWorld(std::string path)
                 mButtons.push_back(button);
                 mCollideables.push_back(button);
             }
+            else if (find_key("hud_button:", line))
+            {
+                std::string id = split_line[1];
+                float x = mHero->getRenderPosition().x + std::stof(split_line[2]);
+                float y = mHero->getRenderPosition().y + std::stof(split_line[3]);
+                int nextWorld = std::stof(split_line[4]);
+                auto button = std::make_shared<WorldSwitcher>(Assets::sprites[id], sf::Vector2f(x, y), nextWorld);
+                mButtons.push_back(button);
+                mCollideables.push_back(button);
+            }
             else if (find_key("waypoint:", line))
             {
                 float x = std::stof(split_line[1]);
@@ -266,6 +296,21 @@ void World::loadWorld(std::string path)
                 if (split_line[split_line.size()-2] == "jump")
                     type = WayPointType::JUMP;
                 mWayPointManager.addWayPointEdge(a, b, type);
+            }
+            else if (find_key("quest_action:", line))
+            {
+                std::string action_type = split_line[1];
+
+                if (action_type == "kill")
+                {
+                    auto action = std::make_shared<KillAction>();
+                    action->mTotalKillCount = std::stof(split_line[2]);
+                    action->mKillsLeftCount = action->mTotalKillCount;
+                    action->mKillTag = std::stof(split_line[3]);
+                    action->mTag = ActionTag::KILL;
+
+                    mHero->getQuest().mActions.push(action);
+                }
             }
         }
 

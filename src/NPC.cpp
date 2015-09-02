@@ -31,6 +31,7 @@ NPC::NPC(SpriteInfo& info, sf::Vector2f pos, WorldRef& worldRef) :
 
     mWeapon.setCoolDown(500);
     mWeaponAngle = 0.f;
+    mKillerTag = -1;
 
     mNeedToUpdatePath = true;
 }
@@ -166,12 +167,10 @@ bool NPC::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool
         if (proj->getOwnerTag() != mTag)
         {
             proj->kill();
+            mKillerTag = proj->getOwnerTag();
             mHealth.mHP -= proj->getDamage();
             mHealth.mActive = true;
             mHealth.mActiveClock.restart();
-
-            if (proj->getOwnerTag() == EntityTags::PLAYER)
-                mAI->setFriendly(false); // attacckkkk!!
         }
 
         return false;

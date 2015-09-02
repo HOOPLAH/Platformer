@@ -6,6 +6,7 @@
 #include "HealthBar.h"
 #include "Weapon.h"
 #include "WorldRef.h"
+#include "Quest.h"
 
 class Player : public SpriteObject, public ICollideable
 {
@@ -30,6 +31,7 @@ class Player : public SpriteObject, public ICollideable
         Weapon& getWeapon(){return mWeapon;}
         sf::Vector2f getWeaponTarget(){return mWeaponTarget;}
         float getWeaponAngle(){return mWeaponAngle;}
+        Quest& getQuest(){return mQuest;}
 
     private:
         float mRunSpeed;
@@ -45,6 +47,8 @@ class Player : public SpriteObject, public ICollideable
         sf::Vector2f mMousePosition;
         sf::Vector2f mWeaponTarget;
         float mWeaponAngle;
+
+        Quest mQuest;
 };
 
 #endif // PLAYER_H

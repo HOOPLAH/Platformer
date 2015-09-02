@@ -53,5 +53,5 @@ void WayPointManager::getPath(std::vector<WayPoint*>& path, int index, int targe
     path.clear();
     std::vector<void*>* path_witchery = (std::vector<void*>*)(&path);
     float totalCost = 0;
-    int result = mPather->Solve((void*)&mWayPoints[index], (void*)&mWayPoints[targetIndex], path_witchery, &totalCost);
+    /*int result =*/ mPather->Solve((void*)&mWayPoints[index], (void*)&mWayPoints[targetIndex], path_witchery, &totalCost);
 }
