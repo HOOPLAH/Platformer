@@ -5,7 +5,8 @@ namespace ActionTag
 {
     enum
     {
-        KILL
+        KILL,
+        COLLECT
     };
 }
 
@@ -14,7 +15,7 @@ struct IAction
     IAction() : mComplete(false), mTag(ActionTag::KILL) {}
 
     bool mComplete;
-    int mTag; // KillAction, etc.
+    int mTag; // KillAction, CollectAction, etc.
 };
 
 struct KillAction : IAction
@@ -24,6 +25,15 @@ struct KillAction : IAction
     std::size_t mTotalKillCount;
     std::size_t mKillsLeftCount;
     int mKillTag; // EntityTags, who to kill
+};
+
+struct CollectAction : IAction
+{
+    CollectAction() : IAction() {}
+
+    std::size_t mTotalCollectCount;
+    std::size_t mCollectLeftCount;
+    int mCollectTag; // EntityTags, what to collect
 };
 
 #endif // IACTION_H

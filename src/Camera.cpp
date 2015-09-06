@@ -21,7 +21,7 @@ void Camera::moveTo(sf::Vector2f newCenter)
     if (dist > 5.f)
     {
         float angle = atan2(mOldCenter.y - mCenter.y, mOldCenter.x - mCenter.x);
-        sf::Vector2f vel = sf::Vector2f(cos(angle), sin(angle))*30.f;
+        sf::Vector2f vel = sf::Vector2f(cos(angle), sin(angle))*50.f;
         mCenter += vel;
     }
 

@@ -101,7 +101,8 @@ void Player::drawStationary(sf::RenderTarget& target)
         {
             auto action = std::static_pointer_cast<KillAction>(mQuest.mActions.top());
 
-            std::string sActionText = std::to_string(action->mTotalKillCount - action->mKillsLeftCount);
+            std::string sActionText = "kill ";
+            sActionText.append(std::to_string(action->mTotalKillCount - action->mKillsLeftCount));
             sActionText.append("/");
             sActionText.append(std::to_string(action->mTotalKillCount));
 

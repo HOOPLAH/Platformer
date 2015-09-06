@@ -38,7 +38,7 @@ void World::update(int ticks)
         mCollideables.push_back(mHero);
     }
 
-    if (mNPCs.size() < mNPCSpawnCount && mNPCSpawnPoints.size() > 0)
+    if (mNPCs.size() < mNPCSpawnCount && mNPCSpawnPoints.size() > 0 && !mHero->getQuest().mActions.empty())
     {
         auto npc = std::make_shared<NPC>(Assets::sprites["pinkpeewee"], mNPCSpawnPoints[mNextNPCSpawnPoint], mWorldRef);
         mNPCs.push_back(npc);
@@ -60,11 +60,11 @@ void World::update(int ticks)
         if (!npc->isStatic())
             npc->setVelocity(npc->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
 
-        if (!npc->isAlive() && npc->getKillerTag() == EntityTags::PLAYER) // playah killed npc
+        if (!npc->isAlive()) // playah killed npc
         {
             if (!mHero->getQuest().mActions.empty())
             {
-                if (mHero->getQuest().mActions.top()->mTag == ActionTag::KILL)
+                if (mHero->getQuest().mActions.top()->mTag == ActionTag::KILL && npc->getKillerTag() == EntityTags::PLAYER)
                 {
                     auto action = std::static_pointer_cast<KillAction>(mHero->getQuest().mActions.top());
 
@@ -265,16 +265,6 @@ void World::loadWorld(std::string path)
                 std::string id = split_line[1];
                 float x = std::stof(split_line[2]);
                 float y = std::stof(split_line[3]);
-                int nextWorld = std::stof(split_line[4]);
-                auto button = std::make_shared<WorldSwitcher>(Assets::sprites[id], sf::Vector2f(x, y), nextWorld);
-                mButtons.push_back(button);
-                mCollideables.push_back(button);
-            }
-            else if (find_key("hud_button:", line))
-            {
-                std::string id = split_line[1];
-                float x = mHero->getRenderPosition().x + std::stof(split_line[2]);
-                float y = mHero->getRenderPosition().y + std::stof(split_line[3]);
                 int nextWorld = std::stof(split_line[4]);
                 auto button = std::make_shared<WorldSwitcher>(Assets::sprites[id], sf::Vector2f(x, y), nextWorld);
                 mButtons.push_back(button);

@@ -180,7 +180,7 @@
 1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/SpriteInfo.h
 	<SFML/Graphics.hpp>
 
-1441177169 /home/lucas/Desktop/Programming/C++/Platformer/include/World.h
+1441529063 /home/lucas/Desktop/Programming/C++/Platformer/include/World.h
 	<vector>
 	<memory>
 	<SFML/Graphics.hpp>
@@ -301,7 +301,7 @@
 	"Constants.h"
 	"EntityTags.h"
 
-1441177608 source:/home/lucas/Desktop/Programming/C++/Platformer/src/World.cpp
+1441529394 source:/home/lucas/Desktop/Programming/C++/Platformer/src/World.cpp
 	"World.h"
 	<iostream>
 	<fstream>
@@ -327,7 +327,7 @@
 	"WorldObject.h"
 	"World.h"
 
-1441178562 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Player.cpp
+1441436943 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Player.cpp
 	"Player.h"
 	<iostream>
 	"Assets.h"
@@ -354,7 +354,7 @@
 1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/Camera.h
 	<SFML/Graphics.hpp>
 
-1440476600 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Camera.cpp
+1441437671 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Camera.cpp
 	"Camera.h"
 	<iostream>
 	"Constants.h"
@@ -665,7 +665,7 @@
 	<SFML/Graphics.hpp>
 	<World.h>
 
-1440480526 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldSwitcher.h
+1441438044 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldSwitcher.h
 	"SpriteObject.h"
 	"ICollideable.h"
 
@@ -697,5 +697,5 @@
 	<memory>
 	"Actions.h"
 
-1441173383 /home/lucas/Desktop/Programming/C++/Platformer/include/Actions.h
+1441436625 /home/lucas/Desktop/Programming/C++/Platformer/include/Actions.h
 
