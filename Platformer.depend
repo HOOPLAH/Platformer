@@ -678,19 +678,11 @@
 	"WorldSwitcher.h"
 	"EntityTags.h"
 
-1440900937 /home/lucas/Desktop/Programming/C++/Platformer/include/LevelEditor.h
-	<vector>
-	<memory>
+1441844936 /home/lucas/Desktop/Programming/C++/Platformer/include/LevelEditor.h
 	<SFML/Graphics.hpp>
-	"Projectile.h"
-	"NPC.h"
-	"World.h"
-	"WorldObject.h"
-	"WorldSwitcher.h"
 
-1440661872 source:/home/lucas/Desktop/Programming/C++/Platformer/src/LevelEditor.cpp
+1441666986 source:/home/lucas/Desktop/Programming/C++/Platformer/src/LevelEditor.cpp
 	"LevelEditor.h"
-	"Assets.h"
 
 1441175534 /home/lucas/Desktop/Programming/C++/Platformer/include/Quest.h
 	<stack>
@@ -698,4 +690,12 @@
 	"Actions.h"
 
 1441436625 /home/lucas/Desktop/Programming/C++/Platformer/include/Actions.h
+
+1441682552 source:/home/lucas/Desktop/Programming/C++/Platformer/LEmain.cpp
+	<SFML/Graphics.hpp>
+	<cstdlib>
+	<ctime>
+	"Assets.h"
+	"LevelEditor.h"
+	"Constants.h"
 
