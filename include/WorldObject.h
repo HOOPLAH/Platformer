@@ -5,14 +5,13 @@
 
 #include "SpriteObject.h"
 #include "ICollideable.h"
-#include "WorldRef.h"
 #include "EntityTags.h"
 #include "HealthBar.h"
 
 class WorldObject : public SpriteObject, public ICollideable
 {
     public:
-        WorldObject(SpriteInfo& info, sf::Vector2f pos, WorldRef& worldRef, bool indestructible=false, int tag=EntityTags::PLATFORM, bool _static=true);
+        WorldObject(SpriteInfo& info, sf::Vector2f pos, bool indestructible=false, int tag=EntityTags::PLATFORM, bool _static=true);
         virtual ~WorldObject();
 
         void update();

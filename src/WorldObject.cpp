@@ -3,7 +3,7 @@
 #include "EntityTags.h"
 #include <Projectile.h>
 
-WorldObject::WorldObject(SpriteInfo& info, sf::Vector2f pos, WorldRef& worldRef, bool indestructible, int tag, bool _static) :
+WorldObject::WorldObject(SpriteInfo& info, sf::Vector2f pos, bool indestructible, int tag, bool _static) :
     SpriteObject(info, pos),
     ICollideable(info.mHitBox, info.mFrameDim, tag, _static),
     mHealth(100.f, sf::Vector2f(30.f, 2.f))

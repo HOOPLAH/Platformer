@@ -1,0 +1,5 @@
+platform: ammocrate -216 -72
+platform: ammocrate -152 -72
+platform: ammocrate 13 -164
+
+tiled_platforms: 4 64 0 ammocrate -80 80

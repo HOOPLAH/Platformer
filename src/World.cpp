@@ -23,6 +23,20 @@ World::World() :
     mCollideables.push_back(mHero);
 }
 
+World::World(std::string path)
+    : mWorldRef(*this)
+{
+    mSpawnPoint = sf::Vector2f(0.f, 0.f);
+    mNextNPCSpawnPoint = 0;
+    mNPCSpawnCount = 0;
+    mGravity = sf::Vector2f(0.f, 10.f);
+
+    mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], mSpawnPoint, mWorldRef);
+    mCollideables.push_back(mHero);
+
+    loadWorld(path);
+}
+
 World::~World()
 {
     //dtor
@@ -166,6 +180,11 @@ void World::draw(sf::RenderTarget& target, float alpha)
 
     target.setView(target.getDefaultView());
 
+    drawStationary(target);
+}
+
+void World::drawStationary(sf::RenderTarget& target)
+{
     mHero->drawStationary(target);
 }
 
@@ -240,7 +259,7 @@ void World::loadWorld(std::string path)
                 float x = std::stof(split_line[2]);
                 float y = std::stof(split_line[3]);
                 bool indestructible = (split_line[4] == "true");
-                auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y), mWorldRef, indestructible, EntityTags::PLATFORM);
+                auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y), indestructible, EntityTags::PLATFORM);
                 mWorldObjects.push_back(platform);
                 mCollideables.push_back(platform);
             }
@@ -255,7 +274,7 @@ void World::loadWorld(std::string path)
                 for (int i = 0; i < amnt; i++)
                 {
                     auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(start_x+(i*distApart.x),
-                                        start_y+(i*distApart.y)), mWorldRef, indestructible);
+                                        start_y+(i*distApart.y)), indestructible);
                     mWorldObjects.push_back(platform);
                     mCollideables.push_back(platform);
                 }

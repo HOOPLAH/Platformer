@@ -6,7 +6,7 @@
 #include <ctime>
 
 #include "Assets.h"
-#include "LevelEditor.h"
+#include "WorldEditor.h"
 #include "Constants.h"
 
 int main()
@@ -17,7 +17,7 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Platformer");
 
-    LevelEditor levelEditor;
+    WorldEditor worldEditor("Content/Worlds/test2.txt");
 
     sf::Clock clock;
 	sf::Time accumulator = sf::Time::Zero;
@@ -35,10 +35,10 @@ int main()
                 if (event.type == sf::Event::Closed)
                     window.close();
 
-                levelEditor.handleEvents(event);
+                worldEditor.handleEvents(event);
             }
 
-            levelEditor.update(ticks);
+            worldEditor.update(ticks);
             accumulator -= UPDATE_STEP;
 
             ticks++;
@@ -47,7 +47,7 @@ int main()
 		float alpha = accumulator.asSeconds()/UPDATE_STEP.asSeconds();
 
         window.clear();
-        levelEditor.draw(window, alpha);
+        worldEditor.draw(window, alpha);
         window.display();
     }
 

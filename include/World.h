@@ -19,10 +19,12 @@ class World
 {
     public:
         World();
+        World(std::string path);
         ~World();
 
         void update(int ticks);
         void draw(sf::RenderTarget& target, float alpha);
+        void drawStationary(sf::RenderTarget& target);
         void handleEvents(sf::Event event);
 
         void loadWorld(std::string path);

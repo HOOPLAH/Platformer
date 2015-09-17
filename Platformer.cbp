@@ -14,7 +14,6 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
-					<Add directory="include" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -24,15 +23,25 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-O3" />
-					<Add directory="include" />
+					<Add option="-O2" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
 				</Linker>
 			</Target>
+			<Target title="WorldEditor">
+				<Option output="bin/Debug/Platformer" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/WorldEditor/" />
+				<Option object_output="obj/WorldEditor/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-std=c++14" />
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 			<Add directory="include" />
@@ -42,15 +51,20 @@
 			<Add library="sfml-window" />
 			<Add library="sfml-system" />
 		</Linker>
+		<Unit filename="LEmain.cpp">
+			<Option target="WorldEditor" />
+		</Unit>
 		<Unit filename="include/AIFollowModule.h" />
 		<Unit filename="include/Actions.h" />
 		<Unit filename="include/Assets.h" />
+		<Unit filename="include/Button.h" />
 		<Unit filename="include/Camera.h" />
 		<Unit filename="include/Constants.h" />
 		<Unit filename="include/Direction.h" />
 		<Unit filename="include/EntityTags.h" />
 		<Unit filename="include/FontInfo.h" />
 		<Unit filename="include/HealthBar.h" />
+		<Unit filename="include/HitInfo.h" />
 		<Unit filename="include/IAIModule.h" />
 		<Unit filename="include/ICollideable.h" />
 		<Unit filename="include/IObject.h" />
@@ -67,14 +81,19 @@
 		<Unit filename="include/WayPointManager.h" />
 		<Unit filename="include/Weapon.h" />
 		<Unit filename="include/World.h" />
+		<Unit filename="include/WorldEditor.h" />
 		<Unit filename="include/WorldManager.h" />
 		<Unit filename="include/WorldObject.h" />
 		<Unit filename="include/WorldRef.h" />
 		<Unit filename="include/WorldSwitcher.h" />
 		<Unit filename="include/micropather.h" />
-		<Unit filename="main.cpp" />
+		<Unit filename="main.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
 		<Unit filename="src/AIFollowModule.cpp" />
 		<Unit filename="src/Assets.cpp" />
+		<Unit filename="src/Button.cpp" />
 		<Unit filename="src/Camera.cpp" />
 		<Unit filename="src/Line.cpp" />
 		<Unit filename="src/NPC.cpp" />
@@ -85,6 +104,7 @@
 		<Unit filename="src/WayPointManager.cpp" />
 		<Unit filename="src/Weapon.cpp" />
 		<Unit filename="src/World.cpp" />
+		<Unit filename="src/WorldEditor.cpp" />
 		<Unit filename="src/WorldManager.cpp" />
 		<Unit filename="src/WorldObject.cpp" />
 		<Unit filename="src/WorldRef.cpp" />
