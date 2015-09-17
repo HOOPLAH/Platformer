@@ -65,7 +65,15 @@ void WorldEditor::handleEvents(sf::Event& event)
 {
     if (event.type == sf::Event::MouseMoved)
     {
+        sf::Vector2i oldPos = mLocalMousePosition;
         mLocalMousePosition = sf::Vector2i(event.mouseMove.x, event.mouseMove.y);
+
+        sf::Vector2i delta = mLocalMousePosition-oldPos;
+
+        if (!mDragObject.expired())
+        {
+            mDragObject.lock()->setPhysicsPosition(mDragObject.lock()->getRenderPosition()+sf::Vector2f(delta.x, delta.y));
+        }
     }
     else if (event.type == sf::Event::KeyPressed)
     {
@@ -94,12 +102,33 @@ void WorldEditor::handleEvents(sf::Event& event)
     }
     else if (event.type == sf::Event::MouseButtonPressed)
     {
-        std::string id = "ammocrate";
-        float x = mGlobalMousePosition.x;
-        float y = mGlobalMousePosition.y;
-        auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y), true, EntityTags::PLATFORM);
-        mWorldObjects.push_back(platform);
-        mCollideables.push_back(platform);
+        if (event.mouseButton.button == sf::Mouse::Left)
+        {
+            std::string id = "ammocrate";
+            float x = mGlobalMousePosition.x;
+            float y = mGlobalMousePosition.y;
+            auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y), true, EntityTags::PLATFORM);
+            mWorldObjects.push_back(platform);
+        }
+        else if (event.mouseButton.button == sf::Mouse::Right)
+        {
+            for (auto& obj : mWorldObjects)
+            {
+                sf::Vector2f a1 = obj->getPhysicsPosition() + sf::Vector2f(obj->getHitBox().left, obj->getHitBox().top);
+                sf::Vector2f a2 = sf::Vector2f(obj->getHitBox().width, obj->getHitBox().height);
+                sf::FloatRect aRect(a1, a2);
+
+                if (aRect.contains(mGlobalMousePosition))
+                    mDragObject = obj;
+            }
+        }
+    }
+    else if (event.type == sf::Event::MouseButtonReleased)
+    {
+        if (event.mouseButton.button == sf::Mouse::Right)
+        {
+            mDragObject.reset();
+        }
     }
 }
 
@@ -146,7 +175,6 @@ void WorldEditor::loadWorld()
                 bool indestructible = (split_line[4] == "true");
                 auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y), indestructible, EntityTags::PLATFORM);
                 mWorldObjects.push_back(platform);
-                mCollideables.push_back(platform);
             }
             else if (find_key("tiled_platforms:", line))
             {
@@ -161,7 +189,6 @@ void WorldEditor::loadWorld()
                     auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(start_x+(i*distApart.x),
                                         start_y+(i*distApart.y)), indestructible);
                     mWorldObjects.push_back(platform);
-                    mCollideables.push_back(platform);
                 }
             }
         }

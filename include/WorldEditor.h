@@ -21,17 +21,15 @@ class WorldEditor
     private:
         std::string mDirectoryPath;
 
-        bool checkCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
-        void resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
-
         sf::Vector2i mLocalMousePosition;
         sf::Vector2f mGlobalMousePosition;
         sf::Vector2f mCameraPosition;
 
         Camera mCamera;
 
+        std::weak_ptr<WorldObject> mDragObject;
+
         std::vector<std::shared_ptr<WorldObject>> mWorldObjects;
-        std::vector<std::weak_ptr<ICollideable>> mCollideables;
 };
 
 #endif // WORLDEDITOR_H
