@@ -8,7 +8,7 @@
 #include "EntityTags.h"
 #include "Projectile.h"
 
-Player::Player(SpriteInfo& info, sf::Vector2f pos, WorldRef& worldRef) :
+Player::Player(SpriteInfo& info, sf::Vector2f pos) :
     SpriteObject(info, pos),
     ICollideable(info.mHitBox, info.mFrameDim, EntityTags::PLAYER),
     mHealth(100.f, sf::Vector2f(30.f, 2.f), false),

@@ -30,6 +30,7 @@ class World
         void loadWorld(std::string path);
 
         // Accessor
+        sf::Vector2f getGravity(){return mGravity;}
         std::weak_ptr<Player> getHero(){return mHero;}
         std::vector<std::shared_ptr<NPC>>& getNPCs(){return mNPCs;}
         std::vector<std::shared_ptr<Projectile>>& getProjectiles(){return mAliveProjectiles;}

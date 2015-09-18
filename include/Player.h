@@ -11,7 +11,7 @@
 class Player : public SpriteObject, public ICollideable
 {
     public:
-        Player(SpriteInfo& info, sf::Vector2f pos, WorldRef& worldRef);
+        Player(SpriteInfo& info, sf::Vector2f pos);
         ~Player();
 
         void update();

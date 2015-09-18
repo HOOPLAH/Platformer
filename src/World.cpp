@@ -19,7 +19,7 @@ World::World() :
     mNPCSpawnCount = 0;
     mGravity = sf::Vector2f(0.f, 10.f);
 
-    mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], mSpawnPoint, mWorldRef);
+    mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], mSpawnPoint);
     mCollideables.push_back(mHero);
 }
 
@@ -31,7 +31,7 @@ World::World(std::string path)
     mNPCSpawnCount = 0;
     mGravity = sf::Vector2f(0.f, 10.f);
 
-    mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], mSpawnPoint, mWorldRef);
+    mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], mSpawnPoint);
     mCollideables.push_back(mHero);
 
     loadWorld(path);

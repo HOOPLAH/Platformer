@@ -1,3 +1,14 @@
-spawn_point: 10 -100
+platform: ammocrate -207 -66
+platform: ammocrate -143 -66
+platform: ammocrate -79 -66
 
-tiled_platforms: 5 64 0 ammocrate 0 0      GROUND
+platform: ammocrate -80 80
+platform: ammocrate -16 80
+platform: ammocrate 48 80
+platform: ammocrate 112 80
+
+platform: ammocrate 83 -150
+platform: ammocrate 147 -150
+platform: ammocrate 211 -150
+
+platform: ammocrate -15 -23

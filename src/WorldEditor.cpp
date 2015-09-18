@@ -7,9 +7,14 @@
 #include "Assets.h"
 
 WorldEditor::WorldEditor(std::string path) :
-    mDirectoryPath(path)
+    mDirectoryPath(path),
+    mWorld(path)
 {
     loadWorld();
+
+    mPlayingHero = false;
+    mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], sf::Vector2f(0.f, 0.f));
+    mCollideables.push_back(mHero);
 }
 
 WorldEditor::~WorldEditor()
@@ -19,21 +24,56 @@ WorldEditor::~WorldEditor()
 
 void WorldEditor::update(int ticks)
 {
-    mCamera.setCenter(mCameraPosition);
+    if (mPlayingHero) // should play as hero
+    {
+        mHero->update();
+        mCamera.follow(mHero->getRenderPosition());
+        mCameraPosition = mHero->getRenderPosition();
+
+        mHero->setVelocity(mHero->getVelocity() + mWorld.getGravity()*UPDATE_STEP.asSeconds());
+    }
+    else // don't play as hero
+    {
+        mCamera.setCenter(mCameraPosition);
+    }
 
     for (auto& obj : mWorldObjects)
     {
         obj->update();
+    }
+
+    // check collisions
+    for (std::size_t x = 0; x < mCollideables.size(); x++)
+    {
+        for (std::size_t y = x+1; y < mCollideables.size(); y++)
+        {
+            auto dynamic = mCollideables[x];
+            auto _static = mCollideables[y];
+
+            if (!mCollideables[x].lock()->isStatic())
+                dynamic = mCollideables[x];
+            else if (!mCollideables[y].lock()->isStatic())
+                dynamic = mCollideables[y];
+
+            if (mCollideables[x].lock()->isStatic())
+                _static = mCollideables[x];
+            else if (mCollideables[x].lock()->isStatic())
+                _static = mCollideables[y];
+
+            if (checkCollision(dynamic, _static))
+                resolveCollision(dynamic, _static);
+        }
     }
 }
 
 void WorldEditor::draw(sf::RenderTarget& target, float alpha)
 {
     target.setView(mCamera.getView());
-
     mGlobalMousePosition = target.mapPixelToCoords(mLocalMousePosition);
-
     sf::FloatRect windowCoords(mCamera.getCenter().x-(SCREEN_WIDTH/2), mCamera.getCenter().y-(SCREEN_HEIGHT/2), SCREEN_WIDTH, SCREEN_HEIGHT);
+
+    if (mPlayingHero)
+        mHero->draw(target, alpha);
 
     for (auto& obj : mWorldObjects)
     {
@@ -70,64 +110,91 @@ void WorldEditor::handleEvents(sf::Event& event)
 
         sf::Vector2i delta = mLocalMousePosition-oldPos;
 
-        if (!mDragObject.expired())
+        if (!mPlayingHero) // not playing as player
         {
-            mDragObject.lock()->setPhysicsPosition(mDragObject.lock()->getRenderPosition()+sf::Vector2f(delta.x, delta.y));
-        }
-    }
-    else if (event.type == sf::Event::KeyPressed)
-    {
-        if (event.key.code == sf::Keyboard::W)
-        {
-            mCameraPosition.y -= 5;
-        }
-        else if (event.key.code == sf::Keyboard::S)
-        {
-            mCameraPosition.y += 5;
-        }
-
-        if (event.key.code == sf::Keyboard::A)
-        {
-            mCameraPosition.x -= 5;
-        }
-        else if (event.key.code == sf::Keyboard::D)
-        {
-            mCameraPosition.x += 5;
-        }
-
-        if (event.key.code == sf::Keyboard::Escape)
-        {
-            saveWorld();
-        }
-    }
-    else if (event.type == sf::Event::MouseButtonPressed)
-    {
-        if (event.mouseButton.button == sf::Mouse::Left)
-        {
-            std::string id = "ammocrate";
-            float x = mGlobalMousePosition.x;
-            float y = mGlobalMousePosition.y;
-            auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y), true, EntityTags::PLATFORM);
-            mWorldObjects.push_back(platform);
-        }
-        else if (event.mouseButton.button == sf::Mouse::Right)
-        {
-            for (auto& obj : mWorldObjects)
+            if (!mDragObject.expired())
             {
-                sf::Vector2f a1 = obj->getPhysicsPosition() + sf::Vector2f(obj->getHitBox().left, obj->getHitBox().top);
-                sf::Vector2f a2 = sf::Vector2f(obj->getHitBox().width, obj->getHitBox().height);
-                sf::FloatRect aRect(a1, a2);
-
-                if (aRect.contains(mGlobalMousePosition))
-                    mDragObject = obj;
+                mDragObject.lock()->setPhysicsPosition(mDragObject.lock()->getRenderPosition()+sf::Vector2f(delta.x, delta.y));
             }
         }
     }
-    else if (event.type == sf::Event::MouseButtonReleased)
+    if (!mPlayingHero) // not playing as player
     {
-        if (event.mouseButton.button == sf::Mouse::Right)
+        if (event.type == sf::Event::KeyPressed)
         {
-            mDragObject.reset();
+            if (event.key.code == sf::Keyboard::W)
+            {
+                mCameraPosition.y -= 5;
+            }
+            else if (event.key.code == sf::Keyboard::S)
+            {
+                mCameraPosition.y += 5;
+            }
+
+            if (event.key.code == sf::Keyboard::A)
+            {
+                mCameraPosition.x -= 5;
+            }
+            else if (event.key.code == sf::Keyboard::D)
+            {
+                mCameraPosition.x += 5;
+            }
+
+            if (event.key.code == sf::Keyboard::Escape)
+            {
+                saveWorld();
+            }
+        }
+        else if (event.type == sf::Event::MouseButtonPressed)
+        {
+            if (event.mouseButton.button == sf::Mouse::Left)
+            {
+                std::string id = "ammocrate";
+                float x = mGlobalMousePosition.x;
+                float y = mGlobalMousePosition.y;
+                auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y), true, EntityTags::PLATFORM);
+                mWorldObjects.push_back(platform);
+            }
+            else if (event.mouseButton.button == sf::Mouse::Right)
+            {
+                for (auto& obj : mWorldObjects)
+                {
+                    sf::Vector2f a1 = obj->getPhysicsPosition() + sf::Vector2f(obj->getHitBox().left, obj->getHitBox().top);
+                    sf::Vector2f a2 = sf::Vector2f(obj->getHitBox().width, obj->getHitBox().height);
+                    sf::FloatRect aRect(a1, a2);
+
+                    if (aRect.contains(mGlobalMousePosition))
+                        mDragObject = obj;
+                }
+            }
+            else if (event.mouseButton.button == sf::Mouse::Middle)
+            {
+                mPlayingHero = !mPlayingHero;
+
+                if (mPlayingHero)
+                    mHero->setPhysicsPosition(mGlobalMousePosition);
+            }
+        }
+        else if (event.type == sf::Event::MouseButtonReleased)
+        {
+            if (event.mouseButton.button == sf::Mouse::Right)
+            {
+                mDragObject.reset();
+            }
+        }
+    }
+    else // playing as player
+    {
+        mHero->handleEvents(event, mWorld.getWorldRef());
+        if (event.type == sf::Event::MouseButtonPressed)
+        {
+            if (event.mouseButton.button == sf::Mouse::Middle)
+            {
+                mPlayingHero = !mPlayingHero;
+
+                if (mPlayingHero)
+                    mHero->setPhysicsPosition(mGlobalMousePosition);
+            }
         }
     }
 }
@@ -175,6 +242,7 @@ void WorldEditor::loadWorld()
                 bool indestructible = (split_line[4] == "true");
                 auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y), indestructible, EntityTags::PLATFORM);
                 mWorldObjects.push_back(platform);
+                mCollideables.push_back(platform);
             }
             else if (find_key("tiled_platforms:", line))
             {
@@ -189,6 +257,7 @@ void WorldEditor::loadWorld()
                     auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(start_x+(i*distApart.x),
                                         start_y+(i*distApart.y)), indestructible);
                     mWorldObjects.push_back(platform);
+                    mCollideables.push_back(platform);
                 }
             }
         }
@@ -209,4 +278,103 @@ void WorldEditor::saveWorld()
     }
 
     file.close();
+}
+
+bool WorldEditor::checkCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b)
+{
+    sf::Vector2f a1 = a.lock()->getPhysicsPosition() + sf::Vector2f(a.lock()->getHitBox().left, a.lock()->getHitBox().top);
+    sf::Vector2f a2 = sf::Vector2f(a.lock()->getHitBox().width, a.lock()->getHitBox().height);
+
+    sf::Vector2f b1 = b.lock()->getPhysicsPosition() + sf::Vector2f(b.lock()->getHitBox().left, b.lock()->getHitBox().top);
+    sf::Vector2f b2 = sf::Vector2f(b.lock()->getHitBox().width, b.lock()->getHitBox().height);
+
+    //float rect = (left, top, width, height)
+    sf::FloatRect aRect(a1, a2);
+    sf::FloatRect bRect(b1, b2);
+
+    if (aRect.intersects(bRect))
+        return true;
+
+    return false;
+}
+
+void WorldEditor::resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b)
+{
+    auto aLeft = a.lock()->getPhysicsPosition().x + a.lock()->getHitBox().left;
+    auto aTop = a.lock()->getPhysicsPosition().y + a.lock()->getHitBox().top;
+    auto aRight = aLeft + a.lock()->getHitBox().width;
+    auto aBottom = aTop + a.lock()->getHitBox().height;
+
+    auto bLeft = b.lock()->getPhysicsPosition().x + b.lock()->getHitBox().left;
+    auto bTop = b.lock()->getPhysicsPosition().y + b.lock()->getHitBox().top;
+    auto bRight = bLeft + b.lock()->getHitBox().width;
+    auto bBottom = bTop + b.lock()->getHitBox().height;
+
+    float overlapLeft {aRight - bLeft};
+    float overlapRight {bRight - aLeft};
+    float overlapTop {aBottom - bTop};
+    float overlapBottom {bBottom - aTop};
+
+    bool fromLeft(std::abs(overlapLeft) < std::abs(overlapRight));
+    bool fromTop(std::abs(overlapTop) < std::abs(overlapBottom));
+
+    float minOverlapX {fromLeft ? overlapLeft : overlapRight};
+    float minOverlapY {fromTop ? overlapTop : overlapBottom};
+
+    auto y_collision = [a, fromTop](float overlapX, float overlapY, bool stair=false)
+    {
+        if (fromTop)
+        {
+            if (stair)
+            {
+                a.lock()->setVelocity(sf::Vector2f(a.lock()->getVelocity().x, 0.f));
+                a.lock()->setPhysicsPosition(sf::Vector2f(a.lock()->getPhysicsPosition().x-5.f, a.lock()->getPhysicsPosition().y - overlapY));
+            }
+            else
+            {
+                a.lock()->setVelocity(sf::Vector2f(a.lock()->getVelocity().x, 0.f));
+                a.lock()->setPhysicsPosition(sf::Vector2f(a.lock()->getPhysicsPosition().x, a.lock()->getPhysicsPosition().y - overlapY));
+            }
+        }
+        else if (!fromTop)
+        {
+            a.lock()->setVelocity(sf::Vector2f(a.lock()->getVelocity().x, 0.f));
+            a.lock()->setPhysicsPosition(sf::Vector2f(a.lock()->getPhysicsPosition().x, a.lock()->getPhysicsPosition().y + overlapY));
+        }
+    };
+
+    auto x_collision = [a, fromLeft, fromTop, y_collision](float overlapX, float overlapY)
+    {
+        if (overlapY < 20.f && fromTop) // it's probably a stair
+        {
+            y_collision(overlapX, overlapY, true);
+            return;
+        }
+
+        a.lock()->setVelocity(sf::Vector2f(0.f, a.lock()->getVelocity().y));
+
+        if (fromLeft)
+        {
+            a.lock()->setPhysicsPosition(sf::Vector2f(a.lock()->getPhysicsPosition().x - overlapX, a.lock()->getPhysicsPosition().y));
+        }
+        else if (!fromLeft)
+        {
+            a.lock()->setPhysicsPosition(sf::Vector2f(a.lock()->getPhysicsPosition().x + overlapX, a.lock()->getPhysicsPosition().y));
+        }
+    };
+
+    if (a.lock()->onContactBegin(b, fromLeft, fromTop) && b.lock()->onContactBegin(a, fromLeft, fromTop))
+    {
+        if (std::abs(minOverlapX) > std::abs(minOverlapY)) // y overlap
+        {
+            y_collision(minOverlapX, minOverlapY);
+        }
+        else if (std::abs(minOverlapX) < std::abs(minOverlapY)) // x overlap
+        {
+            x_collision(minOverlapX, minOverlapY);
+        }
+
+        a.lock()->onContactEnd(b);
+        b.lock()->onContactEnd(a);
+    }
 }

@@ -19,6 +19,9 @@ class WorldEditor
         void saveWorld();
 
     private:
+        bool checkCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
+        void resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
+
         std::string mDirectoryPath;
 
         sf::Vector2i mLocalMousePosition;
@@ -28,8 +31,13 @@ class WorldEditor
         Camera mCamera;
 
         std::weak_ptr<WorldObject> mDragObject;
+        bool mPlayingHero;
+        std::shared_ptr<Player> mHero;
 
         std::vector<std::shared_ptr<WorldObject>> mWorldObjects;
+        std::vector<std::weak_ptr<ICollideable>> mCollideables;
+
+        World mWorld;
 };
 
 #endif // WORLDEDITOR_H
