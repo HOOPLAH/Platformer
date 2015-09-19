@@ -46,7 +46,9 @@ class WorldEditor
 
         sf::Vector2i mLocalMousePosition;
         sf::Vector2f mGlobalMousePosition;
+
         sf::Vector2f mCameraPosition;
+        sf::Vector2f mCameraVelocity;
 
         std::vector<std::string> mIDs;
         int mCurrentID;

@@ -12,6 +12,7 @@ class Camera
         void moveTo(sf::Vector2f newCenter);
         void follow(sf::Vector2f center);
         void setCenter(sf::Vector2f center){mCenter=center;mView.setCenter(mCenter);}
+        void zoom(float factor){mView.zoom(factor);}
 
         sf::Vector2f getCenter(){return mCenter;}
         sf::View& getView(){return mView;}

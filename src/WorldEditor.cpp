@@ -28,7 +28,7 @@ WorldEditor::~WorldEditor()
 
 void WorldEditor::update(int ticks)
 {
-    if (mPlayingHero) // should play as hero
+    if (mPlayingHero)
     {
         mHero->update();
         mCamera.follow(mHero->getRenderPosition());
@@ -38,6 +38,7 @@ void WorldEditor::update(int ticks)
     }
     else // don't play as hero
     {
+        mCameraPosition += mCameraVelocity;
         mCamera.setCenter(mCameraPosition);
     }
 
@@ -91,27 +92,30 @@ void WorldEditor::draw(sf::RenderTarget& target, float alpha)
     target.setView(target.getDefaultView());
 
     // hud stuff
-    std::string locMousePosString = "local: ";
-    locMousePosString.append(std::to_string(mLocalMousePosition.x));
-    locMousePosString.append(", ");
-    locMousePosString.append(std::to_string(mLocalMousePosition.y));
-    sf::Text locMousePosText(locMousePosString, Assets::fonts["8bit"].mFont, 14);
-    locMousePosText.setPosition(0.f, 3.f);
-    target.draw(locMousePosText);
+    if (!mPlayingHero)
+    {
+        std::string locMousePosString = "local: ";
+        locMousePosString.append(std::to_string(mLocalMousePosition.x));
+        locMousePosString.append(", ");
+        locMousePosString.append(std::to_string(mLocalMousePosition.y));
+        sf::Text locMousePosText(locMousePosString, Assets::fonts["8bit"].mFont, 14);
+        locMousePosText.setPosition(0.f, 3.f);
+        target.draw(locMousePosText);
 
-    std::string globMousePosString = "global: ";
-    globMousePosString.append(std::to_string(sf::Vector2i(mGlobalMousePosition.x, 0.f).x));
-    globMousePosString.append(", ");
-    globMousePosString.append(std::to_string(sf::Vector2i(0.f, mGlobalMousePosition.y).y));
-    sf::Text globMousePosText(globMousePosString, Assets::fonts["8bit"].mFont, 14);
-    globMousePosText.setPosition(0.f, 20.f);
-    target.draw(globMousePosText);
+        std::string globMousePosString = "global: ";
+        globMousePosString.append(std::to_string(sf::Vector2i(mGlobalMousePosition.x, 0.f).x));
+        globMousePosString.append(", ");
+        globMousePosString.append(std::to_string(sf::Vector2i(0.f, mGlobalMousePosition.y).y));
+        sf::Text globMousePosText(globMousePosString, Assets::fonts["8bit"].mFont, 14);
+        globMousePosText.setPosition(0.f, 20.f);
+        target.draw(globMousePosText);
 
-    std::string idString = "id: ";
-    idString.append(mIDs[mCurrentID]);
-    sf::Text idText(idString, Assets::fonts["8bit"].mFont, 14);
-    idText.setPosition(SCREEN_WIDTH - idText.getGlobalBounds().width, 3.f);
-    target.draw(idText);
+        std::string idString = "id: ";
+        idString.append(mIDs[mCurrentID]);
+        sf::Text idText(idString, Assets::fonts["8bit"].mFont, 14);
+        idText.setPosition(SCREEN_WIDTH - idText.getGlobalBounds().width, 3.f);
+        target.draw(idText);
+    }
 }
 
 void WorldEditor::handleEvents(sf::Event& event)
@@ -137,34 +141,28 @@ void WorldEditor::handleEvents(sf::Event& event)
         {
             if (event.key.code == sf::Keyboard::W)
             {
-                mCameraPosition.y -= 5;
+                mCameraVelocity.y = -3.f;
             }
             else if (event.key.code == sf::Keyboard::S)
             {
-                mCameraPosition.y += 5;
+                mCameraVelocity.y = 3.f;
             }
 
             if (event.key.code == sf::Keyboard::A)
             {
-                mCameraPosition.x -= 5;
+                mCameraVelocity.x = -3.f;
             }
             else if (event.key.code == sf::Keyboard::D)
             {
-                mCameraPosition.x += 5;
+                mCameraVelocity.x = 3.f;
             }
             else if (event.key.code == sf::Keyboard::Up)
             {
-                if (mCurrentID == mIDs.size()-1)
-                    mCurrentID = 0;
-                else
-                    mCurrentID++;
+                mCamera.zoom(0.9f);
             }
             else if (event.key.code == sf::Keyboard::Down)
             {
-                if (mCurrentID == 0)
-                    mCurrentID = mIDs.size()-1;
-                else
-                    mCurrentID--;
+                mCamera.zoom(1.1f);
             }
 
             if (event.key.code == sf::Keyboard::Escape)
@@ -178,6 +176,26 @@ void WorldEditor::handleEvents(sf::Event& event)
                     mDragObject.lock()->kill();
                     mDragObject.reset();
                 }
+            }
+        }
+        else if (event.type == sf::Event::KeyReleased)
+        {
+            if (event.key.code == sf::Keyboard::W)
+            {
+                mCameraVelocity.y = 0.f;
+            }
+            else if (event.key.code == sf::Keyboard::S)
+            {
+                mCameraVelocity.y = 0.f;
+            }
+
+            if (event.key.code == sf::Keyboard::A)
+            {
+                mCameraVelocity.x = 0.f;
+            }
+            else if (event.key.code == sf::Keyboard::D)
+            {
+                mCameraVelocity.x = 0.f;
             }
         }
         else if (event.type == sf::Event::MouseButtonPressed)

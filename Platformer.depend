@@ -125,7 +125,7 @@
 1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/VecUtils.h
 	<SFML/System/Vector2.hpp>
 
-1442452759 /home/marybeth/Desktop/Programming/C++/Platformer/include/Camera.h
+1442653158 /home/marybeth/Desktop/Programming/C++/Platformer/include/Camera.h
 	<SFML/Graphics.hpp>
 
 1442651983 /home/marybeth/Desktop/Programming/C++/Platformer/include/WorldObject.h
@@ -270,20 +270,20 @@
 	"WorldSwitcher.h"
 	"EntityTags.h"
 
-1442652374 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
+1442654009 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
 	"WorldEditor.h"
 	<iostream>
 	<fstream>
 	<sstream>
 	"Assets.h"
 
-1442652303 /home/marybeth/Desktop/Programming/C++/Platformer/include/WorldEditor.h
+1442654016 /home/marybeth/Desktop/Programming/C++/Platformer/include/WorldEditor.h
 	<SFML/Graphics.hpp>
 	<vector>
 	"World.h"
 	"WorldObject.h"
 
-1442389699 source:/home/marybeth/Desktop/Programming/C++/Platformer/LEmain.cpp
+1442652768 source:/home/marybeth/Desktop/Programming/C++/Platformer/LEmain.cpp
 	<SFML/Graphics.hpp>
 	<cstdlib>
 	<ctime>
