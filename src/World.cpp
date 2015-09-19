@@ -258,8 +258,7 @@ void World::loadWorld(std::string path)
                 std::string id = split_line[1];
                 float x = std::stof(split_line[2]);
                 float y = std::stof(split_line[3]);
-                bool indestructible = (split_line[4] == "true");
-                auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y), indestructible, EntityTags::PLATFORM);
+                auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y), EntityTags::PLATFORM);
                 mWorldObjects.push_back(platform);
                 mCollideables.push_back(platform);
             }
@@ -270,11 +269,10 @@ void World::loadWorld(std::string path)
                 std::string id = split_line[4];
                 float start_x = std::stof(split_line[5]);
                 float start_y = std::stof(split_line[6]);
-                bool indestructible = (split_line[7] == "true");
                 for (int i = 0; i < amnt; i++)
                 {
                     auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(start_x+(i*distApart.x),
-                                        start_y+(i*distApart.y)), indestructible);
+                                        start_y+(i*distApart.y)));
                     mWorldObjects.push_back(platform);
                     mCollideables.push_back(platform);
                 }

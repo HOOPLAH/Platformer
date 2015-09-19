@@ -15,6 +15,10 @@ WorldEditor::WorldEditor(std::string path) :
     mPlayingHero = false;
     mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], sf::Vector2f(0.f, 0.f));
     mCollideables.push_back(mHero);
+
+    mIDs.push_back("ammocrate");
+    mIDs.push_back("blueplatform");
+    mCurrentID = 0;
 }
 
 WorldEditor::~WorldEditor()
@@ -64,6 +68,9 @@ void WorldEditor::update(int ticks)
                 resolveCollision(dynamic, _static);
         }
     }
+
+    mCollideables = removeWeakDeadObj(mCollideables);
+    mWorldObjects = removeDeadObj(mWorldObjects);
 }
 
 void WorldEditor::draw(sf::RenderTarget& target, float alpha)
@@ -99,6 +106,12 @@ void WorldEditor::draw(sf::RenderTarget& target, float alpha)
     sf::Text globMousePosText(globMousePosString, Assets::fonts["8bit"].mFont, 14);
     globMousePosText.setPosition(0.f, 20.f);
     target.draw(globMousePosText);
+
+    std::string idString = "id: ";
+    idString.append(mIDs[mCurrentID]);
+    sf::Text idText(idString, Assets::fonts["8bit"].mFont, 14);
+    idText.setPosition(SCREEN_WIDTH - idText.getGlobalBounds().width, 3.f);
+    target.draw(idText);
 }
 
 void WorldEditor::handleEvents(sf::Event& event)
@@ -139,20 +152,42 @@ void WorldEditor::handleEvents(sf::Event& event)
             {
                 mCameraPosition.x += 5;
             }
+            else if (event.key.code == sf::Keyboard::Up)
+            {
+                if (mCurrentID == mIDs.size()-1)
+                    mCurrentID = 0;
+                else
+                    mCurrentID++;
+            }
+            else if (event.key.code == sf::Keyboard::Down)
+            {
+                if (mCurrentID == 0)
+                    mCurrentID = mIDs.size()-1;
+                else
+                    mCurrentID--;
+            }
 
             if (event.key.code == sf::Keyboard::Escape)
             {
                 saveWorld();
+            }
+            if (event.key.code == sf::Keyboard::Delete)
+            {
+                if (!mDragObject.expired())
+                {
+                    mDragObject.lock()->kill();
+                    mDragObject.reset();
+                }
             }
         }
         else if (event.type == sf::Event::MouseButtonPressed)
         {
             if (event.mouseButton.button == sf::Mouse::Left)
             {
-                std::string id = "ammocrate";
+                std::string id = mIDs[mCurrentID];
                 float x = mGlobalMousePosition.x;
                 float y = mGlobalMousePosition.y;
-                auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y), true, EntityTags::PLATFORM);
+                auto platform = std::make_shared<WorldEditorObject>(Assets::sprites[id], sf::Vector2f(x, y), id);
                 mWorldObjects.push_back(platform);
             }
             else if (event.mouseButton.button == sf::Mouse::Right)
@@ -181,6 +216,25 @@ void WorldEditor::handleEvents(sf::Event& event)
             {
                 mDragObject.reset();
             }
+        }
+        else if (event.type == sf::Event::MouseWheelMoved)
+        {
+            if (event.mouseWheel.delta > 0)
+            {
+                if (mCurrentID == mIDs.size()-1)
+                    mCurrentID = 0;
+                else
+                    mCurrentID++;
+            }
+
+            if (event.mouseWheel.delta < 0)
+            {
+                if (mCurrentID == 0)
+                    mCurrentID = mIDs.size()-1;
+                else
+                    mCurrentID--;
+            }
+
         }
     }
     else // playing as player
@@ -239,8 +293,7 @@ void WorldEditor::loadWorld()
                 std::string id = split_line[1];
                 float x = std::stof(split_line[2]);
                 float y = std::stof(split_line[3]);
-                bool indestructible = (split_line[4] == "true");
-                auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y), indestructible, EntityTags::PLATFORM);
+                auto platform = std::make_shared<WorldEditorObject>(Assets::sprites[id], sf::Vector2f(x, y), id);
                 mWorldObjects.push_back(platform);
                 mCollideables.push_back(platform);
             }
@@ -251,11 +304,10 @@ void WorldEditor::loadWorld()
                 std::string id = split_line[4];
                 float start_x = std::stof(split_line[5]);
                 float start_y = std::stof(split_line[6]);
-                bool indestructible = (split_line[7] == "true");
                 for (int i = 0; i < amnt; i++)
                 {
-                    auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(start_x+(i*distApart.x),
-                                        start_y+(i*distApart.y)), indestructible);
+                    auto platform = std::make_shared<WorldEditorObject>(Assets::sprites[id], sf::Vector2f(start_x+(i*distApart.x),
+                                        start_y+(i*distApart.y)), id);
                     mWorldObjects.push_back(platform);
                     mCollideables.push_back(platform);
                 }
@@ -274,7 +326,7 @@ void WorldEditor::saveWorld()
 
     for (auto& obj : mWorldObjects)
     {
-        file << "platform: " << "ammocrate " << obj->getRenderPosition().x << " " << obj->getRenderPosition().y << "\n";
+        file << "platform: " << obj->getID() << " " << obj->getRenderPosition().x << " " << obj->getRenderPosition().y << "\n";
     }
 
     file.close();
@@ -377,4 +429,44 @@ void WorldEditor::resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<
         a.lock()->onContactEnd(b);
         b.lock()->onContactEnd(a);
     }
+}
+
+template <class T>
+std::vector<T> WorldEditor::removeDeadObj(std::vector<T>& v)
+{
+    typename std::vector<T>::iterator it;
+
+    for (it = v.begin(); it != v.end();)
+    {
+        if(!(*it)->isAlive())
+        {
+            it = v.erase(it);
+        }
+        else
+        {
+            it++;
+        }
+    }
+
+    return v;
+}
+
+template <class T>
+std::vector<T> WorldEditor::removeWeakDeadObj(std::vector<T>& v)
+{
+    typename std::vector<T>::iterator it;
+
+    for (it = v.begin(); it != v.end();)
+    {
+        if(!(*it).lock()->isAlive())
+        {
+            it = v.erase(it);
+        }
+        else
+        {
+            it++;
+        }
+    }
+
+    return v;
 }

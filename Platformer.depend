@@ -24,7 +24,7 @@
 	<SFML/Graphics.hpp>
 	<World.h>
 
-1442569681 /home/marybeth/Desktop/Programming/C++/Platformer/include/World.h
+1442626847 /home/marybeth/Desktop/Programming/C++/Platformer/include/World.h
 	<vector>
 	<memory>
 	<SFML/Graphics.hpp>
@@ -128,7 +128,7 @@
 1442452759 /home/marybeth/Desktop/Programming/C++/Platformer/include/Camera.h
 	<SFML/Graphics.hpp>
 
-1442449665 /home/marybeth/Desktop/Programming/C++/Platformer/include/WorldObject.h
+1442651983 /home/marybeth/Desktop/Programming/C++/Platformer/include/WorldObject.h
 	<tuple>
 	"SpriteObject.h"
 	"ICollideable.h"
@@ -235,7 +235,7 @@
 	"Constants.h"
 	"EntityTags.h"
 
-1442566994 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/World.cpp
+1442652102 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/World.cpp
 	"World.h"
 	<iostream>
 	<fstream>
@@ -252,7 +252,7 @@
 	<fstream>
 	<array>
 
-1442449647 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldObject.cpp
+1442652332 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldObject.cpp
 	"WorldObject.h"
 	"EntityTags.h"
 	<Projectile.h>
@@ -270,16 +270,18 @@
 	"WorldSwitcher.h"
 	"EntityTags.h"
 
-1442570742 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
+1442652374 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
 	"WorldEditor.h"
 	<iostream>
 	<fstream>
 	<sstream>
 	"Assets.h"
 
-1442570664 /home/marybeth/Desktop/Programming/C++/Platformer/include/WorldEditor.h
+1442652303 /home/marybeth/Desktop/Programming/C++/Platformer/include/WorldEditor.h
 	<SFML/Graphics.hpp>
+	<vector>
 	"World.h"
+	"WorldObject.h"
 
 1442389699 source:/home/marybeth/Desktop/Programming/C++/Platformer/LEmain.cpp
 	<SFML/Graphics.hpp>

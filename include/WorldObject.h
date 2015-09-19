@@ -11,7 +11,7 @@
 class WorldObject : public SpriteObject, public ICollideable
 {
     public:
-        WorldObject(SpriteInfo& info, sf::Vector2f pos, bool indestructible=false, int tag=EntityTags::PLATFORM, bool _static=true);
+        WorldObject(SpriteInfo& info, sf::Vector2f pos, int tag=EntityTags::PLATFORM, bool _static=true);
         virtual ~WorldObject();
 
         void update();
@@ -22,7 +22,6 @@ class WorldObject : public SpriteObject, public ICollideable
 
     protected:
         HealthBar mHealth;
-        bool mIndestructible;
 };
 
 #endif // WORLDOBJECT_H

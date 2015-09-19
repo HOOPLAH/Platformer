@@ -46,7 +46,6 @@ class World
 
         template <class T>
         std::vector<T> removeDeadObj(std::vector<T>& v);
-
         template <class T>
         std::vector<T> removeWeakDeadObj(std::vector<T>& v);
 
