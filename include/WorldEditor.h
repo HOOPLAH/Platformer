@@ -38,9 +38,9 @@ class WorldEditor
         void resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
 
         template <class T>
-        std::vector<T> removeDeadObj(std::vector<T>& v);
+        void removeDeadObj(std::vector<T>& v);
         template <class T>
-        std::vector<T> removeWeakDeadObj(std::vector<T>& v);
+        void removeWeakDeadObj(std::vector<T>& v);
 
         std::string mDirectoryPath;
 

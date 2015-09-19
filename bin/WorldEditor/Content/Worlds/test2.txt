@@ -1,18 +1,15 @@
 platform: blueplatform -53 -85
 platform: blueplatform -3 -95
 platform: blueplatform 47 -105
-
 platform: ammocrate -118 -85
 platform: ammocrate -182 -85
 platform: ammocrate 138 -35
 platform: ammocrate 202 -35
 platform: ammocrate 266 -35
-
 platform: blueplatform 330 -35
 platform: blueplatform 380 -25
 platform: blueplatform 430 -15
 platform: blueplatform 480 -5
-
 platform: blueplatform 534 5
 platform: blueplatform 584 5
 platform: blueplatform 634 5

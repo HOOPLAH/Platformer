@@ -70,8 +70,8 @@ void WorldEditor::update(int ticks)
         }
     }
 
-    mCollideables = removeWeakDeadObj(mCollideables);
-    mWorldObjects = removeDeadObj(mWorldObjects);
+    removeWeakDeadObj(mCollideables);
+    removeDeadObj(mWorldObjects);
 }
 
 void WorldEditor::draw(sf::RenderTarget& target, float alpha)
@@ -135,40 +135,37 @@ void WorldEditor::handleEvents(sf::Event& event)
             }
         }
     }
-    if (!mPlayingHero) // not playing as player
+    if (event.type == sf::Event::MouseButtonPressed)
+    {
+        if (event.mouseButton.button == sf::Mouse::Middle)
+        {
+            mPlayingHero = !mPlayingHero;
+
+            if (mPlayingHero)
+                mHero->setPhysicsPosition(mGlobalMousePosition);
+        }
+    }
+    if (!mPlayingHero) // not playing as hero
     {
         if (event.type == sf::Event::KeyPressed)
         {
             if (event.key.code == sf::Keyboard::W)
-            {
                 mCameraVelocity.y = -3.f;
-            }
             else if (event.key.code == sf::Keyboard::S)
-            {
                 mCameraVelocity.y = 3.f;
-            }
 
             if (event.key.code == sf::Keyboard::A)
-            {
                 mCameraVelocity.x = -3.f;
-            }
             else if (event.key.code == sf::Keyboard::D)
-            {
                 mCameraVelocity.x = 3.f;
-            }
-            else if (event.key.code == sf::Keyboard::Up)
-            {
+
+            if (event.key.code == sf::Keyboard::Up)
                 mCamera.zoom(0.9f);
-            }
             else if (event.key.code == sf::Keyboard::Down)
-            {
                 mCamera.zoom(1.1f);
-            }
 
             if (event.key.code == sf::Keyboard::Escape)
-            {
                 saveWorld();
-            }
             if (event.key.code == sf::Keyboard::Delete)
             {
                 if (!mDragObject.expired())
@@ -181,22 +178,14 @@ void WorldEditor::handleEvents(sf::Event& event)
         else if (event.type == sf::Event::KeyReleased)
         {
             if (event.key.code == sf::Keyboard::W)
-            {
                 mCameraVelocity.y = 0.f;
-            }
             else if (event.key.code == sf::Keyboard::S)
-            {
                 mCameraVelocity.y = 0.f;
-            }
 
             if (event.key.code == sf::Keyboard::A)
-            {
                 mCameraVelocity.x = 0.f;
-            }
             else if (event.key.code == sf::Keyboard::D)
-            {
                 mCameraVelocity.x = 0.f;
-            }
         }
         else if (event.type == sf::Event::MouseButtonPressed)
         {
@@ -220,13 +209,6 @@ void WorldEditor::handleEvents(sf::Event& event)
                         mDragObject = obj;
                 }
             }
-            else if (event.mouseButton.button == sf::Mouse::Middle)
-            {
-                mPlayingHero = !mPlayingHero;
-
-                if (mPlayingHero)
-                    mHero->setPhysicsPosition(mGlobalMousePosition);
-            }
         }
         else if (event.type == sf::Event::MouseButtonReleased)
         {
@@ -245,7 +227,7 @@ void WorldEditor::handleEvents(sf::Event& event)
                     mCurrentID++;
             }
 
-            if (event.mouseWheel.delta < 0)
+            else if (event.mouseWheel.delta < 0)
             {
                 if (mCurrentID == 0)
                     mCurrentID = mIDs.size()-1;
@@ -258,16 +240,6 @@ void WorldEditor::handleEvents(sf::Event& event)
     else // playing as player
     {
         mHero->handleEvents(event, mWorld.getWorldRef());
-        if (event.type == sf::Event::MouseButtonPressed)
-        {
-            if (event.mouseButton.button == sf::Mouse::Middle)
-            {
-                mPlayingHero = !mPlayingHero;
-
-                if (mPlayingHero)
-                    mHero->setPhysicsPosition(mGlobalMousePosition);
-            }
-        }
     }
 }
 
@@ -450,7 +422,7 @@ void WorldEditor::resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<
 }
 
 template <class T>
-std::vector<T> WorldEditor::removeDeadObj(std::vector<T>& v)
+void WorldEditor::removeDeadObj(std::vector<T>& v)
 {
     typename std::vector<T>::iterator it;
 
@@ -465,12 +437,10 @@ std::vector<T> WorldEditor::removeDeadObj(std::vector<T>& v)
             it++;
         }
     }
-
-    return v;
 }
 
 template <class T>
-std::vector<T> WorldEditor::removeWeakDeadObj(std::vector<T>& v)
+void WorldEditor::removeWeakDeadObj(std::vector<T>& v)
 {
     typename std::vector<T>::iterator it;
 
@@ -485,6 +455,4 @@ std::vector<T> WorldEditor::removeWeakDeadObj(std::vector<T>& v)
             it++;
         }
     }
-
-    return v;
 }

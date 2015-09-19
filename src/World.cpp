@@ -135,11 +135,11 @@ void World::update(int ticks)
 
     mCamera.follow(mHero->getRenderPosition());
 
-    mCollideables = removeWeakDeadObj(mCollideables);
-    mNPCs = removeDeadObj(mNPCs);
-    mAliveProjectiles = removeDeadObj(mAliveProjectiles);
-    mWorldObjects = removeDeadObj(mWorldObjects);
-    mButtons = removeDeadObj(mButtons);
+    removeWeakDeadObj(mCollideables);
+    removeDeadObj(mNPCs);
+    removeDeadObj(mAliveProjectiles);
+    removeDeadObj(mWorldObjects);
+    removeDeadObj(mButtons);
 }
 
 void World::draw(sf::RenderTarget& target, float alpha)
@@ -427,7 +427,7 @@ void World::resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<IColli
 }
 
 template <class T>
-std::vector<T> World::removeDeadObj(std::vector<T>& v)
+void World::removeDeadObj(std::vector<T>& v)
 {
     typename std::vector<T>::iterator it;
 
@@ -442,12 +442,10 @@ std::vector<T> World::removeDeadObj(std::vector<T>& v)
             it++;
         }
     }
-
-    return v;
 }
 
 template <class T>
-std::vector<T> World::removeWeakDeadObj(std::vector<T>& v)
+void World::removeWeakDeadObj(std::vector<T>& v)
 {
     typename std::vector<T>::iterator it;
 
@@ -462,6 +460,4 @@ std::vector<T> World::removeWeakDeadObj(std::vector<T>& v)
             it++;
         }
     }
-
-    return v;
 }
