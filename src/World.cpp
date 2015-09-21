@@ -102,6 +102,22 @@ void World::update(int ticks)
 
         if (!obj->isStatic())
             obj->setVelocity(obj->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
+
+        if (!obj->isAlive()) // somehow died, player collected it???
+        {
+            if (!mHero->getQuest().mActions.empty())
+            {
+                if (mHero->getQuest().mActions.top()->mTag == ActionTag::COLLECT)
+                {
+                    auto action = std::static_pointer_cast<CollectAction>(mHero->getQuest().mActions.top());
+
+                    if (action->mCollectLeftCount > 1)
+                        action->mCollectLeftCount--;
+                    else
+                        mHero->getQuest().mActions.pop();
+                }
+            }
+        }
     }
 
     for (auto& button : mButtons)
@@ -200,7 +216,7 @@ void World::loadWorld(std::string path)
 
     auto find_key = [](std::string key, std::string line) -> bool
     {
-        size_t pos = 0;
+        std::size_t pos = 0;
         pos = line.find(key);
         if (pos != std::string::npos)
             return true;

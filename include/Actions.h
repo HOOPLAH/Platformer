@@ -24,7 +24,7 @@ struct KillAction : IAction
 
     std::size_t mTotalKillCount;
     std::size_t mKillsLeftCount;
-    int mKillTag; // EntityTags, who to kill
+    int mKillTag; // EntityTags, whom to kill
 };
 
 struct CollectAction : IAction

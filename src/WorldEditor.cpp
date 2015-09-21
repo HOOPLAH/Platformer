@@ -359,7 +359,7 @@ void WorldEditor::loadWorld()
                 int type = WayPointType::WALK;
                 if (split_line[split_line.size()-2] == "jump")
                     type = WayPointType::JUMP;
-                mWorld.getWayPointManager().addWayPointEdge(a, b, type);
+                //mWorld.getWayPointManager().addWayPointEdge(a, b, type);
             }
         }
 

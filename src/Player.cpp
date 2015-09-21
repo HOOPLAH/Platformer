@@ -110,6 +110,19 @@ void Player::drawStationary(sf::RenderTarget& target)
             actionText.setPosition(sf::Vector2f(SCREEN_WIDTH - actionText.getGlobalBounds().width, 0.f));
             target.draw(actionText);
         }
+        else if (mQuest.mActions.top()->mTag == ActionTag::COLLECT)
+        {
+            auto action = std::static_pointer_cast<CollectAction>(mQuest.mActions.top());
+
+            std::string sActionText = "collect ";
+            sActionText.append(std::to_string(action->mTotalCollectCount - action->mCollectLeftCount));
+            sActionText.append("/");
+            sActionText.append(std::to_string(action->mTotalCollectCount));
+
+            sf::Text actionText(sActionText, Assets::fonts["8bit"].mFont);
+            actionText.setPosition(sf::Vector2f(SCREEN_WIDTH - actionText.getGlobalBounds().width, 0.f));
+            target.draw(actionText);
+        }
     }
 }
 
