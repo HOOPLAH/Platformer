@@ -93,6 +93,13 @@ void WorldEditor::draw(sf::RenderTarget& target, float alpha)
             obj->draw(target, alpha);
     }
 
+    for (int i = 0; i < mWorld.getWayPointManager().getWayPoints().size(); i++)
+    {
+        sf::Text num(std::to_string(i), Assets::fonts["8bit"].mFont, 8);
+        num.setPosition(mWorld.getWayPointManager().getWayPoints()[i].mPosition+sf::Vector2f(0.f, -10.f));
+        target.draw(num);
+    }
+
     target.setView(target.getDefaultView());
 
     // hud stuff
@@ -141,7 +148,7 @@ void WorldEditor::handleEvents(sf::Event& event)
         {
             if (!mDragObject.expired())
             {
-                mDragObject.lock()->setPhysicsPosition(mDragObject.lock()->getPhysicsPositionPosition()+sf::Vector2f(delta.x, delta.y));
+                mDragObject.lock()->setPhysicsPosition(mDragObject.lock()->getPhysicsPosition()+sf::Vector2f(delta.x, delta.y));
             }
         }
     }
@@ -186,13 +193,13 @@ void WorldEditor::handleEvents(sf::Event& event)
 
             if (event.key.code == sf::Keyboard::Up)
             {
-                mCamera.zoom(0.9f);
-                mCameraZoom *= 0.9f;
+                mCamera.zoom(0.5f);
+                mCameraZoom *= 0.5f;
             }
             else if (event.key.code == sf::Keyboard::Down)
             {
-                mCamera.zoom(1.1f);
-                mCameraZoom *= 1.1f;
+                mCamera.zoom(2.f);
+                mCameraZoom *= 2.f;
             }
 
             if (event.key.code == sf::Keyboard::Escape)
@@ -337,9 +344,6 @@ void WorldEditor::loadWorld()
             {
                 float x = std::stof(split_line[1]);
                 float y = std::stof(split_line[2]);
-                int index = mWorld.getWayPointManager().getNextWayPointIndex();
-                WayPoint pt(x, y, index);
-                mWorld.getWayPointManager().addWayPoint(pt);
 
                 mWorldObjects.push_back(std::make_shared<WorldEditorObject>(Assets::sprites["waypoint"], sf::Vector2f(x, y), "waypoint"));
             }

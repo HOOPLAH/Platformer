@@ -20,9 +20,9 @@ platform: blueplatform 775 65
 platform: blueplatform 825 65
 waypoint: 27 -26
 waypoint: 156 -26
-waypoint: 303 -40
-waypoint: 421 -43
-waypoint: 592 -113
-waypoint: 592 25
-waypoint: 851 39
-waypoint: 850 -147
+waypoint: 303 -42
+waypoint: 421 -42
+waypoint: 592 -114
+waypoint: 858 -134
+waypoint: 592 26
+waypoint: 858 46

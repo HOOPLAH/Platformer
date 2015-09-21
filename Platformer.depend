@@ -166,7 +166,7 @@
 	"SpriteObject.h"
 	"ICollideable.h"
 
-1442383370 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Camera.cpp
+1442867852 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Camera.cpp
 	"Camera.h"
 	<iostream>
 	"Constants.h"
@@ -270,7 +270,7 @@
 	"WorldSwitcher.h"
 	"EntityTags.h"
 
-1442816255 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
+1442869034 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
 	"WorldEditor.h"
 	<iostream>
 	<fstream>
