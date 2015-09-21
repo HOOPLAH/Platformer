@@ -12,12 +12,16 @@ WorldEditor::WorldEditor(std::string path) :
 {
     loadWorld();
 
+    mCameraZoom = 1.f;
+
     mPlayingHero = false;
     mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], sf::Vector2f(0.f, 0.f));
     mCollideables.push_back(mHero);
 
     mIDs.push_back("ammocrate");
     mIDs.push_back("blueplatform");
+    mIDs.push_back("waypoint");
+    mIDs.push_back("waypoint_edge");
     mCurrentID = 0;
 }
 
@@ -115,6 +119,12 @@ void WorldEditor::draw(sf::RenderTarget& target, float alpha)
         sf::Text idText(idString, Assets::fonts["8bit"].mFont, 14);
         idText.setPosition(SCREEN_WIDTH - idText.getGlobalBounds().width, 3.f);
         target.draw(idText);
+
+        std::string zoomString = "zoom: ";
+        zoomString.append(std::to_string(mCameraZoom));
+        sf::Text zoomText(zoomString, Assets::fonts["8bit"].mFont, 14);
+        zoomText.setPosition(SCREEN_WIDTH - zoomText.getGlobalBounds().width, 20.f);
+        target.draw(zoomText);
     }
 }
 
@@ -131,7 +141,7 @@ void WorldEditor::handleEvents(sf::Event& event)
         {
             if (!mDragObject.expired())
             {
-                mDragObject.lock()->setPhysicsPosition(mDragObject.lock()->getRenderPosition()+sf::Vector2f(delta.x, delta.y));
+                mDragObject.lock()->setPhysicsPosition(mDragObject.lock()->getPhysicsPositionPosition()+sf::Vector2f(delta.x, delta.y));
             }
         }
     }
@@ -149,20 +159,41 @@ void WorldEditor::handleEvents(sf::Event& event)
     {
         if (event.type == sf::Event::KeyPressed)
         {
-            if (event.key.code == sf::Keyboard::W)
-                mCameraVelocity.y = -3.f;
-            else if (event.key.code == sf::Keyboard::S)
-                mCameraVelocity.y = 3.f;
+            if (mDragObject.expired()) // no object selected
+            {
+                if (event.key.code == sf::Keyboard::W)
+                    mCameraVelocity.y = -3.f;
+                else if (event.key.code == sf::Keyboard::S)
+                    mCameraVelocity.y = 3.f;
 
-            if (event.key.code == sf::Keyboard::A)
-                mCameraVelocity.x = -3.f;
-            else if (event.key.code == sf::Keyboard::D)
-                mCameraVelocity.x = 3.f;
+                if (event.key.code == sf::Keyboard::A)
+                    mCameraVelocity.x = -3.f;
+                else if (event.key.code == sf::Keyboard::D)
+                    mCameraVelocity.x = 3.f;
+            }
+            else
+            {
+                if (event.key.code == sf::Keyboard::W)
+                    mDragObject.lock()->setPhysicsPosition(mDragObject.lock()->getPhysicsPosition()+sf::Vector2f(0.f, -1.f));
+                else if (event.key.code == sf::Keyboard::S)
+                    mDragObject.lock()->setPhysicsPosition(mDragObject.lock()->getPhysicsPosition()+sf::Vector2f(0.f, 1.f));
+
+                if (event.key.code == sf::Keyboard::A)
+                    mDragObject.lock()->setPhysicsPosition(mDragObject.lock()->getPhysicsPosition()+sf::Vector2f(-1.f, 0.f));
+                else if (event.key.code == sf::Keyboard::D)
+                    mDragObject.lock()->setPhysicsPosition(mDragObject.lock()->getPhysicsPosition()+sf::Vector2f(1.f, 0.f));
+            }
 
             if (event.key.code == sf::Keyboard::Up)
+            {
                 mCamera.zoom(0.9f);
+                mCameraZoom *= 0.9f;
+            }
             else if (event.key.code == sf::Keyboard::Down)
+            {
                 mCamera.zoom(1.1f);
+                mCameraZoom *= 1.1f;
+            }
 
             if (event.key.code == sf::Keyboard::Escape)
                 saveWorld();
@@ -302,6 +333,25 @@ void WorldEditor::loadWorld()
                     mCollideables.push_back(platform);
                 }
             }
+            else if (find_key("waypoint:", line))
+            {
+                float x = std::stof(split_line[1]);
+                float y = std::stof(split_line[2]);
+                int index = mWorld.getWayPointManager().getNextWayPointIndex();
+                WayPoint pt(x, y, index);
+                mWorld.getWayPointManager().addWayPoint(pt);
+
+                mWorldObjects.push_back(std::make_shared<WorldEditorObject>(Assets::sprites["waypoint"], sf::Vector2f(x, y), "waypoint"));
+            }
+            else if (find_key("waypoint_edge:", line))
+            {
+                int a = std::stof(split_line[1]);
+                int b = std::stof(split_line[2]);
+                int type = WayPointType::WALK;
+                if (split_line[split_line.size()-2] == "jump")
+                    type = WayPointType::JUMP;
+                mWorld.getWayPointManager().addWayPointEdge(a, b, type);
+            }
         }
 
         file.close();
@@ -316,7 +366,12 @@ void WorldEditor::saveWorld()
 
     for (auto& obj : mWorldObjects)
     {
-        file << "platform: " << obj->getID() << " " << obj->getRenderPosition().x << " " << obj->getRenderPosition().y << "\n";
+        if (obj->getID() != "waypoint" && obj->getID() != "waypoint_edge")
+            file << "platform: " << obj->getID() << " " << obj->getRenderPosition().x << " " << obj->getRenderPosition().y << "\n";
+        else if (obj->getID() == "waypoint")
+            file << "waypoint: " << obj->getRenderPosition().x << " " << obj->getRenderPosition().y << "\n";
+        else if (obj->getID() == "waypoint_edge")
+            file << "waypoint_edge: " << "start" << "end" << "\n";
     }
 
     file.close();

@@ -49,6 +49,7 @@ class WorldEditor
 
         sf::Vector2f mCameraPosition;
         sf::Vector2f mCameraVelocity;
+        float mCameraZoom;
 
         std::vector<std::string> mIDs;
         int mCurrentID;

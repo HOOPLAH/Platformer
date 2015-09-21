@@ -1,15 +1,28 @@
-platform: blueplatform -53 -85
-platform: blueplatform -3 -95
-platform: blueplatform 47 -105
-platform: ammocrate -118 -85
-platform: ammocrate -182 -85
-platform: ammocrate 138 -35
-platform: ammocrate 202 -35
-platform: ammocrate 266 -35
-platform: blueplatform 330 -35
-platform: blueplatform 380 -25
-platform: blueplatform 430 -15
-platform: blueplatform 480 -5
-platform: blueplatform 534 5
-platform: blueplatform 584 5
-platform: blueplatform 634 5
+platform: ammocrate 0 0
+platform: ammocrate 64 0
+platform: ammocrate 128 0
+platform: blueplatform 192 0
+platform: blueplatform 242 -10
+platform: blueplatform 292 -20
+platform: blueplatform 342 -20
+platform: blueplatform 392 -20
+platform: blueplatform 575 -95
+platform: blueplatform 625 -105
+platform: blueplatform 675 -115
+platform: blueplatform 575 45
+platform: blueplatform 625 55
+platform: blueplatform 675 65
+platform: blueplatform 725 -115
+platform: blueplatform 775 -115
+platform: blueplatform 825 -115
+platform: blueplatform 725 65
+platform: blueplatform 775 65
+platform: blueplatform 825 65
+waypoint: 27 -26
+waypoint: 156 -26
+waypoint: 303 -40
+waypoint: 421 -43
+waypoint: 592 -113
+waypoint: 592 25
+waypoint: 851 39
+waypoint: 850 -147
