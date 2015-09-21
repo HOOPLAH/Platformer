@@ -32,6 +32,7 @@ class WorldEditor
 
         void loadWorld();
         void saveWorld();
+        void refreshWorld();
 
     private:
         bool checkCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
@@ -56,7 +57,7 @@ class WorldEditor
 
         Camera mCamera;
 
-        std::weak_ptr<WorldObject> mDragObject;
+        std::weak_ptr<WorldEditorObject> mDragObject;
         bool mPlayingHero;
         std::shared_ptr<Player> mHero;
 

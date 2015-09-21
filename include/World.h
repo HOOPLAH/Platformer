@@ -28,6 +28,7 @@ class World
         void handleEvents(sf::Event event);
 
         void loadWorld(std::string path);
+        void resetWorld(std::string path);
 
         // Accessor
         sf::Vector2f getGravity(){return mGravity;}

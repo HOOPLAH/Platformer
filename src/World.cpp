@@ -327,6 +327,22 @@ void World::loadWorld(std::string path)
     else std::cout << "Unable to open file \'" << path << "\'\n";
 }
 
+void World::resetWorld(std::string path)
+{
+    mSpawnPoint = sf::Vector2f(0.f, 0.f);
+    mNextNPCSpawnPoint = 0;
+    mNPCSpawnCount = 0;
+    mGravity = sf::Vector2f(0.f, 10.f);
+
+    mNPCs.clear();
+    mAliveProjectiles.clear();
+    mButtons.clear();
+    mWorldObjects.clear();
+    mCollideables.clear();
+
+    mWayPointManager.getWayPoints().clear();
+}
+
 bool World::checkCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b)
 {
     sf::Vector2f a1 = a.lock()->getPhysicsPosition() + sf::Vector2f(a.lock()->getHitBox().left, a.lock()->getHitBox().top);

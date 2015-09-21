@@ -204,13 +204,18 @@ void WorldEditor::handleEvents(sf::Event& event)
 
             if (event.key.code == sf::Keyboard::Escape)
                 saveWorld();
-            if (event.key.code == sf::Keyboard::Delete)
+            else if (event.key.code == sf::Keyboard::Delete)
             {
                 if (!mDragObject.expired())
                 {
                     mDragObject.lock()->kill();
                     mDragObject.reset();
                 }
+            }
+            else if (event.key.code == sf::Keyboard::R)
+            {
+                saveWorld();
+                refreshWorld();
             }
         }
         else if (event.type == sf::Event::KeyReleased)
@@ -379,6 +384,17 @@ void WorldEditor::saveWorld()
     }
 
     file.close();
+}
+
+void WorldEditor::refreshWorld()
+{
+    mWorld.resetWorld(mDirectoryPath);
+    mWorld.loadWorld(mDirectoryPath);
+
+    mWorldObjects.clear();
+    mCollideables.clear();
+    mCollideables.push_back(mHero);
+    loadWorld();
 }
 
 bool WorldEditor::checkCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b)

@@ -1,4 +1,4 @@
-platform: ammocrate 0 0
+platform: ammocrate 0 1
 platform: ammocrate 64 0
 platform: ammocrate 128 0
 platform: blueplatform 192 0
@@ -18,11 +18,10 @@ platform: blueplatform 825 -115
 platform: blueplatform 725 65
 platform: blueplatform 775 65
 platform: blueplatform 825 65
-waypoint: 27 -26
-waypoint: 156 -26
-waypoint: 303 -42
-waypoint: 421 -42
-waypoint: 592 -114
-waypoint: 858 -134
-waypoint: 592 26
-waypoint: 858 46
+waypoint: 25 -24
+waypoint: 157 -27
+waypoint: 420 -47
+waypoint: 594 -120
+waypoint: 852 -143
+waypoint: 590 20
+waypoint: 855 43
