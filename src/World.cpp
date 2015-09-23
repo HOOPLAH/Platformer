@@ -10,7 +10,7 @@
 #include "EntityTags.h"
 #include "NPC.h"
 #include "WayPoint.h"
-#include "TestObject.h"
+#include "CollectibleObject.h"
 
 World::World() :
     mWorldRef(*this)
@@ -91,34 +91,36 @@ void World::update(int ticks)
 
     for (auto& obj : mWorldObjects)
     {
-        if (!obj->isAlive())
-            std::cout << "how am i alive\n";
-
         obj->update();
 
         if (!obj->isStatic())
             obj->setVelocity(obj->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
 
-        if (!obj->isAlive()) // somehow died, player collected it???
+        if (obj->getTag() == EntityTags::COLLECTIBLE) // somehow died, player collected it???
         {
-            std::cout << "ded\n"; /// START HERE ON DEBUGGING
+            auto collectible = static_cast<CollectibleObject*>(&*obj);
 
-            if (!mHero->getQuest().mActions.empty())
+            if (collectible->isCollected())
             {
-                if (mHero->getQuest().mActions.top()->mTag == ActionTag::COLLECT)
+                if (!mHero->getQuest().mActions.empty())
                 {
-                    auto action = std::static_pointer_cast<CollectAction>(mHero->getQuest().mActions.top());
-
-                    if (obj->getTag() == action->mCollectTag)
+                    if (mHero->getQuest().mActions.top()->mTag == ActionTag::COLLECT)
                     {
-                        if (action->mCollectLeftCount > 1)
-                            action->mCollectLeftCount--;
+                        auto action = std::static_pointer_cast<CollectAction>(mHero->getQuest().mActions.top());
+
+                        if (obj->getTag() == action->mCollectTag)
+                        {
+                            if (action->mCollectLeftCount > 1)
+                                action->mCollectLeftCount--;
+                            else
+                                mHero->getQuest().mActions.pop();
+                        }
                         else
-                            mHero->getQuest().mActions.pop();
+                            break;
                     }
-                    else
-                        break;
                 }
+
+                collectible->kill();
             }
         }
     }
@@ -288,7 +290,7 @@ void World::loadWorld(std::string path)
                 std::string id = split_line[1];
                 float x = std::stof(split_line[2]);
                 float y = std::stof(split_line[3]);
-                auto obj = std::make_shared<TestObject>(Assets::sprites[id], sf::Vector2f(x, y));
+                auto obj = std::make_shared<CollectibleObject>(Assets::sprites[id], sf::Vector2f(x, y));
                 mWorldObjects.push_back(obj);
                 mCollideables.push_back(obj);
             }

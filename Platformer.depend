@@ -212,7 +212,7 @@
 	"SpriteObject.h"
 	<iostream>
 
-1442984496 source:/home/lucas/Desktop/Programming/C++/Platformer/src/TestObject.cpp
+1442997366 source:/home/lucas/Desktop/Programming/C++/Platformer/src/TestObject.cpp
 	"TestObject.h"
 	"Player.h"
 
@@ -236,7 +236,7 @@
 	"Constants.h"
 	"EntityTags.h"
 
-1442997259 source:/home/lucas/Desktop/Programming/C++/Platformer/src/World.cpp
+1442998580 source:/home/lucas/Desktop/Programming/C++/Platformer/src/World.cpp
 	"World.h"
 	<iostream>
 	<fstream>
@@ -247,7 +247,7 @@
 	"EntityTags.h"
 	"NPC.h"
 	"WayPoint.h"
-	"TestObject.h"
+	"CollectibleObject.h"
 
 1442976804 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
 	"WorldEditor.h"
@@ -292,4 +292,11 @@
 	"Assets.h"
 	"WorldManager.h"
 	"Constants.h"
+
+1442998421 source:/home/lucas/Desktop/Programming/C++/Platformer/src/CollectibleObject.cpp
+	"CollectibleObject.h"
+	"Player.h"
+
+1442998440 /home/lucas/Desktop/Programming/C++/Platformer/include/CollectibleObject.h
+	"WorldObject.h"
 
