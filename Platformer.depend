@@ -236,7 +236,7 @@
 	"Constants.h"
 	"EntityTags.h"
 
-1442998580 source:/home/lucas/Desktop/Programming/C++/Platformer/src/World.cpp
+1442998793 source:/home/lucas/Desktop/Programming/C++/Platformer/src/World.cpp
 	"World.h"
 	<iostream>
 	<fstream>
@@ -249,7 +249,7 @@
 	"WayPoint.h"
 	"CollectibleObject.h"
 
-1442976804 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
+1442999209 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
 	"WorldEditor.h"
 	<iostream>
 	<fstream>

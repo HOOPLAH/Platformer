@@ -33,10 +33,10 @@ platform: blueplatform 150 0
 platform: blueplatform -10 88
 waypoint: 906 80
 waypoint: 706 78
-waypoint: 476 26
+waypoint: 475.5 22
 waypoint: 311 66
 waypoint: 236 78
-waypoint: 196 -10
+waypoint: 190 -10
 waypoint: 125 -10
 waypoint: 54 -10
 waypoint: 123 80

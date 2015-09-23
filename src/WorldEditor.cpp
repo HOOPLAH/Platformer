@@ -91,7 +91,7 @@ void WorldEditor::draw(sf::RenderTarget& target, float alpha)
         obj->draw(target, alpha);
     }
 
-    for (int i = 0; i < mWorld.getWayPointManager().getWayPoints().size(); i++)
+    for (std::size_t i = 0; i < mWorld.getWayPointManager().getWayPoints().size(); i++)
     {
         sf::Text num(std::to_string(i), Assets::fonts["8bit"].mFont, 8);
         num.setPosition(mWorld.getWayPointManager().getWayPoints()[i].mPosition+sf::Vector2f(0.f, -10.f));
@@ -146,7 +146,7 @@ void WorldEditor::handleEvents(sf::Event& event)
         {
             if (!mDragObject.expired())
             {
-                mDragObject.lock()->setPhysicsPosition(mDragObject.lock()->getPhysicsPosition()+sf::Vector2f(delta.x, delta.y));
+                mDragObject.lock()->setPhysicsPosition(mDragObject.lock()->getPhysicsPosition()+(sf::Vector2f(delta.x, delta.y)*mCameraZoom));
             }
         }
     }
@@ -210,7 +210,7 @@ void WorldEditor::handleEvents(sf::Event& event)
                     mDragObject.reset();
                 }
             }
-            else if (event.key.code == sf::Keyboard::R)
+            else if (event.key.code == sf::Keyboard::R) // refresh the world
             {
                 saveWorld();
                 refreshWorld();
@@ -235,8 +235,8 @@ void WorldEditor::handleEvents(sf::Event& event)
                 std::string id = mIDs[mCurrentID];
                 float x = mGlobalMousePosition.x;
                 float y = mGlobalMousePosition.y;
-                auto platform = std::make_shared<WorldEditorObject>(Assets::sprites[id], sf::Vector2f(x, y), id);
-                mWorldObjects.push_back(platform);
+                auto obj = std::make_shared<WorldEditorObject>(Assets::sprites[id], sf::Vector2f(x, y), id);
+                mWorldObjects.push_back(obj);
             }
             else if (event.mouseButton.button == sf::Mouse::Right)
             {
@@ -256,6 +256,9 @@ void WorldEditor::handleEvents(sf::Event& event)
             if (event.mouseButton.button == sf::Mouse::Right)
             {
                 mDragObject.reset();
+
+                saveWorld();
+                refreshWorld();
             }
         }
         else if (event.type == sf::Event::MouseWheelMoved)
