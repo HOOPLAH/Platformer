@@ -89,8 +89,7 @@ void WorldEditor::draw(sf::RenderTarget& target, float alpha)
 
     for (auto& obj : mWorldObjects)
     {
-        if (windowCoords.intersects(obj->getSprite().getGlobalBounds()))
-            obj->draw(target, alpha);
+        obj->draw(target, alpha);
     }
 
     for (int i = 0; i < mWorld.getWayPointManager().getWayPoints().size(); i++)
@@ -169,14 +168,14 @@ void WorldEditor::handleEvents(sf::Event& event)
             if (mDragObject.expired()) // no object selected
             {
                 if (event.key.code == sf::Keyboard::W)
-                    mCameraVelocity.y = -3.f;
+                    mCameraVelocity.y = -5.f;
                 else if (event.key.code == sf::Keyboard::S)
-                    mCameraVelocity.y = 3.f;
+                    mCameraVelocity.y = 5.f;
 
                 if (event.key.code == sf::Keyboard::A)
-                    mCameraVelocity.x = -3.f;
+                    mCameraVelocity.x = -5.f;
                 else if (event.key.code == sf::Keyboard::D)
-                    mCameraVelocity.x = 3.f;
+                    mCameraVelocity.x = 5.f;
             }
             else
             {

@@ -111,10 +111,15 @@ void World::update(int ticks)
                 {
                     auto action = std::static_pointer_cast<CollectAction>(mHero->getQuest().mActions.top());
 
-                    if (action->mCollectLeftCount > 1)
-                        action->mCollectLeftCount--;
+                    if (obj->getTag() == action->mCollectTag)
+                    {
+                        if (action->mCollectLeftCount > 1)
+                            action->mCollectLeftCount--;
+                        else
+                            mHero->getQuest().mActions.pop();
+                    }
                     else
-                        mHero->getQuest().mActions.pop();
+                        break;
                 }
             }
         }
@@ -331,6 +336,16 @@ void World::loadWorld(std::string path)
                     action->mKillsLeftCount = action->mTotalKillCount;
                     action->mKillTag = std::stof(split_line[3]);
                     action->mTag = ActionTag::KILL;
+
+                    mHero->getQuest().mActions.push(action);
+                }
+                else if (action_type == "collect")
+                {
+                    auto action = std::make_shared<CollectAction>();
+                    action->mTotalCollectCount = std::stof(split_line[2]);
+                    action->mCollectLeftCount = action->mTotalCollectCount;
+                    action->mCollectTag = std::stof(split_line[3]);
+                    action->mTag = ActionTag::COLLECT;
 
                     mHero->getQuest().mActions.push(action);
                 }

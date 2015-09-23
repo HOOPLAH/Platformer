@@ -135,7 +135,7 @@
 	"EntityTags.h"
 	"HealthBar.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/EntityTags.h
+1442890494 /home/marybeth/Desktop/Programming/C++/Platformer/include/EntityTags.h
 
 1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/WorldSwitcher.h
 	"SpriteObject.h"
@@ -235,7 +235,7 @@
 	"Constants.h"
 	"EntityTags.h"
 
-1442877591 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/World.cpp
+1442902647 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/World.cpp
 	"World.h"
 	<iostream>
 	<fstream>
@@ -270,7 +270,7 @@
 	"WorldSwitcher.h"
 	"EntityTags.h"
 
-1442876814 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
+1442890077 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
 	"WorldEditor.h"
 	<iostream>
 	<fstream>
@@ -290,4 +290,10 @@
 	"Assets.h"
 	"WorldEditor.h"
 	"Constants.h"
+
+1442890770 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/TestObject.cpp
+	"TestObject.h"
+
+1442890776 /home/marybeth/Desktop/Programming/C++/Platformer/include/TestObject.h
+	"WorldObject.h"
 

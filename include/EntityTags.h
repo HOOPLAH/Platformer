@@ -10,7 +10,8 @@ namespace EntityTags
         PLATFORM,
         PROJECTILE,
         WEAPON,
-        BUTTON
+        BUTTON,
+        COLLECTIBLE
     };
 }
 
