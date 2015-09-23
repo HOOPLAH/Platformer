@@ -17,6 +17,7 @@ class ICollideable : virtual public IObject
             mDimensions = dim;
             mTag = tag;
             mStatic = _static;
+            mCollisionActive = true;
         }
         virtual ~ICollideable(){}
 
@@ -28,6 +29,7 @@ class ICollideable : virtual public IObject
         void setDimensions(sf::Vector2f dim){mDimensions=dim;}
         void setPhysicsPosition(sf::Vector2f pos){mPhysicsPosition=pos;}
         void setVelocity(sf::Vector2f vel){mVelocity = vel;}
+        void setCollisionActive(bool active){mCollisionActive=active;}
 
         // Accessors
         sf::FloatRect getHitBox(){return mHitBox;}
@@ -35,6 +37,7 @@ class ICollideable : virtual public IObject
         sf::Vector2f getPhysicsPosition(){return mPhysicsPosition;}
         sf::Vector2f getVelocity(){return mVelocity;}
         bool isStatic(){return mStatic;}
+        bool isCollisionActive(){return mCollisionActive;}
         int getTag(){return mTag;}
 
     protected:
@@ -44,6 +47,7 @@ class ICollideable : virtual public IObject
         sf::Vector2f mOldPhysicsPosition;
         sf::Vector2f mVelocity;
         bool mStatic;
+        bool mCollisionActive;
         int mTag;
 };
 

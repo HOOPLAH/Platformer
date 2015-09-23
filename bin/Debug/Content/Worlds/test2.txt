@@ -1,3 +1,5 @@
+spawn_point: 0 -64
+
 platform: ammocrate 0 0
 platform: ammocrate 64 0
 platform: ammocrate 128 0

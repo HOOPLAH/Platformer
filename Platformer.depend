@@ -1,30 +1,30 @@
 # depslib dependency file v1.0
-1442652775 source:/home/marybeth/Desktop/Programming/C++/Platformer/main.cpp
+1442979216 source:/home/lucas/Desktop/Programming/C++/Platformer/LEmain.cpp
 	<SFML/Graphics.hpp>
 	<cstdlib>
 	<ctime>
 	"Assets.h"
-	"WorldManager.h"
+	"WorldEditor.h"
 	"Constants.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/Assets.h
+1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/Assets.h
 	<map>
 	"SpriteInfo.h"
 	"FontInfo.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/SpriteInfo.h
+1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/SpriteInfo.h
 	<SFML/Graphics.hpp>
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/FontInfo.h
+1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/FontInfo.h
 	<SFML/Graphics/Font.hpp>
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/WorldManager.h
-	<vector>
-	<memory>
+1442974454 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldEditor.h
 	<SFML/Graphics.hpp>
-	<World.h>
+	<vector>
+	"World.h"
+	"WorldObject.h"
 
-1442870618 /home/marybeth/Desktop/Programming/C++/Platformer/include/World.h
+1442974454 /home/lucas/Desktop/Programming/C++/Platformer/include/World.h
 	<vector>
 	<memory>
 	<SFML/Graphics.hpp>
@@ -37,64 +37,64 @@
 	"WorldSwitcher.h"
 	"WorldRef.h"
 
-1442566964 /home/marybeth/Desktop/Programming/C++/Platformer/include/Player.h
+1442974454 /home/lucas/Desktop/Programming/C++/Platformer/include/Player.h
 	<SFML/Graphics.hpp>
 	"HealthBar.h"
 	"Weapon.h"
 	"WorldRef.h"
 	"Quest.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/HealthBar.h
+1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/HealthBar.h
 	<SFML/Graphics.hpp>
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/Weapon.h
+1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/Weapon.h
 	"SpriteObject.h"
 	"Line.h"
 	"Projectile.h"
 	"ICollideable.h"
 	"WorldRef.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/SpriteObject.h
+1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/SpriteObject.h
 	<memory>
 	<SFML/Graphics.hpp>
 	"IRenderable.h"
 	"SpriteInfo.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/IRenderable.h
+1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/IRenderable.h
 	<SFML/Graphics/RenderTarget.hpp>
 	"IObject.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/IObject.h
+1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/IObject.h
 	<iostream>
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/Line.h
+1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/Line.h
 	<SFML/Graphics.hpp>
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/Projectile.h
+1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/Projectile.h
 	"SpriteObject.h"
 	"ICollideable.h"
 	"Constants.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/ICollideable.h
+1442983094 /home/lucas/Desktop/Programming/C++/Platformer/include/ICollideable.h
 	<memory>
 	<iostream>
 	<SFML/Graphics.hpp>
 	"IObject.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/Constants.h
+1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/Constants.h
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/WorldRef.h
+1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldRef.h
 	<memory>
 	<SFML/Graphics.hpp>
 	"WayPointManager.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/WayPointManager.h
+1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/WayPointManager.h
 	<vector>
 	<SFML/Graphics.hpp>
 	"micropather.h"
 	"WayPoint.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/micropather.h
+1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/micropather.h
 	<cstring>
 	<cstdint>
 	<vector>
@@ -103,18 +103,18 @@
 	<stdlib.h>
 	<stdlib.h>
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/WayPoint.h
+1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/WayPoint.h
 	"SFML/System/Vector2.hpp"
 	<iostream>
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/Quest.h
+1441175534 /home/lucas/Desktop/Programming/C++/Platformer/include/Quest.h
 	<stack>
 	<memory>
 	"Actions.h"
 
-1442876854 /home/marybeth/Desktop/Programming/C++/Platformer/include/Actions.h
+1442974454 /home/lucas/Desktop/Programming/C++/Platformer/include/Actions.h
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/NPC.h
+1441172824 /home/lucas/Desktop/Programming/C++/Platformer/include/NPC.h
 	<memory>
 	"HealthBar.h"
 	"Weapon.h"
@@ -122,73 +122,67 @@
 	"Player.h"
 	"VecUtils.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/VecUtils.h
+1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/VecUtils.h
 	<SFML/System/Vector2.hpp>
 
-1442653158 /home/marybeth/Desktop/Programming/C++/Platformer/include/Camera.h
+1442974454 /home/lucas/Desktop/Programming/C++/Platformer/include/Camera.h
 	<SFML/Graphics.hpp>
 
-1442651983 /home/marybeth/Desktop/Programming/C++/Platformer/include/WorldObject.h
+1442974454 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldObject.h
 	<tuple>
 	"SpriteObject.h"
 	"ICollideable.h"
 	"EntityTags.h"
 	"HealthBar.h"
 
-1442890494 /home/marybeth/Desktop/Programming/C++/Platformer/include/EntityTags.h
+1442974454 /home/lucas/Desktop/Programming/C++/Platformer/include/EntityTags.h
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/WorldSwitcher.h
+1441438044 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldSwitcher.h
 	"SpriteObject.h"
 	"ICollideable.h"
 
-1442383370 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/AIFollowModule.cpp
+1440476600 source:/home/lucas/Desktop/Programming/C++/Platformer/src/AIFollowModule.cpp
 	"AIFollowModule.h"
 	"Direction.h"
 	"WorldObject.h"
 	"VecUtils.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/AIFollowModule.h
+1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/AIFollowModule.h
 	"IAIModule.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/IAIModule.h
+1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/IAIModule.h
 	"NPC.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/Direction.h
+1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/Direction.h
 
-1442716541 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Assets.cpp
+1442974455 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Assets.cpp
 	"Assets.h"
 
-1442383370 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Button.cpp
+1439882736 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Button.cpp
 	"Button.h"
 	"EntityTags.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/Button.h
+1439882722 /home/lucas/Desktop/Programming/C++/Platformer/include/Button.h
 	"SpriteObject.h"
 	"ICollideable.h"
 
-1442867852 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Camera.cpp
+1441437671 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Camera.cpp
 	"Camera.h"
 	<iostream>
 	"Constants.h"
 
-1442383370 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/LevelEditor.cpp
-	"LevelEditor.h"
-
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/LevelEditor.h
-	<SFML/Graphics.hpp>
-
-1442383370 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Line.cpp
+1440476600 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Line.cpp
 	"Line.h"
 	"Constants.h"
 	<iostream>
 
-1442383370 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/micropather.cpp
+1440476600 source:/home/lucas/Desktop/Programming/C++/Platformer/src/micropather.cpp
 	<vector>
 	<memory.h>
 	<stdio.h>
 	"micropather.h"
 
-1442383370 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/NPC.cpp
+1441172682 source:/home/lucas/Desktop/Programming/C++/Platformer/src/NPC.cpp
 	"NPC.h"
 	<iostream>
 	<cstdlib>
@@ -200,7 +194,7 @@
 	"AIFollowModule.h"
 	"VecUtils.h"
 
-1442878405 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Player.cpp
+1442974455 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Player.cpp
 	"Player.h"
 	<iostream>
 	"Assets.h"
@@ -209,25 +203,32 @@
 	"EntityTags.h"
 	"Projectile.h"
 
-1442383370 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Projectile.cpp
+1440476600 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Projectile.cpp
 	"Projectile.h"
 	"EntityTags.h"
 	<iostream>
 
-1442383370 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/SpriteObject.cpp
+1440476600 source:/home/lucas/Desktop/Programming/C++/Platformer/src/SpriteObject.cpp
 	"SpriteObject.h"
 	<iostream>
 
-1442383370 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/VecUtils.cpp
+1442984496 source:/home/lucas/Desktop/Programming/C++/Platformer/src/TestObject.cpp
+	"TestObject.h"
+	"Player.h"
+
+1442974454 /home/lucas/Desktop/Programming/C++/Platformer/include/TestObject.h
+	"WorldObject.h"
+
+1440476600 source:/home/lucas/Desktop/Programming/C++/Platformer/src/VecUtils.cpp
 	"VecUtils.h"
 	<cmath>
 
-1442383370 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WayPointManager.cpp
+1441006854 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WayPointManager.cpp
 	"WayPointManager.h"
 	"Line.h"
 	<iostream>
 
-1442383370 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Weapon.cpp
+1440476600 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Weapon.cpp
 	"Weapon.h"
 	<memory>
 	<iostream>
@@ -235,7 +236,7 @@
 	"Constants.h"
 	"EntityTags.h"
 
-1442902647 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/World.cpp
+1442997259 source:/home/lucas/Desktop/Programming/C++/Platformer/src/World.cpp
 	"World.h"
 	<iostream>
 	<fstream>
@@ -246,18 +247,32 @@
 	"EntityTags.h"
 	"NPC.h"
 	"WayPoint.h"
+	"TestObject.h"
 
-1442383370 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldManager.cpp
+1442976804 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
+	"WorldEditor.h"
+	<iostream>
+	<fstream>
+	<sstream>
+	"Assets.h"
+
+1440911599 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldManager.cpp
 	"WorldManager.h"
 	<fstream>
 	<array>
 
-1442652332 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldObject.cpp
+1440911582 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldManager.h
+	<vector>
+	<memory>
+	<SFML/Graphics.hpp>
+	<World.h>
+
+1442974455 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldObject.cpp
 	"WorldObject.h"
 	"EntityTags.h"
 	<Projectile.h>
 
-1442383370 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldRef.cpp
+1440476600 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldRef.cpp
 	"WorldRef.h"
 	"ICollideable.h"
 	"NPC.h"
@@ -266,34 +281,15 @@
 	"WorldObject.h"
 	"World.h"
 
-1442383370 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldSwitcher.cpp
+1442983117 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldSwitcher.cpp
 	"WorldSwitcher.h"
 	"EntityTags.h"
 
-1442890077 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
-	"WorldEditor.h"
-	<iostream>
-	<fstream>
-	<sstream>
-	"Assets.h"
-
-1442876067 /home/marybeth/Desktop/Programming/C++/Platformer/include/WorldEditor.h
-	<SFML/Graphics.hpp>
-	<vector>
-	"World.h"
-	"WorldObject.h"
-
-1442652768 source:/home/marybeth/Desktop/Programming/C++/Platformer/LEmain.cpp
+1440479877 source:/home/lucas/Desktop/Programming/C++/Platformer/main.cpp
 	<SFML/Graphics.hpp>
 	<cstdlib>
 	<ctime>
 	"Assets.h"
-	"WorldEditor.h"
+	"WorldManager.h"
 	"Constants.h"
-
-1442890770 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/TestObject.cpp
-	"TestObject.h"
-
-1442890776 /home/marybeth/Desktop/Programming/C++/Platformer/include/TestObject.h
-	"WorldObject.h"
 

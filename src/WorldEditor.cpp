@@ -21,7 +21,6 @@ WorldEditor::WorldEditor(std::string path) :
     mIDs.push_back("ammocrate");
     mIDs.push_back("blueplatform");
     mIDs.push_back("waypoint");
-    mIDs.push_back("waypoint_edge");
     mCurrentID = 0;
 }
 

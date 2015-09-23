@@ -10,6 +10,7 @@
 #include "EntityTags.h"
 #include "NPC.h"
 #include "WayPoint.h"
+#include "TestObject.h"
 
 World::World() :
     mWorldRef(*this)
@@ -44,14 +45,6 @@ World::~World()
 
 void World::update(int ticks)
 {
-    mHero->update();
-    mHero->setVelocity(mHero->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
-    if (!mHero->isAlive())
-    {
-        mHero->respawn(mSpawnPoint);
-        mCollideables.push_back(mHero);
-    }
-
     if (mNPCs.size() < mNPCSpawnCount && mNPCSpawnPoints.size() > 0 && !mHero->getQuest().mActions.empty())
     {
         auto npc = std::make_shared<NPC>(Assets::sprites["pinkpeewee"], mNPCSpawnPoints[mNextNPCSpawnPoint], mWorldRef);
@@ -98,6 +91,9 @@ void World::update(int ticks)
 
     for (auto& obj : mWorldObjects)
     {
+        if (!obj->isAlive())
+            std::cout << "how am i alive\n";
+
         obj->update();
 
         if (!obj->isStatic())
@@ -105,6 +101,8 @@ void World::update(int ticks)
 
         if (!obj->isAlive()) // somehow died, player collected it???
         {
+            std::cout << "ded\n"; /// START HERE ON DEBUGGING
+
             if (!mHero->getQuest().mActions.empty())
             {
                 if (mHero->getQuest().mActions.top()->mTag == ActionTag::COLLECT)
@@ -128,7 +126,18 @@ void World::update(int ticks)
     for (auto& button : mButtons)
     {
         if (mHero->getQuest().mActions.empty())
+        {
             button->update();
+            button->setCollisionActive(true);
+        }
+    }
+
+    mHero->update();
+    mHero->setVelocity(mHero->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
+    if (!mHero->isAlive())
+    {
+        mHero->respawn(mSpawnPoint);
+        mCollideables.push_back(mHero);
     }
 
     // check collisions
@@ -149,7 +158,7 @@ void World::update(int ticks)
             else if (mCollideables[x].lock()->isStatic())
                 _static = mCollideables[y];
 
-            if (checkCollision(dynamic, _static))
+            if (checkCollision(dynamic, _static) && dynamic.lock()->isCollisionActive() && _static.lock()->isCollisionActive())
                 resolveCollision(dynamic, _static);
         }
     }
@@ -274,6 +283,15 @@ void World::loadWorld(std::string path)
                 int count = std::stof(split_line[1]);
                 mNPCSpawnCount = count;
             }
+            else if (find_key("collectible:", line))
+            {
+                std::string id = split_line[1];
+                float x = std::stof(split_line[2]);
+                float y = std::stof(split_line[3]);
+                auto obj = std::make_shared<TestObject>(Assets::sprites[id], sf::Vector2f(x, y));
+                mWorldObjects.push_back(obj);
+                mCollideables.push_back(obj);
+            }
             else if (find_key("platform:", line))
             {
                 std::string id = split_line[1];
@@ -305,6 +323,7 @@ void World::loadWorld(std::string path)
                 float y = std::stof(split_line[3]);
                 int nextWorld = std::stof(split_line[4]);
                 auto button = std::make_shared<WorldSwitcher>(Assets::sprites[id], sf::Vector2f(x, y), nextWorld);
+                button->setCollisionActive(false); // turn off collisions by default until all quests are complete
                 mButtons.push_back(button);
                 mCollideables.push_back(button);
             }
