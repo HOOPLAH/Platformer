@@ -18,11 +18,12 @@
 1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/FontInfo.h
 	<SFML/Graphics/Font.hpp>
 
-1442974454 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldEditor.h
+1443137214 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldEditor.h
 	<SFML/Graphics.hpp>
 	<vector>
 	"World.h"
 	"WorldObject.h"
+	"DebugConsole.h"
 
 1442974454 /home/lucas/Desktop/Programming/C++/Platformer/include/World.h
 	<vector>
@@ -249,7 +250,7 @@
 	"WayPoint.h"
 	"CollectibleObject.h"
 
-1442999209 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
+1443137730 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
 	"WorldEditor.h"
 	<iostream>
 	<fstream>
@@ -299,4 +300,13 @@
 
 1442998440 /home/lucas/Desktop/Programming/C++/Platformer/include/CollectibleObject.h
 	"WorldObject.h"
+
+1443135925 /home/lucas/Desktop/Programming/C++/Platformer/include/DebugConsole.h
+	<map>
+	<vector>
+	<functional>
+
+1443134094 source:/home/lucas/Desktop/Programming/C++/Platformer/src/DebugConsole.cpp
+	"DebugConsole.h"
+	<iostream>
 

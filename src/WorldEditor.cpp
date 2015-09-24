@@ -22,6 +22,11 @@ WorldEditor::WorldEditor(std::string path) :
     mIDs.push_back("blueplatform");
     mIDs.push_back("waypoint");
     mCurrentID = 0;
+
+    mDebugConsoleActive = false;
+    mDebugConsole.getCommands()["test"]();
+    mNextCommandText = sf::Text("", Assets::fonts["8bit"].mFont, 14);
+    mNextCommandText.setPosition(0.f, 580.f);
 }
 
 WorldEditor::~WorldEditor()
@@ -100,36 +105,64 @@ void WorldEditor::draw(sf::RenderTarget& target, float alpha)
 
     target.setView(target.getDefaultView());
 
+    sf::Text debugText("Debug Console: ", Assets::fonts["8bit"].mFont, 14);
+    debugText.setPosition(0.f, 3.f);
+    target.draw(debugText);
+
+    std::string idString = "id: ";
+    idString.append(mIDs[mCurrentID]);
+    sf::Text idText(idString, Assets::fonts["8bit"].mFont, 14);
+    idText.setPosition(SCREEN_WIDTH - idText.getGlobalBounds().width, 3.f);
+    target.draw(idText);
+
+    std::string zoomString = "zoom: ";
+    zoomString.append(std::to_string(mCameraZoom));
+    sf::Text zoomText(zoomString, Assets::fonts["8bit"].mFont, 14);
+    zoomText.setPosition(SCREEN_WIDTH - zoomText.getGlobalBounds().width, 20.f);
+    target.draw(zoomText);
+
     // hud stuff
-    if (!mPlayingHero)
+    if (!mDebugConsoleActive)
     {
-        std::string locMousePosString = "local: ";
-        locMousePosString.append(std::to_string(mLocalMousePosition.x));
-        locMousePosString.append(", ");
-        locMousePosString.append(std::to_string(mLocalMousePosition.y));
-        sf::Text locMousePosText(locMousePosString, Assets::fonts["8bit"].mFont, 14);
-        locMousePosText.setPosition(0.f, 3.f);
-        target.draw(locMousePosText);
+        sf::Text offText("OFF", Assets::fonts["8bit"].mFont, 14);
+        offText.setPosition(debugText.getGlobalBounds().width, 3.f);
+        offText.setColor(sf::Color::Red);
+        target.draw(offText);
 
-        std::string globMousePosString = "global: ";
-        globMousePosString.append(std::to_string(sf::Vector2i(mGlobalMousePosition.x, 0.f).x));
-        globMousePosString.append(", ");
-        globMousePosString.append(std::to_string(sf::Vector2i(0.f, mGlobalMousePosition.y).y));
-        sf::Text globMousePosText(globMousePosString, Assets::fonts["8bit"].mFont, 14);
-        globMousePosText.setPosition(0.f, 20.f);
-        target.draw(globMousePosText);
+        if (!mPlayingHero)
+        {
+            std::string locMousePosString = "local: ";
+            locMousePosString.append(std::to_string(mLocalMousePosition.x));
+            locMousePosString.append(", ");
+            locMousePosString.append(std::to_string(mLocalMousePosition.y));
+            sf::Text locMousePosText(locMousePosString, Assets::fonts["8bit"].mFont, 14);
+            locMousePosText.setPosition(0.f, 20.f);
+            target.draw(locMousePosText);
 
-        std::string idString = "id: ";
-        idString.append(mIDs[mCurrentID]);
-        sf::Text idText(idString, Assets::fonts["8bit"].mFont, 14);
-        idText.setPosition(SCREEN_WIDTH - idText.getGlobalBounds().width, 3.f);
-        target.draw(idText);
+            std::string globMousePosString = "global: ";
+            globMousePosString.append(std::to_string(sf::Vector2i(mGlobalMousePosition.x, 0.f).x));
+            globMousePosString.append(", ");
+            globMousePosString.append(std::to_string(sf::Vector2i(0.f, mGlobalMousePosition.y).y));
+            sf::Text globMousePosText(globMousePosString, Assets::fonts["8bit"].mFont, 14);
+            globMousePosText.setPosition(0.f, 37.f);
+            target.draw(globMousePosText);
+        }
+    }
+    else if (mDebugConsoleActive)
+    {
+        sf::Text onText("ON", Assets::fonts["8bit"].mFont, 14);
+        onText.setPosition(debugText.getGlobalBounds().width, 3.f);
+        onText.setColor(sf::Color::Green);
+        target.draw(onText);
 
-        std::string zoomString = "zoom: ";
-        zoomString.append(std::to_string(mCameraZoom));
-        sf::Text zoomText(zoomString, Assets::fonts["8bit"].mFont, 14);
-        zoomText.setPosition(SCREEN_WIDTH - zoomText.getGlobalBounds().width, 20.f);
-        target.draw(zoomText);
+        for (std::size_t i = 0; i < std::min(10, mDebugConsole.getLogSize()); i++) // only show the last 10 commands in debug console
+        {
+            sf::Text logText(mDebugConsole.getLog()[i], Assets::fonts["8bit"].mFont, 14);
+            logText.setPosition(0.f, 20.f + (17.f*i));
+            target.draw(logText);
+        }
+
+        target.draw(mNextCommandText);
     }
 }
 
@@ -150,7 +183,7 @@ void WorldEditor::handleEvents(sf::Event& event)
             }
         }
     }
-    if (event.type == sf::Event::MouseButtonPressed)
+    else if (event.type == sf::Event::MouseButtonPressed)
     {
         if (event.mouseButton.button == sf::Mouse::Middle)
         {
@@ -160,9 +193,47 @@ void WorldEditor::handleEvents(sf::Event& event)
                 mHero->setPhysicsPosition(mGlobalMousePosition);
         }
     }
+    else if (event.type == sf::Event::KeyPressed)
+    {
+        if (event.key.code == sf::Keyboard::LShift || event.key.code == sf::Keyboard::RShift)
+        {
+            mDebugConsoleActive = !mDebugConsoleActive;
+        }
+    }
+    else if (event.type == sf::Event::TextEntered && mDebugConsoleActive)
+    {
+        sf::String str = mNextCommandText.getString();
+
+        if (event.text.unicode != 8 and event.text.unicode != 13) // backspace and enter
+        {
+            str.insert(str.getSize(), static_cast<char>(event.text.unicode));
+        }
+        else if (event.text.unicode == 8) // backspace
+        {
+            if (str.getSize() > 1) // for safety
+            {
+                str.erase(str.getSize()-1);
+            }
+            else // string is empty
+            {
+                str = "";
+            }
+        }
+        else if (event.text.unicode == 13) // enter
+        {
+            if (mDebugConsole.getCommands().count(str.toAnsiString()) > 0) // command exists
+            {
+                mDebugConsole.getCommands()[str.toAnsiString()]();
+                mDebugConsole.getLog().push_back(str.toAnsiString());
+                str = "";
+            }
+        }
+
+        mNextCommandText.setString(str);
+    }
     if (!mPlayingHero) // not playing as hero
     {
-        if (event.type == sf::Event::KeyPressed)
+        if (event.type == sf::Event::KeyPressed && !mDebugConsoleActive)
         {
             if (mDragObject.expired()) // no object selected
             {

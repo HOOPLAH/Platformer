@@ -7,6 +7,7 @@
 
 #include "World.h"
 #include "WorldObject.h"
+#include "DebugConsole.h"
 
 class WorldEditorObject : public WorldObject
 {
@@ -48,6 +49,7 @@ class WorldEditor
         sf::Vector2i mLocalMousePosition;
         sf::Vector2f mGlobalMousePosition;
 
+        Camera mCamera;
         sf::Vector2f mCameraPosition;
         sf::Vector2f mCameraVelocity;
         float mCameraZoom;
@@ -55,11 +57,13 @@ class WorldEditor
         std::vector<std::string> mIDs;
         int mCurrentID;
 
-        Camera mCamera;
-
         std::weak_ptr<WorldEditorObject> mDragObject;
         bool mPlayingHero;
         std::shared_ptr<Player> mHero;
+
+        bool mDebugConsoleActive;
+        DebugConsole mDebugConsole;
+        sf::Text mNextCommandText;
 
         std::vector<std::shared_ptr<WorldEditorObject>> mWorldObjects;
         std::vector<std::weak_ptr<ICollideable>> mCollideables;
