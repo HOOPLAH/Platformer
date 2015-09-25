@@ -4,7 +4,7 @@
 
 DebugConsole::DebugConsole()
 {
-    mCommands["test"] = []() -> void {std::cout << "Hello, World!\n";};
+    mCommands["test"] = [](std::string msg) -> void {std::cout << msg << std::endl;};
 }
 
 DebugConsole::~DebugConsole()

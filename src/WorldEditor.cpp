@@ -5,6 +5,7 @@
 #include <sstream>
 
 #include "Assets.h"
+#include "FuncUtils.h"
 
 WorldEditor::WorldEditor(std::string path) :
     mDirectoryPath(path),
@@ -24,7 +25,7 @@ WorldEditor::WorldEditor(std::string path) :
     mCurrentID = 0;
 
     mDebugConsoleActive = false;
-    mDebugConsole.getCommands()["test"]();
+    mDebugConsole.getCommands()["test"]("Hello, World!");
     mNextCommandText = sf::Text("", Assets::fonts["8bit"].mFont, 14);
     mNextCommandText.setPosition(0.f, 580.f);
 }
@@ -221,9 +222,17 @@ void WorldEditor::handleEvents(sf::Event& event)
         }
         else if (event.text.unicode == 13) // enter
         {
-            if (mDebugConsole.getCommands().count(str.toAnsiString()) > 0) // command exists
+            auto split_line = splitStringBySpaces(str.toAnsiString());
+            std::string parameters = "";
+            for (int i = 1; i < split_line.size(); i++)
             {
-                mDebugConsole.getCommands()[str.toAnsiString()]();
+                parameters.append(split_line[i]);
+                parameters.append(" ");
+            }
+
+            if (mDebugConsole.getCommands().count(split_line[0]) > 0) // command exists
+            {
+                mDebugConsole.getCommands()[split_line[0]](parameters);
                 mDebugConsole.getLog().push_back(str.toAnsiString());
                 str = "";
             }
@@ -354,7 +363,8 @@ void WorldEditor::handleEvents(sf::Event& event)
     }
     else // playing as player
     {
-        mHero->handleEvents(event, mWorld.getWorldRef());
+        if (!mDebugConsoleActive)
+            mHero->handleEvents(event, mWorld.getWorldRef());
     }
 }
 
@@ -373,25 +383,11 @@ void WorldEditor::loadWorld()
         return false;
     };
 
-    auto split = [](std::string line) -> std::vector<std::string>
-    {
-        std::istringstream iss(line);
-        std::vector<std::string> split_array;
-        while (iss)
-        {
-            std::string sub;
-            iss >> sub;
-            split_array.push_back(sub);
-        }
-
-        return split_array;
-    };
-
     if (file.is_open())
     {
         while (std::getline(file, line))
         {
-            auto split_line = split(line);
+            auto split_line = splitStringBySpaces(line);
 
             if (find_key("platform:", line))
             {

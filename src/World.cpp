@@ -231,25 +231,11 @@ void World::loadWorld(std::string path)
         return false;
     };
 
-    auto split = [](std::string line) -> std::vector<std::string>
-    {
-        std::istringstream iss(line);
-        std::vector<std::string> split_array;
-        while (iss)
-        {
-            std::string sub;
-            iss >> sub;
-            split_array.push_back(sub);
-        }
-
-        return split_array;
-    };
-
     if (file.is_open())
     {
         while (std::getline(file, line))
         {
-            auto split_line = split(line);
+            auto split_line = splitStringBySpaces(line);
 
             if (find_key("gravity:", line))
             {

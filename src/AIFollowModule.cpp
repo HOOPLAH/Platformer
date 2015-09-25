@@ -3,7 +3,7 @@
 #include "Direction.h"
 #include "WorldObject.h"
 
-#include "VecUtils.h"
+#include "FuncUtils.h"
 
 AIFollowModule::AIFollowModule(NPC& npc, bool friendly) : IAIModule(npc, friendly)
 {

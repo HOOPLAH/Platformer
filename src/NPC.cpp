@@ -10,7 +10,7 @@
 #include "Projectile.h"
 #include "AIFollowModule.h"
 
-#include "VecUtils.h"
+#include "FuncUtils.h"
 
 NPC::NPC(SpriteInfo& info, sf::Vector2f pos, WorldRef& worldRef) :
     SpriteObject(info, pos),

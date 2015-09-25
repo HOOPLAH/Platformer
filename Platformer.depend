@@ -115,13 +115,13 @@
 
 1442974454 /home/lucas/Desktop/Programming/C++/Platformer/include/Actions.h
 
-1441172824 /home/lucas/Desktop/Programming/C++/Platformer/include/NPC.h
+1443165178 /home/lucas/Desktop/Programming/C++/Platformer/include/NPC.h
 	<memory>
 	"HealthBar.h"
 	"Weapon.h"
 	"WorldRef.h"
 	"Player.h"
-	"VecUtils.h"
+	"FuncUtils.h"
 
 1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/VecUtils.h
 	<SFML/System/Vector2.hpp>
@@ -142,11 +142,11 @@
 	"SpriteObject.h"
 	"ICollideable.h"
 
-1440476600 source:/home/lucas/Desktop/Programming/C++/Platformer/src/AIFollowModule.cpp
+1443165185 source:/home/lucas/Desktop/Programming/C++/Platformer/src/AIFollowModule.cpp
 	"AIFollowModule.h"
 	"Direction.h"
 	"WorldObject.h"
-	"VecUtils.h"
+	"FuncUtils.h"
 
 1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/AIFollowModule.h
 	"IAIModule.h"
@@ -183,7 +183,7 @@
 	<stdio.h>
 	"micropather.h"
 
-1441172682 source:/home/lucas/Desktop/Programming/C++/Platformer/src/NPC.cpp
+1443165191 source:/home/lucas/Desktop/Programming/C++/Platformer/src/NPC.cpp
 	"NPC.h"
 	<iostream>
 	<cstdlib>
@@ -193,7 +193,7 @@
 	"EntityTags.h"
 	"Projectile.h"
 	"AIFollowModule.h"
-	"VecUtils.h"
+	"FuncUtils.h"
 
 1442974455 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Player.cpp
 	"Player.h"
@@ -237,7 +237,7 @@
 	"Constants.h"
 	"EntityTags.h"
 
-1442998793 source:/home/lucas/Desktop/Programming/C++/Platformer/src/World.cpp
+1443165480 source:/home/lucas/Desktop/Programming/C++/Platformer/src/World.cpp
 	"World.h"
 	<iostream>
 	<fstream>
@@ -250,12 +250,13 @@
 	"WayPoint.h"
 	"CollectibleObject.h"
 
-1443137730 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
+1443165171 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
 	"WorldEditor.h"
 	<iostream>
 	<fstream>
 	<sstream>
 	"Assets.h"
+	"FuncUtils.h"
 
 1440911599 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldManager.cpp
 	"WorldManager.h"
@@ -301,12 +302,22 @@
 1442998440 /home/lucas/Desktop/Programming/C++/Platformer/include/CollectibleObject.h
 	"WorldObject.h"
 
-1443135925 /home/lucas/Desktop/Programming/C++/Platformer/include/DebugConsole.h
+1443163306 /home/lucas/Desktop/Programming/C++/Platformer/include/DebugConsole.h
 	<map>
 	<vector>
 	<functional>
 
-1443134094 source:/home/lucas/Desktop/Programming/C++/Platformer/src/DebugConsole.cpp
+1443163296 source:/home/lucas/Desktop/Programming/C++/Platformer/src/DebugConsole.cpp
 	"DebugConsole.h"
 	<iostream>
+
+1443165440 /home/lucas/Desktop/Programming/C++/Platformer/include/FuncUtils.h
+	<vector>
+	<string>
+	<SFML/System/Vector2.hpp>
+
+1443165435 source:/home/lucas/Desktop/Programming/C++/Platformer/src/FuncUtils.cpp
+	"FuncUtils.h"
+	<cmath>
+	<sstream>
 

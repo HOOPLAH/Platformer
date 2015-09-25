@@ -65,6 +65,7 @@
 		<Unit filename="include/Direction.h" />
 		<Unit filename="include/EntityTags.h" />
 		<Unit filename="include/FontInfo.h" />
+		<Unit filename="include/FuncUtils.h" />
 		<Unit filename="include/HealthBar.h" />
 		<Unit filename="include/HitInfo.h" />
 		<Unit filename="include/IAIModule.h" />
@@ -78,7 +79,6 @@
 		<Unit filename="include/Quest.h" />
 		<Unit filename="include/SpriteInfo.h" />
 		<Unit filename="include/SpriteObject.h" />
-		<Unit filename="include/VecUtils.h" />
 		<Unit filename="include/WayPoint.h" />
 		<Unit filename="include/WayPointManager.h" />
 		<Unit filename="include/Weapon.h" />
@@ -99,12 +99,12 @@
 		<Unit filename="src/Camera.cpp" />
 		<Unit filename="src/CollectibleObject.cpp" />
 		<Unit filename="src/DebugConsole.cpp" />
+		<Unit filename="src/FuncUtils.cpp" />
 		<Unit filename="src/Line.cpp" />
 		<Unit filename="src/NPC.cpp" />
 		<Unit filename="src/Player.cpp" />
 		<Unit filename="src/Projectile.cpp" />
 		<Unit filename="src/SpriteObject.cpp" />
-		<Unit filename="src/VecUtils.cpp" />
 		<Unit filename="src/WayPointManager.cpp" />
 		<Unit filename="src/Weapon.cpp" />
 		<Unit filename="src/World.cpp" />

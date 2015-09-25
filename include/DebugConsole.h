@@ -11,13 +11,13 @@ class DebugConsole
         DebugConsole();
         ~DebugConsole();
 
-        std::map<std::string, std::function<void()>>& getCommands(){return mCommands;}
+        std::map<std::string, std::function<void(std::string)>>& getCommands(){return mCommands;}
         std::vector<std::string>& getLog(){return mLog;}
 
         int getLogSize(){return mLog.size();}
 
     private:
-        std::map<std::string, std::function<void()>> mCommands;
+        std::map<std::string, std::function<void(std::string)>> mCommands;
         std::vector<std::string> mLog;
 };
 

@@ -7,7 +7,7 @@
 #include "Weapon.h"
 #include "WorldRef.h"
 #include "Player.h"
-#include "VecUtils.h"
+#include "FuncUtils.h"
 
 class IAIModule;
 
