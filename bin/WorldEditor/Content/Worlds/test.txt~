@@ -1,9 +1,12 @@
 spawn_point: 200 -100
-npc_spawn_count: 3
+npc_spawn_count: 0
 npc_spawnpoint: 706 -100
 npc_spawnpoint: 320 -100
 
-quest_action: kill 0 1 --KILL 3 NPCs
+quest_action: collect 3 6 -- collect 3 boxes
+collectible: waypoint -288 68
+collectible: waypoint 125 -45
+collectible: waypoint 480 -10
 
 button: play_button 96 -128 2
 
@@ -32,7 +35,7 @@ waypoint:   54 80 -- 9
 waypoint:  -10 80 -- 10
 waypoint: -320 80 -- 11
 
-waypoint_edge: 0 1
+
 waypoint_edge: 1 2
 waypoint_edge: 2 3
 waypoint_edge: 3 4

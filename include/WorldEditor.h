@@ -12,7 +12,7 @@
 class WorldEditorObject : public WorldObject
 {
     public:
-        WorldEditorObject(SpriteInfo& info, sf::Vector2f pos, std::string id) : WorldObject(info, pos), mID(id){}
+        WorldEditorObject(SpriteInfo& info, sf::Vector2f pos, std::string id) : WorldObject(info, pos), mID(id) {}
         ~WorldEditorObject(){}
 
         std::string getID(){return mID;}

@@ -18,14 +18,14 @@
 1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/FontInfo.h
 	<SFML/Graphics/Font.hpp>
 
-1443137214 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldEditor.h
+1443248953 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldEditor.h
 	<SFML/Graphics.hpp>
 	<vector>
 	"World.h"
 	"WorldObject.h"
 	"DebugConsole.h"
 
-1442974454 /home/lucas/Desktop/Programming/C++/Platformer/include/World.h
+1443248122 /home/lucas/Desktop/Programming/C++/Platformer/include/World.h
 	<vector>
 	<memory>
 	<SFML/Graphics.hpp>
@@ -84,12 +84,12 @@
 
 1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/Constants.h
 
-1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldRef.h
+1443247558 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldRef.h
 	<memory>
 	<SFML/Graphics.hpp>
 	"WayPointManager.h"
 
-1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/WayPointManager.h
+1443248942 /home/lucas/Desktop/Programming/C++/Platformer/include/WayPointManager.h
 	<vector>
 	<SFML/Graphics.hpp>
 	"micropather.h"
@@ -224,7 +224,7 @@
 	"VecUtils.h"
 	<cmath>
 
-1441006854 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WayPointManager.cpp
+1443248591 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WayPointManager.cpp
 	"WayPointManager.h"
 	"Line.h"
 	<iostream>
@@ -250,7 +250,7 @@
 	"WayPoint.h"
 	"CollectibleObject.h"
 
-1443165171 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
+1443249549 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
 	"WorldEditor.h"
 	<iostream>
 	<fstream>
@@ -274,7 +274,7 @@
 	"EntityTags.h"
 	<Projectile.h>
 
-1440476600 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldRef.cpp
+1443248146 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldRef.cpp
 	"WorldRef.h"
 	"ICollideable.h"
 	"NPC.h"
@@ -302,12 +302,13 @@
 1442998440 /home/lucas/Desktop/Programming/C++/Platformer/include/CollectibleObject.h
 	"WorldObject.h"
 
-1443163306 /home/lucas/Desktop/Programming/C++/Platformer/include/DebugConsole.h
+1443247425 /home/lucas/Desktop/Programming/C++/Platformer/include/DebugConsole.h
 	<map>
 	<vector>
 	<functional>
+	"WorldRef.h"
 
-1443163296 source:/home/lucas/Desktop/Programming/C++/Platformer/src/DebugConsole.cpp
+1443248262 source:/home/lucas/Desktop/Programming/C++/Platformer/src/DebugConsole.cpp
 	"DebugConsole.h"
 	<iostream>
 

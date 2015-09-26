@@ -9,7 +9,8 @@
 
 WorldEditor::WorldEditor(std::string path) :
     mDirectoryPath(path),
-    mWorld(path)
+    mWorld(path),
+    mDebugConsole(mWorld.getWorldRef())
 {
     loadWorld();
 
@@ -25,7 +26,6 @@ WorldEditor::WorldEditor(std::string path) :
     mCurrentID = 0;
 
     mDebugConsoleActive = false;
-    mDebugConsole.getCommands()["test"]("Hello, World!");
     mNextCommandText = sf::Text("", Assets::fonts["8bit"].mFont, 14);
     mNextCommandText.setPosition(0.f, 580.f);
 }
@@ -97,11 +97,19 @@ void WorldEditor::draw(sf::RenderTarget& target, float alpha)
         obj->draw(target, alpha);
     }
 
-    for (std::size_t i = 0; i < mWorld.getWayPointManager().getWayPoints().size(); i++)
+    auto points = mWorld.getWayPointManager().getWayPoints();
+    for (std::size_t i = 0; i < points.size(); i++)
     {
         sf::Text num(std::to_string(i), Assets::fonts["8bit"].mFont, 8);
-        num.setPosition(mWorld.getWayPointManager().getWayPoints()[i].mPosition+sf::Vector2f(0.f, -10.f));
+        num.setPosition(points[i].mPosition+sf::Vector2f(0.f, -10.f));
         target.draw(num);
+
+        for (auto edge : points[i].mEdges)
+        {
+            sf::Color color = (edge.mType == WayPointType::WALK ? sf::Color::Red : sf::Color::Cyan);
+            Line line(points[i].mPosition, points[edge.mTargetIndex].mPosition, color);
+            line.draw(target);
+        }
     }
 
     target.setView(target.getDefaultView());
@@ -196,7 +204,7 @@ void WorldEditor::handleEvents(sf::Event& event)
     }
     else if (event.type == sf::Event::KeyPressed)
     {
-        if (event.key.code == sf::Keyboard::LShift || event.key.code == sf::Keyboard::RShift)
+        if (event.key.code == sf::Keyboard::Tab)
         {
             mDebugConsoleActive = !mDebugConsoleActive;
         }
@@ -205,7 +213,7 @@ void WorldEditor::handleEvents(sf::Event& event)
     {
         sf::String str = mNextCommandText.getString();
 
-        if (event.text.unicode != 8 and event.text.unicode != 13) // backspace and enter
+        if (event.text.unicode != 8 && event.text.unicode != 9 && event.text.unicode != 13) // backspace, tab, enter
         {
             str.insert(str.getSize(), static_cast<char>(event.text.unicode));
         }
@@ -223,16 +231,11 @@ void WorldEditor::handleEvents(sf::Event& event)
         else if (event.text.unicode == 13) // enter
         {
             auto split_line = splitStringBySpaces(str.toAnsiString());
-            std::string parameters = "";
-            for (int i = 1; i < split_line.size(); i++)
-            {
-                parameters.append(split_line[i]);
-                parameters.append(" ");
-            }
-
             if (mDebugConsole.getCommands().count(split_line[0]) > 0) // command exists
             {
-                mDebugConsole.getCommands()[split_line[0]](parameters);
+                std::string cmd = split_line[0];
+                split_line.erase(split_line.begin());
+                mDebugConsole.getCommands()[cmd](split_line);
                 mDebugConsole.getLog().push_back(str.toAnsiString());
                 str = "";
             }
@@ -428,6 +431,10 @@ void WorldEditor::loadWorld()
                 if (split_line[split_line.size()-2] == "jump")
                     type = WayPointType::JUMP;
                 //mWorld.getWayPointManager().addWayPointEdge(a, b, type);
+                /*sf::Vector2f start = mWorld.getWayPointManager().getWayPoints()[a].mPosition;
+                sf::Vector2f end = mWorld.getWayPointManager().getWayPoints()[b].mPosition;
+                auto edge = std::make_shared<WorldEditorObject>(Assets::sprites["pistol"], sf::Vector2f(0, 0), "waypoint_edge");
+                mWorldObjects.push_back(edge);*/
             }
         }
 

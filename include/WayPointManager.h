@@ -20,6 +20,7 @@ class WayPointManager : public micropather::Graph
         void addWayPointEdge(int startIndex, int endIndex, int type);
 
         std::vector<WayPoint>& getWayPoints(){return mWayPoints;}
+        std::vector<WayPointEdge>& getWayPointEdges(){return mWayPointEdges;}
         int getNextWayPointIndex(){return mWayPoints.size();}
 
         float LeastCostEstimate(void* stateStart, void* stateEnd);
@@ -29,6 +30,7 @@ class WayPointManager : public micropather::Graph
 
     private:
         std::vector<WayPoint> mWayPoints;
+        std::vector<WayPointEdge> mWayPointEdges;
 
         micropather::MicroPather* mPather;
 };

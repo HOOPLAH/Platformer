@@ -1,45 +1,50 @@
-platform: ammocrate -320 100
-platform: ammocrate -256 100
-platform: ammocrate -192 100
-platform: ammocrate -128 100
-platform: ammocrate -64 100
-platform: ammocrate 0 100
-platform: ammocrate 64 100
-platform: ammocrate 128 100
-platform: ammocrate 192 100
-platform: ammocrate 256 100
-platform: ammocrate 320 100
-platform: ammocrate 384 100
-platform: ammocrate 448 100
-platform: ammocrate 512 100
-platform: ammocrate 576 100
-platform: ammocrate 640 100
-platform: ammocrate 704 100
-platform: ammocrate 768 100
-platform: ammocrate 832 100
-platform: ammocrate 896 100
-platform: blueplatform 236 88
-platform: blueplatform 286 76
-platform: blueplatform 336 64
-platform: blueplatform 386 52
-platform: ammocrate 448 36
-platform: blueplatform 524 52
-platform: blueplatform 574 64
-platform: blueplatform 624 76
-platform: blueplatform 674 88
-platform: blueplatform 50 0
-platform: blueplatform 100 0
-platform: blueplatform 150 0
+spawn_point: 200 -100
+npc_spawn_count: 0
+npc_spawnpoint: 706 -100
+npc_spawnpoint: 320 -100
+
+quest_action: collect 3 6 -- collect 3 boxes
+collectible: waypoint -288 68
+collectible: waypoint 125 -45
+collectible: waypoint 480 -10
+
+button: play_button 96 -128 2
+
+tiled_platforms: 5 64 0 ammocrate -320 100      GROUND
+tiled_platforms: 15 64 0 ammocrate 0 100        GROUND
+tiled_platforms: 4 50 -12 blueplatform 236 88   LEFT STAIRS
+platform: ammocrate 448 36                      BETWEEN STAIRS
+tiled_platforms: 4 50 12 blueplatform 524 52    RIGHT STAIRS
+tiled_platforms: 3 50  0 blueplatform 50 0      TOP PLATFORM
 platform: blueplatform -10 88
-waypoint: 906 80
-waypoint: 706 78
-waypoint: 475.5 22
-waypoint: 311 66
-waypoint: 236 78
-waypoint: 190 -10
-waypoint: 125 -10
-waypoint: 54 -10
-waypoint: 123 80
-waypoint: 54 80
-waypoint: -10 80
-waypoint: -320 80
+
+waypoint: 906 80 -- 0
+waypoint: 706 78 -- 1
+waypoint: 480 26 -- 2
+waypoint: 311 66 -- 3 
+
+// top platform
+waypoint: 236 78  -- 4
+waypoint: 196 -10 -- 5
+waypoint: 125 -10 -- 6
+waypoint:  54 -10 -- 7
+
+// straight off left stairs
+waypoint:  123 80 -- 8
+waypoint:   54 80 -- 9
+waypoint:  -10 80 -- 10
+waypoint: -320 80 -- 11
+
+
+waypoint_edge: 1 2
+waypoint_edge: 2 3
+waypoint_edge: 3 4
+waypoint_edge: 4 5 jump
+waypoint_edge: 5 6
+waypoint_edge: 6 7
+waypoint_edge: 7 10 jump
+
+waypoint_edge: 4 8
+waypoint_edge: 8 9
+waypoint_edge: 9 10
+waypoint_edge: 10 11

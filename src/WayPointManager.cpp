@@ -20,8 +20,12 @@ void WayPointManager::draw(sf::RenderTarget& target)
 
 void WayPointManager::addWayPointEdge(int startIndex, int endIndex, int type)
 {
-    mWayPoints[startIndex].mEdges.push_back(WayPointEdge(endIndex, type));
-    mWayPoints[endIndex].mEdges.push_back(WayPointEdge(startIndex, type));
+    auto a = WayPointEdge(endIndex, type);
+    auto b = WayPointEdge(startIndex, type);
+    mWayPoints[startIndex].mEdges.push_back(a);
+    mWayPoints[endIndex].mEdges.push_back(b);
+    mWayPointEdges.push_back(a);
+    mWayPointEdges.push_back(b);
 }
 
 float WayPointManager::LeastCostEstimate(void* stateStart, void* stateEnd)
