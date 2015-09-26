@@ -1,5 +1,39 @@
-spawn_point: 10 -100
-
-tiled_platforms: 5 64 0 ammocrate 0 0      GROUND
-
-button: play_button 128 -100 1
+platform: ammocrate 0 0
+platform: ammocrate 64 0
+platform: ammocrate 128 0
+platform: blueplatform 192 0
+platform: blueplatform 242 -10
+platform: blueplatform 292 -20
+platform: blueplatform 342 -20
+platform: blueplatform 392 -20
+platform: blueplatform 575 -95
+platform: blueplatform 625 -105
+platform: blueplatform 675 -115
+platform: blueplatform 575 45
+platform: blueplatform 625 55
+platform: blueplatform 675 65
+platform: blueplatform 725 -115
+platform: blueplatform 775 -115
+platform: blueplatform 825 -115
+platform: blueplatform 725 65
+platform: blueplatform 775 65
+platform: blueplatform 825 65
+waypoint: 11 -25
+waypoint: 157 -27
+waypoint: 420 -47
+waypoint: 594 -120
+waypoint: 852 -143
+waypoint: 590 20
+waypoint: 855 43
+waypoint_edge: 0 1
+waypoint_edge: 1 2
+waypoint_edge: 2 3
+waypoint_edge: 2 5
+waypoint_edge: 3 4
+waypoint_edge: 5 6
+waypoint_edge: 1 0
+waypoint_edge: 2 1
+waypoint_edge: 3 2
+waypoint_edge: 5 2
+waypoint_edge: 4 3
+waypoint_edge: 6 5

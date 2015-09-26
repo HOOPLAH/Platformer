@@ -35,7 +35,7 @@ waypoint:   54 80 -- 9
 waypoint:  -10 80 -- 10
 waypoint: -320 80 -- 11
 
-
+waypoint_edge: 0 1
 waypoint_edge: 1 2
 waypoint_edge: 2 3
 waypoint_edge: 3 4

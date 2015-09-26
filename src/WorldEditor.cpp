@@ -450,12 +450,23 @@ void WorldEditor::saveWorld()
 
     for (auto& obj : mWorldObjects)
     {
-        if (obj->getID() != "waypoint" && obj->getID() != "waypoint_edge")
-            file << "platform: " << obj->getID() << " " << obj->getRenderPosition().x << " " << obj->getRenderPosition().y << "\n";
-        else if (obj->getID() == "waypoint")
+        if (obj->getID() == "waypoint")
             file << "waypoint: " << obj->getRenderPosition().x << " " << obj->getRenderPosition().y << "\n";
-        else if (obj->getID() == "waypoint_edge")
-            file << "waypoint_edge: " << "start" << "end" << "\n";
+        else
+            file << "platform: " << obj->getID() << " " << obj->getRenderPosition().x << " " << obj->getRenderPosition().y << "\n";
+    }
+
+    for (auto edge_tuple : mWorld.getWayPointManager().getWayPointEdges())
+    {
+        WayPointEdge a;
+        WayPointEdge b;
+
+        std::tie(a, b) = edge_tuple;
+
+        if (a.mType == WayPointType::WALK)
+            file << "waypoint_edge: " << a.mTargetIndex << " " << b.mTargetIndex << "\n";
+        else
+            file << "waypoint_edge: " << a.mTargetIndex << " " << b.mTargetIndex << " " << "jump" << "\n";
     }
 
     file.close();
