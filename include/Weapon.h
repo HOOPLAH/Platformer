@@ -35,6 +35,7 @@ class Weapon : public SpriteObject
         void setInaccuracy(float inaccuracy){mInaccuracy=inaccuracy;}
         void setCoolDown(int cooldown){mCoolDown=cooldown;}
         void setFirePoint(sf::Vector2f firePoint){mFirePoint=firePoint;}
+        void setUnlimitedAmmo(bool unlimited){mUnlimitedAmmo=unlimited;}
 
     protected:
         int mDamage;
@@ -48,6 +49,7 @@ class Weapon : public SpriteObject
         int mMaxMagazines;
         int mAmmo;
         int mMagazines;
+        bool mUnlimitedAmmo;
 };
 
 #endif // WEAPON_H

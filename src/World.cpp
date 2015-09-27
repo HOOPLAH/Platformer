@@ -11,6 +11,7 @@
 #include "NPC.h"
 #include "WayPoint.h"
 #include "CollectibleObject.h"
+#include "Turret.h"
 
 World::World() :
     mWorldRef(*this)
@@ -82,7 +83,10 @@ void World::update(int ticks)
 
     for (auto& obj : mWorldObjects)
     {
-        obj->update();
+        if (obj->getTag() == EntityTags::TURRET)
+            static_cast<Turret*>(&*obj)->update(mWorldRef);
+        else
+            obj->update();
 
         if (!obj->isStatic())
             obj->setVelocity(obj->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
@@ -294,6 +298,14 @@ void World::loadWorld(std::string path)
                     mWorldObjects.push_back(platform);
                     mCollideables.push_back(platform);
                 }
+            }
+            else if (find_key("turret:", line))
+            {
+                float x = std::stof(split_line[1]);
+                float y = std::stof(split_line[2]);
+                auto turret = std::make_shared<Turret>(Assets::sprites["turretbody"], sf::Vector2f(x, y));
+                mWorldObjects.push_back(turret);
+                mCollideables.push_back(turret);
             }
             else if (find_key("button:", line))
             {

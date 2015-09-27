@@ -19,6 +19,7 @@ class SpriteObject : public IRenderable
 
         // Mutator
         virtual void setPosition(sf::Vector2f pos){mRenderPosition=pos;}
+        virtual void setRotation(float rot){mRotation=rot; mSprite.setRotation(rot);}
         void setFrameLoop(int start, int stop, bool loop=true);
 
         // Accessor
@@ -33,6 +34,7 @@ class SpriteObject : public IRenderable
         sf::Sprite mSprite;
         sf::Vector2f mRenderPosition;
         sf::Vector2f mOldRenderPosition;
+        float mRotation;
 
         int mCurrentFrame;
         sf::Clock mAnimClock;

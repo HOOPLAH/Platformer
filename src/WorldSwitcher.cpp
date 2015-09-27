@@ -25,7 +25,8 @@ void WorldSwitcher::update()
 
 bool WorldSwitcher::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop)
 {
-    mPressed = true;
+    if (object.lock()->getTag() == EntityTags::PLAYER)
+        mPressed = true;
 
     return false;
 }

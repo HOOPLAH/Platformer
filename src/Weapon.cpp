@@ -19,6 +19,7 @@ Weapon::Weapon(SpriteInfo& info) : SpriteObject(info, sf::Vector2f(0.f, 0.f))
     mMaxMagazines = 3;
     mAmmo = mMaxAmmo;
     mMagazines = mMaxMagazines;
+    mUnlimitedAmmo = false;
 }
 
 Weapon::~Weapon()
@@ -28,6 +29,7 @@ Weapon::~Weapon()
 
 void Weapon::update()
 {
+    SpriteObject::update();
 }
 
 void Weapon::draw(sf::RenderTarget& target, float alpha)
@@ -40,7 +42,7 @@ void Weapon::fire(float angle, WorldRef& worldRef, int ownerTag)
     if (mCoolDownClock.getElapsedTime().asMilliseconds() < mCoolDown) //not cooled down yet, don't fire
         return;
 
-    if (mAmmo <= 0)
+    if (mAmmo <= 0 && !mUnlimitedAmmo)
     {
         if (mMagazines > 0) // should reload
         {
@@ -52,7 +54,8 @@ void Weapon::fire(float angle, WorldRef& worldRef, int ownerTag)
     }
 
     mCoolDownClock.restart();
-    mAmmo--;
+    if (!mUnlimitedAmmo)
+        mAmmo--;
 
     angle *= RADTODEG;
     angle += (((float)(rand()%100)/100.f)*(mInaccuracy/2))-(mInaccuracy/2);

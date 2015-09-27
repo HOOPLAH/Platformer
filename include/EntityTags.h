@@ -11,7 +11,8 @@ namespace EntityTags
         PROJECTILE,
         WEAPON,
         BUTTON,
-        COLLECTIBLE
+        COLLECTIBLE,
+        TURRET
     };
 }
 

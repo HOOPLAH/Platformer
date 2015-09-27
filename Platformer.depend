@@ -48,14 +48,14 @@
 1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/HealthBar.h
 	<SFML/Graphics.hpp>
 
-1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/Weapon.h
+1443345763 /home/lucas/Desktop/Programming/C++/Platformer/include/Weapon.h
 	"SpriteObject.h"
 	"Line.h"
 	"Projectile.h"
 	"ICollideable.h"
 	"WorldRef.h"
 
-1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/SpriteObject.h
+1443345170 /home/lucas/Desktop/Programming/C++/Platformer/include/SpriteObject.h
 	<memory>
 	<SFML/Graphics.hpp>
 	"IRenderable.h"
@@ -136,7 +136,7 @@
 	"EntityTags.h"
 	"HealthBar.h"
 
-1442974454 /home/lucas/Desktop/Programming/C++/Platformer/include/EntityTags.h
+1443344129 /home/lucas/Desktop/Programming/C++/Platformer/include/EntityTags.h
 
 1441438044 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldSwitcher.h
 	"SpriteObject.h"
@@ -156,7 +156,7 @@
 
 1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/Direction.h
 
-1442974455 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Assets.cpp
+1443345550 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Assets.cpp
 	"Assets.h"
 
 1439882736 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Button.cpp
@@ -229,7 +229,7 @@
 	"Line.h"
 	<iostream>
 
-1440476600 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Weapon.cpp
+1443346136 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Weapon.cpp
 	"Weapon.h"
 	<memory>
 	<iostream>
@@ -237,7 +237,7 @@
 	"Constants.h"
 	"EntityTags.h"
 
-1443165480 source:/home/lucas/Desktop/Programming/C++/Platformer/src/World.cpp
+1443345992 source:/home/lucas/Desktop/Programming/C++/Platformer/src/World.cpp
 	"World.h"
 	<iostream>
 	<fstream>
@@ -249,6 +249,7 @@
 	"NPC.h"
 	"WayPoint.h"
 	"CollectibleObject.h"
+	"Turret.h"
 
 1443258126 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
 	"WorldEditor.h"
@@ -283,7 +284,7 @@
 	"WorldObject.h"
 	"World.h"
 
-1442983117 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldSwitcher.cpp
+1443346250 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldSwitcher.cpp
 	"WorldSwitcher.h"
 	"EntityTags.h"
 
@@ -308,7 +309,7 @@
 	<functional>
 	"WorldRef.h"
 
-1443258384 source:/home/lucas/Desktop/Programming/C++/Platformer/src/DebugConsole.cpp
+1443258479 source:/home/lucas/Desktop/Programming/C++/Platformer/src/DebugConsole.cpp
 	"DebugConsole.h"
 	<iostream>
 
@@ -321,4 +322,14 @@
 	"FuncUtils.h"
 	<cmath>
 	<sstream>
+
+1443346353 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Turret.cpp
+	"Turret.h"
+	"Assets.h"
+	"EntityTags.h"
+
+1443345918 /home/lucas/Desktop/Programming/C++/Platformer/include/Turret.h
+	"WorldObject.h"
+	"Weapon.h"
+	"WorldRef.h"
 

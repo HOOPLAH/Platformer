@@ -9,6 +9,9 @@ void Assets::loadAssets()
     sprites["play_button"] = SpriteInfo("Content/Textures/play_button.png");
     sprites["pistol"] = SpriteInfo("Content/Textures/pistol.png");
     sprites["bullet"] = SpriteInfo("Content/Textures/bullet.png");
+    sprites["turrethead"] = SpriteInfo("Content/Textures/turrethead.png");
+    sprites["turretbody"] = SpriteInfo("Content/Textures/turretbody.png");
+    sprites["turret"] = SpriteInfo("Content/Textures/turret.png");
     sprites["waypoint"] = SpriteInfo("Content/Textures/waypoint.png");
 
     sprites["kingkam"] = SpriteInfo("Content/Textures/kingkam.png", 12, 6);
