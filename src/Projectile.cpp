@@ -16,6 +16,7 @@ Projectile::Projectile(SpriteInfo& info, sf::Vector2f pos, int damage, float ran
     mAlive = true;
     mOwnerTag = ownerTag;
     mPhysicsPosition = pos;
+    mRenderPosition = pos;
 }
 
 Projectile::~Projectile()

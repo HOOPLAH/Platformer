@@ -1,14 +1,16 @@
 spawn_point: 200 -100
-npc_spawn_count: 0
+npc_spawn_count: 3
 npc_spawnpoint: 706 -100
 npc_spawnpoint: 320 -100
 
-quest_action: collect 3 6 -- collect 3 boxes
-collectible: waypoint -288 68
-collectible: waypoint 125 -45
-collectible: waypoint 480 -10
+quest_action: kill 3 1 -- kill 3 NPCs
+collectible.: waypoint -288 68
+collectible.: waypoint 125 -45
+collectible.: waypoint 480 -10
 
 button: play_button 96 -128 2
+
+turret: -128 -35
 
 tiled_platforms: 5 64 0 ammocrate -320 100      GROUND
 tiled_platforms: 15 64 0 ammocrate 0 100        GROUND

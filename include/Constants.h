@@ -1,6 +1,8 @@
 #ifndef CONSTANTS_H_INCLUDED
 #define CONSTANTS_H_INCLUDED
 
+#include <SFML/System/Time.hpp>
+
 const float SCREEN_WIDTH = 800;
 const float SCREEN_HEIGHT = 600;
 

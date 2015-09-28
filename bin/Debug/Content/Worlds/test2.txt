@@ -20,10 +20,16 @@ platform: blueplatform 825 -115
 platform: blueplatform 725 65
 platform: blueplatform 775 65
 platform: blueplatform 825 65
-waypoint: 25 -24
+waypoint: 11 -25
 waypoint: 157 -27
 waypoint: 420 -47
 waypoint: 594 -120
 waypoint: 852 -143
 waypoint: 590 20
 waypoint: 855 43
+waypoint_edge: 1 0
+waypoint_edge: 2 1
+waypoint_edge: 3 2 jump
+waypoint_edge: 5 2 jump
+waypoint_edge: 4 3
+waypoint_edge: 6 5

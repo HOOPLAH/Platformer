@@ -25,15 +25,9 @@ waypoint: 594 -120
 waypoint: 852 -143
 waypoint: 590 20
 waypoint: 855 43
-waypoint_edge: 0 1
-waypoint_edge: 1 2
-waypoint_edge: 2 3
-waypoint_edge: 2 5
-waypoint_edge: 3 4
-waypoint_edge: 5 6
 waypoint_edge: 1 0
 waypoint_edge: 2 1
-waypoint_edge: 3 2
-waypoint_edge: 5 2
+waypoint_edge: 3 2 jump
+waypoint_edge: 5 2 jump
 waypoint_edge: 4 3
 waypoint_edge: 6 5

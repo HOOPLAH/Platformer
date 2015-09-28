@@ -82,7 +82,8 @@
 	<SFML/Graphics.hpp>
 	"IObject.h"
 
-1440476600 /home/lucas/Desktop/Programming/C++/Platformer/include/Constants.h
+1443394468 /home/lucas/Desktop/Programming/C++/Platformer/include/Constants.h
+	<SFML/System/Time.hpp>
 
 1443247558 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldRef.h
 	<memory>
@@ -229,12 +230,13 @@
 	"Line.h"
 	<iostream>
 
-1443346136 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Weapon.cpp
+1443394566 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Weapon.cpp
 	"Weapon.h"
 	<memory>
 	<iostream>
 	"Assets.h"
 	"Constants.h"
+	"FuncUtils.h"
 	"EntityTags.h"
 
 1443345992 source:/home/lucas/Desktop/Programming/C++/Platformer/src/World.cpp
@@ -270,12 +272,12 @@
 	<SFML/Graphics.hpp>
 	<World.h>
 
-1442974455 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldObject.cpp
+1443396097 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldObject.cpp
 	"WorldObject.h"
 	"EntityTags.h"
 	<Projectile.h>
 
-1443248146 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldRef.cpp
+1443398034 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldRef.cpp
 	"WorldRef.h"
 	"ICollideable.h"
 	"NPC.h"
@@ -284,9 +286,10 @@
 	"WorldObject.h"
 	"World.h"
 
-1443346250 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldSwitcher.cpp
+1443388094 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldSwitcher.cpp
 	"WorldSwitcher.h"
 	"EntityTags.h"
+	"Projectile.h"
 
 1440479877 source:/home/lucas/Desktop/Programming/C++/Platformer/main.cpp
 	<SFML/Graphics.hpp>
@@ -313,23 +316,25 @@
 	"DebugConsole.h"
 	<iostream>
 
-1443165440 /home/lucas/Desktop/Programming/C++/Platformer/include/FuncUtils.h
+1443394394 /home/lucas/Desktop/Programming/C++/Platformer/include/FuncUtils.h
 	<vector>
 	<string>
 	<SFML/System/Vector2.hpp>
 
-1443165435 source:/home/lucas/Desktop/Programming/C++/Platformer/src/FuncUtils.cpp
+1443394444 source:/home/lucas/Desktop/Programming/C++/Platformer/src/FuncUtils.cpp
 	"FuncUtils.h"
 	<cmath>
 	<sstream>
+	"Constants.h"
 
-1443346353 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Turret.cpp
+1443402696 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Turret.cpp
 	"Turret.h"
 	"Assets.h"
 	"EntityTags.h"
 
-1443345918 /home/lucas/Desktop/Programming/C++/Platformer/include/Turret.h
+1443399562 /home/lucas/Desktop/Programming/C++/Platformer/include/Turret.h
 	"WorldObject.h"
+	"ICollideable.h"
 	"Weapon.h"
 	"WorldRef.h"
 

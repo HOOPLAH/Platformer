@@ -117,7 +117,7 @@ std::vector<std::weak_ptr<ICollideable>> WorldRef::getObjectsWithinArea(sf::Floa
 
     for (auto& obj : mWorld.getCollideables())
     {
-        if (obj.lock()->getTag() == EntityTags::PLATFORM)
+        //if (obj.lock()->getTag() == EntityTags::PLATFORM)
         {
             auto pos = obj.lock()->getPhysicsPosition();
             auto hitbox = obj.lock()->getHitBox();

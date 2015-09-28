@@ -3,5 +3,3 @@ spawn_point: 10 -100
 tiled_platforms: 5 64 0 ammocrate 0 0      GROUND
 
 button: play_button 128 -100 1
-
-turret: 0 -35

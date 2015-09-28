@@ -3,6 +3,7 @@
 
 #include "WorldObject.h"
 
+#include "ICollideable.h"
 #include "Weapon.h"
 #include "WorldRef.h"
 
@@ -15,9 +16,11 @@ class Turret : public WorldObject
         void update(WorldRef& worldRef);
         void draw(sf::RenderTarget& target, float alpha);
 
+        bool onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop);
+
     private:
         Weapon mWeapon;
-        sf::Vector2f mWeaponTarget;
+        std::weak_ptr<ICollideable> mWeaponTarget;
         float mWeaponAngle;
 
         int mOwnerTag;

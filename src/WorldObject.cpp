@@ -11,6 +11,7 @@ WorldObject::WorldObject(SpriteInfo& info, sf::Vector2f pos, int tag, bool _stat
     mPhysicsPosition = pos;
     mAlive = true;
     mHealth.mActive = false;
+    mTag = tag;
 }
 
 WorldObject::~WorldObject()

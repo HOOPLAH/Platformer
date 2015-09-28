@@ -5,6 +5,7 @@
 
 #include "Assets.h"
 #include "Constants.h"
+#include "FuncUtils.h"
 #include "EntityTags.h"
 
 Weapon::Weapon(SpriteInfo& info) : SpriteObject(info, sf::Vector2f(0.f, 0.f))
@@ -64,9 +65,11 @@ void Weapon::fire(float angle, WorldRef& worldRef, int ownerTag)
     int dir = 1;
     if (std::abs(angle*RADTODEG) > 90.f)
         dir = -1;
-    else dir = 1;
 
-    auto start = mRenderPosition+sf::Vector2f(mFirePoint.x*dir, mFirePoint.y);
+    sf::Vector2f firePoint = mFirePoint;
+    rotateBy(firePoint, angle*RADTODEG);
+
+    auto start = mRenderPosition+sf::Vector2f(firePoint.x*dir, firePoint.y);
     auto proj = std::make_shared<Projectile>(Assets::sprites["bullet"], start, mDamage, mRange, ownerTag);
     proj->setFiringAngle(angle);
     worldRef.addProjectile(proj);
