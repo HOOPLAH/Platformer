@@ -22,6 +22,7 @@ WorldEditor::WorldEditor(std::string path) :
 
     mIDs.push_back("ammocrate");
     mIDs.push_back("blueplatform");
+    mIDs.push_back("turret");
     mIDs.push_back("waypoint");
     mCurrentID = 0;
 
@@ -416,6 +417,13 @@ void WorldEditor::loadWorld()
                     mCollideables.push_back(platform);
                 }
             }
+            else if (find_key("turret:", line))
+            {
+                float x = std::stof(split_line[1]);
+                float y = std::stof(split_line[2]);
+
+                mWorldObjects.push_back(std::make_shared<WorldEditorObject>(Assets::sprites["turret"], sf::Vector2f(x, y), "turret"));
+            }
             else if (find_key("waypoint:", line))
             {
                 float x = std::stof(split_line[1]);
@@ -452,6 +460,8 @@ void WorldEditor::saveWorld()
     {
         if (obj->getID() == "waypoint")
             file << "waypoint: " << obj->getRenderPosition().x << " " << obj->getRenderPosition().y << "\n";
+        else if (obj->getID() == "turret")
+            file << "turret: " << obj->getRenderPosition().x << " " << obj->getRenderPosition().y << "\n";
         else
             file << "platform: " << obj->getID() << " " << obj->getRenderPosition().x << " " << obj->getRenderPosition().y << "\n";
     }

@@ -59,7 +59,7 @@ void Weapon::fire(float angle, WorldRef& worldRef, int ownerTag)
         mAmmo--;
 
     angle *= RADTODEG;
-    angle += (((float)(rand()%100)/100.f)*(mInaccuracy/2))-(mInaccuracy/2);
+    //angle += (((float)(rand()%100)/100.f)*(mInaccuracy/2))-(mInaccuracy/2);
     angle *= DEGTORAD;
 
     int dir = 1;
