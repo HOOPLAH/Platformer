@@ -3,14 +3,13 @@
 #include "EntityTags.h"
 #include <Projectile.h>
 
-WorldObject::WorldObject(SpriteInfo& info, sf::Vector2f pos, int tag, bool _static) :
+WorldObject::WorldObject(SpriteInfo& info, sf::Vector2f pos, int tag, bool _static, bool hideHealth) :
     SpriteObject(info, pos),
     ICollideable(info.mHitBox, info.mFrameDim, tag, _static),
-    mHealth(100.f, sf::Vector2f(30.f, 2.f))
+    mHealth(100.f, sf::Vector2f(30.f, 2.f), hideHealth)
 {
     mPhysicsPosition = pos;
     mAlive = true;
-    mHealth.mActive = false;
     mTag = tag;
 }
 
@@ -36,8 +35,7 @@ void WorldObject::draw(sf::RenderTarget& target, float alpha)
 {
     SpriteObject::draw(target, alpha);
 
-    if (mHealth.mActive)
-        mHealth.draw(target);
+    //mHealth.draw(target);
 }
 
 bool WorldObject::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop)
@@ -50,16 +48,16 @@ bool WorldObject::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLe
     {
         auto proj = static_cast<Projectile*>(&*object.lock());
 
-        if (proj->getOwnerTag() != mTag)
+        /*if (proj->getOwnerTag() != mTag)
         {
             if (mHealth.mActive)
             {
                 mHealth.mHP -= proj->getDamage();
-                mHealth.mActive = true;
                 mHealth.mActiveClock.restart();
             }
-            proj->kill();
-        }
+        }*/
+
+        proj->kill();
 
         return false;
     }

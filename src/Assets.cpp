@@ -6,6 +6,7 @@ std::map<std::string, FontInfo> Assets::fonts;
 void Assets::loadAssets()
 {
     sprites["ammocrate"] = SpriteInfo("Content/Textures/ammocrate.png");
+    sprites["ammocrate2"] = SpriteInfo("Content/Textures/ammocrate2.png");
     sprites["play_button"] = SpriteInfo("Content/Textures/play_button.png");
     sprites["pistol"] = SpriteInfo("Content/Textures/pistol.png");
     sprites["bullet"] = SpriteInfo("Content/Textures/bullet.png");

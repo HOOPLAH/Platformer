@@ -11,7 +11,7 @@
 class WorldObject : public SpriteObject, public ICollideable
 {
     public:
-        WorldObject(SpriteInfo& info, sf::Vector2f pos, int tag=EntityTags::PLATFORM, bool _static=true);
+        WorldObject(SpriteInfo& info, sf::Vector2f pos, int tag=EntityTags::PLATFORM, bool _static=true, bool hideHealth=true);
         virtual ~WorldObject();
 
         void update();
