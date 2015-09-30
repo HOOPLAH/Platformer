@@ -50,6 +50,8 @@ class World
         template <class T>
         void removeWeakDeadObj(std::vector<T>& v);
 
+        std::string mPathDirectory;
+
         WorldRef mWorldRef;
 
         sf::Vector2f mGravity;

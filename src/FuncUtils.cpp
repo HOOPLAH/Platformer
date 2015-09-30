@@ -10,7 +10,7 @@ float length(sf::Vector2f a)
     return sqrt(a.x*a.x + a.y*a.y);
 }
 
-void rotateBy(sf::Vector2f& v, float degrees, const sf::Vector2f& center)
+void rotateVec(sf::Vector2f& v, float degrees, const sf::Vector2f& center)
 {
     degrees *= DEGTORAD;
     const float cs = cos(degrees);

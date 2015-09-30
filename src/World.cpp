@@ -22,7 +22,6 @@ World::World() :
     mGravity = sf::Vector2f(0.f, 10.f);
 
     mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], mSpawnPoint);
-    mCollideables.push_back(mHero);
 }
 
 World::World(std::string path) : World()
@@ -65,12 +64,19 @@ void World::update(int ticks)
             {
                 if (mHero->getQuest().mActions.top()->mTag == ActionTag::KILL && npc->getKillerTag() == EntityTags::PLAYER)
                 {
-                    auto action = std::static_pointer_cast<KillAction>(mHero->getQuest().mActions.top());
+                    auto action = static_cast<KillAction*>(&*mHero->getQuest().mActions.top());
 
                     if (action->mKillsLeftCount > 1)
                         action->mKillsLeftCount--;
                     else
                         mHero->getQuest().mActions.pop();
+                }
+                else if (mHero->getQuest().mActions.top()->mTag == ActionTag::PROTECT)
+                {
+                    auto action = static_cast<ProtectAction*>(&*mHero->getQuest().mActions.top());
+
+                    if (action->mKillsLeftCount > 0)
+                        action->mKillsLeftCount--;
                 }
             }
         }
@@ -91,7 +97,7 @@ void World::update(int ticks)
         if (!obj->isStatic())
             obj->setVelocity(obj->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
 
-        if (obj->getTag() == EntityTags::COLLECTIBLE) // somehow died, player collected it???
+        if (obj->getTag() == EntityTags::COLLECTIBLE)
         {
             auto collectible = static_cast<CollectibleObject*>(&*obj);
 
@@ -101,7 +107,7 @@ void World::update(int ticks)
                 {
                     if (mHero->getQuest().mActions.top()->mTag == ActionTag::COLLECT)
                     {
-                        auto action = std::static_pointer_cast<CollectAction>(mHero->getQuest().mActions.top());
+                        auto action = static_cast<CollectAction*>(&*mHero->getQuest().mActions.top());
 
                         if (obj->getTag() == action->mCollectTag)
                         {
@@ -135,6 +141,32 @@ void World::update(int ticks)
     {
         mHero->respawn(mSpawnPoint);
         mCollideables.push_back(mHero);
+    }
+
+    if (!mHero->getQuest().mActions.empty())
+    {
+        if (mHero->getQuest().mActions.top()->mTag == ActionTag::PROTECT)
+        {
+            for (auto& obj : mWorldObjects)
+            {
+                if (mHero->getQuest().mActions.top()->mTag == ActionTag::PROTECT)
+                {
+                    mHero->getQuest().mActions.top()->mTag = ActionTag::PROTECT;
+                    auto action = std::static_pointer_cast<ProtectAction>(mHero->getQuest().mActions.top());
+                    if (obj->getTag() == action->mProtectTag)
+                    {
+                        if (obj->isAlive() && action->mKillsLeftCount == 0) // obj is still alive and player killed everyone
+                        {
+                            mHero->getQuest().mActions.pop();
+                        }
+                        else if (!obj->isAlive())
+                        {
+                            resetWorld(mPathDirectory);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     // check collisions
@@ -222,6 +254,8 @@ void World::handleEvents(sf::Event event)
 
 void World::loadWorld(std::string path)
 {
+    mPathDirectory = path;
+
     std::string line = "";
     std::ifstream file(path);
 
@@ -234,6 +268,8 @@ void World::loadWorld(std::string path)
 
         return false;
     };
+
+    mCollideables.push_back(mHero);
 
     if (file.is_open())
     {
@@ -271,7 +307,7 @@ void World::loadWorld(std::string path)
                 std::string id = split_line[1];
                 float x = std::stof(split_line[2]);
                 float y = std::stof(split_line[3]);
-                auto obj = std::make_shared<CollectibleObject>(Assets::sprites[id], sf::Vector2f(x, y));
+                auto obj = std::make_shared<CollectibleObject>(Assets::sprites[id], sf::Vector2f(x, y), CollectibleType::AMMOCRATE);
                 mWorldObjects.push_back(obj);
                 mCollideables.push_back(obj);
             }
@@ -345,7 +381,6 @@ void World::loadWorld(std::string path)
                     action->mTotalKillCount = std::stof(split_line[2]);
                     action->mKillsLeftCount = action->mTotalKillCount;
                     action->mKillTag = std::stof(split_line[3]);
-                    action->mTag = ActionTag::KILL;
 
                     mHero->getQuest().mActions.push(action);
                 }
@@ -355,7 +390,18 @@ void World::loadWorld(std::string path)
                     action->mTotalCollectCount = std::stof(split_line[2]);
                     action->mCollectLeftCount = action->mTotalCollectCount;
                     action->mCollectTag = std::stof(split_line[3]);
-                    action->mTag = ActionTag::COLLECT;
+
+                    mHero->getQuest().mActions.push(action);
+                }
+                else if (action_type == "protect")
+                {
+                    auto action = std::make_shared<ProtectAction>();
+                    // kill quest
+                    action->mTotalKillCount = std::stof(split_line[2]);
+                    action->mKillsLeftCount = action->mTotalKillCount;
+                    action->mKillTag = std::stof(split_line[3]);
+                    // protect quest
+                    action->mProtectTag = std::stof(split_line[4]);
 
                     mHero->getQuest().mActions.push(action);
                 }
@@ -382,6 +428,8 @@ void World::resetWorld(std::string path)
     mCollideables.clear();
 
     mWayPointManager.getWayPoints().clear();
+
+    loadWorld(path);
 }
 
 bool World::checkCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b)

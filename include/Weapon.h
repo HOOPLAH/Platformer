@@ -36,6 +36,7 @@ class Weapon : public SpriteObject
         void setCoolDown(int cooldown){mCoolDown=cooldown;}
         void setFirePoint(sf::Vector2f firePoint){mFirePoint=firePoint;}
         void setUnlimitedAmmo(bool unlimited){mUnlimitedAmmo=unlimited;}
+        void setWeaponClips(int mag, int ammo){mMagazines=mag; mAmmo=ammo;}
 
     protected:
         int mDamage;

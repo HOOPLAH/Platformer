@@ -2,9 +2,10 @@
 
 #include "Player.h"
 
-CollectibleObject::CollectibleObject(SpriteInfo& info, sf::Vector2f pos) : WorldObject(info, pos, EntityTags::COLLECTIBLE, false)
+CollectibleObject::CollectibleObject(SpriteInfo& info, sf::Vector2f pos, int type) : WorldObject(info, pos, EntityTags::COLLECTIBLE, false)
 {
     mCollected = false;
+    mType = type;
 }
 
 CollectibleObject::~CollectibleObject()
@@ -18,23 +19,17 @@ bool CollectibleObject::onContactBegin(std::weak_ptr<ICollideable> object, bool 
 
     if (object.lock()->getTag() == EntityTags::PLAYER)
     {
-        /*auto hero = static_cast<Player*>(&*object.lock());
+        auto player = static_cast<Player*>(&*object.lock());
 
-        if (!hero->getQuest().mActions.empty())
-        {
-            if (hero->getQuest().mActions.top()->mTag == ActionTag::COLLECT)
-            {
-                auto action = std::static_pointer_cast<CollectAction>(hero->getQuest().mActions.top());
-
-                if (action->mCollectLeftCount > 1)
-                    action->mCollectLeftCount--;
-                else
-                    hero->getQuest().mActions.pop();
-            }
-        }*/
+        if (mType == CollectibleType::AMMOCRATE)
+            player->getWeapon().addAmmo(9); // a full magazine
 
         mCollected = true;
 
+        return true;
+    }
+    else if (object.lock()->getTag() == EntityTags::NPC)
+    {
         return false;
     }
 

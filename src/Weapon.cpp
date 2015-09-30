@@ -17,9 +17,9 @@ Weapon::Weapon(SpriteInfo& info) : SpriteObject(info, sf::Vector2f(0.f, 0.f))
     mFirePoint = sf::Vector2f(10.f, 0.f);
 
     mMaxAmmo = 10;
-    mMaxMagazines = 3;
+    mMaxMagazines = 10;
     mAmmo = mMaxAmmo;
-    mMagazines = mMaxMagazines;
+    mMagazines = 3;
     mUnlimitedAmmo = false;
 }
 
@@ -67,7 +67,7 @@ void Weapon::fire(float angle, WorldRef& worldRef, int ownerTag)
         dir = -1;
 
     sf::Vector2f firePoint = mFirePoint;
-    rotateBy(firePoint, angle*RADTODEG);
+    rotateVec(firePoint, angle*RADTODEG);
 
     auto start = mRenderPosition+sf::Vector2f(firePoint.x*dir, firePoint.y);
     auto proj = std::make_shared<Projectile>(Assets::sprites["bullet"], start, mDamage, mRange, ownerTag);
@@ -77,12 +77,20 @@ void Weapon::fire(float angle, WorldRef& worldRef, int ownerTag)
 
 void Weapon::addAmmo(int ammo)
 {
-    int leftover = std::abs(mMaxAmmo - mAmmo - ammo);
+    int surplus = std::abs(mMaxAmmo - mAmmo - ammo);
 
-    if (leftover > 0)
+    if (mMaxAmmo < (mAmmo + ammo))
     {
-        mMagazines++;
-        mAmmo = leftover;
+        if (mMagazines+1 < mMaxMagazines)
+        {
+            mMagazines++;
+            mAmmo = surplus;
+        }
+        else
+        {
+            mMagazines = mMaxMagazines;
+            mAmmo = mMaxAmmo;
+        }
     }
     else
     {

@@ -62,7 +62,7 @@ bool Turret::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, b
     {
         auto proj = static_cast<Projectile*>(&*object.lock());
 
-        //if (proj->getOwnerTag() != mOwnerTag)
+        if (proj->getOwnerTag() != mOwnerTag)
         {
             if (mHealth.mActive)
             {

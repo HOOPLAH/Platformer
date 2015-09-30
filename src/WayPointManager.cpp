@@ -31,8 +31,9 @@ float WayPointManager::LeastCostEstimate(void* stateStart, void* stateEnd)
 {
     WayPoint* start = (WayPoint*)stateStart;
     WayPoint* end = (WayPoint*)stateEnd;
-
-    float dist = sqrt(pow(end->mPosition.x - start->mPosition.x, 2) + pow(end->mPosition.y - start->mPosition.y, 2));
+    float dist = 0.f;
+    if (start && end)
+        dist = sqrt(pow(end->mPosition.x - start->mPosition.x, 2) + pow(end->mPosition.y - start->mPosition.y, 2));
     return dist;
 }
 
