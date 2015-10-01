@@ -3,7 +3,7 @@ npc_spawn_count: 3
 npc_spawnpoint: 706 -100
 npc_spawnpoint: 320 -100
 
-quest_action: protect 3 1 -- protect 1 turret from 3 NPCs
+quest_action: kill 3 1  -- protect 1 turret from 3 NPCs
 
 button: play_button 96 -128 2
 

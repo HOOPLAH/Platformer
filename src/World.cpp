@@ -143,26 +143,22 @@ void World::update(int ticks)
         mCollideables.push_back(mHero);
     }
 
-    if (!mHero->getQuest().mActions.empty())
+    for (auto& obj : mCollideables)
     {
-        if (mHero->getQuest().mActions.top()->mTag == ActionTag::PROTECT)
+        if (!mHero->getQuest().mActions.empty())
         {
-            for (auto& obj : mWorldObjects)
+            if (mHero->getQuest().mActions.top()->mTag == ActionTag::PROTECT)
             {
-                if (mHero->getQuest().mActions.top()->mTag == ActionTag::PROTECT)
+                auto action = std::static_pointer_cast<ProtectAction>(mHero->getQuest().mActions.top());
+                if (obj.lock()->getTag() == action->mProtectTag)
                 {
-                    mHero->getQuest().mActions.top()->mTag = ActionTag::PROTECT;
-                    auto action = std::static_pointer_cast<ProtectAction>(mHero->getQuest().mActions.top());
-                    if (obj->getTag() == action->mProtectTag)
+                    if (obj.lock()->isAlive() && action->mKillsLeftCount == 0) // obj is still alive and player killed everyone
                     {
-                        if (obj->isAlive() && action->mKillsLeftCount == 0) // obj is still alive and player killed everyone
-                        {
-                            mHero->getQuest().mActions.pop();
-                        }
-                        else if (!obj->isAlive())
-                        {
-                            resetWorld(mPathDirectory);
-                        }
+                        mHero->getQuest().mActions.pop();
+                    }
+                    else if (!obj.lock()->isAlive())
+                    {
+                        resetWorld(mPathDirectory);
                     }
                 }
             }
@@ -402,6 +398,7 @@ void World::loadWorld(std::string path)
                     action->mKillTag = std::stof(split_line[3]);
                     // protect quest
                     action->mProtectTag = std::stof(split_line[4]);
+                    action->mTag = ActionTag::PROTECT;
 
                     mHero->getQuest().mActions.push(action);
                 }
