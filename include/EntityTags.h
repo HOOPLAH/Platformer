@@ -12,7 +12,8 @@ namespace EntityTags
         WEAPON,
         BUTTON,
         COLLECTIBLE,
-        TURRET
+        TURRET,
+        GRENADE
     };
 }
 
