@@ -1,4 +1,6 @@
-*.cbp
+*.exe
+*.o
+obj/*
+bin/*
 *.depend
-obj/*.*
-
+*.layout
