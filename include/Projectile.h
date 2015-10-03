@@ -20,6 +20,7 @@ class Projectile : public SpriteObject, public ICollideable
 
         // Mutators
         void setFiringAngle(float angle){mFiringAngle=angle; mSprite.setRotation(angle*RADTODEG);}
+        void setSpeed(float speed){mSpeed=speed;}
 
     private:
         int mDamage;
