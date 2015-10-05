@@ -9,6 +9,8 @@
 #include "WorldManager.h"
 #include "Constants.h"
 
+#include <iostream>
+
 int main()
 {
     srand((unsigned)time(0));
@@ -52,6 +54,4 @@ int main()
     }
 
     window.close();
-
-    return 0;
 }

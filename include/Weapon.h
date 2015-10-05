@@ -2,12 +2,13 @@
 #define WEAPON_H
 
 #include "SpriteObject.h"
+#include "InventoryItem.h"
 #include "Line.h"
 #include "Projectile.h"
 #include "ICollideable.h"
 #include "WorldRef.h"
 
-class Weapon : public SpriteObject
+class Weapon : public SpriteObject, public InventoryItem
 {
     public:
         Weapon(SpriteInfo& info);

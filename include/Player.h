@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "HealthBar.h"
+#include "InventoryItem.h"
 #include "Weapon.h"
 #include "WorldRef.h"
 #include "Quest.h"
@@ -47,6 +48,9 @@ class Player : public SpriteObject, public ICollideable
         sf::Vector2f mMousePosition;
         sf::Vector2f mWeaponTarget;
         float mWeaponAngle;
+
+        std::vector<InventoryItem> mInventory;
+        std::size_t mInventoryIndex;
 
         Quest mQuest;
 };

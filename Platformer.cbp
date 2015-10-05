@@ -64,6 +64,7 @@
 		<Unit filename="include/ICollideable.h" />
 		<Unit filename="include/IObject.h" />
 		<Unit filename="include/IRenderable.h" />
+		<Unit filename="include/Ladder.h" />
 		<Unit filename="include/Line.h" />
 		<Unit filename="include/NPC.h" />
 		<Unit filename="include/Player.h" />
@@ -90,6 +91,7 @@
 		<Unit filename="src/CollectibleObject.cpp" />
 		<Unit filename="src/DebugConsole.cpp" />
 		<Unit filename="src/FuncUtils.cpp" />
+		<Unit filename="src/Ladder.cpp" />
 		<Unit filename="src/Line.cpp" />
 		<Unit filename="src/NPC.cpp" />
 		<Unit filename="src/Player.cpp" />
