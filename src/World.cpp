@@ -13,8 +13,9 @@
 #include "CollectibleObject.h"
 #include "Turret.h"
 
-World::World() :
-    mWorldRef(*this)
+World::World(HSQUIRRELVM vm) :
+    mWorldRef(*this),
+    mVM(vm)
 {
     mSpawnPoint = sf::Vector2f(0.f, 0.f);
     mNextNPCSpawnPoint = 0;
@@ -24,7 +25,7 @@ World::World() :
     mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], mSpawnPoint);
 }
 
-World::World(std::string path) : World()
+World::World(std::string path, HSQUIRRELVM vm) : World(vm)
 {
     loadWorld(path);
 }

@@ -3,7 +3,8 @@
 #include <fstream>
 #include <array>
 
-WorldManager::WorldManager()
+WorldManager::WorldManager(HSQUIRRELVM vm) :
+    mVM(vm)
 {
     mCurrentWorld = 0;
     loadWorldFileNames();
@@ -40,7 +41,7 @@ void WorldManager::handleEvents(sf::Event event)
 
 void WorldManager::loadWorld()
 {
-    std::unique_ptr<World> world(new World);
+    std::unique_ptr<World> world(new World(mVM));
     world->loadWorld(mWorldFileNames[mCurrentWorld]);
     mWorlds.push_back(std::move(world));
 }

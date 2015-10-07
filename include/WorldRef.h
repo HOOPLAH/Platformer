@@ -2,7 +2,9 @@
 #define WORLDREF_H
 
 #include <memory>
+
 #include <SFML/Graphics.hpp>
+#include <squirrel.h>
 
 #include "WayPointManager.h"
 
@@ -29,6 +31,7 @@ class WorldRef
         WayPoint getClosestWayPoint(sf::Vector2f pos);
         WayPoint getClosestWayPoint(WayPoint pt);
         WayPointManager& getWayPointManager();
+        HSQUIRRELVM getVM();
         std::vector<std::weak_ptr<ICollideable>> getObjectsWithinArea(sf::FloatRect rect);
 
     private:

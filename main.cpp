@@ -4,12 +4,25 @@
 
 #include <cstdlib>
 #include <ctime>
+#include <stdarg.h>
+#include <iostream>
+
+#include <squirrel.h>
+#include <sqstdio.h>
+#include <sqstdaux.h>
+#include <sqrat.h>
 
 #include "Assets.h"
 #include "WorldManager.h"
 #include "Constants.h"
 
-#include <iostream>
+void sqprintfunc(HSQUIRRELVM v, const SQChar *s, ...)
+{
+    va_list arglist;
+    va_start(arglist, s);
+    vprintf((char*)s, arglist);
+    va_end(arglist);
+}
 
 int main()
 {
@@ -17,9 +30,31 @@ int main()
 
     Assets::loadAssets();
 
+    HSQUIRRELVM vm = sq_open(1064);
+    sq_setprintfunc(vm, sqprintfunc, NULL);
+    Sqrat::Script *script = new Sqrat::Script(vm);
+
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Platformer");
 
-    WorldManager worldMgr;
+    WorldManager worldMgr(vm);
+
+    //Sqrat::RootTable(vm).Func("getInputString", sqgetinputstring);
+    //Sqrat::RootTable(vm).Func("getInputNumber", sqgetinputnumber);
+
+    //Game::bindSquirrel(script->GetVM());
+
+    std::string error;
+    if (!script->CompileFile("script.nut", error))
+    {
+        std::cout << "Squirrel Error: " << error << std::endl;
+    }
+    else
+    {
+        if (!script->Run(error))
+        {
+            std::cout << "Squirrel Error: " << error << std::endl;
+        }
+    }
 
     sf::Clock clock;
 	sf::Time accumulator = sf::Time::Zero;
@@ -54,4 +89,9 @@ int main()
     }
 
     window.close();
+
+    script->Release();
+    sq_close(vm);
+
+    return 0;
 }

@@ -49,9 +49,6 @@ class Player : public SpriteObject, public ICollideable
         sf::Vector2f mWeaponTarget;
         float mWeaponAngle;
 
-        std::vector<InventoryItem> mInventory;
-        std::size_t mInventoryIndex;
-
         Quest mQuest;
 };
 

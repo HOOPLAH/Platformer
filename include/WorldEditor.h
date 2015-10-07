@@ -24,7 +24,7 @@ class WorldEditorObject : public WorldObject
 class WorldEditor
 {
     public:
-        WorldEditor(std::string path);
+        WorldEditor(std::string path, HSQUIRRELVM vm);
         ~WorldEditor();
 
         void update(int ticks);
@@ -69,6 +69,8 @@ class WorldEditor
         std::vector<std::weak_ptr<ICollideable>> mCollideables;
 
         World mWorld;
+
+        HSQUIRRELVM mVM;
 };
 
 #endif // WORLDEDITOR_H

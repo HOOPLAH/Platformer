@@ -1,6 +1,6 @@
 #include "InventoryItem.h"
 
-InventoryItem::InventoryItem()
+InventoryItem::InventoryItem(SpriteInfo& info) : SpriteObject(info, sf::Vector2f())
 {
     //ctor
 }

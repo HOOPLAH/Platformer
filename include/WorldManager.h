@@ -8,12 +8,14 @@
 #include <memory>
 
 #include <SFML/Graphics.hpp>
-#include <World.h>
+#include <squirrel.h>
+
+#include "World.h"
 
 class WorldManager
 {
     public:
-        WorldManager();
+        WorldManager(HSQUIRRELVM vm);
         ~WorldManager();
 
         void update(int ticks);
@@ -27,6 +29,8 @@ class WorldManager
         int mCurrentWorld;
         std::vector<std::string> mWorldFileNames;
         std::vector<std::unique_ptr<World>> mWorlds;
+
+        HSQUIRRELVM mVM;
 };
 
 #endif // WORLDMANAGER_H

@@ -15,9 +15,31 @@ int main()
 
     Assets::loadAssets();
 
+    HSQUIRRELVM vm = sq_open(1064);
+    sq_setprintfunc(vm, sqprintfunc, NULL);
+    Sqrat::Script *script = new Sqrat::Script(vm);
+
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Platformer");
 
-    WorldEditor worldEditor("Content/Worlds/test2.txt");
+    WorldEditor worldEditor("Content/Worlds/test2.txt", vm);
+
+    //Sqrat::RootTable(vm).Func("getInputString", sqgetinputstring);
+    //Sqrat::RootTable(vm).Func("getInputNumber", sqgetinputnumber);
+
+    //Game::bindSquirrel(script->GetVM());
+
+    std::string error;
+    if (!script->CompileFile("script.nut", error))
+    {
+        std::cout << "Squirrel Error: " << error << std::endl;
+    }
+    else
+    {
+        if (!script->Run(error))
+        {
+            std::cout << "Squirrel Error: " << error << std::endl;
+        }
+    }
 
     sf::Clock clock;
 	sf::Time accumulator = sf::Time::Zero;

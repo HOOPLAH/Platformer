@@ -5,6 +5,7 @@
 #include <memory>
 
 #include <SFML/Graphics.hpp>
+#include <squirrel.h>
 
 #include "Player.h"
 #include "NPC.h"
@@ -18,8 +19,8 @@
 class World
 {
     public:
-        World();
-        World(std::string path);
+        World(HSQUIRRELVM vm);
+        World(std::string path, HSQUIRRELVM vm);
         ~World();
 
         void update(int ticks);
@@ -40,6 +41,7 @@ class World
         std::vector<std::weak_ptr<ICollideable>>& getCollideables(){return mCollideables;}
         WayPointManager& getWayPointManager(){return mWayPointManager;}
         WorldRef& getWorldRef(){return mWorldRef;}
+        HSQUIRRELVM getVM(){return mVM;}
 
     private:
         bool checkCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
@@ -71,6 +73,8 @@ class World
         std::vector<std::shared_ptr<WorldSwitcher>> mButtons;
         std::vector<std::shared_ptr<WorldObject>> mWorldObjects;
         std::vector<std::weak_ptr<ICollideable>> mCollideables;
+
+        HSQUIRRELVM mVM;
 };
 
 #endif // WORLD_H

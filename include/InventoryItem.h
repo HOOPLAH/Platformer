@@ -1,24 +1,15 @@
 #ifndef INVENTORYITEM_H
 #define INVENTORYITEM_H
 
-#include <functional>
+#include "SpriteObject.h"
 
-class InventoryItem
+class InventoryItem : public SpriteObject
 {
     public:
-        InventoryItem();
+        InventoryItem(SpriteInfo& info);
         virtual ~InventoryItem();
 
-        /*template <typename ...Args>
-        void use(void f(Args...), Args... args)
-        {
-            std::function<void(Args...)>&& func = std::function<void(Args...)>(f);
-            func(args...);
-        }*/
-
-        void use(){}
-
-    protected:
+    private:
 };
 
 #endif // INVENTORYITEM_H

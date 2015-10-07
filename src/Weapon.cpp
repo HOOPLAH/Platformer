@@ -8,7 +8,7 @@
 #include "FuncUtils.h"
 #include "EntityTags.h"
 
-Weapon::Weapon(SpriteInfo& info) : SpriteObject(info, sf::Vector2f(0.f, 0.f)) , InventoryItem()
+Weapon::Weapon(SpriteInfo& info) : InventoryItem(info)
 {
     mDamage = 10;
     mRange = 500.f;

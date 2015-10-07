@@ -23,9 +23,6 @@ Player::Player(SpriteInfo& info, sf::Vector2f pos) :
     mJumping = true;
     mPhysicsPosition = pos;
     mFallDamageRate = 10.f;
-
-    mInventory.push_back(mWeapon);
-    mInventoryIndex = 0;
 }
 
 Player::~Player()
