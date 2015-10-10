@@ -16,4 +16,4 @@ class Potion extends Item
 
 potion <- Potion();
 potion.use();
-//playerInventory.push_back(potion);
+playerInventory.push_back(potion);
