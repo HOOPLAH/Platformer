@@ -9,6 +9,7 @@
 struct Assets
 {
     static void loadAssets();
+    static SpriteInfo& getSpriteInfo(std::string id);
 
     static std::map<std::string, SpriteInfo> sprites;
     static std::map<std::string, FontInfo> fonts;

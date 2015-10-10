@@ -2,6 +2,8 @@
 #define SPRITEINFO_H
 
 #include <SFML/Graphics.hpp>
+#include <squirrel.h>
+#include <sqrat.h>
 
 struct SpriteInfo
 {
@@ -20,6 +22,15 @@ struct SpriteInfo
     int mFramesPerRow;
     sf::Vector2f mFrameDim;
     sf::FloatRect mHitBox;
+
+    static void bindSquirrel(HSQUIRRELVM vm)
+    {
+        Sqrat::Class<SpriteInfo> info(vm, "SpriteInfo");
+        info.Ctor<std::string, int, int>();
+        //item.Var("initialize", &<class>::initialize);
+        //vector2.Var("Y", &irr::core::vector2df::Y);
+        Sqrat::RootTable(vm).Bind("SpriteInfo", info);
+    }
 };
 
 #endif // SPRITEINFO_H

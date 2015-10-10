@@ -16,12 +16,36 @@
 #include "WorldManager.h"
 #include "Constants.h"
 
+#include "Item.h"
+#include "Inventory.h"
+#include "Player.h"
+
 void sqprintfunc(HSQUIRRELVM v, const SQChar *s, ...)
 {
     va_list arglist;
     va_start(arglist, s);
     vprintf((char*)s, arglist);
     va_end(arglist);
+}
+
+void bindSquirrel(HSQUIRRELVM vm)
+{
+    Sqrat::Class<Item> itemClass(vm, "Item");
+    itemClass.Func("setStackSize", &Item::setStackSize);
+    itemClass.Func("setName", &Item::setName);
+    itemClass.Func("getCount", &Item::getCount);
+    itemClass.Func("getName", &Item::getName);
+    itemClass.Func("use", &Item::use);
+    Sqrat::RootTable().Bind("Item", itemClass);
+
+    Sqrat::Class<Inventory> inventoryClass(vm, "Inventory");
+    inventoryClass.Func("push_back", &Inventory::sq_push_back);
+    inventoryClass.Func("getItem", &Inventory::getItem);
+    Sqrat::RootTable().Bind("Inventory", inventoryClass);
+
+    Sqrat::Class<Player> playerClass(vm, "Player");
+    playerClass.Func("getInventory", &Player::getInventory);
+    Sqrat::RootTable().Bind("Player", playerClass);
 }
 
 int main()
@@ -31,29 +55,25 @@ int main()
     Assets::loadAssets();
 
     HSQUIRRELVM vm = sq_open(1064);
+
     sq_setprintfunc(vm, sqprintfunc, NULL);
-    Sqrat::Script *script = new Sqrat::Script(vm);
+    Sqrat::ErrorHandling::Enable(true);
+    sq_pushroottable(vm);
+    sqstd_register_iolib(vm);
+    sqstd_seterrorhandlers(vm);
+
+    Sqrat::Script script(vm);
+    Sqrat::DefaultVM::Set(vm);
+    bindSquirrel(vm);
 
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Platformer");
 
     WorldManager worldMgr(vm);
 
-    //Sqrat::RootTable(vm).Func("getInputString", sqgetinputstring);
-    //Sqrat::RootTable(vm).Func("getInputNumber", sqgetinputnumber);
-
-    //Game::bindSquirrel(script->GetVM());
-
     std::string error;
-    if (!script->CompileFile("script.nut", error))
+    if (!script.CompileFile("script.nut", error) || !script.Run(error))
     {
         std::cout << "Squirrel Error: " << error << std::endl;
-    }
-    else
-    {
-        if (!script->Run(error))
-        {
-            std::cout << "Squirrel Error: " << error << std::endl;
-        }
     }
 
     sf::Clock clock;
@@ -90,7 +110,8 @@ int main()
 
     window.close();
 
-    script->Release();
+    Sqrat::RootTable().Release();
+    script.Release();
     sq_close(vm);
 
     return 0;

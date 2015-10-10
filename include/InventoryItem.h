@@ -3,11 +3,15 @@
 
 #include "SpriteObject.h"
 
+#include <squirrel.h>
+
 class InventoryItem : public SpriteObject
 {
     public:
         InventoryItem(SpriteInfo& info);
         virtual ~InventoryItem();
+
+        static void bindSquirrel(HSQUIRRELVM vm);
 
     private:
 };

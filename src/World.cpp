@@ -23,6 +23,9 @@ World::World(HSQUIRRELVM vm) :
     mGravity = sf::Vector2f(0.f, 10.f);
 
     mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], mSpawnPoint);
+
+    //Sqrat::RootTable().SetInstance("player", &mHero);
+    //Sqrat::RootTable().SetInstance("playerInventory", &mHero->getInventory());
 }
 
 World::World(std::string path, HSQUIRRELVM vm) : World(vm)

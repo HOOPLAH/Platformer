@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "HealthBar.h"
-#include "InventoryItem.h"
+#include "Inventory.h"
 #include "Weapon.h"
 #include "WorldRef.h"
 #include "Quest.h"
@@ -32,6 +32,7 @@ class Player : public SpriteObject, public ICollideable
         Weapon& getWeapon(){return mWeapon;}
         sf::Vector2f getWeaponTarget(){return mWeaponTarget;}
         float getWeaponAngle(){return mWeaponAngle;}
+        Inventory& getInventory(){return mInventory;}
         Quest& getQuest(){return mQuest;}
 
     private:
@@ -48,6 +49,8 @@ class Player : public SpriteObject, public ICollideable
         sf::Vector2f mMousePosition;
         sf::Vector2f mWeaponTarget;
         float mWeaponAngle;
+
+        Inventory mInventory;
 
         Quest mQuest;
 };

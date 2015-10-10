@@ -31,3 +31,8 @@ void Assets::loadAssets()
 
     fonts["8bit"] = FontInfo("Content/Fonts/8bit.ttf");
 }
+
+SpriteInfo& Assets::getSpriteInfo(std::string id)
+{
+    return sprites[id];
+}

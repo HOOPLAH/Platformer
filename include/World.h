@@ -43,6 +43,8 @@ class World
         WorldRef& getWorldRef(){return mWorldRef;}
         HSQUIRRELVM getVM(){return mVM;}
 
+        void bindSquirrel();
+
     private:
         bool checkCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
         void resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
