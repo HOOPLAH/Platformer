@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <iostream>
+
 struct HealthBar
 {
     HealthBar(float hp, sf::Vector2f dim, bool hideHealth=true)
@@ -34,7 +36,7 @@ struct HealthBar
         else if (ratio < 0.25f)
             mBar.setFillColor(sf::Color::Red);
 
-        if (mActive)
+        //if (mActive)
             target.draw(mBar);
     }
 

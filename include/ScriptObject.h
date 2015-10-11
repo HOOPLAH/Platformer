@@ -9,7 +9,7 @@
 class ScriptObject
 {
     public:
-        ScriptObject(std::string className, HSQUIRRELVM vm);
+        ScriptObject(std::string className);
         ~ScriptObject();
 
         std::string getClassName(){return mClassName;}

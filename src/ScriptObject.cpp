@@ -1,8 +1,8 @@
 #include "ScriptObject.h"
 
-ScriptObject::ScriptObject(std::string className, HSQUIRRELVM vm) :
+ScriptObject::ScriptObject(std::string className) :
     mClassName(className),
-    mClass(className.c_str(), vm),
+    mClass(className.c_str(), Sqrat::DefaultVM::Get()),
     mInstance(mClass.New())
 {
     //ctor

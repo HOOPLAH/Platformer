@@ -26,6 +26,8 @@ class Player : public SpriteObject, public ICollideable
         void respawn(sf::Vector2f pos);
         void kill(){mAlive=false; mHealth.mHP = -1;}
         void setPosition(sf::Vector2f pos){mPhysicsPosition=pos;}
+        void setHealth(int hp){mHealth.mHP=hp;}
+        int getHealth(){return mHealth.mHP;}
 
         int getDirection(){return mDirection;}
         bool isGrounded(){return mGrounded;}

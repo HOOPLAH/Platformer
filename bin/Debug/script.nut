@@ -1,19 +1,14 @@
-class Potion extends Item
+class Weapon extends Item
 {
     constructor()
     {
         base.constructor();
-        setName("Potion");
+        setName("Weapon");
     }
 
     function use()
     {
         base.use();
-        print("used");
-        //player.setHealth(player.getHealth() + 5);
+        print(getCount()+"\n");
     }
 }
-
-potion <- Potion();
-potion.use();
-playerInventory.push_back(potion);

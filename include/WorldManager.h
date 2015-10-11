@@ -15,22 +15,20 @@
 class WorldManager
 {
     public:
-        WorldManager(HSQUIRRELVM vm);
+        WorldManager(std::weak_ptr<Player> hero);
         ~WorldManager();
 
-        void update(int ticks);
+        void update(int ticks, std::weak_ptr<Player> hero);
         void draw(sf::RenderTarget& target, float alpha);
         void handleEvents(sf::Event event);
 
     private:
-        void loadWorld();
+        void loadWorld(std::weak_ptr<Player> hero);
         void loadWorldFileNames();
 
         int mCurrentWorld;
         std::vector<std::string> mWorldFileNames;
         std::vector<std::unique_ptr<World>> mWorlds;
-
-        HSQUIRRELVM mVM;
 };
 
 #endif // WORLDMANAGER_H

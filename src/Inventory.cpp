@@ -1,5 +1,7 @@
 #include "Inventory.h"
 
+#include "ScriptObject.h"
+
 Inventory::Inventory()
 {
     //ctor
@@ -23,11 +25,8 @@ void Inventory::push_back(Sqrat::SharedPtr<Item> item)
 
 Sqrat::SharedPtr<Item> Inventory::createItemByName(std::string name)
 {
-    Item* item = new Item();
-    item->setName(name);
-
-    auto itemPtr = Sqrat::SharedPtr<Item>(item);
-    //delete item;
+    auto itemPtr = Sqrat::SharedPtr<Item>(new Item);
+    itemPtr->setName(name);
     return itemPtr;
 }
 
@@ -47,14 +46,22 @@ Sqrat::SharedPtr<Item> Inventory::getItemByName(std::string name)
 {
     for (auto& item : mItems)
     {
-        if (item->getName()==name)
+        if (item->getName() == name)
             return item;
     }
 }
 
 ScriptObject Inventory::getSQObject(std::string className)
 {
-    auto obj = ScriptObject(className, Sqrat::DefaultVM::Get());
-    obj.bind("use");
-    return obj;
+    for (auto obj : mSQObjects)
+    {
+        if (obj.getClassName() == className)
+            return obj;
+    }
+
+    // no object exists, make new one
+    ScriptObject newObj(className);
+    newObj.bind("use");
+    mSQObjects.push_back(newObj);
+    return newObj;
 }

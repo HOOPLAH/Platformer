@@ -111,11 +111,6 @@ WayPointManager& WorldRef::getWayPointManager()
     return mWorld.getWayPointManager();
 }
 
-HSQUIRRELVM WorldRef::getVM()
-{
-    return mWorld.getVM();
-}
-
 std::vector<std::weak_ptr<ICollideable>> WorldRef::getObjectsWithinArea(sf::FloatRect rect)
 {
     std::vector<std::weak_ptr<ICollideable>> nearbyPlatforms;

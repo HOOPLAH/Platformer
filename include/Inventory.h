@@ -1,6 +1,8 @@
 #ifndef INVENTORY_H
 #define INVENTORY_H
 
+#include <map>
+
 #include <sqrat.h>
 
 #include "ScriptObject.h"
@@ -27,6 +29,7 @@ class Inventory
 
     private:
         std::vector<Sqrat::SharedPtr<Item>> mItems;
+        std::vector<ScriptObject> mSQObjects;
 };
 
 #endif // INVENTORY_H

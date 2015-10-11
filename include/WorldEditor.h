@@ -24,7 +24,7 @@ class WorldEditorObject : public WorldObject
 class WorldEditor
 {
     public:
-        WorldEditor(std::string path, HSQUIRRELVM vm);
+        WorldEditor(std::string path, std::weak_ptr<Player> hero);
         ~WorldEditor();
 
         void update(int ticks);
@@ -55,11 +55,11 @@ class WorldEditor
         float mCameraZoom;
 
         std::vector<std::string> mIDs;
-        int mCurrentID;
+        std::size_t mCurrentID;
 
         std::weak_ptr<WorldEditorObject> mDragObject;
         bool mPlayingHero;
-        std::shared_ptr<Player> mHero;
+        std::weak_ptr<Player> mHero;
 
         bool mDebugConsoleActive;
         DebugConsole mDebugConsole;
@@ -69,8 +69,6 @@ class WorldEditor
         std::vector<std::weak_ptr<ICollideable>> mCollideables;
 
         World mWorld;
-
-        HSQUIRRELVM mVM;
 };
 
 #endif // WORLDEDITOR_H

@@ -19,8 +19,8 @@
 class World
 {
     public:
-        World(HSQUIRRELVM vm);
-        World(std::string path, HSQUIRRELVM vm);
+        World(std::weak_ptr<Player> hero);
+        World(std::string path, std::weak_ptr<Player> hero);
         ~World();
 
         void update(int ticks);
@@ -41,7 +41,6 @@ class World
         std::vector<std::weak_ptr<ICollideable>>& getCollideables(){return mCollideables;}
         WayPointManager& getWayPointManager(){return mWayPointManager;}
         WorldRef& getWorldRef(){return mWorldRef;}
-        HSQUIRRELVM getVM(){return mVM;}
 
         void bindSquirrel();
 
@@ -69,14 +68,12 @@ class World
 
         Camera mCamera;
 
-        std::shared_ptr<Player> mHero; // outlet hero!!
+        std::weak_ptr<Player> mHero; // outlet hero!!
         std::vector<std::shared_ptr<NPC>> mNPCs;
         std::vector<std::shared_ptr<Projectile>> mAliveProjectiles;
         std::vector<std::shared_ptr<WorldSwitcher>> mButtons;
         std::vector<std::shared_ptr<WorldObject>> mWorldObjects;
         std::vector<std::weak_ptr<ICollideable>> mCollideables;
-
-        HSQUIRRELVM mVM;
 };
 
 #endif // WORLD_H

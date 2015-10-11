@@ -13,22 +13,19 @@
 #include "CollectibleObject.h"
 #include "Turret.h"
 
-World::World(HSQUIRRELVM vm) :
+World::World(std::weak_ptr<Player> hero) :
     mWorldRef(*this),
-    mVM(vm)
+    mHero(hero)
 {
     mSpawnPoint = sf::Vector2f(0.f, 0.f);
     mNextNPCSpawnPoint = 0;
     mNPCSpawnCount = 0;
     mGravity = sf::Vector2f(0.f, 10.f);
 
-    mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], mSpawnPoint);
-
-    Sqrat::RootTable().SetInstance("player", mHero.get());
-    Sqrat::RootTable().SetInstance("playerInventory", &mHero->getInventory());
+    mHero.lock()->setPhysicsPosition(mSpawnPoint);
 }
 
-World::World(std::string path, HSQUIRRELVM vm) : World(vm)
+World::World(std::string path, std::weak_ptr<Player> hero) : World(hero)
 {
     loadWorld(path);
 }
@@ -40,7 +37,7 @@ World::~World()
 
 void World::update(int ticks)
 {
-    if (mNPCs.size() < mNPCSpawnCount && mNPCSpawnPoints.size() > 0 && !mHero->getQuest().mActions.empty())
+    if (mNPCs.size() < mNPCSpawnCount && mNPCSpawnPoints.size() > 0 && !mHero.lock()->getQuest().mActions.empty())
     {
         auto npc = std::make_shared<NPC>(Assets::sprites["pinkpeewee"], mNPCSpawnPoints[mNextNPCSpawnPoint], mWorldRef);
         mNPCs.push_back(npc);
@@ -64,20 +61,20 @@ void World::update(int ticks)
 
         if (!npc->isAlive()) // playah killed npc
         {
-            if (!mHero->getQuest().mActions.empty())
+            if (!mHero.lock()->getQuest().mActions.empty())
             {
-                if (mHero->getQuest().mActions.top()->mTag == ActionTag::KILL && npc->getKillerTag() == EntityTags::PLAYER)
+                if (mHero.lock()->getQuest().mActions.top()->mTag == ActionTag::KILL && npc->getKillerTag() == EntityTags::PLAYER)
                 {
-                    auto action = static_cast<KillAction*>(&*mHero->getQuest().mActions.top());
+                    auto action = static_cast<KillAction*>(&*mHero.lock()->getQuest().mActions.top());
 
                     if (action->mKillsLeftCount > 1)
                         action->mKillsLeftCount--;
                     else
-                        mHero->getQuest().mActions.pop();
+                        mHero.lock()->getQuest().mActions.pop();
                 }
-                else if (mHero->getQuest().mActions.top()->mTag == ActionTag::PROTECT)
+                else if (mHero.lock()->getQuest().mActions.top()->mTag == ActionTag::PROTECT)
                 {
-                    auto action = static_cast<ProtectAction*>(&*mHero->getQuest().mActions.top());
+                    auto action = static_cast<ProtectAction*>(&*mHero.lock()->getQuest().mActions.top());
 
                     if (action->mKillsLeftCount > 0)
                         action->mKillsLeftCount--;
@@ -107,18 +104,18 @@ void World::update(int ticks)
 
             if (collectible->isCollected())
             {
-                if (!mHero->getQuest().mActions.empty())
+                if (!mHero.lock()->getQuest().mActions.empty())
                 {
-                    if (mHero->getQuest().mActions.top()->mTag == ActionTag::COLLECT)
+                    if (mHero.lock()->getQuest().mActions.top()->mTag == ActionTag::COLLECT)
                     {
-                        auto action = static_cast<CollectAction*>(&*mHero->getQuest().mActions.top());
+                        auto action = static_cast<CollectAction*>(&*mHero.lock()->getQuest().mActions.top());
 
                         if (obj->getTag() == action->mCollectTag)
                         {
                             if (action->mCollectLeftCount > 1)
                                 action->mCollectLeftCount--;
                             else
-                                mHero->getQuest().mActions.pop();
+                                mHero.lock()->getQuest().mActions.pop();
                         }
                         else
                             break;
@@ -132,33 +129,33 @@ void World::update(int ticks)
 
     for (auto& button : mButtons)
     {
-        if (mHero->getQuest().mActions.empty())
+        if (mHero.lock()->getQuest().mActions.empty())
         {
             button->update();
             button->setCollisionActive(true);
         }
     }
 
-    mHero->update();
-    mHero->setVelocity(mHero->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
-    if (!mHero->isAlive())
+    mHero.lock()->update();
+    mHero.lock()->setVelocity(mHero.lock()->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
+    if (!mHero.lock()->isAlive())
     {
-        mHero->respawn(mSpawnPoint);
-        mCollideables.push_back(mHero);
+        mHero.lock()->respawn(mSpawnPoint);
+        mCollideables.push_back(mHero.lock());
     }
 
     for (auto& obj : mCollideables)
     {
-        if (!mHero->getQuest().mActions.empty())
+        if (!mHero.lock()->getQuest().mActions.empty())
         {
-            if (mHero->getQuest().mActions.top()->mTag == ActionTag::PROTECT)
+            if (mHero.lock()->getQuest().mActions.top()->mTag == ActionTag::PROTECT)
             {
-                auto action = std::static_pointer_cast<ProtectAction>(mHero->getQuest().mActions.top());
+                auto action = std::static_pointer_cast<ProtectAction>(mHero.lock()->getQuest().mActions.top());
                 if (obj.lock()->getTag() == action->mProtectTag)
                 {
                     if (obj.lock()->isAlive() && action->mKillsLeftCount == 0) // obj is still alive and player killed everyone
                     {
-                        mHero->getQuest().mActions.pop();
+                        mHero.lock()->getQuest().mActions.pop();
                     }
                     else if (!obj.lock()->isAlive())
                     {
@@ -192,7 +189,7 @@ void World::update(int ticks)
         }
     }
 
-    mCamera.follow(mHero->getRenderPosition());
+    mCamera.follow(mHero.lock()->getRenderPosition());
 
     removeWeakDeadObj(mCollideables);
     removeDeadObj(mNPCs);
@@ -227,14 +224,14 @@ void World::draw(sf::RenderTarget& target, float alpha)
 
     for (auto& button : mButtons)
     {
-        if (mHero->getQuest().mActions.empty())
+        if (mHero.lock()->getQuest().mActions.empty())
         {
             if (windowCoords.intersects(button->getSprite().getGlobalBounds()))
                 button->draw(target, alpha);
         }
     }
 
-    mHero->draw(target, alpha);
+    mHero.lock()->draw(target, alpha);
     mWayPointManager.draw(target);
 
     target.setView(target.getDefaultView());
@@ -244,12 +241,12 @@ void World::draw(sf::RenderTarget& target, float alpha)
 
 void World::drawStationary(sf::RenderTarget& target)
 {
-    mHero->drawStationary(target);
+    mHero.lock()->drawStationary(target);
 }
 
 void World::handleEvents(sf::Event event)
 {
-    mHero->handleEvents(event, mWorldRef);
+    mHero.lock()->handleEvents(event, mWorldRef);
 }
 
 void World::loadWorld(std::string path)
@@ -269,7 +266,7 @@ void World::loadWorld(std::string path)
         return false;
     };
 
-    mCollideables.push_back(mHero);
+    mCollideables.push_back(mHero.lock());
 
     if (file.is_open())
     {
@@ -288,7 +285,7 @@ void World::loadWorld(std::string path)
                 float x = std::stof(split_line[1]);
                 float y = std::stof(split_line[2]);
                 mSpawnPoint = sf::Vector2f(x, y);
-                mHero->respawn(mSpawnPoint);
+                mHero.lock()->respawn(mSpawnPoint);
             }
             else if (find_key("npc_spawnpoint:", line))
             {
@@ -382,7 +379,7 @@ void World::loadWorld(std::string path)
                     action->mKillsLeftCount = action->mTotalKillCount;
                     action->mKillTag = std::stof(split_line[3]);
 
-                    mHero->getQuest().mActions.push(action);
+                    mHero.lock()->getQuest().mActions.push(action);
                 }
                 else if (action_type == "collect")
                 {
@@ -391,7 +388,7 @@ void World::loadWorld(std::string path)
                     action->mCollectLeftCount = action->mTotalCollectCount;
                     action->mCollectTag = std::stof(split_line[3]);
 
-                    mHero->getQuest().mActions.push(action);
+                    mHero.lock()->getQuest().mActions.push(action);
                 }
                 else if (action_type == "protect")
                 {
@@ -404,7 +401,7 @@ void World::loadWorld(std::string path)
                     action->mProtectTag = std::stof(split_line[4]);
                     action->mTag = ActionTag::PROTECT;
 
-                    mHero->getQuest().mActions.push(action);
+                    mHero.lock()->getQuest().mActions.push(action);
                 }
             }
         }

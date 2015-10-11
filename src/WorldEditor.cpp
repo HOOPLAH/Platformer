@@ -7,17 +7,17 @@
 #include "Assets.h"
 #include "FuncUtils.h"
 
-WorldEditor::WorldEditor(std::string path, HSQUIRRELVM vm) :
+WorldEditor::WorldEditor(std::string path, std::weak_ptr<Player> hero) :
     mDirectoryPath(path),
-    mWorld(path, vm),
-    mDebugConsole(mWorld.getWorldRef())
+    mHero(hero),
+    mDebugConsole(mWorld.getWorldRef()),
+    mWorld(path, hero)
 {
     loadWorld();
 
     mCameraZoom = 1.f;
 
     mPlayingHero = false;
-    mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], sf::Vector2f(0.f, 0.f));
     mCollideables.push_back(mHero);
 
     mIDs.push_back("ammocrate");
@@ -40,11 +40,11 @@ void WorldEditor::update(int ticks)
 {
     if (mPlayingHero)
     {
-        mHero->update();
-        mCamera.follow(mHero->getRenderPosition());
-        mCameraPosition = mHero->getRenderPosition();
+        mHero.lock()->update();
+        mCamera.follow(mHero.lock()->getRenderPosition());
+        mCameraPosition = mHero.lock()->getRenderPosition();
 
-        mHero->setVelocity(mHero->getVelocity() + mWorld.getGravity()*UPDATE_STEP.asSeconds());
+        mHero.lock()->setVelocity(mHero.lock()->getVelocity() + mWorld.getGravity()*UPDATE_STEP.asSeconds());
     }
     else // don't play as hero
     {
@@ -91,7 +91,7 @@ void WorldEditor::draw(sf::RenderTarget& target, float alpha)
     sf::FloatRect windowCoords(mCamera.getCenter().x-(SCREEN_WIDTH/2), mCamera.getCenter().y-(SCREEN_HEIGHT/2), SCREEN_WIDTH, SCREEN_HEIGHT);
 
     if (mPlayingHero)
-        mHero->draw(target, alpha);
+        mHero.lock()->draw(target, alpha);
 
     for (auto& obj : mWorldObjects)
     {
@@ -200,7 +200,7 @@ void WorldEditor::handleEvents(sf::Event& event)
             mPlayingHero = !mPlayingHero;
 
             if (mPlayingHero)
-                mHero->setPhysicsPosition(mGlobalMousePosition);
+                mHero.lock()->setPhysicsPosition(mGlobalMousePosition);
         }
     }
     else if (event.type == sf::Event::KeyPressed)
@@ -368,7 +368,7 @@ void WorldEditor::handleEvents(sf::Event& event)
     else // playing as player
     {
         if (!mDebugConsoleActive)
-            mHero->handleEvents(event, mWorld.getWorldRef());
+            mHero.lock()->handleEvents(event, mWorld.getWorldRef());
     }
 }
 
@@ -490,7 +490,7 @@ void WorldEditor::refreshWorld()
 
     mWorldObjects.clear();
     mCollideables.clear();
-    mCollideables.push_back(mHero);
+    mCollideables.push_back(mHero.lock());
     loadWorld();
 }
 

@@ -21,7 +21,9 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Platformer");
 
-    WorldEditor worldEditor("Content/Worlds/test2.txt", vm);
+    auto player = std::make_shared<Player>(Assets::sprites["bluepeewee"], sf::Vector2f());
+
+    WorldEditor worldEditor("Content/Worlds/test2.txt", player);
 
     //Sqrat::RootTable(vm).Func("getInputString", sqgetinputstring);
     //Sqrat::RootTable(vm).Func("getInputNumber", sqgetinputnumber);

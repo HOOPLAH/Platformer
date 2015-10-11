@@ -23,6 +23,8 @@ Player::Player(SpriteInfo& info, sf::Vector2f pos) :
     mJumping = true;
     mPhysicsPosition = pos;
     mFallDamageRate = 10.f;
+
+    mInventory.push_back(mInventory.createItemByName("Weapon"));
 }
 
 Player::~Player()
@@ -189,6 +191,7 @@ void Player::handleEvents(sf::Event& event, WorldRef& worldRef)
             }
 
             mWeapon.fire(mWeaponAngle, worldRef, mTag);
+            mInventory.useItem(0);
         }
     }
     else if (event.type == sf::Event::MouseMoved)

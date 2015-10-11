@@ -45,6 +45,8 @@ void bindSquirrel(HSQUIRRELVM vm)
 
     Sqrat::Class<Player> playerClass(vm, "Player");
     playerClass.Func("getInventory", &Player::getInventory);
+    playerClass.Func("setHealth", &Player::setHealth);
+    playerClass.Func("getHealth", &Player::getHealth);
     Sqrat::RootTable().Bind("Player", playerClass);
 }
 
@@ -68,13 +70,17 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Platformer");
 
-    WorldManager worldMgr(vm);
+    auto player = std::make_shared<Player>(Assets::sprites["bluepeewee"], sf::Vector2f());
+    Sqrat::RootTable().SetInstance("player", player.get());
+    Sqrat::RootTable().SetInstance("playerInventory", &player->getInventory());
 
     std::string error;
     if (!script.CompileFile("script.nut", error) || !script.Run(error))
     {
         std::cout << "Squirrel Error: " << error << std::endl;
     }
+
+    WorldManager worldMgr(player);
 
     sf::Clock clock;
 	sf::Time accumulator = sf::Time::Zero;
@@ -95,7 +101,7 @@ int main()
                 worldMgr.handleEvents(event);
             }
 
-            worldMgr.update(ticks);
+            worldMgr.update(ticks, player);
             accumulator -= UPDATE_STEP;
 
             ticks++;
