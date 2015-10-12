@@ -5,6 +5,7 @@
 
 #include <squirrel.h>
 #include <sqext.h>
+#include <sqrat.h>
 
 class ScriptObject
 {

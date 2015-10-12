@@ -17,20 +17,13 @@ struct SpriteInfo
         mHitBox = sf::FloatRect(0.f, 0.f, mFrameDim.x, mFrameDim.y);
     }
 
+    ~SpriteInfo(){}
+
     sf::Texture mTexture;
     int mFrames;
     int mFramesPerRow;
     sf::Vector2f mFrameDim;
     sf::FloatRect mHitBox;
-
-    static void bindSquirrel(HSQUIRRELVM vm)
-    {
-        Sqrat::Class<SpriteInfo> info(vm, "SpriteInfo");
-        info.Ctor<std::string, int, int>();
-        //item.Var("initialize", &<class>::initialize);
-        //vector2.Var("Y", &irr::core::vector2df::Y);
-        Sqrat::RootTable(vm).Bind("SpriteInfo", info);
-    }
 };
 
 #endif // SPRITEINFO_H

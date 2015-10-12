@@ -34,7 +34,7 @@ class ICollideable : virtual public IObject
         // Accessors
         sf::FloatRect getHitBox(){return mHitBox;}
         sf::Vector2f getDimensions(){return mDimensions;}
-        sf::Vector2f getPhysicsPosition(){return mPhysicsPosition;}
+        sf::Vector2f& getPhysicsPosition(){return mPhysicsPosition;}
         sf::Vector2f getVelocity(){return mVelocity;}
         bool isStatic(){return mStatic;}
         bool isCollisionActive(){return mCollisionActive;}

@@ -4,6 +4,8 @@
 #include <fstream>
 #include <sstream>
 
+#include <sqrat.h>
+
 #include "Assets.h"
 #include "Constants.h"
 #include "Direction.h"
@@ -23,6 +25,8 @@ World::World(std::weak_ptr<Player> hero) :
     mGravity = sf::Vector2f(0.f, 10.f);
 
     mHero.lock()->setPhysicsPosition(mSpawnPoint);
+
+    Sqrat::RootTable().SetInstance("worldRef", &mWorldRef);
 }
 
 World::World(std::string path, std::weak_ptr<Player> hero) : World(hero)

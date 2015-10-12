@@ -23,6 +23,7 @@ class WorldRef
 
         void addNPC(std::weak_ptr<NPC> npc);
         void addProjectile(std::weak_ptr<Projectile> proj);
+        void sq_addProjectile(sf::Vector2f start, float dmg, float range, int ownerTag, float angle);
         void addWorldObject(std::weak_ptr<WorldObject> worldObj);
 
         std::weak_ptr<Player> getHero();

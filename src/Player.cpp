@@ -29,7 +29,10 @@ Player::Player(SpriteInfo& info, sf::Vector2f pos) :
 
 Player::~Player()
 {
-    //dtor
+    for(std::vector<ScriptObject*>::iterator it = mInventory.getSQObjectList().begin(); it != mInventory.getSQObjectList().end(); ++it)
+    {
+        delete (*it);
+    }
 }
 
 void Player::update()
@@ -71,6 +74,7 @@ void Player::update()
     mOldPhysicsPosition = mPhysicsPosition;
     mPhysicsPosition += mVelocity;
 
+    mInventory.getSQObject("Weapon")->call("update");
     mWeapon.update();
     mWeapon.setPosition(mRenderPosition + getCenter());
     sf::Vector2f weapFirePoint = mWeapon.getRenderPosition()+mWeapon.getFirePoint();

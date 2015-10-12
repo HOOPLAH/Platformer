@@ -19,6 +19,7 @@
 #include "Item.h"
 #include "Inventory.h"
 #include "Player.h"
+#include "FuncUtils.h"
 
 void sqprintfunc(HSQUIRRELVM v, const SQChar *s, ...)
 {
@@ -30,12 +31,19 @@ void sqprintfunc(HSQUIRRELVM v, const SQChar *s, ...)
 
 void bindSquirrel(HSQUIRRELVM vm)
 {
+    Sqrat::Class<sf::Vector2f> vecClass(vm, "Vector2f");
+    vecClass.Ctor<float, float>();
+    vecClass.Var("x", &sf::Vector2f::x);
+    vecClass.Var("y", &sf::Vector2f::y);
+    Sqrat::RootTable().Bind("Vector2f", vecClass);
+
     Sqrat::Class<Item> itemClass(vm, "Item");
     itemClass.Func("setStackSize", &Item::setStackSize);
     itemClass.Func("setName", &Item::setName);
     itemClass.Func("getCount", &Item::getCount);
     itemClass.Func("getName", &Item::getName);
     itemClass.Func("use", &Item::use);
+    itemClass.Func("update", &Item::use);
     Sqrat::RootTable().Bind("Item", itemClass);
 
     Sqrat::Class<Inventory> inventoryClass(vm, "Inventory");
@@ -44,10 +52,14 @@ void bindSquirrel(HSQUIRRELVM vm)
     Sqrat::RootTable().Bind("Inventory", inventoryClass);
 
     Sqrat::Class<Player> playerClass(vm, "Player");
-    playerClass.Func("getInventory", &Player::getInventory);
-    playerClass.Func("setHealth", &Player::setHealth);
-    playerClass.Func("getHealth", &Player::getHealth);
+    playerClass.Func("getWeaponAngle", &Player::getWeaponAngle);
+    playerClass.Func("getTag", &Player::getTag);
     Sqrat::RootTable().Bind("Player", playerClass);
+
+    Sqrat::Class<WorldRef> worldRefClass(vm, "WorldRef");
+    worldRefClass.Func("addProjectile", &WorldRef::sq_addProjectile);
+    //worldRefClass.Func("rotateVector", &rotateVec);
+    Sqrat::RootTable().Bind("WorldRef", worldRefClass);
 }
 
 int main()
@@ -73,6 +85,7 @@ int main()
     auto player = std::make_shared<Player>(Assets::sprites["bluepeewee"], sf::Vector2f());
     Sqrat::RootTable().SetInstance("player", player.get());
     Sqrat::RootTable().SetInstance("playerInventory", &player->getInventory());
+    Sqrat::RootTable().SetInstance("playerPosition", &player->getPhysicsPosition());
 
     std::string error;
     if (!script.CompileFile("script.nut", error) || !script.Run(error))

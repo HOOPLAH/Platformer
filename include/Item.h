@@ -10,6 +10,7 @@ class Item
         virtual ~Item();
 
         virtual void use(){mCount--;}
+        virtual void update(){}
 
         int getStackSize(){return mStackSize;}
         int getCount(){return mCount;}

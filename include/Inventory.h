@@ -14,7 +14,7 @@ class Inventory
         Inventory();
         ~Inventory();
 
-        void sq_push_back(Sqrat::Object& obj);
+        void sq_push_back(Sqrat::Object obj);
         void push_back(Sqrat::SharedPtr<Item> item);
 
         Sqrat::SharedPtr<Item> createItemByName(std::string name);
@@ -25,11 +25,12 @@ class Inventory
         Sqrat::SharedPtr<Item> getItemByName(std::string name);
         std::vector<Sqrat::SharedPtr<Item>>& getItemList(){return mItems;}
 
-        ScriptObject getSQObject(std::string className);
+        ScriptObject* getSQObject(std::string className);
+        std::vector<ScriptObject*> getSQObjectList(){return mSQObjects;}
 
     private:
         std::vector<Sqrat::SharedPtr<Item>> mItems;
-        std::vector<ScriptObject> mSQObjects;
+        std::vector<ScriptObject*> mSQObjects;
 };
 
 #endif // INVENTORY_H
