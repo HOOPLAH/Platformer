@@ -22,7 +22,7 @@ bool CollectibleObject::onContactBegin(std::weak_ptr<ICollideable> object, bool 
         auto player = static_cast<Player*>(&*object.lock());
 
         if (mType == CollectibleType::AMMOCRATE)
-            player->getWeapon().addAmmo(9); // a full magazine
+            static_cast<Weapon*>(&*player->getInventory().getItem("Weapon"))->addAmmo(9);
 
         mCollected = true;
 

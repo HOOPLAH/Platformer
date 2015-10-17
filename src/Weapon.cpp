@@ -8,12 +8,13 @@
 #include "FuncUtils.h"
 #include "EntityTags.h"
 
-Weapon::Weapon(SpriteInfo& info) : InventoryItem(info)
+Weapon::Weapon(SpriteInfo& info, int tag) : Item(info, "Weapon")
 {
     mDamage = 10;
     mRange = 500.f;
     mInaccuracy = 0.5f;
     mCoolDown = 100;
+    mOwnerTag = tag;
     mFirePoint = sf::Vector2f(10.f, 0.f);
 
     mMaxAmmo = 10;
@@ -38,10 +39,15 @@ void Weapon::draw(sf::RenderTarget& target, float alpha)
     SpriteObject::draw(target, alpha);
 }
 
-void Weapon::fire(float angle, WorldRef& worldRef, int ownerTag)
+void Weapon::use(WorldRef& worldRef)
+{
+    fire(worldRef);
+}
+
+bool Weapon::checkAmmo()
 {
     if (mCoolDownClock.getElapsedTime().asMilliseconds() < mCoolDown) //not cooled down yet, don't fire
-        return;
+        return false;
 
     if (mAmmo <= 0 && !mUnlimitedAmmo)
     {
@@ -51,27 +57,36 @@ void Weapon::fire(float angle, WorldRef& worldRef, int ownerTag)
             mMagazines--;
         }
         else
-            return;
+            return false;
     }
 
     mCoolDownClock.restart();
     if (!mUnlimitedAmmo)
         mAmmo--;
 
-    angle *= RADTODEG;
-    //angle += (((float)(rand()%100)/100.f)*(mInaccuracy/2))-(mInaccuracy/2);
-    angle *= DEGTORAD;
+    return true;
+}
+
+void Weapon::fire(WorldRef& worldRef)
+{
+    if (!checkAmmo())
+        return;
+
+    // make this weapon inaccurate
+    /*mFiringAngle *= RADTODEG;
+    angle += (((float)(rand()%100)/100.f)*(mInaccuracy/2))-(mInaccuracy/2);
+    mFiringAngle *= DEGTORAD;*/
 
     int dir = 1;
-    if (std::abs(angle*RADTODEG) > 90.f)
+    if (std::abs(mFiringAngle*RADTODEG) > 90.f)
         dir = -1;
 
     sf::Vector2f firePoint = mFirePoint;
-    rotateVec(firePoint, angle*RADTODEG);
+    rotateVec(firePoint, mFiringAngle*RADTODEG);
 
     auto start = mRenderPosition+sf::Vector2f(firePoint.x*dir, firePoint.y);
-    auto proj = std::make_shared<Projectile>(Assets::sprites["bullet"], start, mDamage, mRange, ownerTag);
-    proj->setFiringAngle(angle);
+    auto proj = std::make_shared<Projectile>(Assets::sprites["bullet"], start, mDamage, mRange, mOwnerTag);
+    proj->setFiringAngle(mFiringAngle);
     worldRef.addProjectile(proj);
 }
 

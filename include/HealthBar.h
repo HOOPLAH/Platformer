@@ -3,8 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include <iostream>
-
 struct HealthBar
 {
     HealthBar(float hp, sf::Vector2f dim, bool hideHealth=true)

@@ -1,25 +1,27 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
-#include "InventoryItem.h"
+#include "Item.h"
 #include "Line.h"
 #include "Projectile.h"
 #include "ICollideable.h"
 #include "WorldRef.h"
 
-class Weapon : public InventoryItem
+class Weapon : public Item
 {
     public:
-        Weapon(SpriteInfo& info);
+        Weapon(SpriteInfo& info, int tag);
         ~Weapon();
 
-        void update();
+        virtual void update();
         void draw(sf::RenderTarget& target, float alpha);
 
-        void fire(float angle, WorldRef& ref, int ownerTag);
+        virtual void use(WorldRef& worldRef);
+        virtual void fire(WorldRef& ref);
 
         void addAmmo(int ammo);
         void reload(){if (mMagazines > 0){mAmmo=mMaxAmmo; mMagazines--;}}
+        bool checkAmmo();
 
         // Accessors
         sf::Vector2f getFirePoint(){return mFirePoint;}
@@ -34,6 +36,8 @@ class Weapon : public InventoryItem
         void setRange(float range){mRange=range;}
         void setInaccuracy(float inaccuracy){mInaccuracy=inaccuracy;}
         void setCoolDown(int cooldown){mCoolDown=cooldown;}
+        void setFiringAngle(float angle){mFiringAngle=angle;}
+        void setOwnerTag(int tag){mOwnerTag=tag;}
         void setFirePoint(sf::Vector2f firePoint){mFirePoint=firePoint;}
         void setUnlimitedAmmo(bool unlimited){mUnlimitedAmmo=unlimited;}
         void setWeaponClips(int mag, int ammo){mMagazines=mag; mAmmo=ammo;}
@@ -43,6 +47,8 @@ class Weapon : public InventoryItem
         float mRange;
         float mInaccuracy;
         int mCoolDown;
+        float mFiringAngle;
+        int mOwnerTag; // who owns this weapon
         sf::Vector2f mFirePoint;
         sf::Clock mCoolDownClock;
 

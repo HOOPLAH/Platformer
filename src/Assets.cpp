@@ -14,9 +14,11 @@ void Assets::loadAssets()
     sprites["turrethead"] = SpriteInfo("Content/Textures/turrethead.png");
     sprites["turretbody"] = SpriteInfo("Content/Textures/turretbody.png");
     sprites["waypoint"] = SpriteInfo("Content/Textures/waypoint.png");
+    sprites["blueplatform"] = SpriteInfo("Content/Textures/blueplatform.png");
+    sprites["inventorybar"] = SpriteInfo("Content/Textures/inventorybar.png");
 
-    sprites["kingkam"] = SpriteInfo("Content/Textures/kingkam.png", 12, 6);
-
+    sprites["grenade"] = SpriteInfo("Content/Textures/grenade.png");
+        sprites["grenade"].mHitBox = sf::FloatRect(0.f, 9.f, 12.f, 9.f);
     sprites["bluepeewee"] = SpriteInfo("Content/Textures/bluepeewee.png", 36, 6);
         sprites["bluepeewee"].mHitBox = sf::FloatRect(20.f, 10.f, 24.f, 44.f);
     sprites["pinkpeewee"] = SpriteInfo("Content/Textures/pinkpeewee.png", 36, 6);
@@ -25,14 +27,8 @@ void Assets::loadAssets()
         sprites["bigplatform"].mHitBox = sf::FloatRect(10.f, 12.f, 225.f, 124.f);
     sprites["smallplatform"] = SpriteInfo("Content/Textures/smallplatform.png");
         sprites["smallplatform"].mHitBox = sf::FloatRect(5.f, 8.f, 35.f, 26.f);
-    sprites["blueplatform"] = SpriteInfo("Content/Textures/blueplatform.png");
 
     ///
 
     fonts["8bit"] = FontInfo("Content/Fonts/8bit.ttf");
-}
-
-SpriteInfo& Assets::getSpriteInfo(std::string id)
-{
-    return sprites[id];
 }

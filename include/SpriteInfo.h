@@ -2,8 +2,6 @@
 #define SPRITEINFO_H
 
 #include <SFML/Graphics.hpp>
-#include <squirrel.h>
-#include <sqrat.h>
 
 struct SpriteInfo
 {
@@ -16,8 +14,6 @@ struct SpriteInfo
         mFrameDim = sf::Vector2f(mTexture.getSize().x/mFramesPerRow, mTexture.getSize().y/(mFrames/mFramesPerRow));
         mHitBox = sf::FloatRect(0.f, 0.f, mFrameDim.x, mFrameDim.y);
     }
-
-    ~SpriteInfo(){}
 
     sf::Texture mTexture;
     int mFrames;

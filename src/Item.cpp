@@ -1,8 +1,7 @@
 #include "Item.h"
 
-Item::Item() :
-    mCount(1),
-    mName("")
+Item::Item(SpriteInfo& info, std::string name, sf::Vector2f pos) : SpriteObject(info, pos),
+    mName(name)
 {
     //ctor
 }

@@ -7,14 +7,15 @@
 #include "Direction.h"
 #include "EntityTags.h"
 #include "Projectile.h"
+#include "GrenadeLauncher.h"
 
 Player::Player(SpriteInfo& info, sf::Vector2f pos) :
     SpriteObject(info, pos),
     ICollideable(info.mHitBox, info.mFrameDim, EntityTags::PLAYER),
-    mHealth(100.f, sf::Vector2f(30.f, 2.f), false),
-    mWeapon(Assets::sprites["pistol"])
+    mHealth(100.f, sf::Vector2f(30.f, 2.f), false)
 {
-    //mSprite.setOrigin(getCenter());
+    mInventoryBar = sf::Sprite(Assets::sprites["inventorybar"].mTexture);
+    mInventoryBar.setPosition(0.f, 500.f);
 
     mRunSpeed = 3.f;
     mJumpSpeed = 5.5f;
@@ -24,15 +25,14 @@ Player::Player(SpriteInfo& info, sf::Vector2f pos) :
     mPhysicsPosition = pos;
     mFallDamageRate = 10.f;
 
-    mInventory.push_back(mInventory.createItemByName("Weapon"));
+    mInventory.push_back(std::move(std::make_unique<Weapon>(Assets::sprites["pistol"], EntityTags::PLAYER)));
+    mInventory.push_back(std::move(std::make_unique<GrenadeLauncher>(Assets::sprites["grenade"], EntityTags::PLAYER)));
+    mInventoryIndex = 1;
 }
 
 Player::~Player()
 {
-    for(std::vector<ScriptObject*>::iterator it = mInventory.getSQObjectList().begin(); it != mInventory.getSQObjectList().end(); ++it)
-    {
-        delete (*it);
-    }
+    //dtor
 }
 
 void Player::update()
@@ -65,7 +65,7 @@ void Player::update()
             setFrameLoop(6, 11);
     }
 
-    mHealth.setPosition(mRenderPosition + sf::Vector2f(getCenter().x, 0.f));
+
     if (mHealth.mHP <= 0.f)
     {
         kill();
@@ -74,11 +74,18 @@ void Player::update()
     mOldPhysicsPosition = mPhysicsPosition;
     mPhysicsPosition += mVelocity;
 
-    mInventory.getSQObject("Weapon")->call("update");
-    mWeapon.update();
-    mWeapon.setPosition(mRenderPosition + getCenter());
-    sf::Vector2f weapFirePoint = mWeapon.getRenderPosition()+mWeapon.getFirePoint();
-    mWeaponAngle = atan2(mWeaponTarget.y - weapFirePoint.y, mWeaponTarget.x - weapFirePoint.x);
+    if (mInventory.getItem(mInventoryIndex)->getName() == "Weapon")
+    {
+        auto weap = static_cast<Weapon*>(&*mInventory.getItem(mInventoryIndex));
+
+        weap->setFiringAngle(mWeaponAngle);
+        weap->setPosition(mRenderPosition + getCenter());
+
+        sf::Vector2f weapFirePoint = weap->getRenderPosition();//+weap->getFirePoint();
+        mWeaponAngle = atan2(mWeaponTarget.y - weapFirePoint.y, mWeaponTarget.x - weapFirePoint.x);
+    }
+
+    mInventory.getItem(mInventoryIndex)->update();
 }
 
 void Player::draw(sf::RenderTarget& target, float alpha)
@@ -88,18 +95,22 @@ void Player::draw(sf::RenderTarget& target, float alpha)
     mRenderPosition = mPhysicsPosition*alpha + mOldPhysicsPosition*(1.f - alpha);
     //mRenderPosition = mPhysicsPosition;
 
-    mHealth.draw(target);
-    mWeapon.draw(target, alpha);
+    //mHealth.draw(target);
+
+    mInventory.getItem(mInventoryIndex)->draw(target, alpha);
     mWeaponTarget = target.mapPixelToCoords(sf::Vector2i(mMousePosition.x, mMousePosition.y));
 }
 
 void Player::drawStationary(sf::RenderTarget& target)
 {
-    std::string sWeaponText = std::to_string(mWeapon.getMagazines());
+    //target.draw(mInventoryBar);
+
+    // TODO: move to inventory item ui when there is one
+    /*std::string sWeaponText = std::to_string(mWeapon.getMagazines());
     sWeaponText.append("/");
     sWeaponText.append(std::to_string(mWeapon.getAmmo()));
     sf::Text weaponText(sWeaponText, Assets::fonts["8bit"].mFont);
-    target.draw(weaponText); // magazine / ammo_in_magazine
+    target.draw(weaponText); // magazine / ammo_in_magazine*/
 
     if (!mQuest.mActions.empty())
     {
@@ -194,8 +205,11 @@ void Player::handleEvents(sf::Event& event, WorldRef& worldRef)
                     mDirection = Direction::STILL_RIGHT;
             }
 
-            mWeapon.fire(mWeaponAngle, worldRef, mTag);
-            mInventory.useItem(0);
+            mInventory.getItem(mInventoryIndex)->use(worldRef);
+        }
+        else if (event.mouseButton.button == sf::Mouse::Right)
+        {
+            mVelocity = sf::Vector2f(cos(mWeaponAngle), sin(mWeaponAngle))*mRunSpeed;
         }
     }
     else if (event.type == sf::Event::MouseMoved)
@@ -238,7 +252,7 @@ void Player::handleEvents(sf::Event& event, WorldRef& worldRef)
 
         if (event.key.code == sf::Keyboard::R)
         {
-            mWeapon.reload();
+            //mWeapon.reload();
         }
     }
 }
@@ -246,7 +260,7 @@ void Player::handleEvents(sf::Event& event, WorldRef& worldRef)
 void Player::respawn(sf::Vector2f pos)
 {
     mHealth.mHP = mHealth.mMaxHP;
-    mWeapon.setWeaponClips(3, 10);
+    //mWeapon.setWeaponClips(3, 10);
     mPhysicsPosition = pos;
     mVelocity = sf::Vector2f(0.f, 0.f);
     mAlive = true;

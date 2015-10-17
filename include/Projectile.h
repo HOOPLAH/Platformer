@@ -11,7 +11,7 @@ class Projectile : public SpriteObject, public ICollideable
         Projectile(SpriteInfo& info, sf::Vector2f pos, int damage, float range, int ownerTag);
         ~Projectile();
 
-        void update();
+        virtual void update();
         void draw(sf::RenderTarget& target, float alpha);
 
         // Accessors
@@ -19,10 +19,10 @@ class Projectile : public SpriteObject, public ICollideable
         int getOwnerTag(){return mOwnerTag;}
 
         // Mutators
-        void setFiringAngle(float angle){mFiringAngle=angle; mSprite.setRotation(angle*RADTODEG);}
+        virtual void setFiringAngle(float angle){mFiringAngle=angle; mSprite.setRotation(angle*RADTODEG);}
         void setSpeed(float speed){mSpeed=speed;}
 
-    private:
+    protected:
         int mDamage;
         float mSpeed;
         float mFiringAngle;

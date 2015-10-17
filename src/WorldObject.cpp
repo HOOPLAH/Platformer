@@ -28,12 +28,13 @@ void WorldObject::update()
 
     mOldPhysicsPosition = mPhysicsPosition;
     mPhysicsPosition += mVelocity;
-    mRenderPosition = mPhysicsPosition;
 }
 
 void WorldObject::draw(sf::RenderTarget& target, float alpha)
 {
     SpriteObject::draw(target, alpha);
+
+    mRenderPosition = mPhysicsPosition*alpha + mOldPhysicsPosition*(1.f - alpha);
 
     //mHealth.draw(target);
 }

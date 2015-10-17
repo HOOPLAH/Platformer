@@ -15,33 +15,9 @@ int main()
 
     Assets::loadAssets();
 
-    HSQUIRRELVM vm = sq_open(1064);
-    sq_setprintfunc(vm, sqprintfunc, NULL);
-    Sqrat::Script *script = new Sqrat::Script(vm);
-
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Platformer");
 
-    auto player = std::make_shared<Player>(Assets::sprites["bluepeewee"], sf::Vector2f());
-
-    WorldEditor worldEditor("Content/Worlds/test2.txt", player);
-
-    //Sqrat::RootTable(vm).Func("getInputString", sqgetinputstring);
-    //Sqrat::RootTable(vm).Func("getInputNumber", sqgetinputnumber);
-
-    //Game::bindSquirrel(script->GetVM());
-
-    std::string error;
-    if (!script->CompileFile("script.nut", error))
-    {
-        std::cout << "Squirrel Error: " << error << std::endl;
-    }
-    else
-    {
-        if (!script->Run(error))
-        {
-            std::cout << "Squirrel Error: " << error << std::endl;
-        }
-    }
+    WorldEditor worldEditor("Content/Worlds/main_menu.txt");
 
     sf::Clock clock;
 	sf::Time accumulator = sf::Time::Zero;

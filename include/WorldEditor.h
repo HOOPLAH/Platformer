@@ -24,7 +24,7 @@ class WorldEditorObject : public WorldObject
 class WorldEditor
 {
     public:
-        WorldEditor(std::string path, std::weak_ptr<Player> hero);
+        WorldEditor(std::string path);
         ~WorldEditor();
 
         void update(int ticks);
@@ -55,11 +55,11 @@ class WorldEditor
         float mCameraZoom;
 
         std::vector<std::string> mIDs;
-        std::size_t mCurrentID;
+        int mCurrentID;
 
         std::weak_ptr<WorldEditorObject> mDragObject;
         bool mPlayingHero;
-        std::weak_ptr<Player> mHero;
+        std::shared_ptr<Player> mHero;
 
         bool mDebugConsoleActive;
         DebugConsole mDebugConsole;

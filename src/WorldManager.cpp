@@ -3,11 +3,11 @@
 #include <fstream>
 #include <array>
 
-WorldManager::WorldManager(std::weak_ptr<Player> hero)
+WorldManager::WorldManager()
 {
     mCurrentWorld = 0;
     loadWorldFileNames();
-    loadWorld(hero);
+    loadWorld();
 }
 
 WorldManager::~WorldManager()
@@ -15,17 +15,17 @@ WorldManager::~WorldManager()
     //dtor
 }
 
-void WorldManager::update(int ticks, std::weak_ptr<Player> hero)
+void WorldManager::update(int ticks)
 {
     mWorlds[mCurrentWorld]->update(ticks);
 
     for (auto& button : mWorlds[mCurrentWorld]->getButtons())
-        if (button->isPressed())
-        {
-            mCurrentWorld = button->getNextWorld();
-            loadWorld(hero);
-            button->setPressed(false);
-        }
+    if (button->isPressed())
+    {
+        mCurrentWorld = button->getNextWorld();
+        loadWorld();
+        button->setPressed(false);
+    }
 }
 
 void WorldManager::draw(sf::RenderTarget& target, float alpha)
@@ -38,9 +38,9 @@ void WorldManager::handleEvents(sf::Event event)
     mWorlds[mCurrentWorld]->handleEvents(event);
 }
 
-void WorldManager::loadWorld(std::weak_ptr<Player> hero)
+void WorldManager::loadWorld()
 {
-    std::unique_ptr<World> world(new World(hero));
+    std::unique_ptr<World> world(new World);
     world->loadWorld(mWorldFileNames[mCurrentWorld]);
     mWorlds.push_back(std::move(world));
 }

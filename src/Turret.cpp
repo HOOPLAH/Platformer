@@ -4,7 +4,7 @@
 #include "EntityTags.h"
 
 Turret::Turret(SpriteInfo& info, sf::Vector2f pos) : WorldObject(info, pos, EntityTags::TURRET, false, false),
-    mWeapon(Assets::sprites["turrethead"])
+    mWeapon(Assets::sprites["turrethead"], EntityTags::TURRET)
 {
     mWeapon.setUnlimitedAmmo(true);
     mWeapon.setRange(300.f);
@@ -28,18 +28,19 @@ void Turret::update(WorldRef& worldRef)
     auto closeObjs = worldRef.getObjectsWithinArea(sf::FloatRect(mWeapon.getRenderPosition(), sf::Vector2f(mWeapon.getRange(), mWeapon.getRange())));
     for (auto obj : closeObjs)
     {
-        if (obj.lock()->getTag() == EntityTags::PLAYER)
+        if (obj.lock()->getTag() == EntityTags::NPC)
             mWeaponTarget = obj;
     }
 
     mWeapon.update();
+    mWeapon.setFiringAngle(mWeaponAngle);
     mWeapon.setPosition(mRenderPosition + sf::Vector2f(34.f, -10.f));
     sf::Vector2f weapFirePoint = (mWeapon.getRenderPosition()+mWeapon.getFirePoint());
     if (!mWeaponTarget.expired())
     {
         mWeaponAngle = atan2((mWeaponTarget.lock()->getPhysicsPosition().y+mWeaponTarget.lock()->getDimensions().y/2) - weapFirePoint.y,
                              (mWeaponTarget.lock()->getPhysicsPosition().x+mWeaponTarget.lock()->getDimensions().x/2) - weapFirePoint.x);
-        mWeapon.fire(mWeaponAngle, worldRef, mOwnerTag);
+        mWeapon.fire(worldRef);
     }
 
     mHealth.setPosition(mRenderPosition + sf::Vector2f(getCenter().x, -30.f));

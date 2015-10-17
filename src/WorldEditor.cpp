@@ -7,21 +7,22 @@
 #include "Assets.h"
 #include "FuncUtils.h"
 
-WorldEditor::WorldEditor(std::string path, std::weak_ptr<Player> hero) :
+WorldEditor::WorldEditor(std::string path) :
     mDirectoryPath(path),
-    mHero(hero),
-    mDebugConsole(mWorld.getWorldRef()),
-    mWorld(path, hero)
+    mWorld(path),
+    mDebugConsole(mWorld.getWorldRef())
 {
     loadWorld();
 
     mCameraZoom = 1.f;
 
     mPlayingHero = false;
+    mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], sf::Vector2f(0.f, 0.f));
     mCollideables.push_back(mHero);
 
     mIDs.push_back("ammocrate");
     mIDs.push_back("blueplatform");
+    mIDs.push_back("bigplatform");
     mIDs.push_back("turret");
     mIDs.push_back("waypoint");
     mCurrentID = 0;
@@ -40,11 +41,11 @@ void WorldEditor::update(int ticks)
 {
     if (mPlayingHero)
     {
-        mHero.lock()->update();
-        mCamera.follow(mHero.lock()->getRenderPosition());
-        mCameraPosition = mHero.lock()->getRenderPosition();
+        mHero->update();
+        mCamera.follow(mHero->getRenderPosition());
+        mCameraPosition = mHero->getRenderPosition();
 
-        mHero.lock()->setVelocity(mHero.lock()->getVelocity() + mWorld.getGravity()*UPDATE_STEP.asSeconds());
+        mHero->setVelocity(mHero->getVelocity() + mWorld.getGravity()*UPDATE_STEP.asSeconds());
     }
     else // don't play as hero
     {
@@ -91,7 +92,7 @@ void WorldEditor::draw(sf::RenderTarget& target, float alpha)
     sf::FloatRect windowCoords(mCamera.getCenter().x-(SCREEN_WIDTH/2), mCamera.getCenter().y-(SCREEN_HEIGHT/2), SCREEN_WIDTH, SCREEN_HEIGHT);
 
     if (mPlayingHero)
-        mHero.lock()->draw(target, alpha);
+        mHero->draw(target, alpha);
 
     for (auto& obj : mWorldObjects)
     {
@@ -200,7 +201,7 @@ void WorldEditor::handleEvents(sf::Event& event)
             mPlayingHero = !mPlayingHero;
 
             if (mPlayingHero)
-                mHero.lock()->setPhysicsPosition(mGlobalMousePosition);
+                mHero->setPhysicsPosition(mGlobalMousePosition);
         }
     }
     else if (event.type == sf::Event::KeyPressed)
@@ -368,7 +369,7 @@ void WorldEditor::handleEvents(sf::Event& event)
     else // playing as player
     {
         if (!mDebugConsoleActive)
-            mHero.lock()->handleEvents(event, mWorld.getWorldRef());
+            mHero->handleEvents(event, mWorld.getWorldRef());
     }
 }
 
@@ -433,14 +434,13 @@ void WorldEditor::loadWorld()
             }
             else if (find_key("waypoint_edge:", line))
             {
-                /*int a = std::stof(split_line[1]);
+                int a = std::stof(split_line[1]);
                 int b = std::stof(split_line[2]);
                 int type = WayPointType::WALK;
                 if (split_line[split_line.size()-2] == "jump")
                     type = WayPointType::JUMP;
-
                 //mWorld.getWayPointManager().addWayPointEdge(a, b, type);
-                sf::Vector2f start = mWorld.getWayPointManager().getWayPoints()[a].mPosition;
+                /*sf::Vector2f start = mWorld.getWayPointManager().getWayPoints()[a].mPosition;
                 sf::Vector2f end = mWorld.getWayPointManager().getWayPoints()[b].mPosition;
                 auto edge = std::make_shared<WorldEditorObject>(Assets::sprites["pistol"], sf::Vector2f(0, 0), "waypoint_edge");
                 mWorldObjects.push_back(edge);*/
@@ -490,7 +490,7 @@ void WorldEditor::refreshWorld()
 
     mWorldObjects.clear();
     mCollideables.clear();
-    mCollideables.push_back(mHero.lock());
+    mCollideables.push_back(mHero);
     loadWorld();
 }
 

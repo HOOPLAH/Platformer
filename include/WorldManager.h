@@ -8,22 +8,20 @@
 #include <memory>
 
 #include <SFML/Graphics.hpp>
-#include <squirrel.h>
-
-#include "World.h"
+#include <World.h>
 
 class WorldManager
 {
     public:
-        WorldManager(std::weak_ptr<Player> hero);
+        WorldManager();
         ~WorldManager();
 
-        void update(int ticks, std::weak_ptr<Player> hero);
+        void update(int ticks);
         void draw(sf::RenderTarget& target, float alpha);
         void handleEvents(sf::Event event);
 
     private:
-        void loadWorld(std::weak_ptr<Player> hero);
+        void loadWorld();
         void loadWorldFileNames();
 
         int mCurrentWorld;

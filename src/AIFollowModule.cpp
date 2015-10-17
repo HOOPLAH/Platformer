@@ -79,7 +79,7 @@ void AIFollowModule::update(WorldRef& worldRef)
     }
 
     if (!mFriendly && length(mNPC.getRenderPosition() - mNPC.getTarget().getRenderPosition()) < mFollowDistance)
-        mNPC.getWeapon().fire(mNPC.getWeaponAngle(), worldRef, EntityTags::NPC);
+        mNPC.getWeapon().fire(worldRef);
 }
 
 /*sf::FloatRect AIFollowModule::getRectBetweenTarget()

@@ -16,7 +16,7 @@ NPC::NPC(SpriteInfo& info, sf::Vector2f pos, WorldRef& worldRef) :
     SpriteObject(info, pos),
     ICollideable(info.mHitBox, info.mFrameDim, EntityTags::NPC),
     mHealth(25.f, sf::Vector2f(30.f, 2.f)),
-    mWeapon(Assets::sprites["pistol"]),
+    mWeapon(Assets::sprites["pistol"], EntityTags::NPC),
     mTarget(*worldRef.getHero().lock())
 {
     mSpawnPoint = pos;
@@ -74,9 +74,6 @@ void NPC::update(WorldRef& worldRef)
     mHealth.setPosition(mRenderPosition + sf::Vector2f(getCenter().x, 0.f));
     if (mHealth.mHP <= 0.f)
     {
-        int drop = (rand()%3);
-        if (drop == 0)
-            worldRef.getHero().lock()->getWeapon().addAmmo((rand()%3)+1);
         kill();
     }
 
@@ -86,6 +83,7 @@ void NPC::update(WorldRef& worldRef)
     mPhysicsPosition += mVelocity;
 
     mWeapon.update();
+    mWeapon.setFiringAngle(mWeaponAngle);
     mWeapon.setPosition(mRenderPosition + getCenter());
     //mTarget = worldRef.getHero();
     mWeaponAngle = atan2(mTarget.getRenderPosition().y - mRenderPosition.y,

@@ -6,7 +6,7 @@
 
 Projectile::Projectile(SpriteInfo& info, sf::Vector2f pos, int damage, float range, int ownerTag) :
     SpriteObject(info, pos),
-    ICollideable(info.mHitBox, info.mFrameDim, EntityTags::PROJECTILE, false)
+    ICollideable(info.mHitBox, info.mFrameDim, EntityTags::PROJECTILE, true)
     //mLine(start, end, sf::Color(0.f, 191.f, 255.f, 255.f))
 {
     mDamage = damage;
@@ -18,6 +18,7 @@ Projectile::Projectile(SpriteInfo& info, sf::Vector2f pos, int damage, float ran
     mPhysicsPosition = pos;
     mRenderPosition = pos;
     mSprite.setPosition(pos);
+    mTag = EntityTags::PROJECTILE;
 }
 
 Projectile::~Projectile()

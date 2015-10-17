@@ -8,24 +8,20 @@
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/Platformer" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin/Debug/" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
-					<Add directory="include" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
 				<Option output="bin/Release/Platformer" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin/Release/" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -33,127 +29,10 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-std=c++14" />
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
-			<Add directory="include" />
-			<Add directory="extlib/SQUIRREL3/include" />
-			<Add directory="extlib/sqrat-0.9.2/include" />
 		</Compiler>
-		<Linker>
-			<Add library="sfml-graphics" />
-			<Add library="sfml-window" />
-			<Add library="sfml-system" />
-		</Linker>
-		<Unit filename="LEmain.cpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="extlib/SQUIRREL3/sqstdlib/sqstdaux.cpp" />
-		<Unit filename="extlib/SQUIRREL3/sqstdlib/sqstdblob.cpp" />
-		<Unit filename="extlib/SQUIRREL3/sqstdlib/sqstdblobimpl.h" />
-		<Unit filename="extlib/SQUIRREL3/sqstdlib/sqstdio.cpp" />
-		<Unit filename="extlib/SQUIRREL3/sqstdlib/sqstdmath.cpp" />
-		<Unit filename="extlib/SQUIRREL3/sqstdlib/sqstdrex.cpp" />
-		<Unit filename="extlib/SQUIRREL3/sqstdlib/sqstdstream.cpp" />
-		<Unit filename="extlib/SQUIRREL3/sqstdlib/sqstdstream.h" />
-		<Unit filename="extlib/SQUIRREL3/sqstdlib/sqstdstring.cpp" />
-		<Unit filename="extlib/SQUIRREL3/sqstdlib/sqstdsystem.cpp" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqapi.cpp" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqarray.h" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqbaselib.cpp" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqclass.cpp" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqclass.h" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqclosure.h" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqcompiler.cpp" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqcompiler.h" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqdebug.cpp" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqfuncproto.h" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqfuncstate.cpp" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqfuncstate.h" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqlexer.cpp" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqlexer.h" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqmem.cpp" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqobject.cpp" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqobject.h" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqopcodes.h" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqpcheader.h" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqstate.cpp" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqstate.h" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqstring.h" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqtable.cpp" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqtable.h" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/squserdata.h" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/squtils.h" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqvm.cpp" />
-		<Unit filename="extlib/SQUIRREL3/squirrel/sqvm.h" />
-		<Unit filename="extlib/sqrat-0.9.2/include/sqext.h" />
-		<Unit filename="include/AIFollowModule.h" />
-		<Unit filename="include/Actions.h" />
-		<Unit filename="include/Assets.h" />
-		<Unit filename="include/Button.h" />
-		<Unit filename="include/Camera.h" />
-		<Unit filename="include/CollectibleObject.h" />
-		<Unit filename="include/Constants.h" />
-		<Unit filename="include/DebugConsole.h" />
-		<Unit filename="include/Direction.h" />
-		<Unit filename="include/EntityTags.h" />
-		<Unit filename="include/FontInfo.h" />
-		<Unit filename="include/FuncUtils.h" />
-		<Unit filename="include/HealthBar.h" />
-		<Unit filename="include/HitInfo.h" />
-		<Unit filename="include/IAIModule.h" />
-		<Unit filename="include/ICollideable.h" />
-		<Unit filename="include/IObject.h" />
-		<Unit filename="include/IRenderable.h" />
-		<Unit filename="include/Inventory.h" />
-		<Unit filename="include/InventoryItem.h" />
-		<Unit filename="include/Item.h" />
-		<Unit filename="include/Line.h" />
-		<Unit filename="include/NPC.h" />
-		<Unit filename="include/Player.h" />
-		<Unit filename="include/Projectile.h" />
-		<Unit filename="include/Quest.h" />
-		<Unit filename="include/ScriptObject.h" />
-		<Unit filename="include/SpriteInfo.h" />
-		<Unit filename="include/SpriteObject.h" />
-		<Unit filename="include/Turret.h" />
-		<Unit filename="include/WayPoint.h" />
-		<Unit filename="include/WayPointManager.h" />
-		<Unit filename="include/Weapon.h" />
-		<Unit filename="include/World.h" />
-		<Unit filename="include/WorldEditor.h" />
-		<Unit filename="include/WorldManager.h" />
-		<Unit filename="include/WorldObject.h" />
-		<Unit filename="include/WorldRef.h" />
-		<Unit filename="include/WorldSwitcher.h" />
-		<Unit filename="include/micropather.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="src/AIFollowModule.cpp" />
-		<Unit filename="src/Assets.cpp" />
-		<Unit filename="src/Button.cpp" />
-		<Unit filename="src/Camera.cpp" />
-		<Unit filename="src/CollectibleObject.cpp" />
-		<Unit filename="src/DebugConsole.cpp" />
-		<Unit filename="src/FuncUtils.cpp" />
-		<Unit filename="src/Inventory.cpp" />
-		<Unit filename="src/InventoryItem.cpp" />
-		<Unit filename="src/Item.cpp" />
-		<Unit filename="src/Line.cpp" />
-		<Unit filename="src/NPC.cpp" />
-		<Unit filename="src/Player.cpp" />
-		<Unit filename="src/Projectile.cpp" />
-		<Unit filename="src/ScriptObject.cpp" />
-		<Unit filename="src/SpriteObject.cpp" />
-		<Unit filename="src/Turret.cpp" />
-		<Unit filename="src/WayPointManager.cpp" />
-		<Unit filename="src/Weapon.cpp" />
-		<Unit filename="src/World.cpp" />
-		<Unit filename="src/WorldEditor.cpp" />
-		<Unit filename="src/WorldManager.cpp" />
-		<Unit filename="src/WorldObject.cpp" />
-		<Unit filename="src/WorldRef.cpp" />
-		<Unit filename="src/WorldSwitcher.cpp" />
-		<Unit filename="src/micropather.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

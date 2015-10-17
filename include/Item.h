@@ -1,28 +1,23 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include <string>
+#include "SpriteObject.h"
 
-class Item
+#include "WorldRef.h"
+
+class Item : public SpriteObject
 {
     public:
-        Item();
+        Item(SpriteInfo& info, std::string name, sf::Vector2f pos = sf::Vector2f());
         virtual ~Item();
 
-        virtual void use(){mCount--;}
-        virtual void update(){}
+        virtual void use(WorldRef& worldRef){}
+        virtual void update(){SpriteObject::update();}
+        virtual void draw(sf::RenderTarget& target, float alpha){SpriteObject::draw(target, alpha);}
 
-        int getStackSize(){return mStackSize;}
-        int getCount(){return mCount;}
         std::string getName(){return mName;}
 
-        void setStackSize(int size){mStackSize=size;}
-        void setCount(int count){mCount=count;}
-        void setName(std::string name){mName=name;}
-
     protected:
-        int mStackSize;
-        int mCount;
         std::string mName;
 };
 

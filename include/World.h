@@ -5,11 +5,11 @@
 #include <memory>
 
 #include <SFML/Graphics.hpp>
-#include <squirrel.h>
 
 #include "Player.h"
 #include "NPC.h"
 #include "Camera.h"
+#include "Item.h"
 #include "Quest.h"
 #include "WayPointManager.h"
 #include "WorldObject.h"
@@ -19,8 +19,8 @@
 class World
 {
     public:
-        World(std::weak_ptr<Player> hero);
-        World(std::string path, std::weak_ptr<Player> hero);
+        World();
+        World(std::string path);
         ~World();
 
         void update(int ticks);
@@ -36,13 +36,12 @@ class World
         std::weak_ptr<Player> getHero(){return mHero;}
         std::vector<std::shared_ptr<NPC>>& getNPCs(){return mNPCs;}
         std::vector<std::shared_ptr<Projectile>>& getProjectiles(){return mAliveProjectiles;}
+        std::vector<std::shared_ptr<Item>>& getItems(){return mUsedItems;}
         std::vector<std::shared_ptr<WorldSwitcher>>& getButtons(){return mButtons;}
         std::vector<std::shared_ptr<WorldObject>>& getWorldObjects(){return mWorldObjects;}
         std::vector<std::weak_ptr<ICollideable>>& getCollideables(){return mCollideables;}
         WayPointManager& getWayPointManager(){return mWayPointManager;}
         WorldRef& getWorldRef(){return mWorldRef;}
-
-        void bindSquirrel();
 
     private:
         bool checkCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
@@ -68,9 +67,10 @@ class World
 
         Camera mCamera;
 
-        std::weak_ptr<Player> mHero; // outlet hero!!
+        std::shared_ptr<Player> mHero; // outlet hero!!
         std::vector<std::shared_ptr<NPC>> mNPCs;
         std::vector<std::shared_ptr<Projectile>> mAliveProjectiles;
+        std::vector<std::shared_ptr<Item>> mUsedItems; // items that have been used and are out in the world
         std::vector<std::shared_ptr<WorldSwitcher>> mButtons;
         std::vector<std::shared_ptr<WorldObject>> mWorldObjects;
         std::vector<std::weak_ptr<ICollideable>> mCollideables;

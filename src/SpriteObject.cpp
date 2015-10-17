@@ -8,6 +8,7 @@ SpriteObject::SpriteObject(SpriteInfo& info, sf::Vector2f pos) : IRenderable(),
 {
     mSprite = sf::Sprite(info.mTexture);
     mRenderPosition = pos;
+    mRotation = 0.f;
     mAlive = true;
 }
 
@@ -19,6 +20,7 @@ SpriteObject::~SpriteObject()
 void SpriteObject::update()
 {
     mSprite.setPosition(mRenderPosition);
+    mSprite.setRotation(mRotation);
 }
 
 void SpriteObject::draw(sf::RenderTarget& target, float alpha)

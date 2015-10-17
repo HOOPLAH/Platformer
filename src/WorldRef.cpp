@@ -1,6 +1,5 @@
 #include "WorldRef.h"
 
-#include "Assets.h"
 #include "ICollideable.h"
 #include "NPC.h"
 #include "Projectile.h"
@@ -31,17 +30,20 @@ void WorldRef::addProjectile(std::weak_ptr<Projectile> proj)
     mWorld.getCollideables().push_back(proj);
 }
 
-void WorldRef::sq_addProjectile(sf::Vector2f start, float dmg, float range, int ownerTag, float angle)
+void WorldRef::addItem(std::weak_ptr<Item> item)
 {
-    auto proj = std::make_shared<Projectile>(Assets::sprites["bullet"], start, dmg, range, ownerTag);
-    proj->setFiringAngle(angle);
-    addProjectile(proj);
+    mWorld.getItems().push_back(item.lock());
 }
 
 void WorldRef::addWorldObject(std::weak_ptr<WorldObject> worldObj)
 {
     mWorld.getWorldObjects().push_back(worldObj.lock());
     mWorld.getCollideables().push_back(worldObj);
+}
+
+void WorldRef::addCollideable(std::shared_ptr<ICollideable> obj)
+{
+    mWorld.getCollideables().push_back(obj);
 }
 
 std::weak_ptr<Player> WorldRef::getHero()
