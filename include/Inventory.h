@@ -16,6 +16,7 @@ class Inventory
 
         std::unique_ptr<Item>& getItem(int index){return mItems[index];}
         std::unique_ptr<Item>& getItem(std::string name);
+        std::vector<std::unique_ptr<Item>>& getItemList(){mItems;}
 
     private:
         std::vector<std::unique_ptr<Item>> mItems;

@@ -2,6 +2,7 @@
 
 #include "Assets.h"
 #include "Grenade.h"
+#include "EntityTags.h"
 #include "FuncUtils.h"
 
 GrenadeLauncher::GrenadeLauncher(SpriteInfo& info, int tag) : Weapon(info, tag)
@@ -30,5 +31,6 @@ void GrenadeLauncher::fire(WorldRef& worldRef)
     auto grenade = std::make_shared<Grenade>(Assets::sprites["grenade"], start, mOwnerTag);
     grenade->setFiringAngle(mFiringAngle);
     grenade->setVelocity(sf::Vector2f(cos(mFiringAngle), sin(mFiringAngle))*grenade->getSpeed());
+    grenade->setTag(EntityTags::GRENADE);
     worldRef.addProjectile(grenade);
 }

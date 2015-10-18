@@ -121,13 +121,13 @@ WayPointManager& WorldRef::getWayPointManager()
     return mWorld.getWayPointManager();
 }
 
-std::vector<std::weak_ptr<ICollideable>> WorldRef::getObjectsWithinArea(sf::FloatRect rect)
+std::vector<std::weak_ptr<ICollideable>> WorldRef::getObjectsWithinArea(int tag, sf::FloatRect rect)
 {
     std::vector<std::weak_ptr<ICollideable>> nearbyPlatforms;
 
     for (auto& obj : mWorld.getCollideables())
     {
-        //if (obj.lock()->getTag() == EntityTags::PLATFORM)
+        if (obj.lock()->getTag() == tag)
         {
             auto pos = obj.lock()->getPhysicsPosition();
             auto hitbox = obj.lock()->getHitBox();

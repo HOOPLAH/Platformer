@@ -39,6 +39,7 @@ class NPC : public SpriteObject, public ICollideable
         int getKillerTag(){return mKillerTag;}
         float getWeaponAngle(){return mWeaponAngle;}
         sf::Vector2f getFeetPosition(){return (mRenderPosition+sf::Vector2f(mHitBox.width, mHitBox.height));}
+        HealthBar& getHealth(){return mHealth;}
 
     protected:
         sf::Vector2f mSpawnPoint;

@@ -30,6 +30,7 @@ void Projectile::update()
 {
     SpriteObject::update();
 
+    mRotation = mFiringAngle*RADTODEG;
     mVelocity = sf::Vector2f(cos(mFiringAngle), sin(mFiringAngle))*(mSpeed*UPDATE_STEP.asSeconds());
     mDistanceLeft -= std::abs(sqrt(pow(mVelocity.x, 2) + pow(mVelocity.y, 2)));
     mOldPhysicsPosition = mPhysicsPosition;

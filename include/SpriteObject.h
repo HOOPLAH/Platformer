@@ -18,9 +18,10 @@ class SpriteObject : public IRenderable
         virtual void draw(sf::RenderTarget& target, float alpha);
 
         // Mutator
-        virtual void setPosition(sf::Vector2f pos){mRenderPosition=pos;}
+        virtual void setPosition(sf::Vector2f pos){mRenderPosition=pos; mSprite.setPosition(pos);}
         virtual void setRotation(float rot){mRotation=rot; mSprite.setRotation(rot);}
         void setFrameLoop(int start, int stop, bool loop=true);
+        void setFrameDelay(float delay){mFrameDelay=delay;}
 
         // Accessor
         SpriteInfo getSpriteInfo(){return mSpriteInfo;}
@@ -28,6 +29,8 @@ class SpriteObject : public IRenderable
         sf::Vector2f getRenderPosition(){return mRenderPosition;}
         sf::Vector2f getOldRenderPosition(){return mOldRenderPosition;}
         sf::Vector2f getCenter(){return sf::Vector2f(mSpriteInfo.mFrameDim.x/2, mSpriteInfo.mFrameDim.y/2);}
+        int getCurrentFrame(){return mCurrentFrame;}
+        int getEndFrame(){return mEndFrame;}
 
     protected:
         SpriteInfo& mSpriteInfo;

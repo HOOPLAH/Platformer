@@ -103,7 +103,12 @@ void Player::draw(sf::RenderTarget& target, float alpha)
 
 void Player::drawStationary(sf::RenderTarget& target)
 {
-    //target.draw(mInventoryBar);
+    /*target.draw(mInventoryBar);
+
+    for (auto& item : mInventory.getItemList())
+    {
+
+    }*/
 
     // TODO: move to inventory item ui when there is one
     /*std::string sWeaponText = std::to_string(mWeapon.getMagazines());

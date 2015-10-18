@@ -10,7 +10,8 @@ class Grenade : public Projectile
         Grenade(SpriteInfo& info, sf::Vector2f start, int tag);
         ~Grenade();
 
-        void update();
+        void update(WorldRef& worldRef);
+        void draw(sf::RenderTarget& target, float alpha);
         bool onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop);
 
         void setFiringAngle(float angle){mFiringAngle=angle;}
@@ -18,6 +19,8 @@ class Grenade : public Projectile
         float getSpeed(){return mSpeed;}
 
     private:
+        SpriteObject mExplosion;
+        sf::Vector2f mExplosionPosition;
         sf::Clock mTimeUntilExplosion;
         int mTime;
         bool mCollided;

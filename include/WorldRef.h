@@ -32,7 +32,7 @@ class WorldRef
         WayPoint getClosestWayPoint(sf::Vector2f pos);
         WayPoint getClosestWayPoint(WayPoint pt);
         WayPointManager& getWayPointManager();
-        std::vector<std::weak_ptr<ICollideable>> getObjectsWithinArea(sf::FloatRect rect);
+        std::vector<std::weak_ptr<ICollideable>> getObjectsWithinArea(int tag, sf::FloatRect rect);
 
     private:
         World& mWorld;

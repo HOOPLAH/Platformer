@@ -37,7 +37,14 @@ World::~World()
 
 void World::update(int ticks)
 {
-    if (mNPCs.size() < mNPCSpawnCount && mNPCSpawnPoints.size() > 0 && !mHero->getQuest().mActions.empty())
+    removeWeakDeadObj(mCollideables);
+    removeDeadObj(mNPCs);
+    removeDeadObj(mAliveProjectiles);
+    removeDeadObj(mUsedItems);
+    removeDeadObj(mWorldObjects);
+    removeDeadObj(mButtons);
+
+    if (mNPCs.size() < mNPCSpawnCount && mNPCSpawnPoints.size() > 0)// && !mHero->getQuest().mActions.empty())
     {
         auto npc = std::make_shared<NPC>(Assets::sprites["pinkpeewee"], mNPCSpawnPoints[mNextNPCSpawnPoint], mWorldRef);
         mNPCs.push_back(npc);
@@ -59,9 +66,9 @@ void World::update(int ticks)
         if (!npc->isStatic())
             npc->setVelocity(npc->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
 
-        if (!npc->isAlive()) // playah killed npc
+        if (!mHero->getQuest().mActions.empty())
         {
-            if (!mHero->getQuest().mActions.empty())
+            /*if (!npc->isAlive()) // playah killed npc
             {
                 if (mHero->getQuest().mActions.top()->mTag == ActionTag::KILL && npc->getKillerTag() == EntityTags::PLAYER)
                 {
@@ -79,14 +86,20 @@ void World::update(int ticks)
                     if (action->mKillsLeftCount > 0)
                         action->mKillsLeftCount--;
                 }
-            }
+            }*/
         }
     }
 
     for (auto& proj : mAliveProjectiles)
     {
-        proj->update();
-        proj->setVelocity(proj->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
+        if (proj)
+        {
+            if (proj->getTag() == EntityTags::GRENADE)
+                static_cast<Grenade*>(&*proj)->update(mWorldRef);
+            else
+                proj->update();
+            proj->setVelocity(proj->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
+        }
     }
 
     for (auto& item : mUsedItems)
@@ -104,7 +117,7 @@ void World::update(int ticks)
         if (!obj->isStatic())
             obj->setVelocity(obj->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
 
-        if (obj->getTag() == EntityTags::COLLECTIBLE)
+        /*if (obj->getTag() == EntityTags::COLLECTIBLE)
         {
             auto collectible = static_cast<CollectibleObject*>(&*obj);
 
@@ -130,7 +143,7 @@ void World::update(int ticks)
 
                 collectible->kill();
             }
-        }
+        }*/
     }
 
     for (auto& button : mButtons)
@@ -150,7 +163,7 @@ void World::update(int ticks)
         mCollideables.push_back(mHero);
     }
 
-    for (auto& obj : mCollideables)
+    /*for (auto& obj : mCollideables)
     {
         if (!mHero->getQuest().mActions.empty())
         {
@@ -170,7 +183,7 @@ void World::update(int ticks)
                 }
             }
         }
-    }
+    }*/
 
     // check collisions
     for (std::size_t x = 0; x < mCollideables.size(); x++)
@@ -195,21 +208,9 @@ void World::update(int ticks)
         }
     }
 
-    // kill anything that's too far away
-    for (auto& obj : mCollideables)
-    {
-        if (std::abs(length(obj.lock()->getPhysicsPosition() - mHero->getPhysicsPosition())) > 7500.f)
-            obj.lock()->kill();
-    }
+
 
     mCamera.follow(mHero->getRenderPosition());
-
-    removeWeakDeadObj(mCollideables);
-    removeDeadObj(mNPCs);
-    removeDeadObj(mAliveProjectiles);
-    removeDeadObj(mUsedItems);
-    removeDeadObj(mWorldObjects);
-    removeDeadObj(mButtons);
 }
 
 void World::draw(sf::RenderTarget& target, float alpha)
@@ -217,6 +218,12 @@ void World::draw(sf::RenderTarget& target, float alpha)
     target.setView(mCamera.getView());
 
     sf::FloatRect windowCoords(mCamera.getCenter().x-(SCREEN_WIDTH/2), mCamera.getCenter().y-(SCREEN_HEIGHT/2), SCREEN_WIDTH, SCREEN_HEIGHT);
+
+    for (auto& obj : mWorldObjects)
+    {
+        if (windowCoords.intersects(obj->getSprite().getGlobalBounds()))
+            obj->draw(target, alpha);
+    }
 
     for (auto& npc : mNPCs)
     {
@@ -234,12 +241,6 @@ void World::draw(sf::RenderTarget& target, float alpha)
     {
         if (windowCoords.intersects(item->getSprite().getGlobalBounds()))
             item->draw(target, alpha);
-    }
-
-    for (auto& obj : mWorldObjects)
-    {
-        if (windowCoords.intersects(obj->getSprite().getGlobalBounds()))
-            obj->draw(target, alpha);
     }
 
     for (auto& button : mButtons)

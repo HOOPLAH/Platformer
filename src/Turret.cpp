@@ -25,10 +25,10 @@ void Turret::update(WorldRef& worldRef)
 {
     WorldObject::update();
 
-    auto closeObjs = worldRef.getObjectsWithinArea(sf::FloatRect(mWeapon.getRenderPosition(), sf::Vector2f(mWeapon.getRange(), mWeapon.getRange())));
+    auto closeObjs = worldRef.getObjectsWithinArea(EntityTags::NPC, sf::FloatRect(mWeapon.getRenderPosition(), sf::Vector2f(mWeapon.getRange(), mWeapon.getRange())));
     for (auto obj : closeObjs)
     {
-        if (obj.lock()->getTag() == EntityTags::NPC)
+        //if (obj.lock()->getTag() == EntityTags::NPC)
             mWeaponTarget = obj;
     }
 

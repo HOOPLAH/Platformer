@@ -21,7 +21,7 @@ Weapon::Weapon(SpriteInfo& info, int tag) : Item(info, "Weapon")
     mMaxMagazines = 10;
     mAmmo = mMaxAmmo;
     mMagazines = 3;
-    mUnlimitedAmmo = false;
+    mUnlimitedAmmo = true;
 }
 
 Weapon::~Weapon()

@@ -4,6 +4,7 @@
 #include <sstream>
 
 #include "Constants.h"
+#include "SpriteObject.h"
 
 float length(sf::Vector2f a)
 {
