@@ -1,6 +1,5 @@
-spawn_point: 10 -100
+spawn_point: 500 -100
 
-tiled_platforms: 5 64 0 ammocrate 0 0      GROUND
-platform: grenade 50 -50
+tiled_platforms: 5 64 0 ammocrate 490 0      GROUND
 
-button: play_button 128 -100 1
+button: play_button 600 -100 1

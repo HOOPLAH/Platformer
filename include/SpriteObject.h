@@ -24,7 +24,7 @@ class SpriteObject : public IRenderable
         void setFrameDelay(float delay){mFrameDelay=delay;}
 
         // Accessor
-        SpriteInfo getSpriteInfo(){return mSpriteInfo;}
+        SpriteInfo& getSpriteInfo(){return mSpriteInfo;}
         sf::Sprite& getSprite(){return mSprite;}
         sf::Vector2f getRenderPosition(){return mRenderPosition;}
         sf::Vector2f getOldRenderPosition(){return mOldRenderPosition;}

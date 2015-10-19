@@ -95,10 +95,12 @@ void World::update(int ticks)
         if (proj)
         {
             if (proj->getTag() == EntityTags::GRENADE)
+            {
                 static_cast<Grenade*>(&*proj)->update(mWorldRef);
+                proj->setVelocity(proj->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
+            }
             else
                 proj->update();
-            proj->setVelocity(proj->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
         }
     }
 

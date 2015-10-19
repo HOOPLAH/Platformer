@@ -12,11 +12,9 @@
 Player::Player(SpriteInfo& info, sf::Vector2f pos) :
     SpriteObject(info, pos),
     ICollideable(info.mHitBox, info.mFrameDim, EntityTags::PLAYER),
-    mHealth(100.f, sf::Vector2f(30.f, 2.f), false)
+    mHealth(100.f, sf::Vector2f(30.f, 2.f), false),
+    mInventoryHUD(sf::Vector2f(0, 0))
 {
-    mInventoryBar = sf::Sprite(Assets::sprites["inventorybar"].mTexture);
-    mInventoryBar.setPosition(0.f, 500.f);
-
     mRunSpeed = 3.f;
     mJumpSpeed = 5.5f;
     mDirection = Direction::STILL_RIGHT;
@@ -27,7 +25,8 @@ Player::Player(SpriteInfo& info, sf::Vector2f pos) :
 
     mInventory.push_back(std::move(std::make_unique<Weapon>(Assets::sprites["pistol"], EntityTags::PLAYER)));
     mInventory.push_back(std::move(std::make_unique<GrenadeLauncher>(Assets::sprites["grenade"], EntityTags::PLAYER)));
-    mInventoryIndex = 1;
+    mInventoryHUD.addInventoryItem(SpriteObject(Assets::sprites["pistol"], sf::Vector2f()));
+    mInventoryHUD.addInventoryItem(SpriteObject(Assets::sprites["grenade"], sf::Vector2f()));
 }
 
 Player::~Player()
@@ -74,9 +73,9 @@ void Player::update()
     mOldPhysicsPosition = mPhysicsPosition;
     mPhysicsPosition += mVelocity;
 
-    if (mInventory.getItem(mInventoryIndex)->getName() == "Weapon")
+    if (mInventory.getItem(mInventoryHUD.getInventoryIndex())->getName() == "Weapon")
     {
-        auto weap = static_cast<Weapon*>(&*mInventory.getItem(mInventoryIndex));
+        auto weap = static_cast<Weapon*>(&*mInventory.getItem(mInventoryHUD.getInventoryIndex()));
 
         weap->setFiringAngle(mWeaponAngle);
         weap->setPosition(mRenderPosition + getCenter());
@@ -85,7 +84,7 @@ void Player::update()
         mWeaponAngle = atan2(mWeaponTarget.y - weapFirePoint.y, mWeaponTarget.x - weapFirePoint.x);
     }
 
-    mInventory.getItem(mInventoryIndex)->update();
+    mInventory.getItem(mInventoryHUD.getInventoryIndex())->update();
 }
 
 void Player::draw(sf::RenderTarget& target, float alpha)
@@ -97,18 +96,13 @@ void Player::draw(sf::RenderTarget& target, float alpha)
 
     //mHealth.draw(target);
 
-    mInventory.getItem(mInventoryIndex)->draw(target, alpha);
+    //mInventory.getItem(mInventoryHUD.getInventoryIndex())->draw(target, alpha);
     mWeaponTarget = target.mapPixelToCoords(sf::Vector2i(mMousePosition.x, mMousePosition.y));
 }
 
 void Player::drawStationary(sf::RenderTarget& target)
 {
-    /*target.draw(mInventoryBar);
-
-    for (auto& item : mInventory.getItemList())
-    {
-
-    }*/
+    mInventoryHUD.draw(target);
 
     // TODO: move to inventory item ui when there is one
     /*std::string sWeaponText = std::to_string(mWeapon.getMagazines());
@@ -191,6 +185,8 @@ void Player::drawStationary(sf::RenderTarget& target)
 
 void Player::handleEvents(sf::Event& event, WorldRef& worldRef)
 {
+    mInventoryHUD.handleEvents(event, mInventory.getItemList().size());
+
     if (event.type == sf::Event::MouseButtonPressed)
     {
         if (event.mouseButton.button == sf::Mouse::Left)
@@ -210,7 +206,7 @@ void Player::handleEvents(sf::Event& event, WorldRef& worldRef)
                     mDirection = Direction::STILL_RIGHT;
             }
 
-            mInventory.getItem(mInventoryIndex)->use(worldRef);
+            mInventory.getItem(mInventoryHUD.getInventoryIndex())->use(worldRef);
         }
         else if (event.mouseButton.button == sf::Mouse::Right)
         {
@@ -260,6 +256,25 @@ void Player::handleEvents(sf::Event& event, WorldRef& worldRef)
             //mWeapon.reload();
         }
     }
+    else if (event.type == sf::Event::MouseWheelMoved)
+    {
+        if (event.mouseWheel.delta > 0)
+        {
+            if (mInventoryHUD.getInventoryIndex() == mInventory.getItemList().size()-1)
+                mInventoryHUD.setInventoryIndex(0);
+            else
+                mInventoryHUD.setInventoryIndex(mInventoryHUD.getInventoryIndex()+1);
+        }
+
+        else if (event.mouseWheel.delta < 0)
+        {
+            if (mInventoryHUD.getInventoryIndex() == 0)
+                mInventoryHUD.setInventoryIndex(mInventory.getItemList().size()-1);
+            else
+                mInventoryHUD.setInventoryIndex(mInventoryHUD.getInventoryIndex()-1);
+        }
+
+    }
 }
 
 void Player::respawn(sf::Vector2f pos)
@@ -286,7 +301,7 @@ bool Player::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, b
         mJumping = false;
     }
 
-    else if (object.lock()->getTag() == EntityTags::PROJECTILE)
+    if (object.lock()->getTag() == EntityTags::PROJECTILE)
     {
         auto proj = static_cast<Projectile*>(&*object.lock());
 

@@ -35,14 +35,12 @@ class Player : public SpriteObject, public ICollideable
         Quest& getQuest(){return mQuest;}
 
     private:
-        sf::Sprite mInventoryBar;
-
         float mRunSpeed;
         float mJumpSpeed;
         int mDirection; // direction player is facing -- for animations
         bool mGrounded; // touching the ground
         bool mJumping;
-        float mFallDamageRate; // mVelocity.y/mFallDamageRate
+        float mFallDamageRate; // mVelocity.y/mFallDamageRate = how much dmg player takes after fall
 
         HealthBar mHealth;
 
@@ -51,7 +49,7 @@ class Player : public SpriteObject, public ICollideable
         float mWeaponAngle;
 
         Inventory mInventory;
-        std::size_t mInventoryIndex;
+        InventoryHUD mInventoryHUD;
 
         Quest mQuest;
 };

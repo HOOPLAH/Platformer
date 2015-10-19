@@ -12,7 +12,7 @@ Grenade::Grenade(SpriteInfo& info, sf::Vector2f start, int tag) : Projectile(inf
     mTag = EntityTags::GRENADE;
     mStatic = false;
     mCollided = false;
-    mTime = 1000;
+    mTime = 2000;
 
     mSprite.setOrigin(getCenter());
 
@@ -37,7 +37,7 @@ void Grenade::update(WorldRef& worldRef)
         for (auto& obj : worldRef.getObjectsWithinArea(EntityTags::NPC,
             sf::FloatRect(mRenderPosition.x-50.f, mRenderPosition.y-50, 100.f, 100.f)))
         {
-            static_cast<NPC*>(&*obj.lock())->getHealth().mHP -= 10;
+            static_cast<NPC*>(&*obj.lock())->getHealth().mHP -= 1;
         }
 
         if (mExplosion.getCurrentFrame() == mExplosion.getEndFrame())
@@ -51,8 +51,6 @@ void Grenade::update(WorldRef& worldRef)
             mRotation -= 5.f;
         else if (mCollided)
             mRotation -= 0.25f;
-
-        mExplosionPosition = mRenderPosition;
     }
 }
 
@@ -74,7 +72,7 @@ bool Grenade::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, 
         mVelocity.x /= 1.5f;
         mVelocity.y = 0.f;
     }
-    if (object.lock()->getTag() == EntityTags::PROJECTILE)
+    if (object.lock()->getTag() == EntityTags::PLAYER || object.lock()->getTag() == EntityTags::NPC)
         return false;
 
     return true;

@@ -16,6 +16,7 @@ void Assets::loadAssets()
     sprites["waypoint"] = SpriteInfo("Content/Textures/waypoint.png");
     sprites["blueplatform"] = SpriteInfo("Content/Textures/blueplatform.png");
     sprites["inventorybar"] = SpriteInfo("Content/Textures/inventorybar.png");
+    sprites["curinventory"] = SpriteInfo("Content/Textures/curinventory.png");
     sprites["explosion"] = SpriteInfo("Content/Textures/explosion.png", 36, 6);
 
     sprites["grenade"] = SpriteInfo("Content/Textures/grenade.png");

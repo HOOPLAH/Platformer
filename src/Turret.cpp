@@ -57,7 +57,8 @@ void Turret::draw(sf::RenderTarget& target, float alpha)
 
 bool Turret::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop)
 {
-    if (object.lock()->getTag() == EntityTags::TURRET || object.lock()->getTag() == EntityTags::PLAYER)
+    if (object.lock()->getTag() == EntityTags::TURRET || object.lock()->getTag() == EntityTags::PLAYER ||
+        object.lock()->getTag() == EntityTags::NPC || object.lock()->getTag() == EntityTags::GRENADE)
         return false;
     else if (object.lock()->getTag() == EntityTags::PROJECTILE)
     {
