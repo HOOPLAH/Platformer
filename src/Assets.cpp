@@ -19,16 +19,18 @@ void Assets::loadAssets()
     sprites["curinventory"] = SpriteInfo("Content/Textures/curinventory.png");
     sprites["explosion"] = SpriteInfo("Content/Textures/explosion.png", 36, 6);
 
+    sprites["ship"] = SpriteInfo("Content/Textures/ship.png");
+    sprites["ship"].mHitBox = sf::FloatRect(10.f, 22.f, 209.f, 50.f);
     sprites["grenade"] = SpriteInfo("Content/Textures/grenade.png");
-        sprites["grenade"].mHitBox = sf::FloatRect(0.f, 5.f, 5.f, 5.f);
+    sprites["grenade"].mHitBox = sf::FloatRect(0.f, 5.f, 5.f, 5.f);
     sprites["bluepeewee"] = SpriteInfo("Content/Textures/bluepeewee.png", 36, 6);
-        sprites["bluepeewee"].mHitBox = sf::FloatRect(20.f, 10.f, 24.f, 44.f);
+    sprites["bluepeewee"].mHitBox = sf::FloatRect(20.f, 10.f, 24.f, 44.f);
     sprites["pinkpeewee"] = SpriteInfo("Content/Textures/pinkpeewee.png", 36, 6);
-        sprites["pinkpeewee"].mHitBox = sf::FloatRect(20.f, 10.f, 24.f, 44.f);
+    sprites["pinkpeewee"].mHitBox = sf::FloatRect(20.f, 10.f, 24.f, 44.f);
     sprites["bigplatform"] = SpriteInfo("Content/Textures/bigplatform.png");
-        sprites["bigplatform"].mHitBox = sf::FloatRect(10.f, 12.f, 225.f, 124.f);
+    sprites["bigplatform"].mHitBox = sf::FloatRect(10.f, 12.f, 225.f, 124.f);
     sprites["smallplatform"] = SpriteInfo("Content/Textures/smallplatform.png");
-        sprites["smallplatform"].mHitBox = sf::FloatRect(5.f, 8.f, 35.f, 26.f);
+    sprites["smallplatform"].mHitBox = sf::FloatRect(5.f, 8.f, 35.f, 26.f);
 
     ///
 

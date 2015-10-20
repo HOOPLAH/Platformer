@@ -8,6 +8,7 @@
 #include "WorldRef.h"
 #include "Quest.h"
 #include "Inventory.h"
+#include "SpaceShip.h"
 
 class Player : public SpriteObject, public ICollideable
 {
@@ -33,6 +34,8 @@ class Player : public SpriteObject, public ICollideable
         float getWeaponAngle(){return mWeaponAngle;}
         Inventory& getInventory(){return mInventory;}
         Quest& getQuest(){return mQuest;}
+        SpaceShip& getVehicle(){return mSpaceShip;}
+        bool inVehicle(){return mInVehicle;}
 
     private:
         float mRunSpeed;
@@ -50,6 +53,9 @@ class Player : public SpriteObject, public ICollideable
 
         Inventory mInventory;
         InventoryHUD mInventoryHUD;
+
+        SpaceShip mSpaceShip; // he owns the spaceship
+        bool mInVehicle;
 
         Quest mQuest;
 };

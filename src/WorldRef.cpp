@@ -30,11 +30,6 @@ void WorldRef::addProjectile(std::weak_ptr<Projectile> proj)
     mWorld.getCollideables().push_back(proj);
 }
 
-void WorldRef::addItem(std::weak_ptr<Item> item)
-{
-    mWorld.getItems().push_back(item.lock());
-}
-
 void WorldRef::addWorldObject(std::weak_ptr<WorldObject> worldObj)
 {
     mWorld.getWorldObjects().push_back(worldObj.lock());

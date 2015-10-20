@@ -30,6 +30,7 @@ NPC::NPC(SpriteInfo& info, sf::Vector2f pos, WorldRef& worldRef) :
     mAI = std::make_unique<AIFollowModule>(*this);
 
     mWeapon.setCoolDown(500);
+    mWeapon.setDamage(2);
     mWeaponAngle = 0.f;
     mKillerTag = -1;
 
@@ -144,7 +145,7 @@ void NPC::draw(sf::RenderTarget& target, float alpha)
     box.setPosition(pos);*/
 
     mHealth.draw(target);
-    mWeapon.draw(target, alpha);
+    //mWeapon.draw(target, alpha);
 }
 
 bool NPC::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop)

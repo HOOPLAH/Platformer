@@ -40,7 +40,6 @@ void World::update(int ticks)
     removeWeakDeadObj(mCollideables);
     removeDeadObj(mNPCs);
     removeDeadObj(mAliveProjectiles);
-    removeDeadObj(mUsedItems);
     removeDeadObj(mWorldObjects);
     removeDeadObj(mButtons);
 
@@ -104,11 +103,6 @@ void World::update(int ticks)
         }
     }
 
-    for (auto& item : mUsedItems)
-    {
-        item->update();
-    }
-
     for (auto& obj : mWorldObjects)
     {
         if (obj->getTag() == EntityTags::TURRET)
@@ -159,6 +153,15 @@ void World::update(int ticks)
 
     mHero->update();
     mHero->setVelocity(mHero->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
+    if (mHero->inVehicle())
+    {
+        mHero->getVehicle().update();
+        mCamera.follow(mHero->getVehicle().getRenderPosition());
+    }
+    else
+    {
+        mCamera.follow(mHero->getRenderPosition());
+    }
     if (!mHero->isAlive())
     {
         mHero->respawn(mSpawnPoint);
@@ -209,10 +212,6 @@ void World::update(int ticks)
                 resolveCollision(dynamic, _static);
         }
     }
-
-
-
-    mCamera.follow(mHero->getRenderPosition());
 }
 
 void World::draw(sf::RenderTarget& target, float alpha)
@@ -239,12 +238,6 @@ void World::draw(sf::RenderTarget& target, float alpha)
             proj->draw(target, alpha);
     }
 
-    for (auto& item : mUsedItems)
-    {
-        if (windowCoords.intersects(item->getSprite().getGlobalBounds()))
-            item->draw(target, alpha);
-    }
-
     for (auto& button : mButtons)
     {
         if (mHero->getQuest().mActions.empty())
@@ -254,7 +247,10 @@ void World::draw(sf::RenderTarget& target, float alpha)
         }
     }
 
-    mHero->draw(target, alpha);
+    if (!mHero->inVehicle())
+        mHero->draw(target, alpha);
+    else
+        mHero->getVehicle().draw(target, alpha);
     mWayPointManager.draw(target);
 
     target.setView(target.getDefaultView());

@@ -13,7 +13,8 @@ namespace EntityTags
         BUTTON,
         COLLECTIBLE,
         TURRET,
-        GRENADE
+        GRENADE,
+        SPACESHIP
     };
 }
 

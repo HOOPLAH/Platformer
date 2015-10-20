@@ -78,7 +78,7 @@ void AIFollowModule::update(WorldRef& worldRef)
         }
     }
 
-    if (!mFriendly && length(mNPC.getRenderPosition() - mNPC.getTarget().getRenderPosition()) < mFollowDistance)
+    if (!mFriendly && length(mNPC.getRenderPosition() - mNPC.getTarget().getRenderPosition()) < 150)
         mNPC.getWeapon().fire(worldRef);
 }
 

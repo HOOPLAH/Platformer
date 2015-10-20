@@ -4,6 +4,7 @@
 
 #include "Assets.h"
 #include "Constants.h"
+#include "FuncUtils.h"
 #include "Direction.h"
 #include "EntityTags.h"
 #include "Projectile.h"
@@ -13,7 +14,8 @@ Player::Player(SpriteInfo& info, sf::Vector2f pos) :
     SpriteObject(info, pos),
     ICollideable(info.mHitBox, info.mFrameDim, EntityTags::PLAYER),
     mHealth(100.f, sf::Vector2f(30.f, 2.f), false),
-    mInventoryHUD(sf::Vector2f(0, 0))
+    mInventoryHUD(sf::Vector2f(0, 0)),
+    mSpaceShip(Assets::sprites["ship"], mPhysicsPosition)
 {
     mRunSpeed = 3.f;
     mJumpSpeed = 5.5f;
@@ -27,6 +29,8 @@ Player::Player(SpriteInfo& info, sf::Vector2f pos) :
     mInventory.push_back(std::move(std::make_unique<GrenadeLauncher>(Assets::sprites["grenade"], EntityTags::PLAYER)));
     mInventoryHUD.addInventoryItem(SpriteObject(Assets::sprites["pistol"], sf::Vector2f()));
     mInventoryHUD.addInventoryItem(SpriteObject(Assets::sprites["grenade"], sf::Vector2f()));
+
+    mInVehicle = false;
 }
 
 Player::~Player()
@@ -37,6 +41,9 @@ Player::~Player()
 void Player::update()
 {
     SpriteObject::update();
+
+    mOldPhysicsPosition = mPhysicsPosition;
+    mPhysicsPosition += mVelocity;
 
     // animations
     if (!mGrounded) // above ground
@@ -70,9 +77,6 @@ void Player::update()
         kill();
     }
 
-    mOldPhysicsPosition = mPhysicsPosition;
-    mPhysicsPosition += mVelocity;
-
     if (mInventory.getItem(mInventoryHUD.getInventoryIndex())->getName() == "Weapon")
     {
         auto weap = static_cast<Weapon*>(&*mInventory.getItem(mInventoryHUD.getInventoryIndex()));
@@ -89,6 +93,8 @@ void Player::update()
 
 void Player::draw(sf::RenderTarget& target, float alpha)
 {
+    mSpaceShip.draw(target, alpha);
+
     SpriteObject::draw(target, alpha);
 
     mRenderPosition = mPhysicsPosition*alpha + mOldPhysicsPosition*(1.f - alpha);
@@ -187,93 +193,117 @@ void Player::handleEvents(sf::Event& event, WorldRef& worldRef)
 {
     mInventoryHUD.handleEvents(event, mInventory.getItemList().size());
 
-    if (event.type == sf::Event::MouseButtonPressed)
+    if (!mInVehicle)
     {
-        if (event.mouseButton.button == sf::Mouse::Left)
+        if (event.type == sf::Event::MouseButtonPressed)
         {
-            if (mWeaponTarget.x < mRenderPosition.x)
+            if (event.mouseButton.button == sf::Mouse::Left)
             {
-                if (mDirection != Direction::STILL_LEFT && mDirection != Direction::STILL_RIGHT) // moving
-                    mDirection = Direction::LEFT;
-                else // still
-                    mDirection = Direction::STILL_LEFT;
+                if (mWeaponTarget.x < mRenderPosition.x)
+                {
+                    if (mDirection != Direction::STILL_LEFT && mDirection != Direction::STILL_RIGHT) // moving
+                        mDirection = Direction::LEFT;
+                    else // still
+                        mDirection = Direction::STILL_LEFT;
+                }
+                else if (mWeaponTarget.x > mRenderPosition.x)
+                {
+                    if (mDirection != Direction::STILL_LEFT && mDirection != Direction::STILL_RIGHT) // moving
+                        mDirection = Direction::RIGHT;
+                    else // still
+                        mDirection = Direction::STILL_RIGHT;
+                }
+
+                mInventory.getItem(mInventoryHUD.getInventoryIndex())->use(worldRef);
             }
-            else if (mWeaponTarget.x > mRenderPosition.x)
+            else if (event.mouseButton.button == sf::Mouse::Right)
             {
-                if (mDirection != Direction::STILL_LEFT && mDirection != Direction::STILL_RIGHT) // moving
-                    mDirection = Direction::RIGHT;
-                else // still
-                    mDirection = Direction::STILL_RIGHT;
+                mVelocity = sf::Vector2f(cos(mWeaponAngle), sin(mWeaponAngle))*mRunSpeed;
+            }
+        }
+        else if (event.type == sf::Event::MouseMoved)
+        {
+            mMousePosition = sf::Vector2f(event.mouseMove.x, event.mouseMove.y);
+        }
+        else if (event.type == sf::Event::KeyPressed)
+        {
+            if (event.key.code == sf::Keyboard::Space && !mJumping)
+            {
+                mJumping = true;
+                mVelocity.y = 0.f;
+                mVelocity.y -= mJumpSpeed;
+                mGrounded = false;
+            }
+            if (event.key.code == sf::Keyboard::A)
+            {
+                mVelocity.x = -mRunSpeed;
+                mDirection = Direction::LEFT;
+            }
+            else if (event.key.code == sf::Keyboard::D)
+            {
+                mVelocity.x = mRunSpeed;
+                mDirection = Direction::RIGHT;
+            }
+            else if (event.key.code == sf::Keyboard::E)
+            {
+                //if (length(mSpaceShip.getPhysicsPosition() - mPhysicsPosition) < 250)
+                {
+                    mInVehicle = true;
+                }
+            }
+        }
+
+        else if (event.type == sf::Event::KeyReleased)
+        {
+            if (event.key.code == sf::Keyboard::A)
+            {
+                mVelocity.x  = 0.f;
+                mDirection = Direction::STILL_LEFT;
+            }
+            else if (event.key.code == sf::Keyboard::D)
+            {
+                mVelocity.x  = 0.f;
+                mDirection = Direction::STILL_RIGHT;
             }
 
-            mInventory.getItem(mInventoryHUD.getInventoryIndex())->use(worldRef);
+            if (event.key.code == sf::Keyboard::R)
+            {
+                //mWeapon.reload();
+            }
         }
-        else if (event.mouseButton.button == sf::Mouse::Right)
+        else if (event.type == sf::Event::MouseWheelMoved)
         {
-            mVelocity = sf::Vector2f(cos(mWeaponAngle), sin(mWeaponAngle))*mRunSpeed;
+            if (event.mouseWheel.delta > 0)
+            {
+                if (mInventoryHUD.getInventoryIndex() == mInventory.getItemList().size()-1)
+                    mInventoryHUD.setInventoryIndex(0);
+                else
+                    mInventoryHUD.setInventoryIndex(mInventoryHUD.getInventoryIndex()+1);
+            }
+
+            else if (event.mouseWheel.delta < 0)
+            {
+                if (mInventoryHUD.getInventoryIndex() == 0)
+                    mInventoryHUD.setInventoryIndex(mInventory.getItemList().size()-1);
+                else
+                    mInventoryHUD.setInventoryIndex(mInventoryHUD.getInventoryIndex()-1);
+            }
+
         }
     }
-    else if (event.type == sf::Event::MouseMoved)
+    else if (mInVehicle)
     {
-        mMousePosition = sf::Vector2f(event.mouseMove.x, event.mouseMove.y);
-    }
-    else if (event.type == sf::Event::KeyPressed)
-    {
-        if (event.key.code == sf::Keyboard::Space && !mJumping)
-        {
-            mJumping = true;
-            mVelocity.y = 0.f;
-            mVelocity.y -= mJumpSpeed;
-            mGrounded = false;
-        }
-        if (event.key.code == sf::Keyboard::A)
-        {
-            mVelocity.x = -mRunSpeed;
-            mDirection = Direction::LEFT;
-        }
-        else if (event.key.code == sf::Keyboard::D)
-        {
-            mVelocity.x = mRunSpeed;
-            mDirection = Direction::RIGHT;
-        }
-    }
+        mSpaceShip.handleEvents(event, worldRef);
 
-    else if (event.type == sf::Event::KeyReleased)
-    {
-        if (event.key.code == sf::Keyboard::A)
+        if (event.type == sf::Event::KeyPressed)
         {
-            mVelocity.x  = 0.f;
-            mDirection = Direction::STILL_LEFT;
+            if (event.key.code == sf::Keyboard::E)
+            {
+                mInVehicle = false;
+                mVelocity.y = 0.f;
+                mPhysicsPosition = sf::Vector2f(500, -100);
+            }
         }
-        else if (event.key.code == sf::Keyboard::D)
-        {
-            mVelocity.x  = 0.f;
-            mDirection = Direction::STILL_RIGHT;
-        }
-
-        if (event.key.code == sf::Keyboard::R)
-        {
-            //mWeapon.reload();
-        }
-    }
-    else if (event.type == sf::Event::MouseWheelMoved)
-    {
-        if (event.mouseWheel.delta > 0)
-        {
-            if (mInventoryHUD.getInventoryIndex() == mInventory.getItemList().size()-1)
-                mInventoryHUD.setInventoryIndex(0);
-            else
-                mInventoryHUD.setInventoryIndex(mInventoryHUD.getInventoryIndex()+1);
-        }
-
-        else if (event.mouseWheel.delta < 0)
-        {
-            if (mInventoryHUD.getInventoryIndex() == 0)
-                mInventoryHUD.setInventoryIndex(mInventory.getItemList().size()-1);
-            else
-                mInventoryHUD.setInventoryIndex(mInventoryHUD.getInventoryIndex()-1);
-        }
-
     }
 }
 
@@ -288,41 +318,48 @@ void Player::respawn(sf::Vector2f pos)
 
 bool Player::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop)
 {
-    if (object.lock()->isStatic() && fromTop)
+    if (!mInVehicle)
     {
-        if (mVelocity.y/mFallDamageRate > 1.f)
+        if (object.lock()->isStatic() && fromTop)
         {
-            mHealth.mHP -= mVelocity.y; // terraria fall damage = 10(h - 400), where h = fall distance
-            //mHealth.mActive = true;
-            //mHealth.mActiveClock.restart();
-        }
-
-        mGrounded = true;
-        mJumping = false;
-    }
-
-    if (object.lock()->getTag() == EntityTags::PROJECTILE)
-    {
-        auto proj = static_cast<Projectile*>(&*object.lock());
-
-        if (proj->getOwnerTag() != mTag)
-        {
-            mHealth.mHP -= proj->getDamage();
-            //mHealth.mActive = true;
-            //mHealth.mActiveClock.restart();
-
-            proj->kill();
-
-            if (mHealth.mHP <= 0.f)
+            if (mVelocity.y/mFallDamageRate > 1.f)
             {
-                kill();
+                mHealth.mHP -= mVelocity.y; // terraria fall damage = 10(h - 400), where h = fall distance
+                //mHealth.mActive = true;
+                //mHealth.mActiveClock.restart();
             }
+
+            mGrounded = true;
+            mJumping = false;
         }
 
-        return false;
-    }
+        if (object.lock()->getTag() == EntityTags::PROJECTILE)
+        {
+            auto proj = static_cast<Projectile*>(&*object.lock());
 
-    return true;
+            if (proj->getOwnerTag() != mTag)
+            {
+                mHealth.mHP -= proj->getDamage();
+                //mHealth.mActive = true;
+                //mHealth.mActiveClock.restart();
+
+                proj->kill();
+
+                if (mHealth.mHP <= 0.f)
+                {
+                    kill();
+                }
+            }
+
+            return false;
+        }
+
+        return true;
+    }
+    else
+    {
+        mSpaceShip.onContactBegin(object, fromLeft, fromTop);
+    }
 }
 
 void Player::onContactEnd(std::weak_ptr<ICollideable> object)
