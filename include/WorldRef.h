@@ -7,9 +7,7 @@
 #include "WayPointManager.h"
 
 class ICollideable;
-class NPC;
-class Projectile;
-class Item;
+class SpriteObject;
 class Player;
 class WayPoint;
 class WorldObject;
@@ -21,14 +19,12 @@ class WorldRef
         WorldRef(World& world);
         ~WorldRef();
 
-        void addNPC(std::weak_ptr<NPC> npc);
-        void addProjectile(std::weak_ptr<Projectile> proj);
-        void addItem(std::weak_ptr<Item> item);
-        void addWorldObject(std::weak_ptr<WorldObject> worldObj);
+        void addRenderable(std::weak_ptr<SpriteObject> obj);
         void addCollideable(std::shared_ptr<ICollideable> obj);
 
+        int getTicks();
         std::weak_ptr<Player> getHero();
-        std::weak_ptr<WorldObject> getClosestPlatform(sf::Vector2f pos);
+        std::weak_ptr<ICollideable> getClosestPlatform(sf::Vector2f pos);
         WayPoint getClosestWayPoint(sf::Vector2f pos);
         WayPoint getClosestWayPoint(WayPoint pt);
         WayPointManager& getWayPointManager();

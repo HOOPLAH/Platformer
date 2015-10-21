@@ -41,7 +41,7 @@ void WorldEditor::update(int ticks)
 {
     if (mPlayingHero)
     {
-        mHero->update();
+        mHero->update(mWorld.getWorldRef());
         mCamera.follow(mHero->getRenderPosition());
         mCameraPosition = mHero->getRenderPosition();
 

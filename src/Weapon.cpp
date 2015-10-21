@@ -87,7 +87,8 @@ void Weapon::fire(WorldRef& worldRef)
     auto start = mRenderPosition+sf::Vector2f(firePoint.x*dir, firePoint.y);
     auto proj = std::make_shared<Projectile>(Assets::sprites["bullet"], start, mDamage, mRange, mOwnerTag);
     proj->setFiringAngle(mFiringAngle);
-    worldRef.addProjectile(proj);
+    worldRef.addCollideable(proj);
+    worldRef.addRenderable(proj);
 }
 
 void Weapon::addAmmo(int ammo)

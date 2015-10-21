@@ -26,7 +26,7 @@ Projectile::~Projectile()
     //dtor
 }
 
-void Projectile::update()
+void Projectile::update(WorldRef& worldRef)
 {
     SpriteObject::update();
 

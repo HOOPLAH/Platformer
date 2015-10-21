@@ -11,7 +11,7 @@ class Projectile : public SpriteObject, public ICollideable
         Projectile(SpriteInfo& info, sf::Vector2f pos, int damage, float range, int ownerTag);
         ~Projectile();
 
-        virtual void update();
+        virtual void update(WorldRef& worldRef);
         void draw(sf::RenderTarget& target, float alpha);
 
         // Accessors

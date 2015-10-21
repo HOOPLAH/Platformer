@@ -32,13 +32,12 @@ class World
         void resetWorld(std::string path);
 
         // Accessor
+        int getTicks(){return mTicks;}
         sf::Vector2f getGravity(){return mGravity;}
         std::weak_ptr<Player> getHero(){return mHero;}
-        std::vector<std::shared_ptr<NPC>>& getNPCs(){return mNPCs;}
-        std::vector<std::shared_ptr<Projectile>>& getProjectiles(){return mAliveProjectiles;}
         std::vector<std::shared_ptr<WorldSwitcher>>& getButtons(){return mButtons;}
-        std::vector<std::shared_ptr<WorldObject>>& getWorldObjects(){return mWorldObjects;}
         std::vector<std::weak_ptr<ICollideable>>& getCollideables(){return mCollideables;}
+        std::vector<std::weak_ptr<SpriteObject>>& getRenderables(){return mRenderables;}
         WayPointManager& getWayPointManager(){return mWayPointManager;}
         WorldRef& getWorldRef(){return mWorldRef;}
 
@@ -52,11 +51,10 @@ class World
         void removeWeakDeadObj(std::vector<T>& v);
 
         std::string mPathDirectory;
-
         WorldRef mWorldRef;
+        int mTicks;
 
         sf::Vector2f mGravity;
-
         sf::Vector2f mSpawnPoint;
         std::vector<sf::Vector2f> mNPCSpawnPoints;
         std::size_t mNextNPCSpawnPoint;
@@ -67,11 +65,9 @@ class World
         Camera mCamera;
 
         std::shared_ptr<Player> mHero; // outlet hero!!
-        std::vector<std::shared_ptr<NPC>> mNPCs;
-        std::vector<std::shared_ptr<Projectile>> mAliveProjectiles;
         std::vector<std::shared_ptr<WorldSwitcher>> mButtons;
-        std::vector<std::shared_ptr<WorldObject>> mWorldObjects;
         std::vector<std::weak_ptr<ICollideable>> mCollideables;
+        std::vector<std::weak_ptr<SpriteObject>> mRenderables;
 };
 
 #endif // WORLD_H

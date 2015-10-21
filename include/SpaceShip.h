@@ -11,7 +11,7 @@ class SpaceShip : public SpriteObject, public ICollideable
         SpaceShip(SpriteInfo& info, sf::Vector2f pos);
         ~SpaceShip();
 
-        void update();
+        void update(WorldRef& worldRef);
         void draw(sf::RenderTarget& target, float alpha);
         //void drawStationary(sf::RenderTarget& target);
         void handleEvents(sf::Event& event, WorldRef& worldRef);

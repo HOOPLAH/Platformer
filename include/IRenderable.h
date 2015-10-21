@@ -11,7 +11,6 @@ class IRenderable : virtual public IObject
         IRenderable() : IObject() {}
         virtual ~IRenderable(){}
 
-        virtual void update() = 0;
         virtual void draw(sf::RenderTarget& target, float alpha) = 0;
         virtual void drawStationary(sf::RenderTarget& target){}
 };

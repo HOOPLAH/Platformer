@@ -16,7 +16,7 @@ class Player : public SpriteObject, public ICollideable
         Player(SpriteInfo& info, sf::Vector2f pos);
         ~Player();
 
-        void update();
+        void update(WorldRef& worldRef);
         void draw(sf::RenderTarget& target, float alpha);
         void drawStationary(sf::RenderTarget& target);
         void handleEvents(sf::Event& event, WorldRef& worldRef);
@@ -34,7 +34,7 @@ class Player : public SpriteObject, public ICollideable
         float getWeaponAngle(){return mWeaponAngle;}
         Inventory& getInventory(){return mInventory;}
         Quest& getQuest(){return mQuest;}
-        SpaceShip& getVehicle(){return mSpaceShip;}
+        SpaceShip& getVehicle(){return mVehicle;}
         bool inVehicle(){return mInVehicle;}
 
     private:
@@ -54,7 +54,7 @@ class Player : public SpriteObject, public ICollideable
         Inventory mInventory;
         InventoryHUD mInventoryHUD;
 
-        SpaceShip mSpaceShip; // he owns the spaceship
+        SpaceShip mVehicle; // he owns the spaceship
         bool mInVehicle;
 
         Quest mQuest;

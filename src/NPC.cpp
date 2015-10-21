@@ -46,6 +46,9 @@ void NPC::update(WorldRef& worldRef)
 {
     SpriteObject::update();
 
+    if (worldRef.getTicks()%60 == 0) // update AI's paths every second
+        mNeedToUpdatePath = true;
+
     // animations
     if (!mGrounded) // above ground
     {

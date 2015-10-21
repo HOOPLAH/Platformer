@@ -32,5 +32,6 @@ void GrenadeLauncher::fire(WorldRef& worldRef)
     grenade->setFiringAngle(mFiringAngle);
     grenade->setVelocity(sf::Vector2f(cos(mFiringAngle), sin(mFiringAngle))*grenade->getSpeed());
     grenade->setTag(EntityTags::GRENADE);
-    worldRef.addProjectile(grenade);
+    worldRef.addCollideable(grenade);
+    worldRef.addRenderable(grenade);
 }

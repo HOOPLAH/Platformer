@@ -15,7 +15,7 @@ Player::Player(SpriteInfo& info, sf::Vector2f pos) :
     ICollideable(info.mHitBox, info.mFrameDim, EntityTags::PLAYER),
     mHealth(100.f, sf::Vector2f(30.f, 2.f), false),
     mInventoryHUD(sf::Vector2f(0, 0)),
-    mSpaceShip(Assets::sprites["ship"], mPhysicsPosition)
+    mVehicle(Assets::sprites["ship"], mPhysicsPosition)
 {
     mRunSpeed = 3.f;
     mJumpSpeed = 5.5f;
@@ -38,7 +38,7 @@ Player::~Player()
     //dtor
 }
 
-void Player::update()
+void Player::update(WorldRef& worldRef)
 {
     SpriteObject::update();
 
@@ -71,11 +71,13 @@ void Player::update()
             setFrameLoop(6, 11);
     }
 
-
     if (mHealth.mHP <= 0.f)
     {
         kill();
     }
+
+    if (mInVehicle)
+        mRenderPosition = mVehicle.getPhysicsPosition();
 
     if (mInventory.getItem(mInventoryHUD.getInventoryIndex())->getName() == "Weapon")
     {
@@ -93,7 +95,7 @@ void Player::update()
 
 void Player::draw(sf::RenderTarget& target, float alpha)
 {
-    mSpaceShip.draw(target, alpha);
+    mVehicle.draw(target, alpha);
 
     SpriteObject::draw(target, alpha);
 
@@ -246,7 +248,7 @@ void Player::handleEvents(sf::Event& event, WorldRef& worldRef)
             }
             else if (event.key.code == sf::Keyboard::E)
             {
-                //if (length(mSpaceShip.getPhysicsPosition() - mPhysicsPosition) < 250)
+                //if (length(mVehicle.getPhysicsPosition() - mPhysicsPosition) < 250)
                 {
                     mInVehicle = true;
                 }
@@ -293,7 +295,7 @@ void Player::handleEvents(sf::Event& event, WorldRef& worldRef)
     }
     else if (mInVehicle)
     {
-        mSpaceShip.handleEvents(event, worldRef);
+        mVehicle.handleEvents(event, worldRef);
 
         if (event.type == sf::Event::KeyPressed)
         {
@@ -301,7 +303,7 @@ void Player::handleEvents(sf::Event& event, WorldRef& worldRef)
             {
                 mInVehicle = false;
                 mVelocity.y = 0.f;
-                mPhysicsPosition = sf::Vector2f(500, -100);
+                mPhysicsPosition = mVehicle.getPhysicsPosition();
             }
         }
     }
@@ -318,48 +320,41 @@ void Player::respawn(sf::Vector2f pos)
 
 bool Player::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop)
 {
-    if (!mInVehicle)
+    if (object.lock()->isStatic() && fromTop)
     {
-        if (object.lock()->isStatic() && fromTop)
+        if (mVelocity.y/mFallDamageRate > 1.f)
         {
-            if (mVelocity.y/mFallDamageRate > 1.f)
-            {
-                mHealth.mHP -= mVelocity.y; // terraria fall damage = 10(h - 400), where h = fall distance
-                //mHealth.mActive = true;
-                //mHealth.mActiveClock.restart();
-            }
-
-            mGrounded = true;
-            mJumping = false;
+            mHealth.mHP -= mVelocity.y; // terraria fall damage = 10(h - 400), where h = fall distance
+            //mHealth.mActive = true;
+            //mHealth.mActiveClock.restart();
         }
 
-        if (object.lock()->getTag() == EntityTags::PROJECTILE)
+        mGrounded = true;
+        mJumping = false;
+    }
+
+    if (object.lock()->getTag() == EntityTags::PROJECTILE)
+    {
+        auto proj = static_cast<Projectile*>(&*object.lock());
+
+        if (proj->getOwnerTag() != mTag)
         {
-            auto proj = static_cast<Projectile*>(&*object.lock());
+            mHealth.mHP -= proj->getDamage();
+            //mHealth.mActive = true;
+            //mHealth.mActiveClock.restart();
 
-            if (proj->getOwnerTag() != mTag)
+            proj->kill();
+
+            if (mHealth.mHP <= 0.f)
             {
-                mHealth.mHP -= proj->getDamage();
-                //mHealth.mActive = true;
-                //mHealth.mActiveClock.restart();
-
-                proj->kill();
-
-                if (mHealth.mHP <= 0.f)
-                {
-                    kill();
-                }
+                kill();
             }
-
-            return false;
         }
 
-        return true;
+        return false;
     }
-    else
-    {
-        mSpaceShip.onContactBegin(object, fromLeft, fromTop);
-    }
+
+    return true;
 }
 
 void Player::onContactEnd(std::weak_ptr<ICollideable> object)

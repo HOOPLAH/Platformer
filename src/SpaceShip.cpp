@@ -15,7 +15,7 @@ SpaceShip::~SpaceShip()
     //dtor
 }
 
-void SpaceShip::update()
+void SpaceShip::update(WorldRef& worldRef)
 {
     SpriteObject::update();
 

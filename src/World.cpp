@@ -17,6 +17,8 @@
 World::World() :
     mWorldRef(*this)
 {
+    mTicks = 0;
+
     mSpawnPoint = sf::Vector2f(0.f, 0.f);
     mNextNPCSpawnPoint = 0;
     mNPCSpawnCount = 0;
@@ -37,13 +39,13 @@ World::~World()
 
 void World::update(int ticks)
 {
+    mTicks = ticks;
+
     removeWeakDeadObj(mCollideables);
-    removeDeadObj(mNPCs);
-    removeDeadObj(mAliveProjectiles);
-    removeDeadObj(mWorldObjects);
+    //removeWeakDeadObj(mRenderables);
     removeDeadObj(mButtons);
 
-    if (mNPCs.size() < mNPCSpawnCount && mNPCSpawnPoints.size() > 0)// && !mHero->getQuest().mActions.empty())
+    /*if (mNPCs.size() < mNPCSpawnCount && mNPCSpawnPoints.size() > 0)// && !mHero->getQuest().mActions.empty())
     {
         auto npc = std::make_shared<NPC>(Assets::sprites["pinkpeewee"], mNPCSpawnPoints[mNextNPCSpawnPoint], mWorldRef);
         mNPCs.push_back(npc);
@@ -53,120 +55,86 @@ void World::update(int ticks)
             mNextNPCSpawnPoint++;
         else
             mNextNPCSpawnPoint = 0;
+    }*/
+
+    for (auto& obj : mCollideables)
+    {
+        obj.lock()->update(mWorldRef);
+
+        if (!obj.lock()->isStatic())
+            obj.lock()->setVelocity(obj.lock()->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
     }
 
-    for (auto& npc : mNPCs)
+    /*if (!mHero->getQuest().mActions.empty())
     {
-        npc->update(mWorldRef);
-
-        if (ticks%60 == 0) // update AI's paths every second
-            npc->setNeedToUpdatePath(true);
-
-        if (!npc->isStatic())
-            npc->setVelocity(npc->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
-
-        if (!mHero->getQuest().mActions.empty())
+        if (!npc->isAlive()) // playah killed npc
         {
-            /*if (!npc->isAlive()) // playah killed npc
+            if (mHero->getQuest().mActions.top()->mTag == ActionTag::KILL && npc->getKillerTag() == EntityTags::PLAYER)
             {
-                if (mHero->getQuest().mActions.top()->mTag == ActionTag::KILL && npc->getKillerTag() == EntityTags::PLAYER)
-                {
-                    auto action = static_cast<KillAction*>(&*mHero->getQuest().mActions.top());
+                auto action = static_cast<KillAction*>(&*mHero->getQuest().mActions.top());
 
-                    if (action->mKillsLeftCount > 1)
-                        action->mKillsLeftCount--;
-                    else
-                        mHero->getQuest().mActions.pop();
-                }
-                else if (mHero->getQuest().mActions.top()->mTag == ActionTag::PROTECT)
-                {
-                    auto action = static_cast<ProtectAction*>(&*mHero->getQuest().mActions.top());
-
-                    if (action->mKillsLeftCount > 0)
-                        action->mKillsLeftCount--;
-                }
-            }*/
-        }
-    }
-
-    for (auto& proj : mAliveProjectiles)
-    {
-        if (proj)
-        {
-            if (proj->getTag() == EntityTags::GRENADE)
-            {
-                static_cast<Grenade*>(&*proj)->update(mWorldRef);
-                proj->setVelocity(proj->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
+                if (action->mKillsLeftCount > 1)
+                    action->mKillsLeftCount--;
+                else
+                    mHero->getQuest().mActions.pop();
             }
-            else
-                proj->update();
-        }
-    }
-
-    for (auto& obj : mWorldObjects)
-    {
-        if (obj->getTag() == EntityTags::TURRET)
-            static_cast<Turret*>(&*obj)->update(mWorldRef);
-        else
-            obj->update();
-
-        if (!obj->isStatic())
-            obj->setVelocity(obj->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
-
-        /*if (obj->getTag() == EntityTags::COLLECTIBLE)
-        {
-            auto collectible = static_cast<CollectibleObject*>(&*obj);
-
-            if (collectible->isCollected())
+            else if (mHero->getQuest().mActions.top()->mTag == ActionTag::PROTECT)
             {
-                if (!mHero->getQuest().mActions.empty())
+                auto action = static_cast<ProtectAction*>(&*mHero->getQuest().mActions.top());
+
+                if (action->mKillsLeftCount > 0)
+                    action->mKillsLeftCount--;
+            }
+        }
+    }*/
+
+    /*if (obj->getTag() == EntityTags::COLLECTIBLE)
+    {
+        auto collectible = static_cast<CollectibleObject*>(&*obj);
+
+        if (collectible->isCollected())
+        {
+            if (!mHero->getQuest().mActions.empty())
+            {
+                if (mHero->getQuest().mActions.top()->mTag == ActionTag::COLLECT)
                 {
-                    if (mHero->getQuest().mActions.top()->mTag == ActionTag::COLLECT)
+                    auto action = static_cast<CollectAction*>(&*mHero->getQuest().mActions.top());
+
+                    if (obj->getTag() == action->mCollectTag)
                     {
-                        auto action = static_cast<CollectAction*>(&*mHero->getQuest().mActions.top());
-
-                        if (obj->getTag() == action->mCollectTag)
-                        {
-                            if (action->mCollectLeftCount > 1)
-                                action->mCollectLeftCount--;
-                            else
-                                mHero->getQuest().mActions.pop();
-                        }
+                        if (action->mCollectLeftCount > 1)
+                            action->mCollectLeftCount--;
                         else
-                            break;
+                            mHero->getQuest().mActions.pop();
                     }
+                    else
+                        break;
                 }
-
-                collectible->kill();
             }
-        }*/
-    }
+
+            collectible->kill();
+        }
+    }*/
 
     for (auto& button : mButtons)
     {
         if (mHero->getQuest().mActions.empty())
         {
-            button->update();
+            //button->update();
             button->setCollisionActive(true);
         }
     }
 
-    mHero->update();
-    mHero->setVelocity(mHero->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
+   // mHero->update();
+    //mHero->setVelocity(mHero->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
     if (mHero->inVehicle())
-    {
-        mHero->getVehicle().update();
-        mCamera.follow(mHero->getVehicle().getRenderPosition());
-    }
-    else
-    {
-        mCamera.follow(mHero->getRenderPosition());
-    }
+        mHero->getVehicle().update(mWorldRef);
     if (!mHero->isAlive())
     {
         mHero->respawn(mSpawnPoint);
-        mCollideables.push_back(mHero);
+        //mCollideables.push_back(mHero);
     }
+    mCamera.follow(mHero->getRenderPosition());
 
     /*for (auto& obj : mCollideables)
     {
@@ -220,7 +188,7 @@ void World::draw(sf::RenderTarget& target, float alpha)
 
     sf::FloatRect windowCoords(mCamera.getCenter().x-(SCREEN_WIDTH/2), mCamera.getCenter().y-(SCREEN_HEIGHT/2), SCREEN_WIDTH, SCREEN_HEIGHT);
 
-    for (auto& obj : mWorldObjects)
+    /*for (auto& obj : mWorldObjects)
     {
         if (windowCoords.intersects(obj->getSprite().getGlobalBounds()))
             obj->draw(target, alpha);
@@ -236,6 +204,13 @@ void World::draw(sf::RenderTarget& target, float alpha)
     {
         if (windowCoords.intersects(proj->getSprite().getGlobalBounds()))
             proj->draw(target, alpha);
+    }*/
+
+    for (auto& obj : mRenderables)
+    {
+        std::cout << obj.lock()->getRenderPosition().x << std::endl;
+        if (windowCoords.intersects(obj.lock()->getSprite().getGlobalBounds()))
+            obj.lock()->draw(target, alpha);
     }
 
     for (auto& button : mButtons)
@@ -318,14 +293,14 @@ void World::loadWorld(std::string path)
                 int count = std::stof(split_line[1]);
                 mNPCSpawnCount = count;
             }
-            else if (find_key("collectible:", line))
+            /*else if (find_key("collectible:", line))
             {
                 std::string id = split_line[1];
                 float x = std::stof(split_line[2]);
                 float y = std::stof(split_line[3]);
                 auto obj = std::make_shared<CollectibleObject>(Assets::sprites[id], sf::Vector2f(x, y), CollectibleType::AMMOCRATE);
-                mWorldObjects.push_back(obj);
                 mCollideables.push_back(obj);
+                mRenderables.push_back(obj);
             }
             else if (find_key("platform:", line))
             {
@@ -333,9 +308,9 @@ void World::loadWorld(std::string path)
                 float x = std::stof(split_line[2]);
                 float y = std::stof(split_line[3]);
                 auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y), EntityTags::PLATFORM);
-                mWorldObjects.push_back(platform);
                 mCollideables.push_back(platform);
-            }
+                mRenderables.push_back(platform);
+            }*/
             else if (find_key("tiled_platforms:", line))
             {
                 int amnt = std::stoi(split_line[1]);
@@ -347,8 +322,8 @@ void World::loadWorld(std::string path)
                 {
                     auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(start_x+(i*distApart.x),
                                         start_y+(i*distApart.y)));
-                    mWorldObjects.push_back(platform);
                     mCollideables.push_back(platform);
+                    //mRenderables.push_back(platform);
                 }
             }
             else if (find_key("turret:", line))
@@ -356,8 +331,8 @@ void World::loadWorld(std::string path)
                 float x = std::stof(split_line[1]);
                 float y = std::stof(split_line[2]);
                 auto turret = std::make_shared<Turret>(Assets::sprites["turretbody"], sf::Vector2f(x, y));
-                mWorldObjects.push_back(turret);
                 mCollideables.push_back(turret);
+                mRenderables.push_back(turret);
             }
             else if (find_key("button:", line))
             {
@@ -438,11 +413,8 @@ void World::resetWorld(std::string path)
     mNPCSpawnCount = 0;
     mGravity = sf::Vector2f(0.f, 10.f);
 
-    mNPCs.clear();
-    mAliveProjectiles.clear();
-    mButtons.clear();
-    mWorldObjects.clear();
     mCollideables.clear();
+    mRenderables.clear();
 
     mWayPointManager.getWayPoints().clear();
 
@@ -573,6 +545,7 @@ void World::removeWeakDeadObj(std::vector<T>& v)
 
     for (it = v.begin(); it != v.end();)
     {
+        std::cout << (*it).lock()->getTag() << std::endl;
         if(!(*it).lock()->isAlive())
         {
             it = v.erase(it);
