@@ -30,6 +30,7 @@ class ICollideable : virtual public IObject
         void setPhysicsPosition(sf::Vector2f pos){mPhysicsPosition=pos;}
         void setVelocity(sf::Vector2f vel){mVelocity = vel;}
         void setCollisionActive(bool active){mCollisionActive=active;}
+        void setStatic(bool s){mStatic=s;}
         void setTag(int tag){mTag=tag;}
 
         // Accessors

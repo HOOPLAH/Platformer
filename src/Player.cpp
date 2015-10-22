@@ -10,12 +10,11 @@
 #include "Projectile.h"
 #include "GrenadeLauncher.h"
 
-Player::Player(SpriteInfo& info, sf::Vector2f pos) :
+Player::Player(SpriteInfo& info, sf::Vector2f pos, WorldRef& worldRef) :
     SpriteObject(info, pos),
     ICollideable(info.mHitBox, info.mFrameDim, EntityTags::PLAYER),
     mHealth(100.f, sf::Vector2f(30.f, 2.f), false),
-    mInventoryHUD(sf::Vector2f(0, 0)),
-    mVehicle(Assets::sprites["ship"], mPhysicsPosition)
+    mInventoryHUD(sf::Vector2f(0, 0))
 {
     mRunSpeed = 3.f;
     mJumpSpeed = 5.5f;
@@ -30,6 +29,10 @@ Player::Player(SpriteInfo& info, sf::Vector2f pos) :
     mInventoryHUD.addInventoryItem(SpriteObject(Assets::sprites["pistol"], sf::Vector2f()));
     mInventoryHUD.addInventoryItem(SpriteObject(Assets::sprites["grenade"], sf::Vector2f()));
 
+    auto vehicle = std::make_shared<SpaceShip>(Assets::sprites["ship"], sf::Vector2f(500, -100));
+    worldRef.addCollideable(vehicle);
+    worldRef.addRenderable(vehicle);
+    mVehicle = vehicle;
     mInVehicle = false;
 }
 
@@ -77,7 +80,7 @@ void Player::update(WorldRef& worldRef)
     }
 
     if (mInVehicle)
-        mRenderPosition = mVehicle.getPhysicsPosition();
+        mRenderPosition = mVehicle.lock()->getPhysicsPosition();
 
     if (mInventory.getItem(mInventoryHUD.getInventoryIndex())->getName() == "Weapon")
     {
@@ -95,8 +98,6 @@ void Player::update(WorldRef& worldRef)
 
 void Player::draw(sf::RenderTarget& target, float alpha)
 {
-    mVehicle.draw(target, alpha);
-
     SpriteObject::draw(target, alpha);
 
     mRenderPosition = mPhysicsPosition*alpha + mOldPhysicsPosition*(1.f - alpha);
@@ -295,7 +296,7 @@ void Player::handleEvents(sf::Event& event, WorldRef& worldRef)
     }
     else if (mInVehicle)
     {
-        mVehicle.handleEvents(event, worldRef);
+        mVehicle.lock()->handleEvents(event, worldRef);
 
         if (event.type == sf::Event::KeyPressed)
         {
@@ -303,7 +304,7 @@ void Player::handleEvents(sf::Event& event, WorldRef& worldRef)
             {
                 mInVehicle = false;
                 mVelocity.y = 0.f;
-                mPhysicsPosition = mVehicle.getPhysicsPosition();
+                mPhysicsPosition = mVehicle.lock()->getPhysicsPosition();
             }
         }
     }

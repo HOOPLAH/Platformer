@@ -21,6 +21,9 @@ void SpaceShip::update(WorldRef& worldRef)
 
     mOldPhysicsPosition = mPhysicsPosition;
     mPhysicsPosition += mVelocity;
+
+    if (std::abs(mVelocity.y) > 1.f) // not moving
+        std::cout << "not moving lol, " << std::abs(mVelocity.y) << std::endl;
 }
 
 void SpaceShip::draw(sf::RenderTarget& target, float alpha)

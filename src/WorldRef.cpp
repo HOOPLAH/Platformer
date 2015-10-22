@@ -17,14 +17,14 @@ WorldRef::~WorldRef()
     //dtor
 }
 
-void WorldRef::addRenderable(std::weak_ptr<SpriteObject> obj)
+void WorldRef::addRenderable(std::shared_ptr<SpriteObject> obj)
 {
-    mWorld.getRenderables().push_back(obj);
+    mWorld.getRenderables().push_back(std::move(obj));
 }
 
 void WorldRef::addCollideable(std::shared_ptr<ICollideable> obj)
 {
-    mWorld.getCollideables().push_back(obj);
+    mWorld.getCollideables().push_back(std::move(obj));
 }
 
 int WorldRef::getTicks()
@@ -44,9 +44,9 @@ std::weak_ptr<ICollideable> WorldRef::getClosestPlatform(sf::Vector2f pos)
 
     for (auto& obj : mWorld.getCollideables())
     {
-        if (obj.lock()->getTag() == EntityTags::PLATFORM)
+        if (obj->getTag() == EntityTags::PLATFORM)
         {
-            sf::Vector2f objPos = obj.lock()->getPhysicsPosition();
+            sf::Vector2f objPos = obj->getPhysicsPosition();
             float dist = std::abs(sqrt(pow(objPos.x - pos.x , 2) + pow(objPos.y - pos.y, 2)));
 
             if (dist < shortestDist)
@@ -113,10 +113,10 @@ std::vector<std::weak_ptr<ICollideable>> WorldRef::getObjectsWithinArea(int tag,
 
     for (auto& obj : mWorld.getCollideables())
     {
-        if (obj.lock()->getTag() == tag)
+        if (obj->getTag() == tag)
         {
-            auto pos = obj.lock()->getPhysicsPosition();
-            auto hitbox = obj.lock()->getHitBox();
+            auto pos = obj->getPhysicsPosition();
+            auto hitbox = obj->getHitBox();
 
             if (rect.intersects(sf::FloatRect(pos+sf::Vector2f(hitbox.left, hitbox.top), sf::Vector2f(hitbox.width, hitbox.height))))
             {

@@ -24,7 +24,7 @@ World::World() :
     mNPCSpawnCount = 0;
     mGravity = sf::Vector2f(0.f, 10.f);
 
-    mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], mSpawnPoint);
+    mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], mSpawnPoint, mWorldRef);
 }
 
 World::World(std::string path) : World()
@@ -41,8 +41,8 @@ void World::update(int ticks)
 {
     mTicks = ticks;
 
-    removeWeakDeadObj(mCollideables);
-    //removeWeakDeadObj(mRenderables);
+    removeDeadObj(mCollideables);
+    removeDeadObj(mRenderables);
     removeDeadObj(mButtons);
 
     /*if (mNPCs.size() < mNPCSpawnCount && mNPCSpawnPoints.size() > 0)// && !mHero->getQuest().mActions.empty())
@@ -59,10 +59,10 @@ void World::update(int ticks)
 
     for (auto& obj : mCollideables)
     {
-        obj.lock()->update(mWorldRef);
+        obj->update(mWorldRef);
 
-        if (!obj.lock()->isStatic())
-            obj.lock()->setVelocity(obj.lock()->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
+        if (!obj->isStatic())
+            obj->setVelocity(obj->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
     }
 
     /*if (!mHero->getQuest().mActions.empty())
@@ -125,14 +125,10 @@ void World::update(int ticks)
         }
     }
 
-   // mHero->update();
-    //mHero->setVelocity(mHero->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
-    if (mHero->inVehicle())
-        mHero->getVehicle().update(mWorldRef);
     if (!mHero->isAlive())
     {
         mHero->respawn(mSpawnPoint);
-        //mCollideables.push_back(mHero);
+        mCollideables.push_back(mHero);
     }
     mCamera.follow(mHero->getRenderPosition());
 
@@ -166,17 +162,17 @@ void World::update(int ticks)
             auto dynamic = mCollideables[x];
             auto _static = mCollideables[y];
 
-            if (!mCollideables[x].lock()->isStatic())
+            if (!mCollideables[x]->isStatic())
                 dynamic = mCollideables[x];
-            else if (!mCollideables[y].lock()->isStatic())
+            else if (!mCollideables[y]->isStatic())
                 dynamic = mCollideables[y];
 
-            if (mCollideables[x].lock()->isStatic())
+            if (mCollideables[x]->isStatic())
                 _static = mCollideables[x];
-            else if (mCollideables[x].lock()->isStatic())
+            else if (mCollideables[x]->isStatic())
                 _static = mCollideables[y];
 
-            if (checkCollision(dynamic, _static) && dynamic.lock()->isCollisionActive() && _static.lock()->isCollisionActive())
+            if (checkCollision(dynamic, _static) && dynamic->isCollisionActive() && _static->isCollisionActive())
                 resolveCollision(dynamic, _static);
         }
     }
@@ -208,9 +204,8 @@ void World::draw(sf::RenderTarget& target, float alpha)
 
     for (auto& obj : mRenderables)
     {
-        std::cout << obj.lock()->getRenderPosition().x << std::endl;
-        if (windowCoords.intersects(obj.lock()->getSprite().getGlobalBounds()))
-            obj.lock()->draw(target, alpha);
+        //if (windowCoords.intersects(obj->getSprite().getGlobalBounds()))
+            obj->draw(target, alpha);
     }
 
     for (auto& button : mButtons)
@@ -224,8 +219,6 @@ void World::draw(sf::RenderTarget& target, float alpha)
 
     if (!mHero->inVehicle())
         mHero->draw(target, alpha);
-    else
-        mHero->getVehicle().draw(target, alpha);
     mWayPointManager.draw(target);
 
     target.setView(target.getDefaultView());
@@ -293,7 +286,7 @@ void World::loadWorld(std::string path)
                 int count = std::stof(split_line[1]);
                 mNPCSpawnCount = count;
             }
-            /*else if (find_key("collectible:", line))
+            else if (find_key("collectible:", line))
             {
                 std::string id = split_line[1];
                 float x = std::stof(split_line[2]);
@@ -310,7 +303,7 @@ void World::loadWorld(std::string path)
                 auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y), EntityTags::PLATFORM);
                 mCollideables.push_back(platform);
                 mRenderables.push_back(platform);
-            }*/
+            }
             else if (find_key("tiled_platforms:", line))
             {
                 int amnt = std::stoi(split_line[1]);
@@ -323,7 +316,7 @@ void World::loadWorld(std::string path)
                     auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(start_x+(i*distApart.x),
                                         start_y+(i*distApart.y)));
                     mCollideables.push_back(platform);
-                    //mRenderables.push_back(platform);
+                    mRenderables.push_back(platform);
                 }
             }
             else if (find_key("turret:", line))

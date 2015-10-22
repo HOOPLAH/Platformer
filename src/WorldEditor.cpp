@@ -17,7 +17,7 @@ WorldEditor::WorldEditor(std::string path) :
     mCameraZoom = 1.f;
 
     mPlayingHero = false;
-    mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], sf::Vector2f(0.f, 0.f));
+    mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], sf::Vector2f(0.f, 0.f), mWorld.getWorldRef());
     mCollideables.push_back(mHero);
 
     mIDs.push_back("ammocrate");

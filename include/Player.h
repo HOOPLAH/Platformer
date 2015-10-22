@@ -13,7 +13,7 @@
 class Player : public SpriteObject, public ICollideable
 {
     public:
-        Player(SpriteInfo& info, sf::Vector2f pos);
+        Player(SpriteInfo& info, sf::Vector2f pos, WorldRef& worldRef);
         ~Player();
 
         void update(WorldRef& worldRef);
@@ -34,7 +34,7 @@ class Player : public SpriteObject, public ICollideable
         float getWeaponAngle(){return mWeaponAngle;}
         Inventory& getInventory(){return mInventory;}
         Quest& getQuest(){return mQuest;}
-        SpaceShip& getVehicle(){return mVehicle;}
+        std::weak_ptr<SpaceShip> getVehicle(){return mVehicle;}
         bool inVehicle(){return mInVehicle;}
 
     private:
@@ -54,7 +54,7 @@ class Player : public SpriteObject, public ICollideable
         Inventory mInventory;
         InventoryHUD mInventoryHUD;
 
-        SpaceShip mVehicle; // he owns the spaceship
+        std::weak_ptr<SpaceShip> mVehicle; // he owns the spaceship
         bool mInVehicle;
 
         Quest mQuest;

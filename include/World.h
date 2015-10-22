@@ -36,8 +36,8 @@ class World
         sf::Vector2f getGravity(){return mGravity;}
         std::weak_ptr<Player> getHero(){return mHero;}
         std::vector<std::shared_ptr<WorldSwitcher>>& getButtons(){return mButtons;}
-        std::vector<std::weak_ptr<ICollideable>>& getCollideables(){return mCollideables;}
-        std::vector<std::weak_ptr<SpriteObject>>& getRenderables(){return mRenderables;}
+        std::vector<std::shared_ptr<ICollideable>>& getCollideables(){return mCollideables;}
+        std::vector<std::shared_ptr<SpriteObject>>& getRenderables(){return mRenderables;}
         WayPointManager& getWayPointManager(){return mWayPointManager;}
         WorldRef& getWorldRef(){return mWorldRef;}
 
@@ -66,8 +66,8 @@ class World
 
         std::shared_ptr<Player> mHero; // outlet hero!!
         std::vector<std::shared_ptr<WorldSwitcher>> mButtons;
-        std::vector<std::weak_ptr<ICollideable>> mCollideables;
-        std::vector<std::weak_ptr<SpriteObject>> mRenderables;
+        std::vector<std::shared_ptr<ICollideable>> mCollideables;
+        std::vector<std::shared_ptr<SpriteObject>> mRenderables;
 };
 
 #endif // WORLD_H

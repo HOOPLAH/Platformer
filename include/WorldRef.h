@@ -19,7 +19,7 @@ class WorldRef
         WorldRef(World& world);
         ~WorldRef();
 
-        void addRenderable(std::weak_ptr<SpriteObject> obj);
+        void addRenderable(std::shared_ptr<SpriteObject> obj);
         void addCollideable(std::shared_ptr<ICollideable> obj);
 
         int getTicks();
