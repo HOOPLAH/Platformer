@@ -5,7 +5,7 @@
 
 #include "SpriteObject.h"
 #include "ICollideable.h"
-#include "Weapon.h"
+#include "VehicleWeapon.h"
 #include "WorldRef.h"
 
 class SpaceShip : public SpriteObject, public ICollideable
@@ -25,7 +25,7 @@ class SpaceShip : public SpriteObject, public ICollideable
     private:
         float mAcceleration;
 
-        std::vector<Weapon> mWeapons;
+        std::vector<VehicleWeapon> mWeapons;
         sf::Vector2f mMousePosition;
         sf::Vector2f mWeaponTarget;
         float mWeaponAngle;

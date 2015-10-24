@@ -300,7 +300,9 @@ void Player::handleEvents(sf::Event& event, WorldRef& worldRef)
             if (event.key.code == sf::Keyboard::E)
             {
                 mInVehicle = false;
-                mVelocity.y = 0.f;
+                mVelocity = sf::Vector2f(0.f, 0.f);
+                mVehicle.lock()->setVelocity(sf::Vector2f(0.f, 0.f));
+                mDirection = Direction::STILL_RIGHT;
                 mPhysicsPosition = mVehicle.lock()->getPhysicsPosition();
             }
         }

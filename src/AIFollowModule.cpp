@@ -70,7 +70,8 @@ void AIFollowModule::update(WorldRef& worldRef)
     }
     else
     {
-        if (mNPC.walk(mNPC.getTarget().getRenderPosition()))
+        if (mNPC.walk(mNPC.getTarget().getRenderPosition()) ||
+            std::abs(length(mNPC.getTarget().getRenderPosition() - mNPC.getRenderPosition())) > 250.f)
         {
             mIndex = 0;
             mWayPoints.clear();

@@ -9,14 +9,11 @@ SpaceShip::SpaceShip(SpriteInfo& info, sf::Vector2f pos) : SpriteObject(info, po
     mAcceleration = 6.f;
 
     mWeaponAngle = 0.f;
-    Weapon weap1(Assets::sprites["nothing"], EntityTags::VEHICLE);
-    weap1.setFirePoint(sf::Vector2f(0, 0));
-
-    Weapon weap2(Assets::sprites["nothing"], EntityTags::VEHICLE);
-    weap2.setFirePoint(sf::Vector2f(143, 20));
+    VehicleWeapon weap1(Assets::sprites["nothing"], EntityTags::VEHICLE, sf::Vector2f(0, 20));
+    VehicleWeapon weap2(Assets::sprites["nothing"], EntityTags::VEHICLE, sf::Vector2f(200, 20));
 
     mWeapons.push_back(weap1);
-    //mWeapons.push_back(weap2);
+    mWeapons.push_back(weap2);
 }
 
 SpaceShip::~SpaceShip()
@@ -33,11 +30,11 @@ void SpaceShip::update(WorldRef& worldRef)
 
     for (auto& weap : mWeapons)
     {
-        sf::Vector2f weapFirePoint = mRenderPosition+weap.getFirePoint();
+        sf::Vector2f weapFirePoint = mRenderPosition+weap.getPositionOnVehicle()+weap.getFirePoint();
         mWeaponAngle = atan2(mWeaponTarget.y - weapFirePoint.y, mWeaponTarget.x - weapFirePoint.x);
 
         weap.setFiringAngle(mWeaponAngle);
-        weap.setPosition(mRenderPosition+sf::Vector2f(0, 20));
+        weap.setPosition(mRenderPosition+weap.getPositionOnVehicle());
     }
 }
 
