@@ -29,7 +29,7 @@ Player::Player(SpriteInfo& info, sf::Vector2f pos, WorldRef& worldRef) :
     mInventoryHUD.addInventoryItem(SpriteObject(Assets::sprites["pistol"], sf::Vector2f()));
     mInventoryHUD.addInventoryItem(SpriteObject(Assets::sprites["grenade"], sf::Vector2f()));
 
-    auto vehicle = std::make_shared<SpaceShip>(Assets::sprites["ship"], sf::Vector2f(500, -100));
+    auto vehicle = std::make_shared<SpaceShip>(Assets::sprites["ship"], mPhysicsPosition);
     worldRef.addCollideable(vehicle);
     worldRef.addRenderable(vehicle);
     mVehicle = vehicle;
@@ -80,7 +80,7 @@ void Player::update(WorldRef& worldRef)
     }
 
     if (mInVehicle)
-        mRenderPosition = mVehicle.lock()->getPhysicsPosition();
+        mRenderPosition = mVehicle.lock()->getPhysicsPosition()+mVehicle.lock()->getCenter();
 
     if (mInventory.getItem(mInventoryHUD.getInventoryIndex())->getName() == "Weapon")
     {
@@ -111,7 +111,8 @@ void Player::draw(sf::RenderTarget& target, float alpha)
 
 void Player::drawStationary(sf::RenderTarget& target)
 {
-    mInventoryHUD.draw(target);
+    if (!mInVehicle)
+        mInventoryHUD.draw(target);
 
     // TODO: move to inventory item ui when there is one
     /*std::string sWeaponText = std::to_string(mWeapon.getMagazines());
@@ -218,10 +219,6 @@ void Player::handleEvents(sf::Event& event, WorldRef& worldRef)
                 }
 
                 mInventory.getItem(mInventoryHUD.getInventoryIndex())->use(worldRef);
-            }
-            else if (event.mouseButton.button == sf::Mouse::Right)
-            {
-                mVelocity = sf::Vector2f(cos(mWeaponAngle), sin(mWeaponAngle))*mRunSpeed;
             }
         }
         else if (event.type == sf::Event::MouseMoved)

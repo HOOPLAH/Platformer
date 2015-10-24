@@ -41,27 +41,27 @@ void World::update(int ticks)
 {
     mTicks = ticks;
 
-    removeDeadObj(mCollideables);
-    removeDeadObj(mRenderables);
-    removeDeadObj(mButtons);
+    removeDeadObjects(mCollideables);
+    removeDeadObjects(mRenderables);
+    removeDeadObjects(mButtons);
 
-    /*if (mNPCs.size() < mNPCSpawnCount && mNPCSpawnPoints.size() > 0)// && !mHero->getQuest().mActions.empty())
+    if (getObjectsWithTag(EntityTags::NPC).size() < mNPCSpawnCount && mNPCSpawnPoints.size() > 0)// && !mHero->getQuest().mActions.empty())
     {
         auto npc = std::make_shared<NPC>(Assets::sprites["pinkpeewee"], mNPCSpawnPoints[mNextNPCSpawnPoint], mWorldRef);
-        mNPCs.push_back(npc);
+        mRenderables.push_back(npc);
         mCollideables.push_back(npc);
 
         if (mNextNPCSpawnPoint < mNPCSpawnPoints.size())
             mNextNPCSpawnPoint++;
         else
             mNextNPCSpawnPoint = 0;
-    }*/
+    }
 
     for (auto& obj : mCollideables)
     {
         obj->update(mWorldRef);
 
-        if (!obj->isStatic())
+        if (!obj->isStatic() && obj->getTag() != EntityTags::VEHICLE)
             obj->setVelocity(obj->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
     }
 
@@ -182,7 +182,7 @@ void World::draw(sf::RenderTarget& target, float alpha)
 {
     target.setView(mCamera.getView());
 
-    sf::FloatRect windowCoords(mCamera.getCenter().x-(SCREEN_WIDTH/2), mCamera.getCenter().y-(SCREEN_HEIGHT/2), SCREEN_WIDTH, SCREEN_HEIGHT);
+    mWindowCoords = sf::FloatRect(mCamera.getCenter().x-(SCREEN_WIDTH/2), mCamera.getCenter().y-(SCREEN_HEIGHT/2), SCREEN_WIDTH, SCREEN_HEIGHT);
 
     /*for (auto& obj : mWorldObjects)
     {
@@ -204,7 +204,7 @@ void World::draw(sf::RenderTarget& target, float alpha)
 
     for (auto& obj : mRenderables)
     {
-        //if (windowCoords.intersects(obj->getSprite().getGlobalBounds()))
+        if (mWindowCoords.intersects(obj->getSprite().getGlobalBounds()))
             obj->draw(target, alpha);
     }
 
@@ -212,7 +212,7 @@ void World::draw(sf::RenderTarget& target, float alpha)
     {
         if (mHero->getQuest().mActions.empty())
         {
-            if (windowCoords.intersects(button->getSprite().getGlobalBounds()))
+            if (mWindowCoords.intersects(button->getSprite().getGlobalBounds()))
                 button->draw(target, alpha);
         }
     }
@@ -514,7 +514,7 @@ void World::resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<IColli
 }
 
 template <class T>
-void World::removeDeadObj(std::vector<T>& v)
+void World::removeDeadObjects(std::vector<T>& v)
 {
     typename std::vector<T>::iterator it;
 
@@ -531,21 +531,15 @@ void World::removeDeadObj(std::vector<T>& v)
     }
 }
 
-template <class T>
-void World::removeWeakDeadObj(std::vector<T>& v)
+std::vector<std::weak_ptr<ICollideable>> World::getObjectsWithTag(int tag)
 {
-    typename std::vector<T>::iterator it;
+    std::vector<std::weak_ptr<ICollideable>> objs;
 
-    for (it = v.begin(); it != v.end();)
+    for (auto& obj : mCollideables)
     {
-        std::cout << (*it).lock()->getTag() << std::endl;
-        if(!(*it).lock()->isAlive())
-        {
-            it = v.erase(it);
-        }
-        else
-        {
-            it++;
-        }
+        if (obj->getTag() == tag)
+            objs.push_back(obj);
     }
+
+    return objs;
 }

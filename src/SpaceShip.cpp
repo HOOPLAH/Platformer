@@ -1,13 +1,22 @@
 #include "SpaceShip.h"
 
+#include "Assets.h"
 #include "EntityTags.h"
 
-#include <Projectile.h>
-
 SpaceShip::SpaceShip(SpriteInfo& info, sf::Vector2f pos) : SpriteObject(info, pos),
-    ICollideable(info.mHitBox, info.mFrameDim, EntityTags::SPACESHIP)
+    ICollideable(info.mHitBox, info.mFrameDim, EntityTags::VEHICLE)
 {
     mAcceleration = 6.f;
+
+    mWeaponAngle = 0.f;
+    Weapon weap1(Assets::sprites["nothing"], EntityTags::VEHICLE);
+    weap1.setFirePoint(sf::Vector2f(0, 0));
+
+    Weapon weap2(Assets::sprites["nothing"], EntityTags::VEHICLE);
+    weap2.setFirePoint(sf::Vector2f(143, 20));
+
+    mWeapons.push_back(weap1);
+    //mWeapons.push_back(weap2);
 }
 
 SpaceShip::~SpaceShip()
@@ -22,8 +31,14 @@ void SpaceShip::update(WorldRef& worldRef)
     mOldPhysicsPosition = mPhysicsPosition;
     mPhysicsPosition += mVelocity;
 
-    if (std::abs(mVelocity.y) > 1.f) // not moving
-        std::cout << "not moving lol, " << std::abs(mVelocity.y) << std::endl;
+    for (auto& weap : mWeapons)
+    {
+        sf::Vector2f weapFirePoint = mRenderPosition+weap.getFirePoint();
+        mWeaponAngle = atan2(mWeaponTarget.y - weapFirePoint.y, mWeaponTarget.x - weapFirePoint.x);
+
+        weap.setFiringAngle(mWeaponAngle);
+        weap.setPosition(mRenderPosition+sf::Vector2f(0, 20));
+    }
 }
 
 void SpaceShip::draw(sf::RenderTarget& target, float alpha)
@@ -31,16 +46,13 @@ void SpaceShip::draw(sf::RenderTarget& target, float alpha)
     SpriteObject::draw(target, alpha);
 
     mRenderPosition = mPhysicsPosition*alpha + mOldPhysicsPosition*(1.f - alpha);
+    mWeaponTarget = target.mapPixelToCoords(sf::Vector2i(mMousePosition.x, mMousePosition.y));
 }
 
 void SpaceShip::handleEvents(sf::Event& event, WorldRef& worldRef)
 {
     if (event.type == sf::Event::KeyPressed)
     {
-        if (event.key.code == sf::Keyboard::Space)
-        {
-            // fire weapons
-        }
         if (event.key.code == sf::Keyboard::W)
         {
             mVelocity.y = -mAcceleration;
@@ -53,12 +65,12 @@ void SpaceShip::handleEvents(sf::Event& event, WorldRef& worldRef)
         if (event.key.code == sf::Keyboard::A)
         {
             mVelocity.x = -mAcceleration;
-            mSprite.setScale(-1.f, 1.f);
+            setFrameLoop(0, 0);
         }
         else if (event.key.code == sf::Keyboard::D)
         {
             mVelocity.x = mAcceleration;
-            mSprite.setScale(1.f, 1.f);
+            setFrameLoop(1, 1);
         }
     }
 
@@ -84,6 +96,21 @@ void SpaceShip::handleEvents(sf::Event& event, WorldRef& worldRef)
             mVelocity.x = 0;
         }
     }
+
+    else if (event.type == sf::Event::MouseButtonPressed)
+    {
+        if (event.mouseButton.button == sf::Mouse::Left)
+        {
+            for (auto& weap : mWeapons)
+            {
+                weap.fire(worldRef);
+            }
+        }
+    }
+    else if (event.type == sf::Event::MouseMoved)
+    {
+        mMousePosition = sf::Vector2f(event.mouseMove.x, event.mouseMove.y);
+    }
 }
 
 bool SpaceShip::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop)
@@ -103,6 +130,11 @@ bool SpaceShip::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft
 
         return false;
     }
+    else if (object.lock()->getTag() == EntityTags::PLAYER || object.lock()->getTag() == EntityTags::NPC ||
+             object.lock()->getTag() == EntityTags::TURRET)
+         {
+            return false;
+         }
 
     return true;
 }

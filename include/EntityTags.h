@@ -14,7 +14,7 @@ namespace EntityTags
         COLLECTIBLE,
         TURRET,
         GRENADE,
-        SPACESHIP
+        VEHICLE
     };
 }
 

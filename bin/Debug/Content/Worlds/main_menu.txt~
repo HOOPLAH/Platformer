@@ -2,4 +2,4 @@ spawn_point: 500 -100
 
 tiled_platforms: 5 64 0 ammocrate 490 0      GROUND
 
-platform: ship 500 -72
+button: play_button 615 -115 1

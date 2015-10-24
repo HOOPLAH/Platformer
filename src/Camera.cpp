@@ -16,14 +16,16 @@ Camera::~Camera()
 
 void Camera::moveTo(sf::Vector2f newCenter)
 {
-    float dist = sqrt(pow(mOldCenter.x - mCenter.x, 2) + pow(mOldCenter.y - mCenter.y, 2));
+    /*float dist = sqrt(pow(mOldCenter.x - mCenter.x, 2) + pow(mOldCenter.y - mCenter.y, 2));
 
     if (dist > 5.f)
     {
         float angle = atan2(mOldCenter.y - mCenter.y, mOldCenter.x - mCenter.x);
         sf::Vector2f vel = sf::Vector2f(cos(angle), sin(angle))*50.f;
         mCenter += vel;
-    }
+    }*/
+
+    mCenter = newCenter;
 
     mView.setCenter(mCenter);
 }

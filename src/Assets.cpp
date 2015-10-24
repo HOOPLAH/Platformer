@@ -5,6 +5,7 @@ std::map<std::string, FontInfo> Assets::fonts;
 
 void Assets::loadAssets()
 {
+    sprites["nothing"] = SpriteInfo("Content/Textures/nothing.png");
     sprites["ammocrate"] = SpriteInfo("Content/Textures/ammocrate.png");
     sprites["ammocrate2"] = SpriteInfo("Content/Textures/ammocrate2.png");
     sprites["play_button"] = SpriteInfo("Content/Textures/play_button.png");
@@ -18,9 +19,8 @@ void Assets::loadAssets()
     sprites["inventorybar"] = SpriteInfo("Content/Textures/inventorybar.png");
     sprites["curinventory"] = SpriteInfo("Content/Textures/curinventory.png");
     sprites["explosion"] = SpriteInfo("Content/Textures/explosion.png", 36, 6);
+    sprites["ship"] = SpriteInfo("Content/Textures/ship.png", 2, 1);
 
-    sprites["ship"] = SpriteInfo("Content/Textures/ship.png");
-    sprites["ship"].mHitBox = sf::FloatRect(10.f, 22.f, 209.f, 50.f);
     sprites["grenade"] = SpriteInfo("Content/Textures/grenade.png");
     sprites["grenade"].mHitBox = sf::FloatRect(0.f, 5.f, 5.f, 5.f);
     sprites["bluepeewee"] = SpriteInfo("Content/Textures/bluepeewee.png", 36, 6);

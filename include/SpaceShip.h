@@ -1,8 +1,11 @@
 #ifndef SPACESHIP_H
 #define SPACESHIP_H
 
+#include <vector>
+
 #include "SpriteObject.h"
 #include "ICollideable.h"
+#include "Weapon.h"
 #include "WorldRef.h"
 
 class SpaceShip : public SpriteObject, public ICollideable
@@ -21,6 +24,11 @@ class SpaceShip : public SpriteObject, public ICollideable
 
     private:
         float mAcceleration;
+
+        std::vector<Weapon> mWeapons;
+        sf::Vector2f mMousePosition;
+        sf::Vector2f mWeaponTarget;
+        float mWeaponAngle;
 };
 
 #endif // SPACESHIP_H

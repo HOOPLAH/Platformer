@@ -45,10 +45,10 @@ class World
         bool checkCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
         void resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
 
+        std::vector<std::weak_ptr<ICollideable>> getObjectsWithTag(int tag);
+
         template <class T>
-        void removeDeadObj(std::vector<T>& v);
-        template <class T>
-        void removeWeakDeadObj(std::vector<T>& v);
+        void removeDeadObjects(std::vector<T>& v);
 
         std::string mPathDirectory;
         WorldRef mWorldRef;
@@ -63,6 +63,7 @@ class World
         WayPointManager mWayPointManager;
 
         Camera mCamera;
+        sf::FloatRect mWindowCoords;
 
         std::shared_ptr<Player> mHero; // outlet hero!!
         std::vector<std::shared_ptr<WorldSwitcher>> mButtons;

@@ -7,8 +7,8 @@ SpriteObject::SpriteObject(SpriteInfo& info, sf::Vector2f pos) : IRenderable(),
     mCurrentFrame(0), mFrameDelay(100.f), mLoopAnim(true), mStartFrame(0), mEndFrame(0), mFrameDir(1)
 {
     mSprite = sf::Sprite(info.mTexture);
-    mRenderPosition = pos;
     mSprite.setPosition(pos);
+    mRenderPosition = pos;
     mRotation = 0.f;
     mAlive = true;
 }
