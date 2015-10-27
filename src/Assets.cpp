@@ -20,6 +20,7 @@ void Assets::loadAssets()
     sprites["curinventory"] = SpriteInfo("Content/Textures/curinventory.png");
     sprites["explosion"] = SpriteInfo("Content/Textures/explosion.png", 36, 6);
     sprites["ship"] = SpriteInfo("Content/Textures/ship.png", 2, 1);
+    sprites["star"] = SpriteInfo("Content/Textures/star.png");
 
     sprites["grenade"] = SpriteInfo("Content/Textures/grenade.png");
     sprites["grenade"].mHitBox = sf::FloatRect(0.f, 5.f, 5.f, 5.f);

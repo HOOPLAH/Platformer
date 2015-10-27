@@ -45,6 +45,8 @@ void World::update(int ticks)
     removeDeadObjects(mRenderables);
     removeDeadObjects(mButtons);
 
+    mStarField.update();
+
     if (getObjectsWithTag(EntityTags::NPC).size() < mNPCSpawnCount && mNPCSpawnPoints.size() > 0)// && !mHero->getQuest().mActions.empty())
     {
         auto npc = std::make_shared<NPC>(Assets::sprites["pinkpeewee"], mNPCSpawnPoints[mNextNPCSpawnPoint], mWorldRef);
@@ -180,6 +182,10 @@ void World::update(int ticks)
 
 void World::draw(sf::RenderTarget& target, float alpha)
 {
+    target.setView(target.getDefaultView());
+
+    mStarField.draw(target);
+
     target.setView(mCamera.getView());
 
     mWindowCoords = sf::FloatRect(mCamera.getCenter().x-(SCREEN_WIDTH/2), mCamera.getCenter().y-(SCREEN_HEIGHT/2), SCREEN_WIDTH, SCREEN_HEIGHT);

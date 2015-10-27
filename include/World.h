@@ -11,6 +11,7 @@
 #include "Camera.h"
 #include "Item.h"
 #include "Quest.h"
+#include "Starfield.h"
 #include "WayPointManager.h"
 #include "WorldObject.h"
 #include "WorldSwitcher.h"
@@ -64,6 +65,7 @@ class World
 
         Camera mCamera;
         sf::FloatRect mWindowCoords;
+        Starfield mStarField;
 
         std::shared_ptr<Player> mHero; // outlet hero!!
         std::vector<std::shared_ptr<WorldSwitcher>> mButtons;
