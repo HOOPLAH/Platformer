@@ -9,7 +9,7 @@
 
 WorldEditor::WorldEditor(std::string path) :
     mDirectoryPath(path),
-    mWorld(path),
+    mWorld(path, 0, sf::Vector2f()),
     mDebugConsole(mWorld.getWorldRef())
 {
     loadWorld();

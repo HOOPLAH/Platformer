@@ -14,8 +14,10 @@
 #include "CollectibleObject.h"
 #include "Turret.h"
 
-World::World() :
-    mWorldRef(*this)
+World::World(int diameter, sf::Vector2f pos) :
+    mWorldRef(*this),
+    mDiameter(diameter),
+    mPosition(pos)
 {
     mTicks = 0;
 
@@ -25,9 +27,10 @@ World::World() :
     mGravity = sf::Vector2f(0.f, 10.f);
 
     mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], mSpawnPoint, mWorldRef);
+    mCollideables.push_back(mHero);
 }
 
-World::World(std::string path) : World()
+World::World(std::string path, int diameter, sf::Vector2f pos) : World(diameter, pos)
 {
     loadWorld(path);
 }
@@ -64,7 +67,20 @@ void World::update(int ticks)
         obj->update(mWorldRef);
 
         if (!obj->isStatic() && obj->getTag() != EntityTags::VEHICLE)
-            obj->setVelocity(obj->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
+        {
+            int orient = Orientation::TOP;
+            if (obj->getPhysicsPosition().x < mPosition.x) // left
+                orient = Orientation::LEFT;
+            else if (obj->getPhysicsPosition().x > mPosition.x+mDiameter) // right
+                orient = Orientation::RIGHT;
+
+            else if (obj->getPhysicsPosition().y < mPosition.y) // top
+                orient = Orientation::TOP;
+            else if (obj->getPhysicsPosition().y > mPosition.y+mDiameter) // bottom
+                orient = Orientation::BOTTOM;
+
+            obj->setVelocity(obj->getVelocity() + getGravityOrientation(orient)*UPDATE_STEP.asSeconds());
+        }
     }
 
     /*if (!mHero->getQuest().mActions.empty())
@@ -118,14 +134,14 @@ void World::update(int ticks)
         }
     }*/
 
-    for (auto& button : mButtons)
+    /*for (auto& button : mButtons)
     {
         if (mHero->getQuest().mActions.empty())
         {
             //button->update();
             button->setCollisionActive(true);
         }
-    }
+    }*/
 
     if (!mHero->isAlive())
     {
@@ -182,31 +198,11 @@ void World::update(int ticks)
 
 void World::draw(sf::RenderTarget& target, float alpha)
 {
-    target.setView(target.getDefaultView());
-
-    mStarField.draw(target);
+    mStarField.draw(target, mWindowCoords);
 
     target.setView(mCamera.getView());
 
     mWindowCoords = sf::FloatRect(mCamera.getCenter().x-(SCREEN_WIDTH/2), mCamera.getCenter().y-(SCREEN_HEIGHT/2), SCREEN_WIDTH, SCREEN_HEIGHT);
-
-    /*for (auto& obj : mWorldObjects)
-    {
-        if (windowCoords.intersects(obj->getSprite().getGlobalBounds()))
-            obj->draw(target, alpha);
-    }
-
-    for (auto& npc : mNPCs)
-    {
-        if (windowCoords.intersects(npc->getSprite().getGlobalBounds()))
-            npc->draw(target, alpha);
-    }
-
-    for (auto& proj : mAliveProjectiles)
-    {
-        if (windowCoords.intersects(proj->getSprite().getGlobalBounds()))
-            proj->draw(target, alpha);
-    }*/
 
     for (auto& obj : mRenderables)
     {
@@ -214,14 +210,14 @@ void World::draw(sf::RenderTarget& target, float alpha)
             obj->draw(target, alpha);
     }
 
-    for (auto& button : mButtons)
+    /*for (auto& button : mButtons)
     {
         if (mHero->getQuest().mActions.empty())
         {
             if (mWindowCoords.intersects(button->getSprite().getGlobalBounds()))
                 button->draw(target, alpha);
         }
-    }
+    }*/
 
     if (!mHero->inVehicle())
         mHero->draw(target, alpha);
@@ -548,4 +544,17 @@ std::vector<std::weak_ptr<ICollideable>> World::getObjectsWithTag(int tag)
     }
 
     return objs;
+}
+
+sf::Vector2f World::getGravityOrientation(int orient)
+{
+    sf::Vector2f grav = mGravity;
+    if (orient == Orientation::BOTTOM)
+        grav = sf::Vector2f(mGravity.x, -mGravity.y);
+    else if (orient == Orientation::LEFT)
+        grav = sf::Vector2f(mGravity.y, mGravity.x);
+    else if (orient == Orientation::RIGHT)
+        grav = sf::Vector2f(-mGravity.y, mGravity.x);
+
+    return grav;
 }

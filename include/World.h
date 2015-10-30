@@ -17,11 +17,22 @@
 #include "WorldSwitcher.h"
 #include "WorldRef.h"
 
+namespace Orientation
+{
+    enum
+    {
+        TOP,
+        BOTTOM,
+        LEFT,
+        RIGHT
+    };
+}
+
 class World
 {
     public:
-        World();
-        World(std::string path);
+        World(int diameter, sf::Vector2f pos);
+        World(std::string path, int diameter, sf::Vector2f pos);
         ~World();
 
         void update(int ticks);
@@ -47,6 +58,7 @@ class World
         void resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
 
         std::vector<std::weak_ptr<ICollideable>> getObjectsWithTag(int tag);
+        sf::Vector2f getGravityOrientation(int orient);
 
         template <class T>
         void removeDeadObjects(std::vector<T>& v);
@@ -55,6 +67,8 @@ class World
         WorldRef mWorldRef;
         int mTicks;
 
+        int mDiameter;
+        sf::Vector2f mPosition;
         sf::Vector2f mGravity;
         sf::Vector2f mSpawnPoint;
         std::vector<sf::Vector2f> mNPCSpawnPoints;

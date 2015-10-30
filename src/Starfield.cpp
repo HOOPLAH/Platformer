@@ -31,21 +31,16 @@ void Starfield::addStar(int layer)
 
 void Starfield::update()
 {
-    for (auto layer : mLayers)
-    {
-        for (auto rect : layer)
-        {
-            rect.setPosition(rect.getRenderPosition() + sf::Vector2f(13.f, 0.f));
-        }
-    }
 }
 
-void Starfield::draw(sf::RenderTarget& target)
+void Starfield::draw(sf::RenderTarget& target, sf::FloatRect windowCoords)
 {
     for (auto layer : mLayers)
     {
         for (auto rect : layer)
         {
+            //if (!windowCoords.intersects(rect.getSprite().getGlobalBounds()))
+                rect.setPosition(rect.getRenderPosition() + sf::Vector2f(13.f, 0.f));
             rect.draw(target, 1.f);
         }
     }
