@@ -320,7 +320,7 @@ void Player::respawn(sf::Vector2f pos)
 
 bool Player::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop)
 {
-    if (object.lock()->isStatic() && fromTop)
+    if (object.lock()->isStatic())// && fromTop)
     {
         if (mVelocity.y/mFallDamageRate > 1.f)
         {

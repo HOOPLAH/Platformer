@@ -17,17 +17,6 @@
 #include "WorldSwitcher.h"
 #include "WorldRef.h"
 
-namespace Orientation
-{
-    enum
-    {
-        TOP,
-        BOTTOM,
-        LEFT,
-        RIGHT
-    };
-}
-
 class World
 {
     public:
@@ -45,7 +34,7 @@ class World
 
         // Accessor
         int getTicks(){return mTicks;}
-        sf::Vector2f getGravity(){return mGravity;}
+        float getGravity(){return mGravity;}
         std::weak_ptr<Player> getHero(){return mHero;}
         std::vector<std::shared_ptr<WorldSwitcher>>& getButtons(){return mButtons;}
         std::vector<std::shared_ptr<ICollideable>>& getCollideables(){return mCollideables;}
@@ -53,12 +42,14 @@ class World
         WayPointManager& getWayPointManager(){return mWayPointManager;}
         WorldRef& getWorldRef(){return mWorldRef;}
 
+        // Mutator
+        void setPosition(sf::Vector2f pos){mPosition=pos;}
+
     private:
         bool checkCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
         void resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
 
         std::vector<std::weak_ptr<ICollideable>> getObjectsWithTag(int tag);
-        sf::Vector2f getGravityOrientation(int orient);
 
         template <class T>
         void removeDeadObjects(std::vector<T>& v);
@@ -69,7 +60,7 @@ class World
 
         int mDiameter;
         sf::Vector2f mPosition;
-        sf::Vector2f mGravity;
+        float mGravity;
         sf::Vector2f mSpawnPoint;
         std::vector<sf::Vector2f> mNPCSpawnPoints;
         std::size_t mNextNPCSpawnPoint;

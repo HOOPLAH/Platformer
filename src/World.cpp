@@ -21,12 +21,13 @@ World::World(int diameter, sf::Vector2f pos) :
 {
     mTicks = 0;
 
-    mSpawnPoint = sf::Vector2f(0.f, 0.f);
+    mSpawnPoint = sf::Vector2f(0.f, -312.f);
     mNextNPCSpawnPoint = 0;
     mNPCSpawnCount = 0;
-    mGravity = sf::Vector2f(0.f, 10.f);
+    mGravity = 30.f;
 
     mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], mSpawnPoint, mWorldRef);
+    mHero->getVehicle().lock()->setPhysicsPosition(pos);
     mCollideables.push_back(mHero);
 }
 
@@ -68,18 +69,14 @@ void World::update(int ticks)
 
         if (!obj->isStatic() && obj->getTag() != EntityTags::VEHICLE)
         {
-            int orient = Orientation::TOP;
-            if (obj->getPhysicsPosition().x < mPosition.x) // left
-                orient = Orientation::LEFT;
-            else if (obj->getPhysicsPosition().x > mPosition.x+mDiameter) // right
-                orient = Orientation::RIGHT;
+            //float radial_grav = atan2(mPosition.y - obj->getPhysicsPosition().y, mPosition.x - obj->getPhysicsPosition().x);
+            sf::Vector2f dist = mPosition-obj->getPhysicsPosition();
+            dist /= length(dist);
+            sf::Vector2f gravity = dist*mGravity;
+            //radial_grav *= RADTODEG;
+            //auto gravity = sf::Vector2f(cos(radial_grav), sin(radial_grav))*mGravity;
 
-            else if (obj->getPhysicsPosition().y < mPosition.y) // top
-                orient = Orientation::TOP;
-            else if (obj->getPhysicsPosition().y > mPosition.y+mDiameter) // bottom
-                orient = Orientation::BOTTOM;
-
-            obj->setVelocity(obj->getVelocity() + getGravityOrientation(orient)*UPDATE_STEP.asSeconds());
+            obj->setVelocity(obj->getVelocity()+gravity*UPDATE_STEP.asSeconds());
         }
     }
 
@@ -265,9 +262,8 @@ void World::loadWorld(std::string path)
 
             if (find_key("gravity:", line))
             {
-                float x = std::stof(split_line[1]);
                 float y = std::stof(split_line[2]);
-                mGravity = sf::Vector2f(x, y);
+                mGravity = y;
             }
             else if (find_key("spawn_point:", line))
             {
@@ -406,7 +402,7 @@ void World::resetWorld(std::string path)
     mSpawnPoint = sf::Vector2f(0.f, 0.f);
     mNextNPCSpawnPoint = 0;
     mNPCSpawnCount = 0;
-    mGravity = sf::Vector2f(0.f, 10.f);
+    mGravity = 10.f;
 
     mCollideables.clear();
     mRenderables.clear();
@@ -544,17 +540,4 @@ std::vector<std::weak_ptr<ICollideable>> World::getObjectsWithTag(int tag)
     }
 
     return objs;
-}
-
-sf::Vector2f World::getGravityOrientation(int orient)
-{
-    sf::Vector2f grav = mGravity;
-    if (orient == Orientation::BOTTOM)
-        grav = sf::Vector2f(mGravity.x, -mGravity.y);
-    else if (orient == Orientation::LEFT)
-        grav = sf::Vector2f(mGravity.y, mGravity.x);
-    else if (orient == Orientation::RIGHT)
-        grav = sf::Vector2f(-mGravity.y, mGravity.x);
-
-    return grav;
 }

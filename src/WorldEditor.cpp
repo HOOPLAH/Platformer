@@ -45,7 +45,7 @@ void WorldEditor::update(int ticks)
         mCamera.follow(mHero->getRenderPosition());
         mCameraPosition = mHero->getRenderPosition();
 
-        mHero->setVelocity(mHero->getVelocity() + mWorld.getGravity()*UPDATE_STEP.asSeconds());
+        mHero->setVelocity(mHero->getVelocity() + sf::Vector2f(0.f, mWorld.getGravity())*UPDATE_STEP.asSeconds());
     }
     else // don't play as hero
     {

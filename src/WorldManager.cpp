@@ -5,7 +5,7 @@
 
 WorldManager::WorldManager()
 {
-    mWorlds.push_back(std::move(mWorldGenerator.generateWorld(2, sf::Vector2f())));
+    mWorlds.push_back(std::move(mWorldGenerator.generateWorld(60, sf::Vector2f(0.f, 0.f))));
 }
 
 WorldManager::~WorldManager()
