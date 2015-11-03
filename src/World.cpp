@@ -24,7 +24,7 @@ World::World(int diameter, sf::Vector2f pos) :
     mSpawnPoint = sf::Vector2f(0.f, -312.f);
     mNextNPCSpawnPoint = 0;
     mNPCSpawnCount = 0;
-    mGravity = 30.f;
+    mGravity = 10.f;
 
     mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], mSpawnPoint, mWorldRef);
     mHero->getVehicle().lock()->setPhysicsPosition(pos);
@@ -47,7 +47,6 @@ void World::update(int ticks)
 
     removeDeadObjects(mCollideables);
     removeDeadObjects(mRenderables);
-    removeDeadObjects(mButtons);
 
     mStarField.update();
 
@@ -65,18 +64,21 @@ void World::update(int ticks)
 
     for (auto& obj : mCollideables)
     {
-        obj->update(mWorldRef);
-
-        if (!obj->isStatic() && obj->getTag() != EntityTags::VEHICLE)
+        if (obj->getTag() != EntityTags::PLATFORM)
         {
-            //float radial_grav = atan2(mPosition.y - obj->getPhysicsPosition().y, mPosition.x - obj->getPhysicsPosition().x);
-            sf::Vector2f dist = mPosition-obj->getPhysicsPosition();
-            dist /= length(dist);
-            sf::Vector2f gravity = dist*mGravity;
-            //radial_grav *= RADTODEG;
-            //auto gravity = sf::Vector2f(cos(radial_grav), sin(radial_grav))*mGravity;
+            obj->update(mWorldRef);
 
-            obj->setVelocity(obj->getVelocity()+gravity*UPDATE_STEP.asSeconds());
+            if (!obj->isStatic() && obj->getTag() != EntityTags::VEHICLE)
+            {
+                //float radial_grav = atan2(mPosition.y - obj->getPhysicsPosition().y, mPosition.x - obj->getPhysicsPosition().x);
+                sf::Vector2f dist = mPosition-obj->getPhysicsPosition();
+                dist /= length(dist);
+                sf::Vector2f gravity = dist*mGravity;
+                //radial_grav *= RADTODEG;
+                //auto gravity = sf::Vector2f(cos(radial_grav), sin(radial_grav))*mGravity;
+
+                obj->setVelocity(obj->getVelocity()+gravity*UPDATE_STEP.asSeconds());
+            }
         }
     }
 
@@ -174,21 +176,33 @@ void World::update(int ticks)
     {
         for (std::size_t y = x+1; y < mCollideables.size(); y++)
         {
-            auto dynamic = mCollideables[x];
-            auto _static = mCollideables[y];
+            sf::Vector2f a1 = mCollideables[x]->getPhysicsPosition() + sf::Vector2f(mCollideables[x]->getHitBox().left, mCollideables[x]->getHitBox().top);
+            sf::Vector2f a2 = sf::Vector2f(mCollideables[x]->getHitBox().width, mCollideables[x]->getHitBox().height);
 
-            if (!mCollideables[x]->isStatic())
-                dynamic = mCollideables[x];
-            else if (!mCollideables[y]->isStatic())
-                dynamic = mCollideables[y];
+            sf::Vector2f b1 = mCollideables[y]->getPhysicsPosition() + sf::Vector2f(mCollideables[y]->getHitBox().left, mCollideables[y]->getHitBox().top);
+            sf::Vector2f b2 = sf::Vector2f(mCollideables[y]->getHitBox().width, mCollideables[y]->getHitBox().height);
 
-            if (mCollideables[x]->isStatic())
-                _static = mCollideables[x];
-            else if (mCollideables[x]->isStatic())
-                _static = mCollideables[y];
+            sf::FloatRect a_rect(a1, a2);
+            sf::FloatRect b_rect(b1, b2);
 
-            if (checkCollision(dynamic, _static) && dynamic->isCollisionActive() && _static->isCollisionActive())
-                resolveCollision(dynamic, _static);
+            if (mWindowCoords.intersects(a_rect) && mWindowCoords.intersects(b_rect))
+            {
+                auto dynamic = mCollideables[x];
+                auto _static = mCollideables[y];
+
+                if (!mCollideables[x]->isStatic())
+                    dynamic = mCollideables[x];
+                else if (!mCollideables[y]->isStatic())
+                    dynamic = mCollideables[y];
+
+                if (mCollideables[x]->isStatic())
+                    _static = mCollideables[x];
+                else if (mCollideables[x]->isStatic())
+                    _static = mCollideables[y];
+
+                if (checkCollision(dynamic, _static) && dynamic->isCollisionActive() && _static->isCollisionActive())
+                    resolveCollision(dynamic, _static);
+            }
         }
     }
 }

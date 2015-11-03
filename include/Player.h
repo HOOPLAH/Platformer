@@ -54,7 +54,7 @@ class Player : public SpriteObject, public ICollideable
         Inventory mInventory;
         InventoryHUD mInventoryHUD;
 
-        std::weak_ptr<SpaceShip> mVehicle; // he owns the spaceship
+        std::weak_ptr<SpaceShip> mVehicle;
         bool mInVehicle;
 
         Quest mQuest;
