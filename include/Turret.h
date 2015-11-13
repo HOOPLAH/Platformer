@@ -3,11 +3,11 @@
 
 #include "WorldObject.h"
 
-#include "ICollideable.h"
+#include "Vehicle.h"
 #include "Weapon.h"
 #include "WorldRef.h"
 
-class Turret : public WorldObject
+class Turret : public Vehicle
 {
     public:
         Turret(SpriteInfo& info, sf::Vector2f pos);
@@ -15,13 +15,17 @@ class Turret : public WorldObject
 
         void update(WorldRef& worldRef);
         void draw(sf::RenderTarget& target, float alpha);
+        void handleEvents(sf::Event& event, WorldRef& worldRef);
 
         bool onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop);
 
     private:
+        bool mAutoAim;
         Weapon mWeapon;
         std::weak_ptr<ICollideable> mWeaponTarget;
         float mWeaponAngle;
+
+        HealthBar mHealth;
 
         int mOwnerTag;
 };

@@ -20,8 +20,8 @@
 class World
 {
     public:
-        World(int diameter, sf::Vector2f pos);
-        World(std::string path, int diameter, sf::Vector2f pos);
+        World();
+        World(std::string path);
         ~World();
 
         void update(int ticks);
@@ -34,7 +34,7 @@ class World
 
         // Accessor
         int getTicks(){return mTicks;}
-        float getGravity(){return mGravity;}
+        sf::Vector2f getGravity(){return mGravity;}
         std::weak_ptr<Player> getHero(){return mHero;}
         std::vector<std::shared_ptr<WorldSwitcher>>& getButtons(){return mButtons;}
         std::vector<std::shared_ptr<ICollideable>>& getCollideables(){return mCollideables;}
@@ -42,12 +42,10 @@ class World
         WayPointManager& getWayPointManager(){return mWayPointManager;}
         WorldRef& getWorldRef(){return mWorldRef;}
 
-        // Mutator
-        void setPosition(sf::Vector2f pos){mPosition=pos;}
-
     private:
         bool checkCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
         void resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
+        bool onScreen(std::weak_ptr<ICollideable> obj);
 
         std::vector<std::weak_ptr<ICollideable>> getObjectsWithTag(int tag);
 
@@ -58,9 +56,7 @@ class World
         WorldRef mWorldRef;
         int mTicks;
 
-        int mDiameter;
-        sf::Vector2f mPosition;
-        float mGravity;
+        sf::Vector2f mGravity;
         sf::Vector2f mSpawnPoint;
         std::vector<sf::Vector2f> mNPCSpawnPoints;
         std::size_t mNextNPCSpawnPoint;

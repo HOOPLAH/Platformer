@@ -8,6 +8,7 @@
 #include "Direction.h"
 #include "EntityTags.h"
 #include "Projectile.h"
+#include "SpaceShip.h"
 #include "GrenadeLauncher.h"
 
 Player::Player(SpriteInfo& info, sf::Vector2f pos, WorldRef& worldRef) :
@@ -29,10 +30,6 @@ Player::Player(SpriteInfo& info, sf::Vector2f pos, WorldRef& worldRef) :
     mInventoryHUD.addInventoryItem(SpriteObject(Assets::sprites["pistol"], sf::Vector2f()));
     mInventoryHUD.addInventoryItem(SpriteObject(Assets::sprites["grenade"], sf::Vector2f()));
 
-    auto vehicle = std::make_shared<SpaceShip>(Assets::sprites["ship"], mPhysicsPosition);
-    worldRef.addCollideable(vehicle);
-    worldRef.addRenderable(vehicle);
-    mVehicle = vehicle;
     mInVehicle = false;
 }
 
@@ -103,7 +100,7 @@ void Player::draw(sf::RenderTarget& target, float alpha)
     mRenderPosition = mPhysicsPosition*alpha + mOldPhysicsPosition*(1.f - alpha);
     //mRenderPosition = mPhysicsPosition;
 
-    //mHealth.draw(target);
+    mHealth.draw(target);
 
     //mInventory.getItem(mInventoryHUD.getInventoryIndex())->draw(target, alpha);
     mWeaponTarget = target.mapPixelToCoords(sf::Vector2i(mMousePosition.x, mMousePosition.y));
@@ -246,9 +243,16 @@ void Player::handleEvents(sf::Event& event, WorldRef& worldRef)
             }
             else if (event.key.code == sf::Keyboard::E)
             {
-                //if (length(mVehicle.getPhysicsPosition() - mPhysicsPosition) < 250)
+                if (!worldRef.getClosestObject(EntityTags::VEHICLE, mRenderPosition).expired())
                 {
-                    mInVehicle = true;
+                    auto vehicle = worldRef.getClosestObject(EntityTags::VEHICLE, mRenderPosition);
+                    std::cout << vehicle.lock()->getPhysicsPosition().x << " " << vehicle.lock()->getPhysicsPosition().y << std::endl;
+                    if (length(vehicle.lock()->getPhysicsPosition() - mPhysicsPosition) < 100)
+                    {
+                        mInVehicle = true;
+                        mVehicle = std::dynamic_pointer_cast<Vehicle>(vehicle.lock());
+                        //tr1::shared_ptr<B> sh_Bptr(tr1::dynamic_pointer_cast<B>(sh_Aptr)); //check for sh_Bptr NULLness
+                    }
                 }
             }
         }
@@ -320,7 +324,7 @@ void Player::respawn(sf::Vector2f pos)
 
 bool Player::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop)
 {
-    if (object.lock()->isStatic())// && fromTop)
+    if (object.lock()->isStatic() && fromTop)
     {
         if (mVelocity.y/mFallDamageRate > 1.f)
         {
@@ -335,7 +339,7 @@ bool Player::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, b
 
     if (object.lock()->getTag() == EntityTags::PROJECTILE)
     {
-        auto proj = static_cast<Projectile*>(&*object.lock());
+        Projectile* proj = static_cast<Projectile*>(&*object.lock());
 
         if (proj->getOwnerTag() != mTag)
         {

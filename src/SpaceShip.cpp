@@ -3,10 +3,9 @@
 #include "Assets.h"
 #include "EntityTags.h"
 
-SpaceShip::SpaceShip(SpriteInfo& info, sf::Vector2f pos) : SpriteObject(info, pos),
-    ICollideable(info.mHitBox, info.mFrameDim, EntityTags::VEHICLE)
+SpaceShip::SpaceShip(SpriteInfo& info, sf::Vector2f pos) : Vehicle(info, pos)
 {
-    mAcceleration = 6.f;
+    mSpeed = 6.f;
 
     mWeaponAngle = 0.f;
     VehicleWeapon weap1(Assets::sprites["nothing"], EntityTags::VEHICLE, sf::Vector2f(0, 20));
@@ -23,10 +22,7 @@ SpaceShip::~SpaceShip()
 
 void SpaceShip::update(WorldRef& worldRef)
 {
-    SpriteObject::update();
-
-    mOldPhysicsPosition = mPhysicsPosition;
-    mPhysicsPosition += mVelocity;
+    Vehicle::update(worldRef);
 
     for (auto& weap : mWeapons)
     {
@@ -40,10 +36,9 @@ void SpaceShip::update(WorldRef& worldRef)
 
 void SpaceShip::draw(sf::RenderTarget& target, float alpha)
 {
-    SpriteObject::draw(target, alpha);
+    Vehicle::draw(target, alpha);
 
     mRenderPosition = mPhysicsPosition*alpha + mOldPhysicsPosition*(1.f - alpha);
-    mWeaponTarget = target.mapPixelToCoords(sf::Vector2i(mMousePosition.x, mMousePosition.y));
 }
 
 void SpaceShip::handleEvents(sf::Event& event, WorldRef& worldRef)
@@ -52,21 +47,21 @@ void SpaceShip::handleEvents(sf::Event& event, WorldRef& worldRef)
     {
         if (event.key.code == sf::Keyboard::W)
         {
-            mVelocity.y = -mAcceleration;
+            mVelocity.y = -mSpeed;
         }
         else if (event.key.code == sf::Keyboard::S)
         {
-            mVelocity.y = mAcceleration;
+            mVelocity.y = mSpeed;
         }
 
         if (event.key.code == sf::Keyboard::A)
         {
-            mVelocity.x = -mAcceleration;
+            mVelocity.x = -mSpeed;
             setFrameLoop(0, 0);
         }
         else if (event.key.code == sf::Keyboard::D)
         {
-            mVelocity.x = mAcceleration;
+            mVelocity.x = mSpeed;
             setFrameLoop(1, 1);
         }
     }
@@ -75,21 +70,11 @@ void SpaceShip::handleEvents(sf::Event& event, WorldRef& worldRef)
     {
         if (event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::S)
         {
-            /*if (mVelocity.y < 0.f)
-                mVelocity.y += mAcceleration;
-            else if (mVelocity.y > 0.f)
-                mVelocity.y -= mAcceleration;*/
-
             mVelocity.y = 0;
         }
 
         else if (event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::D)
         {
-            /*if (mVelocity.x < 0.f)
-                mVelocity.x += mAcceleration;
-            else if (mVelocity.x > 0.f)
-                mVelocity.x -= mAcceleration;*/
-
             mVelocity.x = 0;
         }
     }

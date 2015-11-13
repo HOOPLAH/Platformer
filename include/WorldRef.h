@@ -24,7 +24,7 @@ class WorldRef
 
         int getTicks();
         std::weak_ptr<Player> getHero();
-        std::weak_ptr<ICollideable> getClosestPlatform(sf::Vector2f pos);
+        std::weak_ptr<ICollideable> getClosestObject(int tag, sf::Vector2f pos);
         WayPoint getClosestWayPoint(sf::Vector2f pos);
         WayPoint getClosestWayPoint(WayPoint pt);
         WayPointManager& getWayPointManager();

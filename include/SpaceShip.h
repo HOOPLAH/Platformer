@@ -3,12 +3,11 @@
 
 #include <vector>
 
-#include "SpriteObject.h"
-#include "ICollideable.h"
+#include "Vehicle.h"
 #include "VehicleWeapon.h"
 #include "WorldRef.h"
 
-class SpaceShip : public SpriteObject, public ICollideable
+class SpaceShip : public Vehicle
 {
     public:
         SpaceShip(SpriteInfo& info, sf::Vector2f pos);
@@ -23,7 +22,7 @@ class SpaceShip : public SpriteObject, public ICollideable
         void onContactEnd(std::weak_ptr<ICollideable> object);
 
     private:
-        float mAcceleration;
+        float mSpeed;
 
         std::vector<VehicleWeapon> mWeapons;
         sf::Vector2f mMousePosition;

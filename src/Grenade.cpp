@@ -33,6 +33,7 @@ void Grenade::update(WorldRef& worldRef)
 
     if (mTimeUntilExplosion.getElapsedTime().asMilliseconds() >= mTime)
     {
+        mExplosion.setPosition(mExplosionPosition-mExplosion.getCenter());
         mExplosionPosition = mRenderPosition;
         for (auto& obj : worldRef.getObjectsWithinArea(EntityTags::NPC,
             sf::FloatRect(mRenderPosition.x-50.f, mRenderPosition.y-50, 100.f, 100.f)))

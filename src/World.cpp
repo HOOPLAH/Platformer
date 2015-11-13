@@ -14,24 +14,20 @@
 #include "CollectibleObject.h"
 #include "Turret.h"
 
-World::World(int diameter, sf::Vector2f pos) :
-    mWorldRef(*this),
-    mDiameter(diameter),
-    mPosition(pos)
+World::World() :
+    mWorldRef(*this)
 {
     mTicks = 0;
 
-    mSpawnPoint = sf::Vector2f(0.f, -312.f);
+    mSpawnPoint = sf::Vector2f(0.f, 0.f);
     mNextNPCSpawnPoint = 0;
     mNPCSpawnCount = 0;
-    mGravity = 10.f;
+    mGravity = sf::Vector2f(0.f, 10.f);
 
     mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], mSpawnPoint, mWorldRef);
-    mHero->getVehicle().lock()->setPhysicsPosition(pos);
-    mCollideables.push_back(mHero);
 }
 
-World::World(std::string path, int diameter, sf::Vector2f pos) : World(diameter, pos)
+World::World(std::string path) : World()
 {
     loadWorld(path);
 }
@@ -47,8 +43,9 @@ void World::update(int ticks)
 
     removeDeadObjects(mCollideables);
     removeDeadObjects(mRenderables);
+    removeDeadObjects(mButtons);
 
-    mStarField.update();
+    //mStarField.update();
 
     if (getObjectsWithTag(EntityTags::NPC).size() < mNPCSpawnCount && mNPCSpawnPoints.size() > 0)// && !mHero->getQuest().mActions.empty())
     {
@@ -64,22 +61,10 @@ void World::update(int ticks)
 
     for (auto& obj : mCollideables)
     {
-        if (obj->getTag() != EntityTags::PLATFORM)
-        {
-            obj->update(mWorldRef);
+        obj->update(mWorldRef);
 
-            if (!obj->isStatic() && obj->getTag() != EntityTags::VEHICLE)
-            {
-                //float radial_grav = atan2(mPosition.y - obj->getPhysicsPosition().y, mPosition.x - obj->getPhysicsPosition().x);
-                sf::Vector2f dist = mPosition-obj->getPhysicsPosition();
-                dist /= length(dist);
-                sf::Vector2f gravity = dist*mGravity;
-                //radial_grav *= RADTODEG;
-                //auto gravity = sf::Vector2f(cos(radial_grav), sin(radial_grav))*mGravity;
-
-                obj->setVelocity(obj->getVelocity()+gravity*UPDATE_STEP.asSeconds());
-            }
-        }
+        //if (!obj->isStatic() && obj->getTag() != EntityTags::VEHICLE && onScreen(obj))
+            obj->setVelocity(obj->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
     }
 
     /*if (!mHero->getQuest().mActions.empty())
@@ -133,14 +118,14 @@ void World::update(int ticks)
         }
     }*/
 
-    /*for (auto& button : mButtons)
+    for (auto& button : mButtons)
     {
         if (mHero->getQuest().mActions.empty())
         {
             //button->update();
             button->setCollisionActive(true);
         }
-    }*/
+    }
 
     if (!mHero->isAlive())
     {
@@ -176,16 +161,7 @@ void World::update(int ticks)
     {
         for (std::size_t y = x+1; y < mCollideables.size(); y++)
         {
-            sf::Vector2f a1 = mCollideables[x]->getPhysicsPosition() + sf::Vector2f(mCollideables[x]->getHitBox().left, mCollideables[x]->getHitBox().top);
-            sf::Vector2f a2 = sf::Vector2f(mCollideables[x]->getHitBox().width, mCollideables[x]->getHitBox().height);
-
-            sf::Vector2f b1 = mCollideables[y]->getPhysicsPosition() + sf::Vector2f(mCollideables[y]->getHitBox().left, mCollideables[y]->getHitBox().top);
-            sf::Vector2f b2 = sf::Vector2f(mCollideables[y]->getHitBox().width, mCollideables[y]->getHitBox().height);
-
-            sf::FloatRect a_rect(a1, a2);
-            sf::FloatRect b_rect(b1, b2);
-
-            if (mWindowCoords.intersects(a_rect) && mWindowCoords.intersects(b_rect))
+            if (onScreen(mCollideables[x]) && onScreen(mCollideables[y]))
             {
                 auto dynamic = mCollideables[x];
                 auto _static = mCollideables[y];
@@ -209,7 +185,9 @@ void World::update(int ticks)
 
 void World::draw(sf::RenderTarget& target, float alpha)
 {
-    mStarField.draw(target, mWindowCoords);
+    target.setView(target.getDefaultView());
+
+    //mStarField.draw(target);
 
     target.setView(mCamera.getView());
 
@@ -221,14 +199,14 @@ void World::draw(sf::RenderTarget& target, float alpha)
             obj->draw(target, alpha);
     }
 
-    /*for (auto& button : mButtons)
+    for (auto& button : mButtons)
     {
         if (mHero->getQuest().mActions.empty())
         {
             if (mWindowCoords.intersects(button->getSprite().getGlobalBounds()))
                 button->draw(target, alpha);
         }
-    }*/
+    }
 
     if (!mHero->inVehicle())
         mHero->draw(target, alpha);
@@ -276,8 +254,9 @@ void World::loadWorld(std::string path)
 
             if (find_key("gravity:", line))
             {
+                float x = std::stof(split_line[1]);
                 float y = std::stof(split_line[2]);
-                mGravity = y;
+                mGravity = sf::Vector2f(x, y);
             }
             else if (find_key("spawn_point:", line))
             {
@@ -416,7 +395,7 @@ void World::resetWorld(std::string path)
     mSpawnPoint = sf::Vector2f(0.f, 0.f);
     mNextNPCSpawnPoint = 0;
     mNPCSpawnCount = 0;
-    mGravity = 10.f;
+    mGravity = sf::Vector2f(0.f, 10.f);
 
     mCollideables.clear();
     mRenderables.clear();
@@ -554,4 +533,16 @@ std::vector<std::weak_ptr<ICollideable>> World::getObjectsWithTag(int tag)
     }
 
     return objs;
+}
+
+bool World::onScreen(std::weak_ptr<ICollideable> obj)
+{
+    sf::Vector2f a1 = obj.lock()->getPhysicsPosition() + sf::Vector2f(obj.lock()->getHitBox().left, obj.lock()->getHitBox().top);
+    sf::Vector2f a2 = sf::Vector2f(obj.lock()->getHitBox().width, obj.lock()->getHitBox().height);
+    sf::FloatRect rect(a1, a2);
+
+    if (mWindowCoords.intersects(rect))
+        return true;
+
+    return false;
 }

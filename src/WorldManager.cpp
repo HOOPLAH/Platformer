@@ -5,7 +5,9 @@
 
 WorldManager::WorldManager()
 {
-    mWorlds.push_back(std::move(mWorldGenerator.generateWorld(120, sf::Vector2f(0.f, 0.f))));
+    mCurrentWorld = 0;
+    loadWorldFileNames();
+    loadWorld();
 }
 
 WorldManager::~WorldManager()
@@ -15,25 +17,46 @@ WorldManager::~WorldManager()
 
 void WorldManager::update(int ticks)
 {
-    for (auto& world : mWorlds)
+    mWorlds[mCurrentWorld]->update(ticks);
+
+    for (auto& button : mWorlds[mCurrentWorld]->getButtons())
+    if (button->isPressed())
     {
-        world->update(ticks);
+        mCurrentWorld = button->getNextWorld();
+        loadWorld();
+        button->setPressed(false);
     }
 }
 
 void WorldManager::draw(sf::RenderTarget& target, float alpha)
 {
-    for (auto& world : mWorlds)
-    {
-        world->draw(target, alpha);
-    }
+    mWorlds[mCurrentWorld]->draw(target, alpha);
 }
 
 void WorldManager::handleEvents(sf::Event event)
 {
-    for (auto& world : mWorlds)
-    {
-        world->handleEvents(event);
-    }
+    mWorlds[mCurrentWorld]->handleEvents(event);
 }
 
+void WorldManager::loadWorld()
+{
+    std::unique_ptr<World> world(new World);
+    world->loadWorld(mWorldFileNames[mCurrentWorld]);
+    mWorlds.push_back(std::move(world));
+}
+
+void WorldManager::loadWorldFileNames()
+{
+    std::string line = "";
+    std::ifstream file("Content/Worlds/world_filenames.txt");
+
+    if (file.is_open())
+    {
+        while (std::getline(file, line))
+        {
+            mWorldFileNames.push_back(line);
+        }
+    }
+
+    file.close();
+}

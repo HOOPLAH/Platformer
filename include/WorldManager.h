@@ -8,8 +8,7 @@
 #include <memory>
 
 #include <SFML/Graphics.hpp>
-#include "World.h"
-#include "WorldGenerator.h"
+#include <World.h>
 
 class WorldManager
 {
@@ -22,8 +21,11 @@ class WorldManager
         void handleEvents(sf::Event event);
 
     private:
-        WorldGenerator mWorldGenerator;
+        void loadWorld();
+        void loadWorldFileNames();
 
+        int mCurrentWorld;
+        std::vector<std::string> mWorldFileNames;
         std::vector<std::unique_ptr<World>> mWorlds;
 };
 

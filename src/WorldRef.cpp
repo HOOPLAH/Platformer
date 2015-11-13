@@ -37,14 +37,14 @@ std::weak_ptr<Player> WorldRef::getHero()
     return mWorld.getHero();
 }
 
-std::weak_ptr<ICollideable> WorldRef::getClosestPlatform(sf::Vector2f pos)
+std::weak_ptr<ICollideable> WorldRef::getClosestObject(int tag, sf::Vector2f pos)
 {
     float shortestDist = FLT_MAX;
     std::weak_ptr<ICollideable> closestObj = mWorld.getCollideables()[0];
 
     for (auto& obj : mWorld.getCollideables())
     {
-        if (obj->getTag() == EntityTags::PLATFORM)
+        if (obj->getTag() == tag)
         {
             sf::Vector2f objPos = obj->getPhysicsPosition();
             float dist = std::abs(sqrt(pow(objPos.x - pos.x , 2) + pow(objPos.y - pos.y, 2)));

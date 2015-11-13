@@ -3,9 +3,12 @@
 #include "Assets.h"
 #include "EntityTags.h"
 
-Turret::Turret(SpriteInfo& info, sf::Vector2f pos) : WorldObject(info, pos, EntityTags::TURRET, false, false),
-    mWeapon(Assets::sprites["turrethead"], EntityTags::TURRET)
+Turret::Turret(SpriteInfo& info, sf::Vector2f pos) : Vehicle(info, pos),
+    mWeapon(Assets::sprites["turrethead"], EntityTags::TURRET),
+    mHealth(100.f, sf::Vector2f(30.f, 2.f), false)
 {
+    mAutoAim = true;
+
     mWeapon.setUnlimitedAmmo(true);
     mWeapon.setRange(300.f);
     mWeapon.setDamage(1.f);
@@ -13,6 +16,7 @@ Turret::Turret(SpriteInfo& info, sf::Vector2f pos) : WorldObject(info, pos, Enti
     mWeapon.getSprite().setOrigin(mWeapon.getCenter());
     mWeaponAngle = 0.f;
 
+    mTag = EntityTags::VEHICLE;
     mOwnerTag = EntityTags::TURRET;
 }
 
@@ -23,36 +27,39 @@ Turret::~Turret()
 
 void Turret::update(WorldRef& worldRef)
 {
-    WorldObject::update();
+    Vehicle::update(worldRef);
 
-    auto closeObjs = worldRef.getObjectsWithinArea(EntityTags::NPC, sf::FloatRect(mWeapon.getRenderPosition(), sf::Vector2f(mWeapon.getRange(), mWeapon.getRange())));
-    for (auto obj : closeObjs)
+    if (mAutoAim)
     {
-        //if (obj.lock()->getTag() == EntityTags::NPC)
-            mWeaponTarget = obj;
-    }
-
-    mWeapon.update();
-    mWeapon.setFiringAngle(mWeaponAngle);
-    mWeapon.setPosition(mRenderPosition + sf::Vector2f(34.f, -10.f));
-    sf::Vector2f weapFirePoint = (mWeapon.getRenderPosition()+mWeapon.getFirePoint());
-    if (!mWeaponTarget.expired())
-    {
-        mWeaponAngle = atan2((mWeaponTarget.lock()->getPhysicsPosition().y+mWeaponTarget.lock()->getDimensions().y/2) - weapFirePoint.y,
-                             (mWeaponTarget.lock()->getPhysicsPosition().x+mWeaponTarget.lock()->getDimensions().x/2) - weapFirePoint.x);
-        mWeapon.fire(worldRef);
+        mWeaponTarget = worldRef.getClosestObject(EntityTags::NPC, mRenderPosition);
+        mWeapon.update();
+        mWeapon.setFiringAngle(mWeaponAngle);
+        mWeapon.setPosition(mRenderPosition + sf::Vector2f(34.f, -10.f));
+        sf::Vector2f weapFirePoint = (mWeapon.getRenderPosition()+mWeapon.getFirePoint());
+        if (!mWeaponTarget.expired())
+        {
+            mWeaponAngle = atan2((mWeaponTarget.lock()->getPhysicsPosition().y+mWeaponTarget.lock()->getDimensions().y/2) - weapFirePoint.y,
+                                 (mWeaponTarget.lock()->getPhysicsPosition().x+mWeaponTarget.lock()->getDimensions().x/2) - weapFirePoint.x);
+            mWeapon.fire(worldRef);
+        }
     }
 
     mHealth.setPosition(mRenderPosition + sf::Vector2f(getCenter().x, -30.f));
+    if (mHealth.mHP <= 0.f)
+        kill();
 }
 
 void Turret::draw(sf::RenderTarget& target, float alpha)
 {
-    WorldObject::draw(target, alpha);
+    Vehicle::draw(target, alpha);
 
     mHealth.draw(target);
     mWeapon.draw(target, alpha);
     mWeapon.setRotation(mWeaponAngle*RADTODEG);
+}
+
+void Turret::handleEvents(sf::Event& event, WorldRef& worldRef)
+{
 }
 
 bool Turret::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop)

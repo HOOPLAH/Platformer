@@ -13,7 +13,7 @@ class Starfield
         ~Starfield();
 
         void update();
-        void draw(sf::RenderTarget& target, sf::FloatRect windowCoords);
+        void draw(sf::RenderTarget& target);
 
         void addStar(int layer);
 

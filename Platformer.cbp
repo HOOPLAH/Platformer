@@ -52,6 +52,7 @@
 			<Add library="sfml-graphics" />
 			<Add library="sfml-window" />
 			<Add library="sfml-system" />
+			<Add library="Box2D" />
 		</Linker>
 		<Unit filename="LEmain.cpp">
 			<Option target="WorldEditor" />
@@ -88,13 +89,13 @@
 		<Unit filename="include/SpriteObject.h" />
 		<Unit filename="include/Starfield.h" />
 		<Unit filename="include/Turret.h" />
+		<Unit filename="include/Vehicle.h" />
 		<Unit filename="include/VehicleWeapon.h" />
 		<Unit filename="include/WayPoint.h" />
 		<Unit filename="include/WayPointManager.h" />
 		<Unit filename="include/Weapon.h" />
 		<Unit filename="include/World.h" />
 		<Unit filename="include/WorldEditor.h" />
-		<Unit filename="include/WorldGenerator.h" />
 		<Unit filename="include/WorldManager.h" />
 		<Unit filename="include/WorldObject.h" />
 		<Unit filename="include/WorldRef.h" />
@@ -123,12 +124,12 @@
 		<Unit filename="src/SpriteObject.cpp" />
 		<Unit filename="src/Starfield.cpp" />
 		<Unit filename="src/Turret.cpp" />
+		<Unit filename="src/Vehicle.cpp" />
 		<Unit filename="src/VehicleWeapon.cpp" />
 		<Unit filename="src/WayPointManager.cpp" />
 		<Unit filename="src/Weapon.cpp" />
 		<Unit filename="src/World.cpp" />
 		<Unit filename="src/WorldEditor.cpp" />
-		<Unit filename="src/WorldGenerator.cpp" />
 		<Unit filename="src/WorldManager.cpp" />
 		<Unit filename="src/WorldObject.cpp" />
 		<Unit filename="src/WorldRef.cpp" />
