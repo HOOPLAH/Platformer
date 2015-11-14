@@ -15,7 +15,11 @@ class Vehicle : public SpriteObject, public ICollideable
         virtual void drawStationary(sf::RenderTarget& target){}
         virtual void handleEvents(sf::Event& event, WorldRef& worldRef){}
 
+        void setInVehicle(bool v){mInVehicle=v;}
+        bool isInVehicle(){return mInVehicle;}
+
     protected:
+        bool mInVehicle;
 };
 
 #endif // VEHICLE_H

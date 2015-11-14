@@ -29,22 +29,23 @@ void Turret::update(WorldRef& worldRef)
 {
     Vehicle::update(worldRef);
 
-    if (mAutoAim)
+    if (!mInVehicle)
     {
-        mWeaponTarget = worldRef.getClosestObject(EntityTags::NPC, mRenderPosition);
+        auto obj = worldRef.getClosestObject(EntityTags::NPC, mRenderPosition);
+        mWeaponTarget = obj.lock()->getPhysicsPosition();// + (obj.lock()->getDimensions()/2);
         mWeapon.update();
-        mWeapon.setFiringAngle(mWeaponAngle);
-        mWeapon.setPosition(mRenderPosition + sf::Vector2f(34.f, -10.f));
+        mWeapon.fire(worldRef);
+    }
+    else
+    {
         sf::Vector2f weapFirePoint = (mWeapon.getRenderPosition()+mWeapon.getFirePoint());
-        if (!mWeaponTarget.expired())
-        {
-            mWeaponAngle = atan2((mWeaponTarget.lock()->getPhysicsPosition().y+mWeaponTarget.lock()->getDimensions().y/2) - weapFirePoint.y,
-                                 (mWeaponTarget.lock()->getPhysicsPosition().x+mWeaponTarget.lock()->getDimensions().x/2) - weapFirePoint.x);
-            mWeapon.fire(worldRef);
-        }
+        mWeaponAngle = atan2(mWeaponTarget.y - weapFirePoint.y, mWeaponTarget.x - weapFirePoint.x);
     }
 
+    mWeapon.setFiringAngle(mWeaponAngle);
+
     mHealth.setPosition(mRenderPosition + sf::Vector2f(getCenter().x, -30.f));
+    mWeapon.setPosition(mRenderPosition + sf::Vector2f(34.f, -5.f));
     if (mHealth.mHP <= 0.f)
         kill();
 }
@@ -56,10 +57,22 @@ void Turret::draw(sf::RenderTarget& target, float alpha)
     mHealth.draw(target);
     mWeapon.draw(target, alpha);
     mWeapon.setRotation(mWeaponAngle*RADTODEG);
+    mWeaponTarget = target.mapPixelToCoords(sf::Vector2i(mMousePosition.x, mMousePosition.y));
 }
 
 void Turret::handleEvents(sf::Event& event, WorldRef& worldRef)
 {
+    if (event.type == sf::Event::MouseMoved)
+    {
+        mMousePosition = sf::Vector2f(event.mouseMove.x, event.mouseMove.y);
+    }
+    else if (event.type == sf::Event::MouseButtonPressed)
+    {
+        if (event.mouseButton.button == sf::Mouse::Left)
+        {
+            mWeapon.fire(worldRef);
+        }
+    }
 }
 
 bool Turret::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop)

@@ -6,7 +6,7 @@ Vehicle::Vehicle(SpriteInfo& info, sf::Vector2f pos) : SpriteObject(info, pos),
     ICollideable(info.mHitBox, info.mFrameDim, EntityTags::VEHICLE)
 
 {
-    //ctor
+    mInVehicle = false;
 }
 
 Vehicle::~Vehicle()

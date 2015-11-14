@@ -98,7 +98,6 @@ void Player::draw(sf::RenderTarget& target, float alpha)
     SpriteObject::draw(target, alpha);
 
     mRenderPosition = mPhysicsPosition*alpha + mOldPhysicsPosition*(1.f - alpha);
-    //mRenderPosition = mPhysicsPosition;
 
     mHealth.draw(target);
 
@@ -246,12 +245,14 @@ void Player::handleEvents(sf::Event& event, WorldRef& worldRef)
                 if (!worldRef.getClosestObject(EntityTags::VEHICLE, mRenderPosition).expired())
                 {
                     auto vehicle = worldRef.getClosestObject(EntityTags::VEHICLE, mRenderPosition);
-                    std::cout << vehicle.lock()->getPhysicsPosition().x << " " << vehicle.lock()->getPhysicsPosition().y << std::endl;
-                    if (length(vehicle.lock()->getPhysicsPosition() - mPhysicsPosition) < 100)
+                    if (vehicle.lock()->getTag() == EntityTags::VEHICLE);
                     {
-                        mInVehicle = true;
-                        mVehicle = std::dynamic_pointer_cast<Vehicle>(vehicle.lock());
-                        //tr1::shared_ptr<B> sh_Bptr(tr1::dynamic_pointer_cast<B>(sh_Aptr)); //check for sh_Bptr NULLness
+                        if (length(vehicle.lock()->getPhysicsPosition() - mPhysicsPosition) < 100)
+                        {
+                            mInVehicle = true;
+                            mVehicle = std::static_pointer_cast<Vehicle>(vehicle.lock());
+                            mVehicle.lock()->setInVehicle(true);
+                        }
                     }
                 }
             }
@@ -306,6 +307,7 @@ void Player::handleEvents(sf::Event& event, WorldRef& worldRef)
                 mInVehicle = false;
                 mVelocity = sf::Vector2f(0.f, 0.f);
                 mVehicle.lock()->setVelocity(sf::Vector2f(0.f, 0.f));
+                mVehicle.lock()->setInVehicle(false);
                 mDirection = Direction::STILL_RIGHT;
                 mPhysicsPosition = mVehicle.lock()->getPhysicsPosition();
             }

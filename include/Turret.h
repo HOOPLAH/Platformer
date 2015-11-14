@@ -22,7 +22,8 @@ class Turret : public Vehicle
     private:
         bool mAutoAim;
         Weapon mWeapon;
-        std::weak_ptr<ICollideable> mWeaponTarget;
+        sf::Vector2f mMousePosition;
+        sf::Vector2f mWeaponTarget;
         float mWeaponAngle;
 
         HealthBar mHealth;
