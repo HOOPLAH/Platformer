@@ -101,52 +101,6 @@ void NPC::draw(sf::RenderTarget& target, float alpha)
     mOldRenderPosition = mRenderPosition;
     mRenderPosition = mPhysicsPosition*alpha + mOldPhysicsPosition*(1.f - alpha);
 
-    /*sf::FloatRect rect;
-    sf::Vector2f pos;
-
-    if (mRenderPosition.y - mTarget.getRenderPosition().y > -1.f)
-    {
-        // target is left and above
-        if (mTarget.getRenderPosition().x < mRenderPosition.x)
-        {
-            rect = sf::FloatRect(sf::Vector2f(0.f, 0.f), (mRenderPosition+sf::Vector2f(mHitBox.width*1.6, mHitBox.height*1.1)) -
-                                (mTarget.getRenderPosition()+sf::Vector2f(mTarget.getHitBox().left, mTarget.getHitBox().top)));
-            pos = mTarget.getRenderPosition()+sf::Vector2f(mTarget.getHitBox().left, mTarget.getHitBox().top);
-        }
-        // right and above
-        if (mTarget.getRenderPosition().x > mRenderPosition.x)
-        {
-            rect = sf::FloatRect(sf::Vector2f(0.f, 0.f),
-                                (mTarget.getRenderPosition()+sf::Vector2f(mTarget.getHitBox().width*1.6, mTarget.getHitBox().top*1.1)) -
-                                (mRenderPosition+sf::Vector2f(mHitBox.left, mHitBox.height)));
-            pos = mRenderPosition+sf::Vector2f(mHitBox.left, mHitBox.height);
-        }
-    }
-    else
-    {
-        // target is left and below
-        if (mTarget.getRenderPosition().x < mRenderPosition.x)
-        {
-            rect = sf::FloatRect(sf::Vector2f(0.f, 0.f), (mRenderPosition+sf::Vector2f(mHitBox.width*1.6, mHitBox.top*1.1)) -
-                                (mTarget.getRenderPosition()+sf::Vector2f(mTarget.getHitBox().left, mTarget.getHitBox().height)));
-            pos = mTarget.getRenderPosition()+sf::Vector2f(mTarget.getHitBox().left, mTarget.getHitBox().height);
-        }
-        // right and below
-        if (mTarget.getRenderPosition().x > mRenderPosition.x)
-        {
-            rect = sf::FloatRect(sf::Vector2f(0.f, 0.f),
-                                (mTarget.getRenderPosition()+sf::Vector2f(mTarget.getHitBox().width*1.6, mTarget.getHitBox().height*1.1)) -
-                                (mRenderPosition+sf::Vector2f(mHitBox.left, mHitBox.top)));
-            pos = mRenderPosition+sf::Vector2f(mHitBox.left, mHitBox.top);
-        }
-    }
-
-    sf::RectangleShape box(sf::Vector2f(rect.width, rect.height));
-    box.setOutlineThickness(1.f);
-    box.setOutlineColor(sf::Color::Yellow);
-    box.setFillColor(sf::Color::Transparent);
-    box.setPosition(pos);*/
-
     mHealth.draw(target);
     //mWeapon.draw(target, alpha);
 }

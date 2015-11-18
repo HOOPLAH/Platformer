@@ -57,6 +57,7 @@
 		<Unit filename="LEmain.cpp">
 			<Option target="WorldEditor" />
 		</Unit>
+		<Unit filename="include/AIAttackModule.h" />
 		<Unit filename="include/AIFollowModule.h" />
 		<Unit filename="include/Actions.h" />
 		<Unit filename="include/Assets.h" />
@@ -83,6 +84,7 @@
 		<Unit filename="include/NPC.h" />
 		<Unit filename="include/Player.h" />
 		<Unit filename="include/Projectile.h" />
+		<Unit filename="include/QuadTree.h" />
 		<Unit filename="include/Quest.h" />
 		<Unit filename="include/SpaceShip.h" />
 		<Unit filename="include/SpriteInfo.h" />
@@ -105,6 +107,7 @@
 			<Option target="Debug" />
 			<Option target="Release" />
 		</Unit>
+		<Unit filename="src/AIAttackModule.cpp" />
 		<Unit filename="src/AIFollowModule.cpp" />
 		<Unit filename="src/Assets.cpp" />
 		<Unit filename="src/Button.cpp" />
@@ -120,6 +123,7 @@
 		<Unit filename="src/NPC.cpp" />
 		<Unit filename="src/Player.cpp" />
 		<Unit filename="src/Projectile.cpp" />
+		<Unit filename="src/QuadTree.cpp" />
 		<Unit filename="src/SpaceShip.cpp" />
 		<Unit filename="src/SpriteObject.cpp" />
 		<Unit filename="src/Starfield.cpp" />

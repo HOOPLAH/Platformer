@@ -15,7 +15,8 @@
 #include "Turret.h"
 
 World::World() :
-    mWorldRef(*this)
+    mWorldRef(*this),
+    mQuadTree(sf::IntRect(0.f, 0.f, SCREEN_WIDTH, SCREEN_HEIGHT), 0, 3)
 {
     mTicks = 0;
 
@@ -25,6 +26,7 @@ World::World() :
     mGravity = sf::Vector2f(0.f, 10.f);
 
     mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], mSpawnPoint, mWorldRef);
+    //mCollideables.push_back(mHero);
 }
 
 World::World(std::string path) : World()
@@ -40,6 +42,7 @@ World::~World()
 void World::update(int ticks)
 {
     mTicks = ticks;
+    mQuadTree.setIntRect(sf::IntRect(mCamera.getCenter().x-(SCREEN_WIDTH/2), mCamera.getCenter().y-(SCREEN_HEIGHT/2), SCREEN_WIDTH, SCREEN_HEIGHT));
 
     removeDeadObjects(mCollideables);
     removeDeadObjects(mRenderables);
@@ -59,12 +62,15 @@ void World::update(int ticks)
             mNextNPCSpawnPoint = 0;
     }
 
+    mQuadTree.clear();
     for (auto& obj : mCollideables)
     {
         obj->update(mWorldRef);
 
-        //if (!obj->isStatic() && obj->getTag() != EntityTags::VEHICLE && onScreen(obj))
+        if (!obj->isStatic() && obj->getTag() != EntityTags::VEHICLE && onScreen(obj))
             obj->setVelocity(obj->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
+
+        mQuadTree.addObject(obj);
     }
 
     /*if (!mHero->getQuest().mActions.empty())
@@ -156,28 +162,30 @@ void World::update(int ticks)
         }
     }*/
 
-    // check collisions
-    for (std::size_t x = 0; x < mCollideables.size(); x++)
+    for (auto& obj : mCollideables)
     {
-        for (std::size_t y = x+1; y < mCollideables.size(); y++)
+        auto returnObjects = mQuadTree.getObjectsAt(obj->getPhysicsPosition());
+        for (std::size_t x = 0; x < returnObjects.size(); x++)
         {
-            if (onScreen(mCollideables[x]) && onScreen(mCollideables[y]))
+            for (std::size_t y = x+1; y < returnObjects.size(); y++)
             {
-                auto dynamic = mCollideables[x];
-                auto _static = mCollideables[y];
+                auto dynamic = returnObjects[x];
+                auto _static = returnObjects[y];
 
-                if (!mCollideables[x]->isStatic())
-                    dynamic = mCollideables[x];
-                else if (!mCollideables[y]->isStatic())
-                    dynamic = mCollideables[y];
+                if (!returnObjects[x].lock()->isStatic())
+                    dynamic = returnObjects[x];
+                else if (!returnObjects[y].lock()->isStatic())
+                    dynamic = returnObjects[y];
 
-                if (mCollideables[x]->isStatic())
-                    _static = mCollideables[x];
-                else if (mCollideables[x]->isStatic())
-                    _static = mCollideables[y];
+                if (returnObjects[x].lock()->isStatic())
+                    _static = returnObjects[x];
+                else if (returnObjects[x].lock()->isStatic())
+                    _static = returnObjects[y];
 
-                if (checkCollision(dynamic, _static) && dynamic->isCollisionActive() && _static->isCollisionActive())
+                if (checkCollision(dynamic, _static) && dynamic.lock()->isCollisionActive() && _static.lock()->isCollisionActive())
+                {
                     resolveCollision(dynamic, _static);
+                }
             }
         }
     }

@@ -6,16 +6,12 @@
 class AIFollowModule : public IAIModule
 {
     public:
-        AIFollowModule(NPC& npc, bool friendly=true);
+        AIFollowModule(NPC& npc);
         ~AIFollowModule();
 
         void update(WorldRef& worldRef);
 
-        void setFriendly(bool friendly){mFriendly=friendly;}
-
     private:
-        //sf::FloatRect getRectBetweenTarget();
-        bool mFriendly;
         float mFollowDistance;
 
         std::size_t mIndex;

@@ -16,7 +16,7 @@ class IAIModule
 
     protected:
         NPC& mNPC;
-        bool mFriendly; // should i attack?? applies to most AIs
+        bool mFriendly; // should i attack player?? applies to most AIs
 };
 
 #endif // IAIMODULE_H

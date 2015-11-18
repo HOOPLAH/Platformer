@@ -77,7 +77,7 @@ void Player::update(WorldRef& worldRef)
     }
 
     if (mInVehicle)
-        mRenderPosition = mVehicle.lock()->getPhysicsPosition()+mVehicle.lock()->getCenter();
+        mPhysicsPosition = mVehicle.lock()->getPhysicsPosition();//+mVehicle.lock()->getCenter();
 
     if (mInventory.getItem(mInventoryHUD.getInventoryIndex())->getName() == "Weapon")
     {
