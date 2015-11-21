@@ -26,7 +26,7 @@ World::World() :
     mGravity = sf::Vector2f(0.f, 10.f);
 
     mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], mSpawnPoint, mWorldRef);
-    //mCollideables.push_back(mHero);
+    //mCollisionResolver.getCollideables().push_back(mHero);
 }
 
 World::World(std::string path) : World()
@@ -44,7 +44,7 @@ void World::update(int ticks)
     mTicks = ticks;
     mQuadTree.setIntRect(sf::IntRect(mCamera.getCenter().x-(SCREEN_WIDTH/2), mCamera.getCenter().y-(SCREEN_HEIGHT/2), SCREEN_WIDTH, SCREEN_HEIGHT));
 
-    removeDeadObjects(mCollideables);
+    removeDeadObjects(mCollisionResolver.getCollideables());
     removeDeadObjects(mRenderables);
     removeDeadObjects(mButtons);
 
@@ -54,7 +54,7 @@ void World::update(int ticks)
     {
         auto npc = std::make_shared<NPC>(Assets::sprites["pinkpeewee"], mNPCSpawnPoints[mNextNPCSpawnPoint], mWorldRef);
         mRenderables.push_back(npc);
-        mCollideables.push_back(npc);
+        mCollisionResolver.getCollideables().push_back(npc);
 
         if (mNextNPCSpawnPoint < mNPCSpawnPoints.size())
             mNextNPCSpawnPoint++;
@@ -62,15 +62,15 @@ void World::update(int ticks)
             mNextNPCSpawnPoint = 0;
     }
 
-    mQuadTree.clear();
-    for (auto& obj : mCollideables)
+    //mQuadTree.clear();
+    for (auto& obj : mCollisionResolver.getCollideables())
     {
         obj->update(mWorldRef);
 
         if (!obj->isStatic() && obj->getTag() != EntityTags::VEHICLE && onScreen(obj))
             obj->setVelocity(obj->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
 
-        mQuadTree.addObject(obj);
+        //mQuadTree.addObject(obj);
     }
 
     /*if (!mHero->getQuest().mActions.empty())
@@ -136,11 +136,11 @@ void World::update(int ticks)
     if (!mHero->isAlive())
     {
         mHero->respawn(mSpawnPoint);
-        mCollideables.push_back(mHero);
+        mCollisionResolver.getCollideables().push_back(mHero);
     }
     mCamera.follow(mHero->getRenderPosition());
 
-    /*for (auto& obj : mCollideables)
+    /*for (auto& obj : mCollisionResolver.getCollideables())
     {
         if (!mHero->getQuest().mActions.empty())
         {
@@ -162,33 +162,7 @@ void World::update(int ticks)
         }
     }*/
 
-    for (auto& obj : mCollideables)
-    {
-        auto returnObjects = mQuadTree.getObjectsAt(obj->getPhysicsPosition());
-        for (std::size_t x = 0; x < returnObjects.size(); x++)
-        {
-            for (std::size_t y = x+1; y < returnObjects.size(); y++)
-            {
-                auto dynamic = returnObjects[x];
-                auto _static = returnObjects[y];
-
-                if (!returnObjects[x].lock()->isStatic())
-                    dynamic = returnObjects[x];
-                else if (!returnObjects[y].lock()->isStatic())
-                    dynamic = returnObjects[y];
-
-                if (returnObjects[x].lock()->isStatic())
-                    _static = returnObjects[x];
-                else if (returnObjects[x].lock()->isStatic())
-                    _static = returnObjects[y];
-
-                if (checkCollision(dynamic, _static) && dynamic.lock()->isCollisionActive() && _static.lock()->isCollisionActive())
-                {
-                    resolveCollision(dynamic, _static);
-                }
-            }
-        }
-    }
+    mCollisionResolver.update();
 }
 
 void World::draw(sf::RenderTarget& target, float alpha)
@@ -252,7 +226,7 @@ void World::loadWorld(std::string path)
         return false;
     };
 
-    mCollideables.push_back(mHero);
+    mCollisionResolver.getCollideables().push_back(mHero);
 
     if (file.is_open())
     {
@@ -291,7 +265,7 @@ void World::loadWorld(std::string path)
                 float x = std::stof(split_line[2]);
                 float y = std::stof(split_line[3]);
                 auto obj = std::make_shared<CollectibleObject>(Assets::sprites[id], sf::Vector2f(x, y), CollectibleType::AMMOCRATE);
-                mCollideables.push_back(obj);
+                mCollisionResolver.getCollideables().push_back(obj);
                 mRenderables.push_back(obj);
             }
             else if (find_key("platform:", line))
@@ -300,7 +274,7 @@ void World::loadWorld(std::string path)
                 float x = std::stof(split_line[2]);
                 float y = std::stof(split_line[3]);
                 auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y), EntityTags::PLATFORM);
-                mCollideables.push_back(platform);
+                mCollisionResolver.getCollideables().push_back(platform);
                 mRenderables.push_back(platform);
             }
             else if (find_key("tiled_platforms:", line))
@@ -314,7 +288,7 @@ void World::loadWorld(std::string path)
                 {
                     auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(start_x+(i*distApart.x),
                                         start_y+(i*distApart.y)));
-                    mCollideables.push_back(platform);
+                    mCollisionResolver.getCollideables().push_back(platform);
                     mRenderables.push_back(platform);
                 }
             }
@@ -323,7 +297,7 @@ void World::loadWorld(std::string path)
                 float x = std::stof(split_line[1]);
                 float y = std::stof(split_line[2]);
                 auto turret = std::make_shared<Turret>(Assets::sprites["turretbody"], sf::Vector2f(x, y));
-                mCollideables.push_back(turret);
+                mCollisionResolver.getCollideables().push_back(turret);
                 mRenderables.push_back(turret);
             }
             else if (find_key("button:", line))
@@ -335,7 +309,7 @@ void World::loadWorld(std::string path)
                 auto button = std::make_shared<WorldSwitcher>(Assets::sprites[id], sf::Vector2f(x, y), nextWorld);
                 button->setCollisionActive(false); // turn off collisions by default until all quests are complete
                 mButtons.push_back(button);
-                mCollideables.push_back(button);
+                mCollisionResolver.getCollideables().push_back(button);
             }
             else if (find_key("waypoint:", line))
             {
@@ -405,111 +379,12 @@ void World::resetWorld(std::string path)
     mNPCSpawnCount = 0;
     mGravity = sf::Vector2f(0.f, 10.f);
 
-    mCollideables.clear();
+    mCollisionResolver.getCollideables().clear();
     mRenderables.clear();
 
     mWayPointManager.getWayPoints().clear();
 
     loadWorld(path);
-}
-
-bool World::checkCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b)
-{
-    sf::Vector2f a1 = a.lock()->getPhysicsPosition() + sf::Vector2f(a.lock()->getHitBox().left, a.lock()->getHitBox().top);
-    sf::Vector2f a2 = sf::Vector2f(a.lock()->getHitBox().width, a.lock()->getHitBox().height);
-
-    sf::Vector2f b1 = b.lock()->getPhysicsPosition() + sf::Vector2f(b.lock()->getHitBox().left, b.lock()->getHitBox().top);
-    sf::Vector2f b2 = sf::Vector2f(b.lock()->getHitBox().width, b.lock()->getHitBox().height);
-
-    //float rect = (left, top, width, height)
-    sf::FloatRect aRect(a1, a2);
-    sf::FloatRect bRect(b1, b2);
-
-    if (aRect.intersects(bRect))
-        return true;
-
-    return false;
-}
-
-void World::resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b)
-{
-    auto aLeft = a.lock()->getPhysicsPosition().x + a.lock()->getHitBox().left;
-    auto aTop = a.lock()->getPhysicsPosition().y + a.lock()->getHitBox().top;
-    auto aRight = aLeft + a.lock()->getHitBox().width;
-    auto aBottom = aTop + a.lock()->getHitBox().height;
-
-    auto bLeft = b.lock()->getPhysicsPosition().x + b.lock()->getHitBox().left;
-    auto bTop = b.lock()->getPhysicsPosition().y + b.lock()->getHitBox().top;
-    auto bRight = bLeft + b.lock()->getHitBox().width;
-    auto bBottom = bTop + b.lock()->getHitBox().height;
-
-    float overlapLeft {aRight - bLeft};
-    float overlapRight {bRight - aLeft};
-    float overlapTop {aBottom - bTop};
-    float overlapBottom {bBottom - aTop};
-
-    bool fromLeft(std::abs(overlapLeft) < std::abs(overlapRight));
-    bool fromTop(std::abs(overlapTop) < std::abs(overlapBottom));
-
-    float minOverlapX {fromLeft ? overlapLeft : overlapRight};
-    float minOverlapY {fromTop ? overlapTop : overlapBottom};
-
-    auto y_collision = [a, fromTop](float overlapX, float overlapY, bool stair=false)
-    {
-        if (fromTop)
-        {
-            if (stair)
-            {
-                a.lock()->setVelocity(sf::Vector2f(a.lock()->getVelocity().x, 0.f));
-                a.lock()->setPhysicsPosition(sf::Vector2f(a.lock()->getPhysicsPosition().x-5.f, a.lock()->getPhysicsPosition().y - overlapY));
-            }
-            else
-            {
-                a.lock()->setVelocity(sf::Vector2f(a.lock()->getVelocity().x, 0.f));
-                a.lock()->setPhysicsPosition(sf::Vector2f(a.lock()->getPhysicsPosition().x, a.lock()->getPhysicsPosition().y - overlapY));
-            }
-        }
-        else if (!fromTop)
-        {
-            a.lock()->setVelocity(sf::Vector2f(a.lock()->getVelocity().x, 0.f));
-            a.lock()->setPhysicsPosition(sf::Vector2f(a.lock()->getPhysicsPosition().x, a.lock()->getPhysicsPosition().y + overlapY));
-        }
-    };
-
-    auto x_collision = [a, fromLeft, fromTop, y_collision](float overlapX, float overlapY)
-    {
-        if (overlapY < 20.f && fromTop) // it's probably a stair
-        {
-            y_collision(overlapX, overlapY, true);
-            return;
-        }
-
-        a.lock()->setVelocity(sf::Vector2f(0.f, a.lock()->getVelocity().y));
-
-        if (fromLeft)
-        {
-            a.lock()->setPhysicsPosition(sf::Vector2f(a.lock()->getPhysicsPosition().x - overlapX, a.lock()->getPhysicsPosition().y));
-        }
-        else if (!fromLeft)
-        {
-            a.lock()->setPhysicsPosition(sf::Vector2f(a.lock()->getPhysicsPosition().x + overlapX, a.lock()->getPhysicsPosition().y));
-        }
-    };
-
-    if (a.lock()->onContactBegin(b, fromLeft, fromTop) && b.lock()->onContactBegin(a, fromLeft, fromTop))
-    {
-        if (std::abs(minOverlapX) > std::abs(minOverlapY)) // y overlap
-        {
-            y_collision(minOverlapX, minOverlapY);
-        }
-        else if (std::abs(minOverlapX) < std::abs(minOverlapY)) // x overlap
-        {
-            x_collision(minOverlapX, minOverlapY);
-        }
-
-        a.lock()->onContactEnd(b);
-        b.lock()->onContactEnd(a);
-    }
 }
 
 template <class T>
@@ -534,7 +409,7 @@ std::vector<std::weak_ptr<ICollideable>> World::getObjectsWithTag(int tag)
 {
     std::vector<std::weak_ptr<ICollideable>> objs;
 
-    for (auto& obj : mCollideables)
+    for (auto& obj : mCollisionResolver.getCollideables())
     {
         if (obj->getTag() == tag)
             objs.push_back(obj);

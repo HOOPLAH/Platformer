@@ -24,7 +24,7 @@ void WorldRef::addRenderable(std::shared_ptr<SpriteObject> obj)
 
 void WorldRef::addCollideable(std::shared_ptr<ICollideable> obj)
 {
-    mWorld.getCollideables().push_back(std::move(obj));
+    mWorld.getCollisionResolver().getCollideables().push_back(std::move(obj));
 }
 
 int WorldRef::getTicks()
@@ -40,9 +40,9 @@ std::weak_ptr<Player> WorldRef::getHero()
 std::weak_ptr<ICollideable> WorldRef::getClosestObject(int tag, sf::Vector2f pos)
 {
     float shortestDist = FLT_MAX;
-    std::weak_ptr<ICollideable> closestObj = mWorld.getCollideables()[0];
+    std::weak_ptr<ICollideable> closestObj = mWorld.getCollisionResolver().getCollideables()[0];
 
-    for (auto& obj : mWorld.getCollideables())
+    for (auto& obj : mWorld.getCollisionResolver().getCollideables())
     {
         if (obj->getTag() == tag)
         {
@@ -111,7 +111,7 @@ std::vector<std::weak_ptr<ICollideable>> WorldRef::getObjectsWithinArea(int tag,
 {
     std::vector<std::weak_ptr<ICollideable>> nearbyPlatforms;
 
-    for (auto& obj : mWorld.getCollideables())
+    for (auto& obj : mWorld.getCollisionResolver().getCollideables())
     {
         if (obj->getTag() == tag)
         {

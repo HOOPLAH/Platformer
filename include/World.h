@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "NPC.h"
 #include "Camera.h"
+#include "CollisionResolver.h"
 #include "Item.h"
 #include "Quest.h"
 #include "Starfield.h"
@@ -38,18 +39,14 @@ class World
         sf::Vector2f getGravity(){return mGravity;}
         std::weak_ptr<Player> getHero(){return mHero;}
         std::vector<std::shared_ptr<WorldSwitcher>>& getButtons(){return mButtons;}
-        std::vector<std::shared_ptr<ICollideable>>& getCollideables(){return mCollideables;}
         std::vector<std::shared_ptr<SpriteObject>>& getRenderables(){return mRenderables;}
         WayPointManager& getWayPointManager(){return mWayPointManager;}
+        CollisionResolver& getCollisionResolver(){return mCollisionResolver;}
         WorldRef& getWorldRef(){return mWorldRef;}
 
     private:
-        bool checkCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
-        void resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
         bool onScreen(std::weak_ptr<ICollideable> obj);
-
         std::vector<std::weak_ptr<ICollideable>> getObjectsWithTag(int tag);
-
         template <class T>
         void removeDeadObjects(std::vector<T>& v);
 
@@ -64,6 +61,7 @@ class World
         std::size_t mNPCSpawnCount; // how many npcs should be out and about at one time
 
         WayPointManager mWayPointManager;
+        CollisionResolver mCollisionResolver;
 
         Camera mCamera;
         sf::FloatRect mWindowCoords;
@@ -72,7 +70,6 @@ class World
 
         std::shared_ptr<Player> mHero; // outlet hero!!
         std::vector<std::shared_ptr<WorldSwitcher>> mButtons;
-        std::vector<std::shared_ptr<ICollideable>> mCollideables;
         std::vector<std::shared_ptr<SpriteObject>> mRenderables;
 };
 

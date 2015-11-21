@@ -52,26 +52,24 @@ class InventoryHUD
             {
                 auto original = mInventoryIndex;
 
-                if (event.key.code == sf::Keyboard::Num0)
+                if (event.key.code == sf::Keyboard::Num1)
                     mInventoryIndex = 0;
-                else if (event.key.code == sf::Keyboard::Num1)
-                    mInventoryIndex = 1;
                 else if (event.key.code == sf::Keyboard::Num2)
-                    mInventoryIndex = 2;
+                    mInventoryIndex = 1;
                 else if (event.key.code == sf::Keyboard::Num3)
-                    mInventoryIndex = 3;
+                    mInventoryIndex = 2;
                 else if (event.key.code == sf::Keyboard::Num4)
-                    mInventoryIndex = 4;
+                    mInventoryIndex = 3;
                 else if (event.key.code == sf::Keyboard::Num5)
-                    mInventoryIndex = 5;
+                    mInventoryIndex = 4;
                 else if (event.key.code == sf::Keyboard::Num6)
-                    mInventoryIndex = 6;
+                    mInventoryIndex = 5;
                 else if (event.key.code == sf::Keyboard::Num7)
-                    mInventoryIndex = 7;
+                    mInventoryIndex = 6;
                 else if (event.key.code == sf::Keyboard::Num8)
-                    mInventoryIndex = 8;
+                    mInventoryIndex = 7;
                 else if (event.key.code == sf::Keyboard::Num9)
-                    mInventoryIndex = 9;
+                    mInventoryIndex = 8;
 
                 if (mInventoryIndex >= inventorySize)
                     mInventoryIndex = original;
