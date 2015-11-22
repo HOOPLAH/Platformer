@@ -1,5 +1,7 @@
 #include "QuadTree.h"
 
+#include <algorithm>
+
 QuadTree::QuadTree(sf::IntRect rect, int level, int maxLevel) :
 	mRect(rect),
 	mLevel(level),

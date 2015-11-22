@@ -1,6 +1,7 @@
 #include "CollisionResolver.h"
 
-CollisionResolver::CollisionResolver()
+CollisionResolver::CollisionResolver(QuadTree& quad) :
+    mQuadTree(quad)
 {
     //ctor
 }
@@ -10,10 +11,29 @@ CollisionResolver::~CollisionResolver()
     //dtor
 }
 
-void CollisionResolver::update()
+void CollisionResolver::update(int ticks)
 {
+    mQuadTree.clear();
+    for (auto& obj : mCollideables)
+    {
+        mQuadTree.addObject(obj);
+    }
+
+    for (auto& obj : mCollideables)
+    {
+        auto returnObjects = mQuadTree.getObjectsAt(obj->getPhysicsPosition());
+        for (auto& colObj : returnObjects)
+        {
+            if (obj != colObj.lock())
+            {
+                if (check(obj, colObj))// && dynamic->isCollisionActive() && _static->isCollisionActive())
+                    resolve(obj, colObj);
+            }
+        }
+    }
+
     // check collisions
-    for (std::size_t x = 0; x < mCollideables.size(); x++)
+    /*for (std::size_t x = 0; x < mCollideables.size(); x++)
     {
         for (std::size_t y = x+1; y < mCollideables.size(); y++)
         {
@@ -27,13 +47,13 @@ void CollisionResolver::update()
 
             if (mCollideables[x]->isStatic())
                 _static = mCollideables[x];
-            else if (mCollideables[x]->isStatic())
+            else if (mCollideables[y]->isStatic())
                 _static = mCollideables[y];
 
             if (check(dynamic, _static) && dynamic->isCollisionActive() && _static->isCollisionActive())
                 resolve(dynamic, _static);
         }
-    }
+    }*/
 }
 
 bool CollisionResolver::check(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b)

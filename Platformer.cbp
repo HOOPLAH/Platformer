@@ -64,6 +64,7 @@
 		<Unit filename="include/Button.h" />
 		<Unit filename="include/Camera.h" />
 		<Unit filename="include/CollectibleObject.h" />
+		<Unit filename="include/CollisionResolver.h" />
 		<Unit filename="include/Constants.h" />
 		<Unit filename="include/DebugConsole.h" />
 		<Unit filename="include/Direction.h" />
@@ -113,6 +114,7 @@
 		<Unit filename="src/Button.cpp" />
 		<Unit filename="src/Camera.cpp" />
 		<Unit filename="src/CollectibleObject.cpp" />
+		<Unit filename="src/CollisionResolver.cpp" />
 		<Unit filename="src/DebugConsole.cpp" />
 		<Unit filename="src/FuncUtils.cpp" />
 		<Unit filename="src/Grenade.cpp" />

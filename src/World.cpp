@@ -16,7 +16,8 @@
 
 World::World() :
     mWorldRef(*this),
-    mQuadTree(sf::IntRect(0.f, 0.f, SCREEN_WIDTH, SCREEN_HEIGHT), 0, 3)
+    mQuadTree(sf::IntRect(0.f, 0.f, SCREEN_WIDTH, SCREEN_HEIGHT), 0, 3),
+    mCollisionResolver(mQuadTree)
 {
     mTicks = 0;
 
@@ -69,8 +70,6 @@ void World::update(int ticks)
 
         if (!obj->isStatic() && obj->getTag() != EntityTags::VEHICLE && onScreen(obj))
             obj->setVelocity(obj->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
-
-        //mQuadTree.addObject(obj);
     }
 
     /*if (!mHero->getQuest().mActions.empty())
@@ -162,7 +161,7 @@ void World::update(int ticks)
         }
     }*/
 
-    mCollisionResolver.update();
+    mCollisionResolver.update(ticks);
 }
 
 void World::draw(sf::RenderTarget& target, float alpha)

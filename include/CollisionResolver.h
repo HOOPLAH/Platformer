@@ -5,14 +5,15 @@
 #include <memory>
 
 #include "ICollideable.h"
+#include "QuadTree.h"
 
 class CollisionResolver
 {
     public:
-        CollisionResolver();
+        CollisionResolver(QuadTree& quad);
         ~CollisionResolver();
 
-        void update();
+        void update(int ticks);
 
         std::vector<std::shared_ptr<ICollideable>>& getCollideables(){return mCollideables;}
 
@@ -21,6 +22,7 @@ class CollisionResolver
         void resolve(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
 
         std::vector<std::shared_ptr<ICollideable>> mCollideables;
+        QuadTree& mQuadTree;
 };
 
 #endif // COLLISIONRESOLVER_H
