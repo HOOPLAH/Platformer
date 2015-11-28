@@ -1,13 +1,14 @@
 #include "AIFollowModule.h"
 
+#include "NPC.h"
 #include "Direction.h"
 #include "WorldObject.h"
-
 #include "FuncUtils.h"
 
-AIFollowModule::AIFollowModule(NPC& npc) : IAIModule(npc)
+AIFollowModule::AIFollowModule(NPC& npc, std::size_t followerTag) : IAIModule(npc)
 {
     mFollowDistance = 15.f;
+    mFollowerTag = followerTag;
 
     mIndex = 0;
 }
@@ -19,7 +20,7 @@ AIFollowModule::~AIFollowModule()
 
 void AIFollowModule::update(WorldRef& worldRef)
 {
-    WayPoint playerWayPt = worldRef.getClosestWayPoint(mNPC.getTarget().getRenderPosition());
+    WayPoint playerWayPt = worldRef.getClosestWayPoint(mNPC.getTarget().lock()->getPhysicsPosition());
 
     if (mNPC.needToUpdatePath())
     {
@@ -69,8 +70,8 @@ void AIFollowModule::update(WorldRef& worldRef)
     }
     else
     {
-        if (mNPC.walk(mNPC.getTarget().getRenderPosition()) ||
-            std::abs(length(mNPC.getTarget().getRenderPosition() - mNPC.getRenderPosition())) > 250.f)
+        if (mNPC.walk(mNPC.getTarget().lock()->getPhysicsPosition()) ||
+            std::abs(length(mNPC.getTarget().lock()->getPhysicsPosition() - mNPC.getRenderPosition())) > 250.f)
         {
             mIndex = 0;
             mWayPoints.clear();

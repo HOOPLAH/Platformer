@@ -50,15 +50,15 @@ void World::update(int ticks)
     removeDeadObjects(mRenderables);
     removeDeadObjects(mButtons);
 
-    if (getObjectsWithTag(EntityTags::NPC).size() < mNPCSpawnCount && mNPCSpawnPoints.size() > 0)// && !mHero->getQuest().mActions.empty())
+    if (getObjectsWithTag(EntityTags::NPC).size() < mNPCSpawnCount && mNPCSpawnPoints.size() > 0)
     {
         auto npc = std::make_shared<NPC>(Assets::sprites["pinkpeewee"], mNPCSpawnPoints[mNextNPCSpawnPoint], mWorldRef);
         mRenderables.push_back(npc);
         mCollideables.push_back(npc);
 
-        if (mNextNPCSpawnPoint < mNPCSpawnPoints.size())
+        if (mNextNPCSpawnPoint < mNPCSpawnPoints.size() && mNPCSpawnCount > 1)
             mNextNPCSpawnPoint++;
-        else
+        else if (mNextNPCSpawnPoint >= mNPCSpawnPoints.size() || mNPCSpawnCount == 1)
             mNextNPCSpawnPoint = 0;
     }
 
@@ -83,6 +83,10 @@ void World::update(int ticks)
     {
         mHero->respawn(mSpawnPoint);
         mCollideables.push_back(mHero);
+    }
+    if (mHero->getRenderPosition().y > SCREEN_HEIGHT)
+    {
+        mHero->kill();
     }
 
     for (auto& obj : mRenderables)
@@ -190,7 +194,7 @@ void World::loadWorld(std::string path)
                 mSpawnPoint = sf::Vector2f(x, y);
                 mHero->respawn(mSpawnPoint);
             }
-            else if (find_key("npc_spawnpoint:", line))
+            else if (find_key("npc_spawn_point:", line))
             {
                 float x = std::stof(split_line[1]);
                 float y = std::stof(split_line[2]);

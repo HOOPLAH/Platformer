@@ -280,11 +280,6 @@ bool Player::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, b
             //mHealth.mActiveClock.restart();
 
             proj->kill();
-
-            if (mHealth.mHP <= 0.f)
-            {
-                kill();
-            }
         }
 
         return false;

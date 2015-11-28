@@ -1,6 +1,9 @@
 #include "AIAttackModule.h"
 
-AIAttackModule::AIAttackModule(NPC& npc, bool friendly) : IAIModule(npc, friendly)
+#include "NPC.h"
+
+AIAttackModule::AIAttackModule(NPC& npc, std::size_t attackerTag) : IAIModule(npc),
+    mAttackerTag(attackerTag)
 {
     //ctor
 }
@@ -12,6 +15,6 @@ AIAttackModule::~AIAttackModule()
 
 void AIAttackModule::update(WorldRef& worldRef)
 {
-    if (!mFriendly && length(mNPC.getPhysicsPosition() - mNPC.getTarget().getPhysicsPosition()) < 150)
+    if (length(mNPC.getPhysicsPosition() - mNPC.getTarget().lock()->getPhysicsPosition()) < mNPC.getWeapon().getRange())
         mNPC.getWeapon().fire(worldRef);
 }

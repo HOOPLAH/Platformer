@@ -17,7 +17,8 @@ NPC::NPC(SpriteInfo& info, sf::Vector2f pos, WorldRef& worldRef) :
     ICollideable(info.mHitBox, info.mFrameDim, EntityTags::NPC),
     mHealth(25.f, sf::Vector2f(30.f, 2.f)),
     mWeapon(Assets::sprites["pistol"], EntityTags::NPC),
-    mTarget(*worldRef.getHero().lock())
+    mTarget(worldRef.getHero()),
+    mAIModuleProcessor(*this, EntityTags::PLAYER)
 {
     mSpawnPoint = pos;
     mRunSpeed = 2.f;
@@ -27,10 +28,9 @@ NPC::NPC(SpriteInfo& info, sf::Vector2f pos, WorldRef& worldRef) :
     mJumping = true;
     mPhysicsPosition = pos;
 
-    mAI = std::make_unique<AIFollowModule>(*this);
-
     mWeapon.setCoolDown(500);
-    mWeapon.setDamage(2);
+    mWeapon.setDamage(10);
+    mWeapon.setRange(150.f);
     mWeaponAngle = 0.f;
     mKillerTag = -1;
 
@@ -81,7 +81,7 @@ void NPC::update(WorldRef& worldRef)
         kill();
     }
 
-    mAI->update(worldRef);
+    mAIModuleProcessor.update(worldRef);
 
     mOldPhysicsPosition = mPhysicsPosition;
     mPhysicsPosition += mVelocity;
@@ -90,8 +90,8 @@ void NPC::update(WorldRef& worldRef)
     mWeapon.setFiringAngle(mWeaponAngle);
     mWeapon.setRenderPosition(mRenderPosition + getCenter());
     //mTarget = worldRef.getHero();
-    mWeaponAngle = atan2(mTarget.getRenderPosition().y - mRenderPosition.y,
-                         mTarget.getRenderPosition().x - mRenderPosition.x);
+    mWeaponAngle = atan2(mTarget.lock()->getPhysicsPosition().y - mRenderPosition.y,
+                         mTarget.lock()->getPhysicsPosition().x - mRenderPosition.x);
 }
 
 void NPC::draw(sf::RenderTarget& target, float alpha)
@@ -195,6 +195,7 @@ void NPC::respawn()
 {
     mHealth.mHP = mHealth.mMaxHP;
     mPhysicsPosition = mSpawnPoint;
+    mRenderPosition = mSpawnPoint;
     mVelocity = sf::Vector2f(0.f, 0.f);
     mAlive = true;
 }

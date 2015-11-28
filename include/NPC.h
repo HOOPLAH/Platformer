@@ -3,6 +3,7 @@
 
 #include <memory>
 
+#include "AIModuleProcessor.h"
 #include "HealthBar.h"
 #include "Weapon.h"
 #include "WorldRef.h"
@@ -35,7 +36,7 @@ class NPC : public SpriteObject, public ICollideable
         bool needToUpdatePath(){return mNeedToUpdatePath;}
         int getDirection(){return mDirection;}
         Weapon& getWeapon(){return mWeapon;}
-        Player& getTarget(){return mTarget;}
+        std::weak_ptr<ICollideable> getTarget(){return mTarget;}
         int getKillerTag(){return mKillerTag;}
         float getWeaponAngle(){return mWeaponAngle;}
         sf::Vector2f getFeetPosition(){return (mRenderPosition+sf::Vector2f(mHitBox.width, mHitBox.height));}
@@ -45,17 +46,17 @@ class NPC : public SpriteObject, public ICollideable
         sf::Vector2f mSpawnPoint;
         float mRunSpeed;
         float mJumpSpeed;
-        int mDirection; // direction npc is facing -- for animations
-        bool mGrounded; // touching the ground -- for animations
+        int mDirection; // direction npc is facing - for animations
+        bool mGrounded;
         bool mJumping;
         bool mNeedToUpdatePath;
 
         HealthBar mHealth;
 
-        std::unique_ptr<IAIModule> mAI;
+        AIModuleProcessor mAIModuleProcessor;
 
         Weapon mWeapon;
-        Player& mTarget;
+        std::weak_ptr<ICollideable> mTarget;
         int mKillerTag; // what kind of entity killed this npc
         float mWeaponAngle;
 };

@@ -6,13 +6,13 @@
 class AIAttackModule : public IAIModule
 {
     public:
-        AIAttackModule(NPC& npc, bool friendly);
+        AIAttackModule(NPC& npc, std::size_t attackerTag);
         ~AIAttackModule();
 
         void update(WorldRef& worldRef);
 
     private:
-        int mAttackerTag;
+        std::size_t mAttackerTag;
 };
 
 #endif // AIATTACKMODULE_H

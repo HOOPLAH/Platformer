@@ -1,22 +1,20 @@
 #ifndef IAIMODULE_H
 #define IAIMODULE_H
 
-#include "NPC.h"
+#include "WorldRef.h"
+
+class NPC;
 
 class IAIModule
 {
     public:
-        IAIModule(NPC& npc, bool friendly=true):mNPC(npc){mFriendly=friendly;}
+        IAIModule(NPC& npc) : mNPC(npc) {}
         virtual ~IAIModule(){}
 
         virtual void update(WorldRef& worldRef){}
 
-        virtual void setFriendly(bool friendly){mFriendly=friendly;}
-        bool isFriendly(){return mFriendly;}
-
     protected:
-        NPC& mNPC;
-        bool mFriendly; // should i attack player?? applies to most AIs
+        NPC& mNPC; // the npc that this AI is controlling
 };
 
 #endif // IAIMODULE_H

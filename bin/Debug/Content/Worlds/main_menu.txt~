@@ -1,10 +1,29 @@
 spawnpoint: 0 500
 
+npc_spawn_point: 400 500
+npc_spawn_count: 1
+
 renderonly: cloud -64 64 parallax
 renderonly: cloud 320 10 parallax
 renderonly: cloud 128 128 parallax
 renderonly: cloud 512 96 parallax
 
 platform: tilegrassblock 0 567
+platform: tallrock 172 478
 platform: grassblock 100 567
 platform: tilegrassblock 64 567
+
+platform: grassblock 300 567
+platform: grassblock 531 567
+platform: bridge 385 531
+platform: tilegrassblock 595 567
+platform: tilegrassblock 659 567
+platform: tilegrassblock 723 567
+platform: tilegrassblock 787 567
+
+waypoint: 310 547 -- 0
+waypoint: 530 547 -- 1
+waypoint: 777 547 -- 2
+
+waypoint_edge: 0 1
+waypoint_edge: 1 2
