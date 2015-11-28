@@ -2,7 +2,6 @@
 #define ICOLLIDEABLE_H
 
 #include <memory>
-#include <iostream>
 
 #include <SFML/Graphics.hpp>
 

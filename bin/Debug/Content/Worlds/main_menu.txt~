@@ -1,5 +1,10 @@
-spawn_point: 500 -100
+spawnpoint: 0 500
 
-tiled_platforms: 5 64 0 ammocrate 490 0      GROUND
+renderonly: cloud -64 64 parallax
+renderonly: cloud 320 10 parallax
+renderonly: cloud 128 128 parallax
+renderonly: cloud 512 96 parallax
 
-button: play_button 615 -115 1
+platform: tilegrassblock 0 567
+platform: grassblock 100 567
+platform: tilegrassblock 64 567

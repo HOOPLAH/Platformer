@@ -26,8 +26,9 @@ World::World() :
     mNPCSpawnCount = 0;
     mGravity = sf::Vector2f(0.f, 10.f);
 
+    mBackground = sf::Sprite(Assets::sprites["background"].mTexture);
     mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], mSpawnPoint, mWorldRef);
-    //mCollisionResolver.getCollideables().push_back(mHero);
+    //mCollideables.push_back(mHero);
 }
 
 World::World(std::string path) : World()
@@ -43,19 +44,17 @@ World::~World()
 void World::update(int ticks)
 {
     mTicks = ticks;
-    mQuadTree.setIntRect(sf::IntRect(mCamera.getCenter().x-(SCREEN_WIDTH/2), mCamera.getCenter().y-(SCREEN_HEIGHT/2), SCREEN_WIDTH, SCREEN_HEIGHT));
+    //mQuadTree.setIntRect(sf::IntRect(mCamera.getCenter().x-(SCREEN_WIDTH/2), mCamera.getCenter().y-(SCREEN_HEIGHT/2), SCREEN_WIDTH, SCREEN_HEIGHT));
 
-    removeDeadObjects(mCollisionResolver.getCollideables());
+    removeDeadObjects(mCollideables);
     removeDeadObjects(mRenderables);
     removeDeadObjects(mButtons);
-
-    //mStarField.update();
 
     if (getObjectsWithTag(EntityTags::NPC).size() < mNPCSpawnCount && mNPCSpawnPoints.size() > 0)// && !mHero->getQuest().mActions.empty())
     {
         auto npc = std::make_shared<NPC>(Assets::sprites["pinkpeewee"], mNPCSpawnPoints[mNextNPCSpawnPoint], mWorldRef);
         mRenderables.push_back(npc);
-        mCollisionResolver.getCollideables().push_back(npc);
+        mCollideables.push_back(npc);
 
         if (mNextNPCSpawnPoint < mNPCSpawnPoints.size())
             mNextNPCSpawnPoint++;
@@ -63,139 +62,84 @@ void World::update(int ticks)
             mNextNPCSpawnPoint = 0;
     }
 
-    //mQuadTree.clear();
-    for (auto& obj : mCollisionResolver.getCollideables())
+    mQuadTree.clear();
+    for (auto& obj : mCollideables)
     {
         obj->update(mWorldRef);
 
         if (!obj->isStatic() && obj->getTag() != EntityTags::VEHICLE && onScreen(obj))
             obj->setVelocity(obj->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
+
+        mQuadTree.addObject(obj);
     }
-
-    /*if (!mHero->getQuest().mActions.empty())
-    {
-        if (!npc->isAlive()) // playah killed npc
-        {
-            if (mHero->getQuest().mActions.top()->mTag == ActionTag::KILL && npc->getKillerTag() == EntityTags::PLAYER)
-            {
-                auto action = static_cast<KillAction*>(&*mHero->getQuest().mActions.top());
-
-                if (action->mKillsLeftCount > 1)
-                    action->mKillsLeftCount--;
-                else
-                    mHero->getQuest().mActions.pop();
-            }
-            else if (mHero->getQuest().mActions.top()->mTag == ActionTag::PROTECT)
-            {
-                auto action = static_cast<ProtectAction*>(&*mHero->getQuest().mActions.top());
-
-                if (action->mKillsLeftCount > 0)
-                    action->mKillsLeftCount--;
-            }
-        }
-    }*/
-
-    /*if (obj->getTag() == EntityTags::COLLECTIBLE)
-    {
-        auto collectible = static_cast<CollectibleObject*>(&*obj);
-
-        if (collectible->isCollected())
-        {
-            if (!mHero->getQuest().mActions.empty())
-            {
-                if (mHero->getQuest().mActions.top()->mTag == ActionTag::COLLECT)
-                {
-                    auto action = static_cast<CollectAction*>(&*mHero->getQuest().mActions.top());
-
-                    if (obj->getTag() == action->mCollectTag)
-                    {
-                        if (action->mCollectLeftCount > 1)
-                            action->mCollectLeftCount--;
-                        else
-                            mHero->getQuest().mActions.pop();
-                    }
-                    else
-                        break;
-                }
-            }
-
-            collectible->kill();
-        }
-    }*/
 
     for (auto& button : mButtons)
     {
-        if (mHero->getQuest().mActions.empty())
-        {
-            //button->update();
-            button->setCollisionActive(true);
-        }
+        //button->update();
+        button->setCollisionActive(true);
     }
 
     if (!mHero->isAlive())
     {
         mHero->respawn(mSpawnPoint);
-        mCollisionResolver.getCollideables().push_back(mHero);
+        mCollideables.push_back(mHero);
     }
-    mCamera.follow(mHero->getRenderPosition());
 
-    /*for (auto& obj : mCollisionResolver.getCollideables())
+    for (auto& obj : mRenderables)
     {
-        if (!mHero->getQuest().mActions.empty())
+        if (obj->isParallaxable())
         {
-            if (mHero->getQuest().mActions.top()->mTag == ActionTag::PROTECT)
-            {
-                auto action = std::static_pointer_cast<ProtectAction>(mHero->getQuest().mActions.top());
-                if (obj.lock()->getTag() == action->mProtectTag)
-                {
-                    if (obj.lock()->isAlive() && action->mKillsLeftCount == 0) // obj is still alive and player killed everyone
-                    {
-                        mHero->getQuest().mActions.pop();
-                    }
-                    else if (!obj.lock()->isAlive())
-                    {
-                        resetWorld(mPathDirectory);
-                    }
-                }
-            }
+            obj->setRenderPosition(obj->getRenderPosition() + sf::Vector2f(0.25f, 0.f));
+            if (obj->getRenderPosition().x > SCREEN_WIDTH)
+                obj->setRenderPosition(sf::Vector2f(-obj->getSpriteInfo().mHitBox.width, obj->getRenderPosition().y));
         }
-    }*/
+    }
 
-    mCollisionResolver.update(ticks);
+    mCollisionResolver.update(mCollideables);
+
+    mCamera.follow(sf::Vector2f(mHero->getRenderPosition().x, SCREEN_HEIGHT/2.f));
 }
 
 void World::draw(sf::RenderTarget& target, float alpha)
 {
     target.setView(target.getDefaultView());
-
-    //mStarField.draw(target);
-
-    target.setView(mCamera.getView());
-
-    mWindowCoords = sf::FloatRect(mCamera.getCenter().x-(SCREEN_WIDTH/2), mCamera.getCenter().y-(SCREEN_HEIGHT/2), SCREEN_WIDTH, SCREEN_HEIGHT);
-
-    for (auto& obj : mRenderables)
     {
-        if (mWindowCoords.intersects(obj->getSprite().getGlobalBounds()))
-            obj->draw(target, alpha);
+        target.draw(mBackground);
+
+        for (auto& obj : mRenderables)
+        {
+            if (obj->isParallaxable())
+            {
+                obj->draw(target, alpha);
+            }
+        }
     }
 
-    for (auto& button : mButtons)
+    target.setView(mCamera.getView());
     {
-        if (mHero->getQuest().mActions.empty())
+        mWindowCoords = sf::FloatRect(mCamera.getCenter().x-(SCREEN_WIDTH/2), mCamera.getCenter().y-(SCREEN_HEIGHT/2), SCREEN_WIDTH, SCREEN_HEIGHT);
+
+        for (auto& obj : mRenderables)
+        {
+            if (mWindowCoords.intersects(obj->getSprite().getGlobalBounds()) && !obj->isParallaxable())
+                obj->draw(target, alpha);
+        }
+
+        for (auto& button : mButtons)
         {
             if (mWindowCoords.intersects(button->getSprite().getGlobalBounds()))
                 button->draw(target, alpha);
         }
+
+        if (!mHero->inVehicle())
+            mHero->draw(target, alpha);
+        mWayPointManager.draw(target);
     }
 
-    if (!mHero->inVehicle())
-        mHero->draw(target, alpha);
-    mWayPointManager.draw(target);
-
     target.setView(target.getDefaultView());
-
-    drawStationary(target);
+    {
+        drawStationary(target);
+    }
 }
 
 void World::drawStationary(sf::RenderTarget& target)
@@ -225,7 +169,7 @@ void World::loadWorld(std::string path)
         return false;
     };
 
-    mCollisionResolver.getCollideables().push_back(mHero);
+    mCollideables.push_back(mHero);
 
     if (file.is_open())
     {
@@ -239,7 +183,7 @@ void World::loadWorld(std::string path)
                 float y = std::stof(split_line[2]);
                 mGravity = sf::Vector2f(x, y);
             }
-            else if (find_key("spawn_point:", line))
+            else if (find_key("spawnpoint:", line))
             {
                 float x = std::stof(split_line[1]);
                 float y = std::stof(split_line[2]);
@@ -264,7 +208,7 @@ void World::loadWorld(std::string path)
                 float x = std::stof(split_line[2]);
                 float y = std::stof(split_line[3]);
                 auto obj = std::make_shared<CollectibleObject>(Assets::sprites[id], sf::Vector2f(x, y), CollectibleType::AMMOCRATE);
-                mCollisionResolver.getCollideables().push_back(obj);
+                mCollideables.push_back(obj);
                 mRenderables.push_back(obj);
             }
             else if (find_key("platform:", line))
@@ -273,7 +217,7 @@ void World::loadWorld(std::string path)
                 float x = std::stof(split_line[2]);
                 float y = std::stof(split_line[3]);
                 auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y), EntityTags::PLATFORM);
-                mCollisionResolver.getCollideables().push_back(platform);
+                mCollideables.push_back(platform);
                 mRenderables.push_back(platform);
             }
             else if (find_key("tiled_platforms:", line))
@@ -287,7 +231,7 @@ void World::loadWorld(std::string path)
                 {
                     auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(start_x+(i*distApart.x),
                                         start_y+(i*distApart.y)));
-                    mCollisionResolver.getCollideables().push_back(platform);
+                    mCollideables.push_back(platform);
                     mRenderables.push_back(platform);
                 }
             }
@@ -296,7 +240,7 @@ void World::loadWorld(std::string path)
                 float x = std::stof(split_line[1]);
                 float y = std::stof(split_line[2]);
                 auto turret = std::make_shared<Turret>(Assets::sprites["turretbody"], sf::Vector2f(x, y));
-                mCollisionResolver.getCollideables().push_back(turret);
+                mCollideables.push_back(turret);
                 mRenderables.push_back(turret);
             }
             else if (find_key("button:", line))
@@ -308,7 +252,7 @@ void World::loadWorld(std::string path)
                 auto button = std::make_shared<WorldSwitcher>(Assets::sprites[id], sf::Vector2f(x, y), nextWorld);
                 button->setCollisionActive(false); // turn off collisions by default until all quests are complete
                 mButtons.push_back(button);
-                mCollisionResolver.getCollideables().push_back(button);
+                mCollideables.push_back(button);
             }
             else if (find_key("waypoint:", line))
             {
@@ -327,41 +271,18 @@ void World::loadWorld(std::string path)
                     type = WayPointType::JUMP;
                 mWayPointManager.addWayPointEdge(a, b, type);
             }
-            else if (find_key("quest_action:", line))
+            else if (find_key("renderonly:", line))
             {
-                std::string action_type = split_line[1];
+                std::string id = split_line[1];
+                float x = std::stof(split_line[2]);
+                float y = std::stof(split_line[3]);
+                bool parallax = false;
 
-                if (action_type == "kill")
-                {
-                    auto action = std::make_shared<KillAction>();
-                    action->mTotalKillCount = std::stof(split_line[2]);
-                    action->mKillsLeftCount = action->mTotalKillCount;
-                    action->mKillTag = std::stof(split_line[3]);
+                if (split_line[4] == "parallax")
+                    parallax = true;
 
-                    mHero->getQuest().mActions.push(action);
-                }
-                else if (action_type == "collect")
-                {
-                    auto action = std::make_shared<CollectAction>();
-                    action->mTotalCollectCount = std::stof(split_line[2]);
-                    action->mCollectLeftCount = action->mTotalCollectCount;
-                    action->mCollectTag = std::stof(split_line[3]);
-
-                    mHero->getQuest().mActions.push(action);
-                }
-                else if (action_type == "protect")
-                {
-                    auto action = std::make_shared<ProtectAction>();
-                    // kill quest
-                    action->mTotalKillCount = std::stof(split_line[2]);
-                    action->mKillsLeftCount = action->mTotalKillCount;
-                    action->mKillTag = std::stof(split_line[3]);
-                    // protect quest
-                    action->mProtectTag = std::stof(split_line[4]);
-                    action->mTag = ActionTag::PROTECT;
-
-                    mHero->getQuest().mActions.push(action);
-                }
+                auto obj = std::make_shared<SpriteObject>(Assets::sprites[id], sf::Vector2f(x, y), parallax);
+                mRenderables.push_back(obj);
             }
         }
 
@@ -378,7 +299,7 @@ void World::resetWorld(std::string path)
     mNPCSpawnCount = 0;
     mGravity = sf::Vector2f(0.f, 10.f);
 
-    mCollisionResolver.getCollideables().clear();
+    mCollideables.clear();
     mRenderables.clear();
 
     mWayPointManager.getWayPoints().clear();
@@ -408,7 +329,7 @@ std::vector<std::weak_ptr<ICollideable>> World::getObjectsWithTag(int tag)
 {
     std::vector<std::weak_ptr<ICollideable>> objs;
 
-    for (auto& obj : mCollisionResolver.getCollideables())
+    for (auto& obj : mCollideables)
     {
         if (obj->getTag() == tag)
             objs.push_back(obj);

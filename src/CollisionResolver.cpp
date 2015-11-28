@@ -1,5 +1,7 @@
 #include "CollisionResolver.h"
 
+#include <iostream>
+
 CollisionResolver::CollisionResolver(QuadTree& quad) :
     mQuadTree(quad)
 {
@@ -11,15 +13,9 @@ CollisionResolver::~CollisionResolver()
     //dtor
 }
 
-void CollisionResolver::update(int ticks)
+void CollisionResolver::update(std::vector<std::shared_ptr<ICollideable>>& collideables)
 {
-    mQuadTree.clear();
-    for (auto& obj : mCollideables)
-    {
-        mQuadTree.addObject(obj);
-    }
-
-    for (auto& obj : mCollideables)
+    /*for (auto& obj : collideables)
     {
         auto returnObjects = mQuadTree.getObjectsAt(obj->getPhysicsPosition());
         for (auto& colObj : returnObjects)
@@ -30,30 +26,30 @@ void CollisionResolver::update(int ticks)
                     resolve(obj, colObj);
             }
         }
-    }
+    }*/
 
     // check collisions
-    /*for (std::size_t x = 0; x < mCollideables.size(); x++)
+    for (std::size_t x = 0; x < collideables.size(); x++)
     {
-        for (std::size_t y = x+1; y < mCollideables.size(); y++)
+        for (std::size_t y = x+1; y < collideables.size(); y++)
         {
-            auto dynamic = mCollideables[x];
-            auto _static = mCollideables[y];
+            auto dynamic = collideables[x];
+            auto _static = collideables[y];
 
-            if (!mCollideables[x]->isStatic())
-                dynamic = mCollideables[x];
-            else if (!mCollideables[y]->isStatic())
-                dynamic = mCollideables[y];
+            if (!collideables[x]->isStatic())
+                dynamic = collideables[x];
+            else if (!collideables[y]->isStatic())
+                dynamic = collideables[y];
 
-            if (mCollideables[x]->isStatic())
-                _static = mCollideables[x];
-            else if (mCollideables[y]->isStatic())
-                _static = mCollideables[y];
+            if (collideables[x]->isStatic())
+                _static = collideables[x];
+            else if (collideables[y]->isStatic())
+                _static = collideables[y];
 
             if (check(dynamic, _static) && dynamic->isCollisionActive() && _static->isCollisionActive())
                 resolve(dynamic, _static);
         }
-    }*/
+    }
 }
 
 bool CollisionResolver::check(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b)

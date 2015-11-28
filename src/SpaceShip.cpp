@@ -30,7 +30,7 @@ void SpaceShip::update(WorldRef& worldRef)
         mWeaponAngle = atan2(mWeaponTarget.y - weapFirePoint.y, mWeaponTarget.x - weapFirePoint.x);
 
         weap.setFiringAngle(mWeaponAngle);
-        weap.setPosition(mRenderPosition+weap.getPositionOnVehicle());
+        weap.setRenderPosition(mRenderPosition+weap.getPositionOnVehicle());
     }
 }
 

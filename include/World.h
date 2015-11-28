@@ -11,8 +11,6 @@
 #include "Camera.h"
 #include "CollisionResolver.h"
 #include "Item.h"
-#include "Quest.h"
-#include "Starfield.h"
 #include "QuadTree.h"
 #include "WayPointManager.h"
 #include "WorldObject.h"
@@ -39,6 +37,7 @@ class World
         sf::Vector2f getGravity(){return mGravity;}
         std::weak_ptr<Player> getHero(){return mHero;}
         std::vector<std::shared_ptr<WorldSwitcher>>& getButtons(){return mButtons;}
+        std::vector<std::shared_ptr<ICollideable>>& getCollideables(){return mCollideables;}
         std::vector<std::shared_ptr<SpriteObject>>& getRenderables(){return mRenderables;}
         WayPointManager& getWayPointManager(){return mWayPointManager;}
         CollisionResolver& getCollisionResolver(){return mCollisionResolver;}
@@ -65,11 +64,12 @@ class World
 
         Camera mCamera;
         sf::FloatRect mWindowCoords;
-        Starfield mStarField;
         QuadTree mQuadTree;
+        sf::Sprite mBackground;
 
         std::shared_ptr<Player> mHero; // outlet hero!!
         std::vector<std::shared_ptr<WorldSwitcher>> mButtons;
+        std::vector<std::shared_ptr<ICollideable>> mCollideables;
         std::vector<std::shared_ptr<SpriteObject>> mRenderables;
 };
 

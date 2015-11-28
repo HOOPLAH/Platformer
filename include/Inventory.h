@@ -38,11 +38,11 @@ class InventoryHUD
             {
                 auto item = mInventoryItems[i];
                 auto pos = mInventoryBar.getRenderPosition();
-                item.setPosition(pos + (sf::Vector2f(16 + (31*i), 16)-item.getCenter()));
+                item.setRenderPosition(pos + (sf::Vector2f(16 + (31*i), 16)-item.getCenter()));
                 item.draw(target, 1.f);
             }
 
-            mCurrentInventoryItem.setPosition(sf::Vector2f((2*mInventoryIndex)+31*mInventoryIndex, 0) + mInventoryBar.getRenderPosition());
+            mCurrentInventoryItem.setRenderPosition(sf::Vector2f((2*mInventoryIndex)+31*mInventoryIndex, 0) + mInventoryBar.getRenderPosition());
             mCurrentInventoryItem.draw(target, 1.f);
         }
 

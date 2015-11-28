@@ -1,6 +1,6 @@
 #include "NPC.h"
 
-#include <iostream>
+#include <memory>
 #include <cstdlib>
 
 #include "Assets.h"
@@ -88,7 +88,7 @@ void NPC::update(WorldRef& worldRef)
 
     mWeapon.update();
     mWeapon.setFiringAngle(mWeaponAngle);
-    mWeapon.setPosition(mRenderPosition + getCenter());
+    mWeapon.setRenderPosition(mRenderPosition + getCenter());
     //mTarget = worldRef.getHero();
     mWeaponAngle = atan2(mTarget.getRenderPosition().y - mRenderPosition.y,
                          mTarget.getRenderPosition().x - mRenderPosition.x);

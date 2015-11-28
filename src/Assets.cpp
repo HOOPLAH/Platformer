@@ -21,6 +21,12 @@ void Assets::loadAssets()
     sprites["explosion"] = SpriteInfo("Content/Textures/explosion.png", 36, 6);
     sprites["ship"] = SpriteInfo("Content/Textures/ship.png", 2, 1);
     sprites["star"] = SpriteInfo("Content/Textures/star.png");
+    sprites["grassblock"] = SpriteInfo("Content/Textures/grass_block.png");
+    sprites["tilegrassblock"] = SpriteInfo("Content/Textures/grass_block_tileable.png");
+    sprites["tallrock"] = SpriteInfo("Content/Textures/tall_rock.png");
+    sprites["background"] = SpriteInfo("Content/Textures/background.png");
+    sprites["cloud"] = SpriteInfo("Content/Textures/cloud.png");
+    sprites["sign"] = SpriteInfo("Content/Textures/sign.png");
 
     sprites["grenade"] = SpriteInfo("Content/Textures/grenade.png");
     sprites["grenade"].mHitBox = sf::FloatRect(0.f, 5.f, 5.f, 5.f);
@@ -32,6 +38,10 @@ void Assets::loadAssets()
     sprites["bigplatform"].mHitBox = sf::FloatRect(10.f, 12.f, 225.f, 124.f);
     sprites["smallplatform"] = SpriteInfo("Content/Textures/smallplatform.png");
     sprites["smallplatform"].mHitBox = sf::FloatRect(5.f, 8.f, 35.f, 26.f);
+    sprites["bridge"] = SpriteInfo("Content/Textures/bridge.png");
+    sprites["bridge"].mHitBox = sf::FloatRect(6.f, 37.f, 140.f, 6.f);
+    sprites["commandcenter"] = SpriteInfo("Content/Textures/command_center.png");
+    sprites["commandcenter"].mHitBox = sf::FloatRect(56.f, 86.f, 40.f, 20.f);
 
     ///
 

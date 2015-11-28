@@ -84,7 +84,7 @@ void Player::update(WorldRef& worldRef)
         auto weap = static_cast<Weapon*>(&*mInventory.getItem(mInventoryHUD.getInventoryIndex()));
 
         weap->setFiringAngle(mWeaponAngle);
-        weap->setPosition(mRenderPosition + getCenter());
+        weap->setRenderPosition(mRenderPosition + getCenter());
 
         sf::Vector2f weapFirePoint = weap->getRenderPosition();//+weap->getFirePoint();
         mWeaponAngle = atan2(mWeaponTarget.y - weapFirePoint.y, mWeaponTarget.x - weapFirePoint.x);
@@ -116,77 +116,6 @@ void Player::drawStationary(sf::RenderTarget& target)
     sWeaponText.append(std::to_string(mWeapon.getAmmo()));
     sf::Text weaponText(sWeaponText, Assets::fonts["8bit"].mFont);
     target.draw(weaponText); // magazine / ammo_in_magazine*/
-
-    if (!mQuest.mActions.empty())
-    {
-        if (mQuest.mActions.top()->mTag == ActionTag::KILL)
-        {
-            auto action = static_cast<KillAction*>(&*mQuest.mActions.top());
-
-            std::string sActionText = "kill ";
-            sActionText.append(std::to_string(action->mTotalKillCount - action->mKillsLeftCount));
-            sActionText.append("/");
-            sActionText.append(std::to_string(action->mTotalKillCount));
-
-            sf::Text actionText(sActionText, Assets::fonts["8bit"].mFont);
-            actionText.setPosition(sf::Vector2f(SCREEN_WIDTH - actionText.getGlobalBounds().width, 0.f));
-            target.draw(actionText);
-        }
-        else if (mQuest.mActions.top()->mTag == ActionTag::COLLECT)
-        {
-            auto action = static_cast<CollectAction*>(&*mQuest.mActions.top());
-
-            std::string sActionText = "collect ";
-            sActionText.append(std::to_string(action->mTotalCollectCount - action->mCollectLeftCount));
-            sActionText.append("/");
-            sActionText.append(std::to_string(action->mTotalCollectCount));
-
-            sf::Text actionText(sActionText, Assets::fonts["8bit"].mFont);
-            actionText.setPosition(sf::Vector2f(SCREEN_WIDTH - actionText.getGlobalBounds().width, 0.f));
-            target.draw(actionText);
-        }
-        else if (mQuest.mActions.top()->mTag == ActionTag::PROTECT)
-        {
-            auto action = static_cast<ProtectAction*>(&*mQuest.mActions.top());
-
-            std::string sActionText = "protect ";
-            switch (action->mProtectTag)
-            {
-                case EntityTags::PLAYER:
-                {
-                    sActionText.append("player");
-                    break;
-                }
-
-                case EntityTags::NPC:
-                {
-                    sActionText.append("NPC");
-                    break;
-                }
-
-                case EntityTags::COLLECTIBLE:
-                {
-                    sActionText.append("collectible");
-                    break;
-                }
-
-                case EntityTags::TURRET:
-                {
-                    sActionText.append("turret");
-                    break;
-                }
-            }
-            sActionText.append("\n");
-            sActionText.append("kill ");
-            sActionText.append(std::to_string(action->mTotalKillCount - action->mKillsLeftCount));
-            sActionText.append("/");
-            sActionText.append(std::to_string(action->mTotalKillCount));
-
-            sf::Text actionText(sActionText, Assets::fonts["8bit"].mFont);
-            actionText.setPosition(sf::Vector2f(SCREEN_WIDTH - actionText.getGlobalBounds().width, 0.f));
-            target.draw(actionText);
-        }
-    }
 }
 
 void Player::handleEvents(sf::Event& event, WorldRef& worldRef)
@@ -320,6 +249,7 @@ void Player::respawn(sf::Vector2f pos)
     mHealth.mHP = mHealth.mMaxHP;
     //mWeapon.setWeaponClips(3, 10);
     mPhysicsPosition = pos;
+    mRenderPosition = pos;
     mVelocity = sf::Vector2f(0.f, 0.f);
     mAlive = true;
 }

@@ -20,12 +20,13 @@ WorldEditor::WorldEditor(std::string path) :
     mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], sf::Vector2f(0.f, 0.f), mWorld.getWorldRef());
     mCollideables.push_back(mHero);
 
-    mIDs.push_back("ammocrate");
-    mIDs.push_back("blueplatform");
     mIDs.push_back("bigplatform");
     mIDs.push_back("smallplatform");
-    mIDs.push_back("turret");
-    mIDs.push_back("waypoint");
+    mIDs.push_back("tilegrassblock");
+    mIDs.push_back("grassblock");
+    mIDs.push_back("tallrock");
+    mIDs.push_back("commandcenter");
+    mIDs.push_back("bridge");
     mCurrentID = 0;
 
     mDebugConsoleActive = false;

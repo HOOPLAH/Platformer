@@ -14,6 +14,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-std=c++1y" />
 					<Add directory="include" />
 				</Compiler>
 			</Target>
@@ -45,6 +46,8 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-std=c++14" />
+			<Add option="-std=c++1y" />
 			<Add option="-fexceptions" />
 			<Add directory="include" />
 		</Compiler>

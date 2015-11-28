@@ -6,7 +6,6 @@
 #include "HealthBar.h"
 #include "Weapon.h"
 #include "WorldRef.h"
-#include "Quest.h"
 #include "Inventory.h"
 #include "Vehicle.h"
 
@@ -26,7 +25,6 @@ class Player : public SpriteObject, public ICollideable
 
         void respawn(sf::Vector2f pos);
         void kill(){mAlive=false; mHealth.mHP = -1;}
-        void setPosition(sf::Vector2f pos){mPhysicsPosition=pos;}
         void setVehicle(std::weak_ptr<Vehicle> vehicle){mVehicle=vehicle;}
 
         int getDirection(){return mDirection;}
@@ -34,7 +32,6 @@ class Player : public SpriteObject, public ICollideable
         sf::Vector2f getWeaponTarget(){return mWeaponTarget;}
         float getWeaponAngle(){return mWeaponAngle;}
         Inventory& getInventory(){return mInventory;}
-        Quest& getQuest(){return mQuest;}
         std::weak_ptr<Vehicle> getVehicle(){return mVehicle;}
         bool inVehicle(){return mInVehicle;}
 
@@ -57,8 +54,6 @@ class Player : public SpriteObject, public ICollideable
 
         std::weak_ptr<Vehicle> mVehicle; // he owns the spaceship
         bool mInVehicle;
-
-        Quest mQuest;
 };
 
 #endif // PLAYER_H

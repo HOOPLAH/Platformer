@@ -29,11 +29,11 @@ void Grenade::update(WorldRef& worldRef)
 {
     SpriteObject::update();
 
-    mExplosion.setPosition(mExplosionPosition-mExplosion.getCenter());
+    mExplosion.setRenderPosition(mExplosionPosition-mExplosion.getCenter());
 
     if (mTimeUntilExplosion.getElapsedTime().asMilliseconds() >= mTime)
     {
-        mExplosion.setPosition(mExplosionPosition-mExplosion.getCenter());
+        mExplosion.setRenderPosition(mExplosionPosition-mExplosion.getCenter());
         mExplosionPosition = mRenderPosition;
         for (auto& obj : worldRef.getObjectsWithinArea(EntityTags::NPC,
             sf::FloatRect(mRenderPosition.x-50.f, mRenderPosition.y-50, 100.f, 100.f)))

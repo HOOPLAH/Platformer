@@ -13,15 +13,12 @@ class CollisionResolver
         CollisionResolver(QuadTree& quad);
         ~CollisionResolver();
 
-        void update(int ticks);
-
-        std::vector<std::shared_ptr<ICollideable>>& getCollideables(){return mCollideables;}
+        void update(std::vector<std::shared_ptr<ICollideable>>& collideables);
 
     private:
         bool check(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
         void resolve(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
 
-        std::vector<std::shared_ptr<ICollideable>> mCollideables;
         QuadTree& mQuadTree;
 };
 

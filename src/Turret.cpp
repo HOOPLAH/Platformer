@@ -45,7 +45,7 @@ void Turret::update(WorldRef& worldRef)
     mWeapon.setFiringAngle(mWeaponAngle);
 
     mHealth.setPosition(mRenderPosition + sf::Vector2f(getCenter().x, -30.f));
-    mWeapon.setPosition(mRenderPosition + sf::Vector2f(34.f, -5.f));
+    mWeapon.setRenderPosition(mRenderPosition + sf::Vector2f(34.f, -5.f));
     if (mHealth.mHP <= 0.f)
         kill();
 }
