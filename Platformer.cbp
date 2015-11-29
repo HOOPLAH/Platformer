@@ -62,7 +62,7 @@
 		</Unit>
 		<Unit filename="include/AIAttackModule.h" />
 		<Unit filename="include/AIFollowModule.h" />
-		<Unit filename="include/Actions.h" />
+		<Unit filename="include/AIModuleProcessor.h" />
 		<Unit filename="include/Assets.h" />
 		<Unit filename="include/Button.h" />
 		<Unit filename="include/Camera.h" />
@@ -93,7 +93,6 @@
 		<Unit filename="include/SpaceShip.h" />
 		<Unit filename="include/SpriteInfo.h" />
 		<Unit filename="include/SpriteObject.h" />
-		<Unit filename="include/Starfield.h" />
 		<Unit filename="include/Turret.h" />
 		<Unit filename="include/Vehicle.h" />
 		<Unit filename="include/VehicleWeapon.h" />
@@ -113,6 +112,7 @@
 		</Unit>
 		<Unit filename="src/AIAttackModule.cpp" />
 		<Unit filename="src/AIFollowModule.cpp" />
+		<Unit filename="src/AIModuleProcessor.cpp" />
 		<Unit filename="src/Assets.cpp" />
 		<Unit filename="src/Button.cpp" />
 		<Unit filename="src/Camera.cpp" />
@@ -131,7 +131,6 @@
 		<Unit filename="src/QuadTree.cpp" />
 		<Unit filename="src/SpaceShip.cpp" />
 		<Unit filename="src/SpriteObject.cpp" />
-		<Unit filename="src/Starfield.cpp" />
 		<Unit filename="src/Turret.cpp" />
 		<Unit filename="src/Vehicle.cpp" />
 		<Unit filename="src/VehicleWeapon.cpp" />

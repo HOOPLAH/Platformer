@@ -67,8 +67,10 @@ void World::update(int ticks)
     {
         obj->update(mWorldRef);
 
-        if (!obj->isStatic() && obj->getTag() != EntityTags::VEHICLE && onScreen(obj))
+        if (!obj->isStatic() && obj->getTag() != EntityTags::VEHICLE)
             obj->setVelocity(obj->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
+        if (obj->getPhysicsPosition().y > SCREEN_HEIGHT)
+            obj->kill();
 
         mQuadTree.addObject(obj);
     }
@@ -82,7 +84,7 @@ void World::update(int ticks)
     if (!mHero->isAlive())
     {
         mHero->respawn(mSpawnPoint);
-        mCollideables.push_back(mHero);
+        //mCollideables.push_back(mHero);
     }
     if (mHero->getRenderPosition().y > SCREEN_HEIGHT)
     {

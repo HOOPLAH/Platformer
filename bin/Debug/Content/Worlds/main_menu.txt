@@ -21,9 +21,15 @@ platform: tilegrassblock 659 567
 platform: tilegrassblock 723 567
 platform: tilegrassblock 787 567
 
-waypoint: 310 547 -- 0
-waypoint: 530 547 -- 1
-waypoint: 777 547 -- 2
+waypoint: 310 545 -- 0
+waypoint: 240 545 -- 1
+waypoint: 385 545 -- 2
+waypoint: 460 545 -- 3
+waypoint: 530 545 -- 4
+waypoint: 777 545 -- 5
 
 waypoint_edge: 0 1
 waypoint_edge: 1 2
+waypoint_edge: 2 3
+waypoint_edge: 3 4
+waypoint_edge: 4 5

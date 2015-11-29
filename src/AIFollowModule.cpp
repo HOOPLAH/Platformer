@@ -20,7 +20,7 @@ AIFollowModule::~AIFollowModule()
 
 void AIFollowModule::update(WorldRef& worldRef)
 {
-    WayPoint playerWayPt = worldRef.getClosestWayPoint(mNPC.getTarget().lock()->getPhysicsPosition());
+    WayPoint wayPt = worldRef.getClosestWayPoint(mNPC.getTarget().lock()->getPhysicsPosition());
 
     if (mNPC.needToUpdatePath())
     {
@@ -30,7 +30,7 @@ void AIFollowModule::update(WorldRef& worldRef)
             curWayPtIndex = mWayPoints[mIndex]->mIndex;
         }
 
-        worldRef.getWayPointManager().getPath(mWayPoints, worldRef.getClosestWayPoint(mNPC.getFeetPosition()).mIndex, playerWayPt.mIndex);
+        worldRef.getWayPointManager().getPath(mWayPoints, worldRef.getClosestWayPoint(mNPC.getFeetPosition()).mIndex, wayPt.mIndex);
         mIndex = 0;
 
         if (curWayPtIndex != -1)
@@ -66,12 +66,14 @@ void AIFollowModule::update(WorldRef& worldRef)
 
                 mIndex++;
             }
+            else
+                mNPC.stop();
         }
     }
     else
     {
         if (mNPC.walk(mNPC.getTarget().lock()->getPhysicsPosition()) ||
-            std::abs(length(mNPC.getTarget().lock()->getPhysicsPosition() - mNPC.getRenderPosition())) > 250.f)
+            std::abs(length(mNPC.getTarget().lock()->getPhysicsPosition() - mNPC.getRenderPosition())) < mFollowDistance)
         {
             mIndex = 0;
             mWayPoints.clear();

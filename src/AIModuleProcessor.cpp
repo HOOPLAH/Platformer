@@ -8,7 +8,7 @@ AIModuleProcessor::AIModuleProcessor(NPC& npc, std::size_t chaserTag) :
     mFollowerTag(chaserTag),
     mNPC(npc)
 {
-    mCurrentAI = std::make_unique<AIAttackModule>(npc, chaserTag);
+    mCurrentAI = std::make_unique<AIFollowModule>(npc, chaserTag);
 }
 
 AIModuleProcessor::~AIModuleProcessor()
@@ -21,7 +21,12 @@ void AIModuleProcessor::update(WorldRef& worldRef)
     mCurrentAI->update(worldRef);
 
     if (length(mNPC.getPhysicsPosition() - mNPC.getTarget().lock()->getPhysicsPosition()) < mNPC.getWeapon().getRange())
+    {
+        mNPC.stop();
         mCurrentAI = std::make_unique<AIAttackModule>(mNPC, mFollowerTag);
-    else
+    }
+    else if (length(mNPC.getPhysicsPosition() - mNPC.getTarget().lock()->getPhysicsPosition()) > mNPC.getWeapon().getRange())
+    {
         mCurrentAI = std::make_unique<AIFollowModule>(mNPC, mFollowerTag);
+    }
 }
