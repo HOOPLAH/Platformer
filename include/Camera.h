@@ -14,6 +14,7 @@ class Camera
         void setCenter(sf::Vector2f center){mCenter=center;mView.setCenter(mCenter);}
         void zoom(float factor){mView.zoom(factor);}
 
+        sf::Vector2f getChange(){return mOldCenter-mCenter;} // returns the distance between teh two camera centers
         sf::Vector2f getCenter(){return mCenter;}
         sf::View& getView(){return mView;}
 

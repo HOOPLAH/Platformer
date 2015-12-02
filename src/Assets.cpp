@@ -26,6 +26,7 @@ void Assets::loadAssets()
     sprites["tallrock"] = SpriteInfo("Content/Textures/tall_rock.png");
     sprites["background"] = SpriteInfo("Content/Textures/background.png");
     sprites["cloud"] = SpriteInfo("Content/Textures/cloud.png");
+    sprites["mountain"] = SpriteInfo("Content/Textures/mountain_background.png");
     sprites["sign"] = SpriteInfo("Content/Textures/sign.png");
 
     sprites["grenade"] = SpriteInfo("Content/Textures/grenade.png");

@@ -1,12 +1,14 @@
 spawnpoint: 0 500
 
 npc_spawn_point: 400 500
-npc_spawn_count: 1
+npc_spawn_count: 0
 
 renderonly: cloud -64 64 parallax
 renderonly: cloud 320 10 parallax
 renderonly: cloud 128 128 parallax
 renderonly: cloud 512 96 parallax
+
+renderonly: commandcenter 630 454 false
 
 platform: tilegrassblock 0 567
 platform: tallrock 172 478
@@ -32,3 +34,4 @@ waypoint_edge: 0 1
 waypoint_edge: 1 2
 waypoint_edge: 2 3
 waypoint_edge: 3 4
+waypoint_edge: 4 5
