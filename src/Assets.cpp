@@ -5,27 +5,45 @@ std::map<std::string, FontInfo> Assets::fonts;
 
 void Assets::loadAssets()
 {
+    sprites["nothing"] = SpriteInfo("Content/Textures/nothing.png");
     sprites["ammocrate"] = SpriteInfo("Content/Textures/ammocrate.png");
     sprites["ammocrate2"] = SpriteInfo("Content/Textures/ammocrate2.png");
     sprites["play_button"] = SpriteInfo("Content/Textures/play_button.png");
     sprites["pistol"] = SpriteInfo("Content/Textures/pistol.png");
     sprites["bullet"] = SpriteInfo("Content/Textures/bullet.png");
+    sprites["turret"] = SpriteInfo("Content/Textures/turret.png");
     sprites["turrethead"] = SpriteInfo("Content/Textures/turrethead.png");
     sprites["turretbody"] = SpriteInfo("Content/Textures/turretbody.png");
-    sprites["turret"] = SpriteInfo("Content/Textures/turret.png");
     sprites["waypoint"] = SpriteInfo("Content/Textures/waypoint.png");
-
-    sprites["kingkam"] = SpriteInfo("Content/Textures/kingkam.png", 12, 6);
-
-    sprites["bluepeewee"] = SpriteInfo("Content/Textures/bluepeewee.png", 36, 6);
-        sprites["bluepeewee"].mHitBox = sf::FloatRect(20.f, 10.f, 24.f, 44.f);
-    sprites["pinkpeewee"] = SpriteInfo("Content/Textures/pinkpeewee.png", 36, 6);
-        sprites["pinkpeewee"].mHitBox = sf::FloatRect(20.f, 10.f, 24.f, 44.f);
-    sprites["bigplatform"] = SpriteInfo("Content/Textures/bigplatform.png");
-        sprites["bigplatform"].mHitBox = sf::FloatRect(10.f, 12.f, 225.f, 124.f);
-    sprites["smallplatform"] = SpriteInfo("Content/Textures/smallplatform.png");
-        sprites["smallplatform"].mHitBox = sf::FloatRect(5.f, 8.f, 35.f, 26.f);
     sprites["blueplatform"] = SpriteInfo("Content/Textures/blueplatform.png");
+    sprites["inventorybar"] = SpriteInfo("Content/Textures/inventorybar.png");
+    sprites["curinventory"] = SpriteInfo("Content/Textures/curinventory.png");
+    sprites["explosion"] = SpriteInfo("Content/Textures/explosion.png", 36, 6);
+    sprites["ship"] = SpriteInfo("Content/Textures/ship.png", 2, 1);
+    sprites["star"] = SpriteInfo("Content/Textures/star.png");
+    sprites["grassblock"] = SpriteInfo("Content/Textures/grass_block.png");
+    sprites["tilegrassblock"] = SpriteInfo("Content/Textures/grass_block_tileable.png");
+    sprites["tallrock"] = SpriteInfo("Content/Textures/tall_rock.png");
+    sprites["background"] = SpriteInfo("Content/Textures/background.png");
+    sprites["cloud"] = SpriteInfo("Content/Textures/cloud.png");
+    sprites["mountain"] = SpriteInfo("Content/Textures/mountain_background.png");
+    sprites["sign"] = SpriteInfo("Content/Textures/sign.png");
+    sprites["playbutton"] = SpriteInfo("Content/Textures/playbutton.png", 3, 3);
+
+    sprites["grenade"] = SpriteInfo("Content/Textures/grenade.png");
+    sprites["grenade"].mHitBox = sf::FloatRect(0.f, 5.f, 5.f, 5.f);
+    sprites["bluepeewee"] = SpriteInfo("Content/Textures/bluepeewee.png", 36, 6);
+    sprites["bluepeewee"].mHitBox = sf::FloatRect(20.f, 10.f, 24.f, 44.f);
+    sprites["pinkpeewee"] = SpriteInfo("Content/Textures/pinkpeewee.png", 36, 6);
+    sprites["pinkpeewee"].mHitBox = sf::FloatRect(20.f, 10.f, 24.f, 44.f);
+    sprites["bigplatform"] = SpriteInfo("Content/Textures/bigplatform.png");
+    sprites["bigplatform"].mHitBox = sf::FloatRect(10.f, 12.f, 225.f, 124.f);
+    sprites["smallplatform"] = SpriteInfo("Content/Textures/smallplatform.png");
+    sprites["smallplatform"].mHitBox = sf::FloatRect(5.f, 8.f, 35.f, 26.f);
+    sprites["bridge"] = SpriteInfo("Content/Textures/bridge.png");
+    sprites["bridge"].mHitBox = sf::FloatRect(6.f, 37.f, 140.f, 6.f);
+    sprites["commandcenter"] = SpriteInfo("Content/Textures/command_center.png");
+    sprites["commandcenter"].mHitBox = sf::FloatRect(56.f, 86.f, 40.f, 20.f);
 
     ///
 

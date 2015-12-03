@@ -1,101 +1,105 @@
 # depslib dependency file v1.0
-1442652775 source:/home/marybeth/Desktop/Programming/C++/Platformer/main.cpp
+1449097772 source:/home/marybeth/Desktop/Programming/C++/Platformer/main.cpp
 	<SFML/Graphics.hpp>
 	<cstdlib>
 	<ctime>
+	<iostream>
 	"Assets.h"
-	"WorldManager.h"
 	"Constants.h"
+	"MainMenuState.h"
+	"StateMachine.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/Assets.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/Assets.h
 	<map>
 	"SpriteInfo.h"
 	"FontInfo.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/SpriteInfo.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/SpriteInfo.h
 	<SFML/Graphics.hpp>
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/FontInfo.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/FontInfo.h
 	<SFML/Graphics/Font.hpp>
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/WorldManager.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/WorldManager.h
 	<vector>
 	<memory>
 	<SFML/Graphics.hpp>
 	<World.h>
 
-1442870618 /home/marybeth/Desktop/Programming/C++/Platformer/include/World.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/World.h
 	<vector>
 	<memory>
 	<SFML/Graphics.hpp>
 	"Player.h"
 	"NPC.h"
 	"Camera.h"
-	"Quest.h"
+	"CollisionResolver.h"
+	"Item.h"
+	"QuadTree.h"
 	"WayPointManager.h"
 	"WorldObject.h"
 	"WorldSwitcher.h"
 	"WorldRef.h"
 
-1442566964 /home/marybeth/Desktop/Programming/C++/Platformer/include/Player.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/Player.h
 	<SFML/Graphics.hpp>
 	"HealthBar.h"
 	"Weapon.h"
 	"WorldRef.h"
-	"Quest.h"
+	"Inventory.h"
+	"Vehicle.h"
 
-1443552352 /home/marybeth/Desktop/Programming/C++/Platformer/include/HealthBar.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/HealthBar.h
 	<SFML/Graphics.hpp>
 
-1443549493 /home/marybeth/Desktop/Programming/C++/Platformer/include/Weapon.h
-	"SpriteObject.h"
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/Weapon.h
+	"Item.h"
 	"Line.h"
 	"Projectile.h"
 	"ICollideable.h"
 	"WorldRef.h"
 
-1443549493 /home/marybeth/Desktop/Programming/C++/Platformer/include/SpriteObject.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/SpriteObject.h
 	<memory>
 	<SFML/Graphics.hpp>
 	"IRenderable.h"
 	"SpriteInfo.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/IRenderable.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/IRenderable.h
 	<SFML/Graphics/RenderTarget.hpp>
 	"IObject.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/IObject.h
-	<iostream>
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/IObject.h
+	<WorldRef.h>
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/Line.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/Line.h
 	<SFML/Graphics.hpp>
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/Projectile.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/Projectile.h
 	"SpriteObject.h"
 	"ICollideable.h"
 	"Constants.h"
 
-1443549493 /home/marybeth/Desktop/Programming/C++/Platformer/include/ICollideable.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/ICollideable.h
 	<memory>
-	<iostream>
 	<SFML/Graphics.hpp>
 	"IObject.h"
 
-1443549493 /home/marybeth/Desktop/Programming/C++/Platformer/include/Constants.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/Constants.h
 	<SFML/System/Time.hpp>
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/WorldRef.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/WorldRef.h
 	<memory>
 	<SFML/Graphics.hpp>
 	"WayPointManager.h"
 
-1443549493 /home/marybeth/Desktop/Programming/C++/Platformer/include/WayPointManager.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/WayPointManager.h
 	<vector>
 	<SFML/Graphics.hpp>
 	"micropather.h"
 	"WayPoint.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/micropather.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/micropather.h
 	<cstring>
 	<cstdint>
 	<vector>
@@ -104,113 +108,118 @@
 	<stdlib.h>
 	<stdlib.h>
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/WayPoint.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/WayPoint.h
 	"SFML/System/Vector2.hpp"
 	<iostream>
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/Quest.h
+1445770030 /home/marybeth/Desktop/Programming/C++/Platformer/include/Quest.h
 	<stack>
 	<memory>
 	"Actions.h"
 
-1442876854 /home/marybeth/Desktop/Programming/C++/Platformer/include/Actions.h
+1445770030 /home/marybeth/Desktop/Programming/C++/Platformer/include/Actions.h
 
-1443549493 /home/marybeth/Desktop/Programming/C++/Platformer/include/NPC.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/NPC.h
 	<memory>
+	"AIModuleProcessor.h"
 	"HealthBar.h"
 	"Weapon.h"
 	"WorldRef.h"
 	"Player.h"
 	"FuncUtils.h"
 
-1443549493 /home/marybeth/Desktop/Programming/C++/Platformer/include/FuncUtils.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/FuncUtils.h
 	<vector>
 	<string>
+	<memory>
 	<SFML/System/Vector2.hpp>
+	<SFML/Graphics/RenderTarget.hpp>
+	"SpriteInfo.h"
 
-1442653158 /home/marybeth/Desktop/Programming/C++/Platformer/include/Camera.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/Camera.h
 	<SFML/Graphics.hpp>
 
-1443552667 /home/marybeth/Desktop/Programming/C++/Platformer/include/WorldObject.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/WorldObject.h
 	<tuple>
 	"SpriteObject.h"
 	"ICollideable.h"
 	"EntityTags.h"
 	"HealthBar.h"
 
-1443549493 /home/marybeth/Desktop/Programming/C++/Platformer/include/EntityTags.h
+1449097341 /home/marybeth/Desktop/Programming/C++/Platformer/include/EntityTags.h
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/WorldSwitcher.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/WorldSwitcher.h
 	"SpriteObject.h"
 	"ICollideable.h"
 
-1443549493 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/AIFollowModule.cpp
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/AIFollowModule.cpp
 	"AIFollowModule.h"
+	"NPC.h"
 	"Direction.h"
 	"WorldObject.h"
 	"FuncUtils.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/AIFollowModule.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/AIFollowModule.h
 	"IAIModule.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/IAIModule.h
-	"NPC.h"
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/IAIModule.h
+	"WorldRef.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/Direction.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/Direction.h
 
-1443551896 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Assets.cpp
+1449099616 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Assets.cpp
 	"Assets.h"
 
-1442383370 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Button.cpp
+1449098741 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Button.cpp
 	"Button.h"
 	"EntityTags.h"
 
-1442383370 /home/marybeth/Desktop/Programming/C++/Platformer/include/Button.h
+1449098574 /home/marybeth/Desktop/Programming/C++/Platformer/include/Button.h
 	"SpriteObject.h"
-	"ICollideable.h"
 
-1442867852 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Camera.cpp
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Camera.cpp
 	"Camera.h"
 	<iostream>
 	"Constants.h"
 
-1443549493 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/CollectibleObject.cpp
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/CollectibleObject.cpp
 	"CollectibleObject.h"
 	"Player.h"
 
-1443549493 /home/marybeth/Desktop/Programming/C++/Platformer/include/CollectibleObject.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/CollectibleObject.h
 	"WorldObject.h"
 
-1443549493 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/DebugConsole.cpp
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/DebugConsole.cpp
 	"DebugConsole.h"
 	<iostream>
 
-1443549493 /home/marybeth/Desktop/Programming/C++/Platformer/include/DebugConsole.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/DebugConsole.h
 	<map>
 	<vector>
 	<functional>
 	"WorldRef.h"
 
-1443549493 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/FuncUtils.cpp
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/FuncUtils.cpp
 	"FuncUtils.h"
 	<cmath>
 	<sstream>
 	"Constants.h"
+	"SpriteObject.h"
 
-1442383370 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Line.cpp
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Line.cpp
 	"Line.h"
 	"Constants.h"
 	<iostream>
 
-1442383370 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/micropather.cpp
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/micropather.cpp
 	<vector>
 	<memory.h>
 	<stdio.h>
 	"micropather.h"
 
-1443549493 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/NPC.cpp
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/NPC.cpp
 	"NPC.h"
-	<iostream>
+	<memory>
 	<cstdlib>
 	"Assets.h"
 	"Constants.h"
@@ -220,41 +229,44 @@
 	"AIFollowModule.h"
 	"FuncUtils.h"
 
-1442878405 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Player.cpp
+1449097252 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Player.cpp
 	"Player.h"
 	<iostream>
 	"Assets.h"
 	"Constants.h"
+	"FuncUtils.h"
 	"Direction.h"
 	"EntityTags.h"
 	"Projectile.h"
+	"SpaceShip.h"
+	"GrenadeLauncher.h"
 
-1443549493 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Projectile.cpp
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Projectile.cpp
 	"Projectile.h"
 	"EntityTags.h"
 	<iostream>
 
-1442383370 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/SpriteObject.cpp
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/SpriteObject.cpp
 	"SpriteObject.h"
 	<iostream>
 
-1443553476 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Turret.cpp
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Turret.cpp
 	"Turret.h"
 	"Assets.h"
 	"EntityTags.h"
 
-1443553344 /home/marybeth/Desktop/Programming/C++/Platformer/include/Turret.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/Turret.h
 	"WorldObject.h"
-	"ICollideable.h"
+	"Vehicle.h"
 	"Weapon.h"
 	"WorldRef.h"
 
-1443549493 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WayPointManager.cpp
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WayPointManager.cpp
 	"WayPointManager.h"
 	"Line.h"
 	<iostream>
 
-1443549493 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Weapon.cpp
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Weapon.cpp
 	"Weapon.h"
 	<memory>
 	<iostream>
@@ -263,7 +275,7 @@
 	"FuncUtils.h"
 	"EntityTags.h"
 
-1443549493 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/World.cpp
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/World.cpp
 	"World.h"
 	<iostream>
 	<fstream>
@@ -272,12 +284,13 @@
 	"Constants.h"
 	"Direction.h"
 	"EntityTags.h"
+	"Grenade.h"
 	"NPC.h"
 	"WayPoint.h"
 	"CollectibleObject.h"
 	"Turret.h"
 
-1443550671 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
 	"WorldEditor.h"
 	<iostream>
 	<fstream>
@@ -285,42 +298,239 @@
 	"Assets.h"
 	"FuncUtils.h"
 
-1443549493 /home/marybeth/Desktop/Programming/C++/Platformer/include/WorldEditor.h
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/WorldEditor.h
 	<SFML/Graphics.hpp>
 	<vector>
 	"World.h"
 	"WorldObject.h"
 	"DebugConsole.h"
 
-1442383370 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldManager.cpp
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldManager.cpp
 	"WorldManager.h"
+	"imgui.h"
+	"imgui-SFML.h"
 	<fstream>
-	<array>
 
-1443552720 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldObject.cpp
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldObject.cpp
 	"WorldObject.h"
 	"EntityTags.h"
 	<Projectile.h>
 
-1443549493 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldRef.cpp
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldRef.cpp
 	"WorldRef.h"
 	"ICollideable.h"
-	"NPC.h"
-	"Projectile.h"
+	"IRenderable.h"
 	"WayPoint.h"
 	"WorldObject.h"
 	"World.h"
 
-1443549493 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldSwitcher.cpp
+1449097968 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/WorldSwitcher.cpp
 	"WorldSwitcher.h"
 	"EntityTags.h"
 	"Projectile.h"
 
-1442652768 source:/home/marybeth/Desktop/Programming/C++/Platformer/LEmain.cpp
+1445726540 source:/home/marybeth/Desktop/Programming/C++/Platformer/LEmain.cpp
 	<SFML/Graphics.hpp>
 	<cstdlib>
 	<ctime>
 	"Assets.h"
 	"WorldEditor.h"
 	"Constants.h"
+
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/Item.h
+	"SpriteObject.h"
+	"WorldRef.h"
+
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/Inventory.h
+	<vector>
+	<memory>
+	"Assets.h"
+	"Item.h"
+
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/SpaceShip.h
+	<vector>
+	"Vehicle.h"
+	"VehicleWeapon.h"
+	"WorldRef.h"
+
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/VehicleWeapon.h
+	"Weapon.h"
+
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/GrenadeLauncher.h
+	"Weapon.h"
+
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/Grenade.h
+	"Projectile.h"
+	"WorldRef.h"
+
+1445770030 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Controller.cpp
+	"Controller.h"
+
+1445770030 /home/marybeth/Desktop/Programming/C++/Platformer/include/Controller.h
+	<SFML/Window/Event.hpp>
+	"ICollideable.h"
+
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Grenade.cpp
+	"Grenade.h"
+	"Assets.h"
+	"EntityTags.h"
+	"Constants.h"
+	"NPC.h"
+
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/GrenadeLauncher.cpp
+	"GrenadeLauncher.h"
+	"Assets.h"
+	"Grenade.h"
+	"EntityTags.h"
+	"FuncUtils.h"
+
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Inventory.cpp
+	"Inventory.h"
+
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Item.cpp
+	"Item.h"
+
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/SpaceShip.cpp
+	"SpaceShip.h"
+	"Assets.h"
+	"EntityTags.h"
+
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/VehicleWeapon.cpp
+	"VehicleWeapon.h"
+
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/imgui.h
+	"imconfig.h"
+	<float.h>
+	<stdarg.h>
+	<stddef.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	"imgui_user.h"
+
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/imconfig.h
+
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/imgui-SFML.h
+	<vector>
+	<SFML/Window/Keyboard.hpp>
+	<SFML/Window/Event.hpp>
+	<SFML/Graphics/Texture.hpp>
+	<SFML/Graphics/Vertex.hpp>
+	<SFML/Graphics/RenderWindow.hpp>
+	<SFML/OpenGL.hpp>
+	"imconfig.h"
+
+1449099048 /home/marybeth/Desktop/Programming/C++/Platformer/include/MainMenuState.h
+	"IState.h"
+	"Button.h"
+
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/IState.h
+	<memory>
+	<SFML/Graphics/RenderTarget.hpp>
+	<SFML/Window/Event.hpp>
+
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/StateMachine.h
+	<memory>
+	<stack>
+	<string>
+	<SFML/Graphics/RenderTarget.hpp>
+	<SFML/Window/Event.hpp>
+
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/AIModuleProcessor.h
+	<memory>
+	"IAIModule.h"
+
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/Vehicle.h
+	"SpriteObject.h"
+	"ICollideable.h"
+
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/CollisionResolver.h
+	<vector>
+	<memory>
+	"ICollideable.h"
+	"QuadTree.h"
+
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/QuadTree.h
+	<vector>
+	<memory>
+	<SFML/Graphics/Rect.hpp>
+	"ICollideable.h"
+
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/AIAttackModule.cpp
+	"AIAttackModule.h"
+	"NPC.h"
+
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/AIAttackModule.h
+	"IAIModule.h"
+
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/AIModuleProcessor.cpp
+	"AIModuleProcessor.h"
+	"NPC.h"
+	"AIAttackModule.h"
+	"AIFollowModule.h"
+
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/CollisionResolver.cpp
+	"CollisionResolver.h"
+	<iostream>
+
+1449097991 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/GameState.cpp
+	"GameState.h"
+	"imgui.h"
+
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/GameState.h
+	"IState.h"
+	"WorldManager.h"
+
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/imgui.cpp
+	"imgui.h"
+	<ctype.h>
+	<math.h>
+	<stdint.h>
+	<stdio.h>
+	<new>
+	"stb_rect_pack.h"
+	"stb_truetype.h"
+	"stb_textedit.h"
+	"stb_textedit.h"
+	<windows.h>
+	<windows.h>
+	<Imm.h>
+	"imgui_user.inl"
+
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/stb_rect_pack.h
+	<stdlib.h>
+	<assert.h>
+
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/stb_truetype.h
+	"stb_truetype.h"
+	<stdio.h>
+	"stb_truetype.h"
+	<stdlib.h>
+	<math.h>
+	<math.h>
+	<stdlib.h>
+	<assert.h>
+	<string.h>
+	<memory.h>
+
+1449096223 /home/marybeth/Desktop/Programming/C++/Platformer/include/stb_textedit.h
+	<string.h>
+
+1449099092 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/MainMenuState.cpp
+	"MainMenuState.h"
+	"imgui.h"
+	"GameState.h"
+	"StateMachine.h"
+
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/QuadTree.cpp
+	"QuadTree.h"
+	<algorithm>
+
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/StateMachine.cpp
+	"StateMachine.h"
+	"IState.h"
+
+1449096223 source:/home/marybeth/Desktop/Programming/C++/Platformer/src/Vehicle.cpp
+	"Vehicle.h"
+	"EntityTags.h"
 

@@ -17,7 +17,7 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Platformer");
 
-    WorldEditor worldEditor("Content/Worlds/test2.txt");
+    WorldEditor worldEditor("Content/Worlds/main_menu.txt");
 
     sf::Clock clock;
 	sf::Time accumulator = sf::Time::Zero;

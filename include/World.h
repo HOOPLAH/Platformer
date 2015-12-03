@@ -9,7 +9,9 @@
 #include "Player.h"
 #include "NPC.h"
 #include "Camera.h"
-#include "Quest.h"
+#include "CollisionResolver.h"
+#include "Item.h"
+#include "QuadTree.h"
 #include "WayPointManager.h"
 #include "WorldObject.h"
 #include "WorldSwitcher.h"
@@ -31,44 +33,44 @@ class World
         void resetWorld(std::string path);
 
         // Accessor
+        int getTicks(){return mTicks;}
         sf::Vector2f getGravity(){return mGravity;}
         std::weak_ptr<Player> getHero(){return mHero;}
-        std::vector<std::shared_ptr<NPC>>& getNPCs(){return mNPCs;}
-        std::vector<std::shared_ptr<Projectile>>& getProjectiles(){return mAliveProjectiles;}
         std::vector<std::shared_ptr<WorldSwitcher>>& getButtons(){return mButtons;}
-        std::vector<std::shared_ptr<WorldObject>>& getWorldObjects(){return mWorldObjects;}
-        std::vector<std::weak_ptr<ICollideable>>& getCollideables(){return mCollideables;}
+        std::vector<std::shared_ptr<ICollideable>>& getCollideables(){return mCollideables;}
+        std::vector<std::shared_ptr<SpriteObject>>& getRenderables(){return mRenderables;}
         WayPointManager& getWayPointManager(){return mWayPointManager;}
+        CollisionResolver& getCollisionResolver(){return mCollisionResolver;}
         WorldRef& getWorldRef(){return mWorldRef;}
 
     private:
-        bool checkCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
-        void resolveCollision(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b);
-
+        bool onScreen(std::weak_ptr<ICollideable> obj);
+        std::vector<std::weak_ptr<ICollideable>> getObjectsWithTag(int tag);
         template <class T>
-        void removeDeadObj(std::vector<T>& v);
-        template <class T>
-        void removeWeakDeadObj(std::vector<T>& v);
+        void removeDeadObjects(std::vector<T>& v);
 
+        std::string mPathDirectory;
         WorldRef mWorldRef;
+        int mTicks;
 
         sf::Vector2f mGravity;
-
         sf::Vector2f mSpawnPoint;
         std::vector<sf::Vector2f> mNPCSpawnPoints;
         std::size_t mNextNPCSpawnPoint;
         std::size_t mNPCSpawnCount; // how many npcs should be out and about at one time
 
         WayPointManager mWayPointManager;
+        CollisionResolver mCollisionResolver;
 
         Camera mCamera;
+        sf::FloatRect mWindowCoords;
+        QuadTree mQuadTree;
+        sf::Sprite mBackground;
 
         std::shared_ptr<Player> mHero; // outlet hero!!
-        std::vector<std::shared_ptr<NPC>> mNPCs;
-        std::vector<std::shared_ptr<Projectile>> mAliveProjectiles;
         std::vector<std::shared_ptr<WorldSwitcher>> mButtons;
-        std::vector<std::shared_ptr<WorldObject>> mWorldObjects;
-        std::vector<std::weak_ptr<ICollideable>> mCollideables;
+        std::vector<std::shared_ptr<ICollideable>> mCollideables;
+        std::vector<std::shared_ptr<SpriteObject>> mRenderables;
 };
 
 #endif // WORLD_H

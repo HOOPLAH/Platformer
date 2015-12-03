@@ -1,6 +1,6 @@
 #include "NPC.h"
 
-#include <iostream>
+#include <memory>
 #include <cstdlib>
 
 #include "Assets.h"
@@ -16,8 +16,9 @@ NPC::NPC(SpriteInfo& info, sf::Vector2f pos, WorldRef& worldRef) :
     SpriteObject(info, pos),
     ICollideable(info.mHitBox, info.mFrameDim, EntityTags::NPC),
     mHealth(25.f, sf::Vector2f(30.f, 2.f)),
-    mWeapon(Assets::sprites["pistol"]),
-    mTarget(*worldRef.getHero().lock())
+    mWeapon(Assets::sprites["pistol"], EntityTags::NPC),
+    mTarget(worldRef.getHero()),
+    mAIModuleProcessor(*this, EntityTags::PLAYER)
 {
     mSpawnPoint = pos;
     mRunSpeed = 2.f;
@@ -27,9 +28,9 @@ NPC::NPC(SpriteInfo& info, sf::Vector2f pos, WorldRef& worldRef) :
     mJumping = true;
     mPhysicsPosition = pos;
 
-    mAI = std::make_unique<AIFollowModule>(*this);
-
     mWeapon.setCoolDown(500);
+    mWeapon.setDamage(10);
+    mWeapon.setRange(150.f);
     mWeaponAngle = 0.f;
     mKillerTag = -1;
 
@@ -44,6 +45,9 @@ NPC::~NPC()
 void NPC::update(WorldRef& worldRef)
 {
     SpriteObject::update();
+
+    if (worldRef.getTicks()%60 == 0) // update AI's paths every second
+        mNeedToUpdatePath = true;
 
     // animations
     if (!mGrounded) // above ground
@@ -74,22 +78,20 @@ void NPC::update(WorldRef& worldRef)
     mHealth.setPosition(mRenderPosition + sf::Vector2f(getCenter().x, 0.f));
     if (mHealth.mHP <= 0.f)
     {
-        int drop = (rand()%3);
-        if (drop == 0)
-            worldRef.getHero().lock()->getWeapon().addAmmo((rand()%3)+1);
         kill();
     }
 
-    mAI->update(worldRef);
+    mAIModuleProcessor.update(worldRef);
 
     mOldPhysicsPosition = mPhysicsPosition;
     mPhysicsPosition += mVelocity;
 
     mWeapon.update();
-    mWeapon.setPosition(mRenderPosition + getCenter());
+    mWeapon.setFiringAngle(mWeaponAngle);
+    mWeapon.setRenderPosition(mRenderPosition + getCenter());
     //mTarget = worldRef.getHero();
-    mWeaponAngle = atan2(mTarget.getRenderPosition().y - mRenderPosition.y,
-                         mTarget.getRenderPosition().x - mRenderPosition.x);
+    mWeaponAngle = atan2(mTarget.lock()->getPhysicsPosition().y - mRenderPosition.y,
+                         mTarget.lock()->getPhysicsPosition().x - mRenderPosition.x);
 }
 
 void NPC::draw(sf::RenderTarget& target, float alpha)
@@ -99,54 +101,8 @@ void NPC::draw(sf::RenderTarget& target, float alpha)
     mOldRenderPosition = mRenderPosition;
     mRenderPosition = mPhysicsPosition*alpha + mOldPhysicsPosition*(1.f - alpha);
 
-    /*sf::FloatRect rect;
-    sf::Vector2f pos;
-
-    if (mRenderPosition.y - mTarget.getRenderPosition().y > -1.f)
-    {
-        // target is left and above
-        if (mTarget.getRenderPosition().x < mRenderPosition.x)
-        {
-            rect = sf::FloatRect(sf::Vector2f(0.f, 0.f), (mRenderPosition+sf::Vector2f(mHitBox.width*1.6, mHitBox.height*1.1)) -
-                                (mTarget.getRenderPosition()+sf::Vector2f(mTarget.getHitBox().left, mTarget.getHitBox().top)));
-            pos = mTarget.getRenderPosition()+sf::Vector2f(mTarget.getHitBox().left, mTarget.getHitBox().top);
-        }
-        // right and above
-        if (mTarget.getRenderPosition().x > mRenderPosition.x)
-        {
-            rect = sf::FloatRect(sf::Vector2f(0.f, 0.f),
-                                (mTarget.getRenderPosition()+sf::Vector2f(mTarget.getHitBox().width*1.6, mTarget.getHitBox().top*1.1)) -
-                                (mRenderPosition+sf::Vector2f(mHitBox.left, mHitBox.height)));
-            pos = mRenderPosition+sf::Vector2f(mHitBox.left, mHitBox.height);
-        }
-    }
-    else
-    {
-        // target is left and below
-        if (mTarget.getRenderPosition().x < mRenderPosition.x)
-        {
-            rect = sf::FloatRect(sf::Vector2f(0.f, 0.f), (mRenderPosition+sf::Vector2f(mHitBox.width*1.6, mHitBox.top*1.1)) -
-                                (mTarget.getRenderPosition()+sf::Vector2f(mTarget.getHitBox().left, mTarget.getHitBox().height)));
-            pos = mTarget.getRenderPosition()+sf::Vector2f(mTarget.getHitBox().left, mTarget.getHitBox().height);
-        }
-        // right and below
-        if (mTarget.getRenderPosition().x > mRenderPosition.x)
-        {
-            rect = sf::FloatRect(sf::Vector2f(0.f, 0.f),
-                                (mTarget.getRenderPosition()+sf::Vector2f(mTarget.getHitBox().width*1.6, mTarget.getHitBox().height*1.1)) -
-                                (mRenderPosition+sf::Vector2f(mHitBox.left, mHitBox.top)));
-            pos = mRenderPosition+sf::Vector2f(mHitBox.left, mHitBox.top);
-        }
-    }
-
-    sf::RectangleShape box(sf::Vector2f(rect.width, rect.height));
-    box.setOutlineThickness(1.f);
-    box.setOutlineColor(sf::Color::Yellow);
-    box.setFillColor(sf::Color::Transparent);
-    box.setPosition(pos);*/
-
     mHealth.draw(target);
-    mWeapon.draw(target, alpha);
+    //mWeapon.draw(target, alpha);
 }
 
 bool NPC::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop)
@@ -239,6 +195,7 @@ void NPC::respawn()
 {
     mHealth.mHP = mHealth.mMaxHP;
     mPhysicsPosition = mSpawnPoint;
+    mRenderPosition = mSpawnPoint;
     mVelocity = sf::Vector2f(0.f, 0.f);
     mAlive = true;
 }

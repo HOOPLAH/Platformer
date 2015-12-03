@@ -17,13 +17,15 @@ WorldEditor::WorldEditor(std::string path) :
     mCameraZoom = 1.f;
 
     mPlayingHero = false;
-    mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], sf::Vector2f(0.f, 0.f));
+    mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], sf::Vector2f(0.f, 0.f), mWorld.getWorldRef());
     mCollideables.push_back(mHero);
 
-    mIDs.push_back("ammocrate");
-    mIDs.push_back("blueplatform");
-    mIDs.push_back("turret");
     mIDs.push_back("waypoint");
+    mIDs.push_back("tilegrassblock");
+    mIDs.push_back("grassblock");
+    mIDs.push_back("tallrock");
+    mIDs.push_back("commandcenter");
+    mIDs.push_back("bridge");
     mCurrentID = 0;
 
     mDebugConsoleActive = false;
@@ -40,7 +42,7 @@ void WorldEditor::update(int ticks)
 {
     if (mPlayingHero)
     {
-        mHero->update();
+        mHero->update(mWorld.getWorldRef());
         mCamera.follow(mHero->getRenderPosition());
         mCameraPosition = mHero->getRenderPosition();
 

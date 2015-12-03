@@ -1,13 +1,15 @@
 #ifndef IOBJECT_H
 #define IOBJECT_H
 
-#include <iostream>
+#include <WorldRef.h>
 
 class IObject
 {
     public:
         IObject(){mAlive=true;}
         virtual ~IObject(){}
+
+        virtual void update(WorldRef& worldRef){}
 
         virtual void respawn(){mAlive=true;}
         virtual void kill(){mAlive=false;}

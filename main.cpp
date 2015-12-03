@@ -4,10 +4,12 @@
 
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
 
 #include "Assets.h"
-#include "WorldManager.h"
 #include "Constants.h"
+#include "MainMenuState.h"
+#include "StateMachine.h"
 
 int main()
 {
@@ -17,7 +19,8 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Platformer");
 
-    WorldManager worldMgr;
+	StateMachine statesMachine;
+	statesMachine.run(StateMachine::build<MainMenuState>(statesMachine, true));
 
     sf::Clock clock;
 	sf::Time accumulator = sf::Time::Zero;
@@ -35,10 +38,11 @@ int main()
                 if (event.type == sf::Event::Closed)
                     window.close();
 
-                worldMgr.handleEvents(event);
+                statesMachine.handleEvents(event);
             }
 
-            worldMgr.update(ticks);
+            statesMachine.nextState();
+            statesMachine.update(ticks);
             accumulator -= UPDATE_STEP;
 
             ticks++;
@@ -47,7 +51,9 @@ int main()
 		float alpha = accumulator.asSeconds()/UPDATE_STEP.asSeconds();
 
         window.clear();
-        worldMgr.draw(window, alpha);
+
+		statesMachine.draw(window, alpha);
+
         window.display();
     }
 

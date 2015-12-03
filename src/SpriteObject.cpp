@@ -2,12 +2,15 @@
 
 #include <iostream>
 
-SpriteObject::SpriteObject(SpriteInfo& info, sf::Vector2f pos) : IRenderable(),
+SpriteObject::SpriteObject(SpriteInfo& info, sf::Vector2f pos, bool parallax) : IRenderable(),
     mSpriteInfo(info),
-    mCurrentFrame(0), mFrameDelay(100.f), mLoopAnim(true), mStartFrame(0), mEndFrame(0), mFrameDir(1)
+    mCurrentFrame(0), mFrameDelay(100.f), mLoopAnim(true), mStartFrame(0), mEndFrame(0), mFrameDir(1),
+    mRenderPosition(pos),
+    mParallaxable(parallax)
 {
     mSprite = sf::Sprite(info.mTexture);
-    mRenderPosition = pos;
+    mSprite.setPosition(pos);
+    mRotation = 0.f;
     mAlive = true;
 }
 
@@ -19,6 +22,7 @@ SpriteObject::~SpriteObject()
 void SpriteObject::update()
 {
     mSprite.setPosition(mRenderPosition);
+    mSprite.setRotation(mRotation);
 }
 
 void SpriteObject::draw(sf::RenderTarget& target, float alpha)

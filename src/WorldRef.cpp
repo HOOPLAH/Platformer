@@ -1,8 +1,7 @@
 #include "WorldRef.h"
 
 #include "ICollideable.h"
-#include "NPC.h"
-#include "Projectile.h"
+#include "IRenderable.h"
 #include "WayPoint.h"
 #include "WorldObject.h"
 #include "World.h"
@@ -18,22 +17,19 @@ WorldRef::~WorldRef()
     //dtor
 }
 
-void WorldRef::addNPC(std::weak_ptr<NPC> npc)
+void WorldRef::addRenderable(std::shared_ptr<SpriteObject> obj)
 {
-    mWorld.getNPCs().push_back(npc.lock());
-    mWorld.getCollideables().push_back(npc);
+    mWorld.getRenderables().push_back(std::move(obj));
 }
 
-void WorldRef::addProjectile(std::weak_ptr<Projectile> proj)
+void WorldRef::addCollideable(std::shared_ptr<ICollideable> obj)
 {
-    mWorld.getProjectiles().push_back(proj.lock());
-    mWorld.getCollideables().push_back(proj);
+    mWorld.getCollideables().push_back(std::move(obj));
 }
 
-void WorldRef::addWorldObject(std::weak_ptr<WorldObject> worldObj)
+int WorldRef::getTicks()
 {
-    mWorld.getWorldObjects().push_back(worldObj.lock());
-    mWorld.getCollideables().push_back(worldObj);
+    return mWorld.getTicks();
 }
 
 std::weak_ptr<Player> WorldRef::getHero()
@@ -41,14 +37,14 @@ std::weak_ptr<Player> WorldRef::getHero()
     return mWorld.getHero();
 }
 
-std::weak_ptr<WorldObject> WorldRef::getClosestPlatform(sf::Vector2f pos)
+std::weak_ptr<ICollideable> WorldRef::getClosestObject(int tag, sf::Vector2f pos)
 {
     float shortestDist = FLT_MAX;
-    std::weak_ptr<WorldObject> closestObj = mWorld.getWorldObjects()[0];
+    std::weak_ptr<ICollideable> closestObj = mWorld.getCollideables()[0];
 
-    for (auto& obj : mWorld.getWorldObjects())
+    for (auto& obj : mWorld.getCollideables())
     {
-        if (obj->getTag() == EntityTags::PLATFORM)
+        if (obj->getTag() == tag)
         {
             sf::Vector2f objPos = obj->getPhysicsPosition();
             float dist = std::abs(sqrt(pow(objPos.x - pos.x , 2) + pow(objPos.y - pos.y, 2)));
@@ -111,16 +107,16 @@ WayPointManager& WorldRef::getWayPointManager()
     return mWorld.getWayPointManager();
 }
 
-std::vector<std::weak_ptr<ICollideable>> WorldRef::getObjectsWithinArea(sf::FloatRect rect)
+std::vector<std::weak_ptr<ICollideable>> WorldRef::getObjectsWithinArea(int tag, sf::FloatRect rect)
 {
     std::vector<std::weak_ptr<ICollideable>> nearbyPlatforms;
 
     for (auto& obj : mWorld.getCollideables())
     {
-        //if (obj.lock()->getTag() == EntityTags::PLATFORM)
+        if (obj->getTag() == tag)
         {
-            auto pos = obj.lock()->getPhysicsPosition();
-            auto hitbox = obj.lock()->getHitBox();
+            auto pos = obj->getPhysicsPosition();
+            auto hitbox = obj->getHitBox();
 
             if (rect.intersects(sf::FloatRect(pos+sf::Vector2f(hitbox.left, hitbox.top), sf::Vector2f(hitbox.width, hitbox.height))))
             {

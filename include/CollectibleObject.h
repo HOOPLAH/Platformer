@@ -3,10 +3,18 @@
 
 #include "WorldObject.h"
 
+namespace CollectibleType
+{
+    enum
+    {
+        AMMOCRATE
+    };
+}
+
 class CollectibleObject : public WorldObject
 {
     public:
-        CollectibleObject(SpriteInfo& info, sf::Vector2f pos);
+        CollectibleObject(SpriteInfo& info, sf::Vector2f pos, int type);
         ~CollectibleObject();
 
         bool onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop);
@@ -16,6 +24,7 @@ class CollectibleObject : public WorldObject
 
     private:
         bool mCollected;
+        int mType;
 };
 
 #endif // TESTOBJECT_H

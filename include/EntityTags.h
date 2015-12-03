@@ -10,9 +10,10 @@ namespace EntityTags
         PLATFORM,
         PROJECTILE,
         WEAPON,
-        BUTTON,
         COLLECTIBLE,
-        TURRET
+        TURRET,
+        GRENADE,
+        VEHICLE
     };
 }
 

@@ -1,14 +1,14 @@
 #include "AIFollowModule.h"
 
+#include "NPC.h"
 #include "Direction.h"
 #include "WorldObject.h"
-
 #include "FuncUtils.h"
 
-AIFollowModule::AIFollowModule(NPC& npc, bool friendly) : IAIModule(npc, friendly)
+AIFollowModule::AIFollowModule(NPC& npc, std::size_t followerTag) : IAIModule(npc)
 {
-    mFriendly = false;
     mFollowDistance = 15.f;
+    mFollowerTag = followerTag;
 
     mIndex = 0;
 }
@@ -20,7 +20,7 @@ AIFollowModule::~AIFollowModule()
 
 void AIFollowModule::update(WorldRef& worldRef)
 {
-    WayPoint playerWayPt = worldRef.getClosestWayPoint(mNPC.getTarget().getRenderPosition());
+    WayPoint wayPt = worldRef.getClosestWayPoint(mNPC.getTarget().lock()->getPhysicsPosition());
 
     if (mNPC.needToUpdatePath())
     {
@@ -30,7 +30,7 @@ void AIFollowModule::update(WorldRef& worldRef)
             curWayPtIndex = mWayPoints[mIndex]->mIndex;
         }
 
-        worldRef.getWayPointManager().getPath(mWayPoints, worldRef.getClosestWayPoint(mNPC.getFeetPosition()).mIndex, playerWayPt.mIndex);
+        worldRef.getWayPointManager().getPath(mWayPoints, worldRef.getClosestWayPoint(mNPC.getFeetPosition()).mIndex, wayPt.mIndex);
         mIndex = 0;
 
         if (curWayPtIndex != -1)
@@ -66,60 +66,18 @@ void AIFollowModule::update(WorldRef& worldRef)
 
                 mIndex++;
             }
+            else
+                mNPC.stop();
         }
     }
     else
     {
-        if (mNPC.walk(mNPC.getTarget().getRenderPosition()))
+        if (mNPC.walk(mNPC.getTarget().lock()->getPhysicsPosition()) ||
+            std::abs(length(mNPC.getTarget().lock()->getPhysicsPosition() - mNPC.getRenderPosition())) < mFollowDistance)
         {
             mIndex = 0;
             mWayPoints.clear();
             mNPC.stop();
         }
     }
-
-    if (!mFriendly && length(mNPC.getRenderPosition() - mNPC.getTarget().getRenderPosition()) < mFollowDistance)
-        mNPC.getWeapon().fire(mNPC.getWeaponAngle(), worldRef, EntityTags::NPC);
 }
-
-/*sf::FloatRect AIFollowModule::getRectBetweenTarget()
-{
-    sf::FloatRect rect;
-
-    if (npcPos.y - mNPC.getTarget().getRenderPosition().y > -1.f)
-    {
-        // target is left and above
-        if (mNPC.getTarget().getRenderPosition().x < mNPC.getRenderPosition().x)
-        {
-            rect = sf::FloatRect(mNPC.getTarget().getRenderPosition()+sf::Vector2f(mNPC.getTarget().getHitBox().left, mNPC.getTarget().getHitBox().top),
-                                (mNPC.getRenderPosition()+sf::Vector2f(mNPC.getHitBox().width*1.6, mNPC.getHitBox().height*1.1)) -
-                                (mNPC.getTarget().getRenderPosition()+sf::Vector2f(mNPC.getTarget().getHitBox().left, mNPC.getTarget().getHitBox().top)));
-        }
-        // right and above
-        if (mNPC.getTarget().getRenderPosition().x > mNPC.getRenderPosition().x)
-        {
-            rect = sf::FloatRect(mNPC.getRenderPosition()+sf::Vector2f(mNPC.getHitBox().left, mNPC.getHitBox().height),
-                                (mNPC.getTarget().getRenderPosition()+sf::Vector2f(mNPC.getTarget().getHitBox().width*1.6, mNPC.getTarget().getHitBox().top*1.1)) -
-                                (mNPC.getRenderPosition()+sf::Vector2f(mNPC.getHitBox().left, mNPC.getHitBox().height)));
-        }
-    }
-    else
-    {
-        // target is left and below
-        if (mNPC.getTarget().getRenderPosition().x < mNPC.getRenderPosition().x)
-        {
-            rect = sf::FloatRect(mNPC.getTarget().getRenderPosition()+sf::Vector2f(mNPC.getTarget().getHitBox().left, mNPC.getTarget().getHitBox().height),
-                                (mNPC.getRenderPosition()+sf::Vector2f(mNPC.getHitBox().width*1.6, mNPC.getHitBox().top*1.1)) -
-                                (mNPC.getTarget().getRenderPosition()+sf::Vector2f(mNPC.getTarget().getHitBox().left, mNPC.getTarget().getHitBox().height)));
-        }
-        // right and below
-        if (mNPC.getTarget().getRenderPosition().x > mNPC.getRenderPosition().x)
-        {
-            rect = sf::FloatRect(mNPC.getRenderPosition()+sf::Vector2f(mNPC.getHitBox().left, mNPC.getHitBox().top),
-                                (mNPC.getTarget().getRenderPosition()+sf::Vector2f(mNPC.getTarget().getHitBox().width*1.6, mNPC.getTarget().getHitBox().height*1.1)) -
-                                (mNPC.getRenderPosition()+sf::Vector2f(mNPC.getHitBox().left, mNPC.getHitBox().top)));
-        }
-    }
-
-    return rect;
-}*/

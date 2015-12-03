@@ -16,8 +16,7 @@ Projectile::Projectile(SpriteInfo& info, sf::Vector2f pos, int damage, float ran
     mAlive = true;
     mOwnerTag = ownerTag;
     mPhysicsPosition = pos;
-    mRenderPosition = pos;
-    mSprite.setPosition(pos);
+    mTag = EntityTags::PROJECTILE;
 }
 
 Projectile::~Projectile()
@@ -25,14 +24,15 @@ Projectile::~Projectile()
     //dtor
 }
 
-void Projectile::update()
+void Projectile::update(WorldRef& worldRef)
 {
     SpriteObject::update();
 
-    sf::Vector2f vel = sf::Vector2f(cos(mFiringAngle), sin(mFiringAngle))*(mSpeed*UPDATE_STEP.asSeconds());
-    mDistanceLeft -= std::abs(sqrt(pow(vel.x, 2) + pow(vel.y, 2)));
+    mRotation = mFiringAngle*RADTODEG;
+    mVelocity = sf::Vector2f(cos(mFiringAngle), sin(mFiringAngle))*(mSpeed*UPDATE_STEP.asSeconds());
+    mDistanceLeft -= std::abs(sqrt(pow(mVelocity.x, 2) + pow(mVelocity.y, 2)));
     mOldPhysicsPosition = mPhysicsPosition;
-    mPhysicsPosition += vel;
+    mPhysicsPosition += mVelocity;
 
     if (mDistanceLeft <= 0.f)
     {

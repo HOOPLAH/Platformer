@@ -6,15 +6,16 @@
 #include "HealthBar.h"
 #include "Weapon.h"
 #include "WorldRef.h"
-#include "Quest.h"
+#include "Inventory.h"
+#include "Vehicle.h"
 
 class Player : public SpriteObject, public ICollideable
 {
     public:
-        Player(SpriteInfo& info, sf::Vector2f pos);
+        Player(SpriteInfo& info, sf::Vector2f pos, WorldRef& worldRef);
         ~Player();
 
-        void update();
+        void update(WorldRef& worldRef);
         void draw(sf::RenderTarget& target, float alpha);
         void drawStationary(sf::RenderTarget& target);
         void handleEvents(sf::Event& event, WorldRef& worldRef);
@@ -24,14 +25,15 @@ class Player : public SpriteObject, public ICollideable
 
         void respawn(sf::Vector2f pos);
         void kill(){mAlive=false; mHealth.mHP = -1;}
-        void setPosition(sf::Vector2f pos){mPhysicsPosition=pos;}
+        void setVehicle(std::weak_ptr<Vehicle> vehicle){mVehicle=vehicle;}
 
         int getDirection(){return mDirection;}
         bool isGrounded(){return mGrounded;}
-        Weapon& getWeapon(){return mWeapon;}
         sf::Vector2f getWeaponTarget(){return mWeaponTarget;}
         float getWeaponAngle(){return mWeaponAngle;}
-        Quest& getQuest(){return mQuest;}
+        Inventory& getInventory(){return mInventory;}
+        std::weak_ptr<Vehicle> getVehicle(){return mVehicle;}
+        bool inVehicle(){return mInVehicle;}
 
     private:
         float mRunSpeed;
@@ -39,16 +41,19 @@ class Player : public SpriteObject, public ICollideable
         int mDirection; // direction player is facing -- for animations
         bool mGrounded; // touching the ground
         bool mJumping;
-        float mFallDamageRate; // mVelocity.y/mFallDamageRate
+        float mFallDamageRate; // mVelocity.y/mFallDamageRate = how much dmg player takes after fall
 
         HealthBar mHealth;
 
-        Weapon mWeapon;
         sf::Vector2f mMousePosition;
         sf::Vector2f mWeaponTarget;
         float mWeaponAngle;
 
-        Quest mQuest;
+        Inventory mInventory;
+        InventoryHUD mInventoryHUD;
+
+        std::weak_ptr<Vehicle> mVehicle; // he owns the spaceship
+        bool mInVehicle;
 };
 
 #endif // PLAYER_H

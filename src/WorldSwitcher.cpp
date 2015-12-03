@@ -5,7 +5,7 @@
 
 WorldSwitcher::WorldSwitcher(SpriteInfo& info, sf::Vector2f pos, int nextWorld) :
     SpriteObject(info, pos),
-    ICollideable(info.mHitBox, info.mFrameDim, EntityTags::BUTTON),
+    ICollideable(info.mHitBox, info.mFrameDim, EntityTags::PLATFORM),
     mPressed(false),
     mNextWorld(nextWorld)
 {
@@ -26,8 +26,7 @@ void WorldSwitcher::update()
 
 bool WorldSwitcher::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop)
 {
-    if (object.lock()->getTag() == EntityTags::PLAYER || (object.lock()->getTag() == EntityTags::PROJECTILE &&
-        static_cast<Projectile*>(&*object.lock())->getOwnerTag() == EntityTags::PLAYER))
+    if (object.lock()->getTag() == EntityTags::PLAYER)
         mPressed = true;
 
     return false;
