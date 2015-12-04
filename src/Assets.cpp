@@ -8,7 +8,6 @@ void Assets::loadAssets()
     sprites["nothing"] = SpriteInfo("Content/Textures/nothing.png");
     sprites["ammocrate"] = SpriteInfo("Content/Textures/ammocrate.png");
     sprites["ammocrate2"] = SpriteInfo("Content/Textures/ammocrate2.png");
-    sprites["play_button"] = SpriteInfo("Content/Textures/play_button.png");
     sprites["pistol"] = SpriteInfo("Content/Textures/pistol.png");
     sprites["bullet"] = SpriteInfo("Content/Textures/bullet.png");
     sprites["turret"] = SpriteInfo("Content/Textures/turret.png");
@@ -28,7 +27,7 @@ void Assets::loadAssets()
     sprites["cloud"] = SpriteInfo("Content/Textures/cloud.png");
     sprites["mountain"] = SpriteInfo("Content/Textures/mountain_background.png");
     sprites["sign"] = SpriteInfo("Content/Textures/sign.png");
-    sprites["playbutton"] = SpriteInfo("Content/Textures/playbutton.png", 3, 3);
+    sprites["playbutton"] = SpriteInfo("Content/Textures/playbutton.png", 3, 1);
 
     sprites["grenade"] = SpriteInfo("Content/Textures/grenade.png");
     sprites["grenade"].mHitBox = sf::FloatRect(0.f, 5.f, 5.f, 5.f);

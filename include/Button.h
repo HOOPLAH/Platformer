@@ -19,7 +19,9 @@ class Button : public SpriteObject
         Button(SpriteInfo& info, sf::Vector2f pos);
         ~Button();
 
+        void update();
         void draw(sf::RenderTarget& target, float alpha);
+        void handleEvents(sf::Event& event);
 
         void setPressed(bool pressed){mPressed=pressed;}
         bool isPressed(){return mPressed;}
@@ -30,6 +32,8 @@ class Button : public SpriteObject
     private:
         bool mPressed;
         int mState;
+
+        sf::Vector2f mMousePosition;
 };
 
 #endif // BUTTON_H

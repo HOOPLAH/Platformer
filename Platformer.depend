@@ -534,3 +534,1560 @@
 	"Vehicle.h"
 	"EntityTags.h"
 
+1449133772 source:/media/lucas/LUCAS/Platformer/main.cpp
+	<SFML/Graphics.hpp>
+	<cstdlib>
+	<ctime>
+	<iostream>
+	"Assets.h"
+	"Constants.h"
+	"MainMenuState.h"
+	"StateMachine.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/Assets.h
+	<map>
+	"SpriteInfo.h"
+	"FontInfo.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/SpriteInfo.h
+	<SFML/Graphics.hpp>
+
+1449132222 /media/lucas/LUCAS/Platformer/include/FontInfo.h
+	<SFML/Graphics/Font.hpp>
+
+1449132222 /media/lucas/LUCAS/Platformer/include/Constants.h
+	<SFML/System/Time.hpp>
+
+1449135048 /media/lucas/LUCAS/Platformer/include/MainMenuState.h
+	"IState.h"
+	"Button.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/IState.h
+	<memory>
+	<SFML/Graphics/RenderTarget.hpp>
+	<SFML/Window/Event.hpp>
+
+1449134574 /media/lucas/LUCAS/Platformer/include/Button.h
+	"SpriteObject.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/SpriteObject.h
+	<memory>
+	<SFML/Graphics.hpp>
+	"IRenderable.h"
+	"SpriteInfo.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/IRenderable.h
+	<SFML/Graphics/RenderTarget.hpp>
+	"IObject.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/IObject.h
+	<WorldRef.h>
+
+1449132222 /media/lucas/LUCAS/Platformer/include/WorldRef.h
+	<memory>
+	<SFML/Graphics.hpp>
+	"WayPointManager.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/WayPointManager.h
+	<vector>
+	<SFML/Graphics.hpp>
+	"micropather.h"
+	"WayPoint.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/micropather.h
+	<cstring>
+	<cstdint>
+	<vector>
+	<float.h>
+	<assert.h>
+	<stdlib.h>
+	<stdlib.h>
+
+1449132222 /media/lucas/LUCAS/Platformer/include/WayPoint.h
+	"SFML/System/Vector2.hpp"
+	<iostream>
+
+1449132222 /media/lucas/LUCAS/Platformer/include/StateMachine.h
+	<memory>
+	<stack>
+	<string>
+	<SFML/Graphics/RenderTarget.hpp>
+	<SFML/Window/Event.hpp>
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/AIAttackModule.cpp
+	"AIAttackModule.h"
+	"NPC.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/AIAttackModule.h
+	"IAIModule.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/IAIModule.h
+	"WorldRef.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/NPC.h
+	<memory>
+	"AIModuleProcessor.h"
+	"HealthBar.h"
+	"Weapon.h"
+	"WorldRef.h"
+	"Player.h"
+	"FuncUtils.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/AIModuleProcessor.h
+	<memory>
+	"IAIModule.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/HealthBar.h
+	<SFML/Graphics.hpp>
+
+1449132222 /media/lucas/LUCAS/Platformer/include/Weapon.h
+	"Item.h"
+	"Line.h"
+	"Projectile.h"
+	"ICollideable.h"
+	"WorldRef.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/Item.h
+	"SpriteObject.h"
+	"WorldRef.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/Line.h
+	<SFML/Graphics.hpp>
+
+1449132222 /media/lucas/LUCAS/Platformer/include/Projectile.h
+	"SpriteObject.h"
+	"ICollideable.h"
+	"Constants.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/ICollideable.h
+	<memory>
+	<SFML/Graphics.hpp>
+	"IObject.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/Player.h
+	<SFML/Graphics.hpp>
+	"HealthBar.h"
+	"Weapon.h"
+	"WorldRef.h"
+	"Inventory.h"
+	"Vehicle.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/Inventory.h
+	<vector>
+	<memory>
+	"Assets.h"
+	"Item.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/Vehicle.h
+	"SpriteObject.h"
+	"ICollideable.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/FuncUtils.h
+	<vector>
+	<string>
+	<memory>
+	<SFML/System/Vector2.hpp>
+	<SFML/Graphics/RenderTarget.hpp>
+	"SpriteInfo.h"
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/AIFollowModule.cpp
+	"AIFollowModule.h"
+	"NPC.h"
+	"Direction.h"
+	"WorldObject.h"
+	"FuncUtils.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/AIFollowModule.h
+	"IAIModule.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/Direction.h
+
+1449132222 /media/lucas/LUCAS/Platformer/include/WorldObject.h
+	<tuple>
+	"SpriteObject.h"
+	"ICollideable.h"
+	"EntityTags.h"
+	"HealthBar.h"
+
+1449133340 /media/lucas/LUCAS/Platformer/include/EntityTags.h
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/AIModuleProcessor.cpp
+	"AIModuleProcessor.h"
+	"NPC.h"
+	"AIAttackModule.h"
+	"AIFollowModule.h"
+
+1449134740 source:/media/lucas/LUCAS/Platformer/src/Button.cpp
+	"Button.h"
+	"EntityTags.h"
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/Camera.cpp
+	"Camera.h"
+	<iostream>
+	"Constants.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/Camera.h
+	<SFML/Graphics.hpp>
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/CollectibleObject.cpp
+	"CollectibleObject.h"
+	"Player.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/CollectibleObject.h
+	"WorldObject.h"
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/CollisionResolver.cpp
+	"CollisionResolver.h"
+	<iostream>
+
+1449132222 /media/lucas/LUCAS/Platformer/include/CollisionResolver.h
+	<vector>
+	<memory>
+	"ICollideable.h"
+	"QuadTree.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/QuadTree.h
+	<vector>
+	<memory>
+	<SFML/Graphics/Rect.hpp>
+	"ICollideable.h"
+
+1445806030 source:/media/lucas/LUCAS/Platformer/src/Controller.cpp
+	"Controller.h"
+
+1445806030 /media/lucas/LUCAS/Platformer/include/Controller.h
+	<SFML/Window/Event.hpp>
+	"ICollideable.h"
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/DebugConsole.cpp
+	"DebugConsole.h"
+	<iostream>
+
+1449132222 /media/lucas/LUCAS/Platformer/include/DebugConsole.h
+	<map>
+	<vector>
+	<functional>
+	"WorldRef.h"
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/FuncUtils.cpp
+	"FuncUtils.h"
+	<cmath>
+	<sstream>
+	"Constants.h"
+	"SpriteObject.h"
+
+1449133990 source:/media/lucas/LUCAS/Platformer/src/GameState.cpp
+	"GameState.h"
+	"imgui.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/GameState.h
+	"IState.h"
+	"WorldManager.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/WorldManager.h
+	<vector>
+	<memory>
+	<SFML/Graphics.hpp>
+	<World.h>
+
+1449132222 /media/lucas/LUCAS/Platformer/include/World.h
+	<vector>
+	<memory>
+	<SFML/Graphics.hpp>
+	"Player.h"
+	"NPC.h"
+	"Camera.h"
+	"CollisionResolver.h"
+	"Item.h"
+	"QuadTree.h"
+	"WayPointManager.h"
+	"WorldObject.h"
+	"WorldSwitcher.h"
+	"WorldRef.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/WorldSwitcher.h
+	"SpriteObject.h"
+	"ICollideable.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/imgui.h
+	"imconfig.h"
+	<float.h>
+	<stdarg.h>
+	<stddef.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	"imgui_user.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/imconfig.h
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/Grenade.cpp
+	"Grenade.h"
+	"Assets.h"
+	"EntityTags.h"
+	"Constants.h"
+	"NPC.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/Grenade.h
+	"Projectile.h"
+	"WorldRef.h"
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/GrenadeLauncher.cpp
+	"GrenadeLauncher.h"
+	"Assets.h"
+	"Grenade.h"
+	"EntityTags.h"
+	"FuncUtils.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/GrenadeLauncher.h
+	"Weapon.h"
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/imgui.cpp
+	"imgui.h"
+	<ctype.h>
+	<math.h>
+	<stdint.h>
+	<stdio.h>
+	<new>
+	"stb_rect_pack.h"
+	"stb_truetype.h"
+	"stb_textedit.h"
+	"stb_textedit.h"
+	<windows.h>
+	<windows.h>
+	<Imm.h>
+	"imgui_user.inl"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/stb_rect_pack.h
+	<stdlib.h>
+	<assert.h>
+
+1449132222 /media/lucas/LUCAS/Platformer/include/stb_truetype.h
+	"stb_truetype.h"
+	<stdio.h>
+	"stb_truetype.h"
+	<stdlib.h>
+	<math.h>
+	<math.h>
+	<stdlib.h>
+	<assert.h>
+	<string.h>
+	<memory.h>
+
+1449132222 /media/lucas/LUCAS/Platformer/include/stb_textedit.h
+	<string.h>
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/Inventory.cpp
+	"Inventory.h"
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/Item.cpp
+	"Item.h"
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/Line.cpp
+	"Line.h"
+	"Constants.h"
+	<iostream>
+
+1449135686 source:/media/lucas/LUCAS/Platformer/src/MainMenuState.cpp
+	"MainMenuState.h"
+	"imgui.h"
+	"GameState.h"
+	"StateMachine.h"
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/micropather.cpp
+	<vector>
+	<memory.h>
+	<stdio.h>
+	"micropather.h"
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/NPC.cpp
+	"NPC.h"
+	<memory>
+	<cstdlib>
+	"Assets.h"
+	"Constants.h"
+	"Direction.h"
+	"EntityTags.h"
+	"Projectile.h"
+	"AIFollowModule.h"
+	"FuncUtils.h"
+
+1449133252 source:/media/lucas/LUCAS/Platformer/src/Player.cpp
+	"Player.h"
+	<iostream>
+	"Assets.h"
+	"Constants.h"
+	"FuncUtils.h"
+	"Direction.h"
+	"EntityTags.h"
+	"Projectile.h"
+	"SpaceShip.h"
+	"GrenadeLauncher.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/SpaceShip.h
+	<vector>
+	"Vehicle.h"
+	"VehicleWeapon.h"
+	"WorldRef.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/VehicleWeapon.h
+	"Weapon.h"
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/Projectile.cpp
+	"Projectile.h"
+	"EntityTags.h"
+	<iostream>
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/QuadTree.cpp
+	"QuadTree.h"
+	<algorithm>
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/SpaceShip.cpp
+	"SpaceShip.h"
+	"Assets.h"
+	"EntityTags.h"
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/SpriteObject.cpp
+	"SpriteObject.h"
+	<iostream>
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/StateMachine.cpp
+	"StateMachine.h"
+	"IState.h"
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/Turret.cpp
+	"Turret.h"
+	"Assets.h"
+	"EntityTags.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/Turret.h
+	"WorldObject.h"
+	"Vehicle.h"
+	"Weapon.h"
+	"WorldRef.h"
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/Vehicle.cpp
+	"Vehicle.h"
+	"EntityTags.h"
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/VehicleWeapon.cpp
+	"VehicleWeapon.h"
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/WayPointManager.cpp
+	"WayPointManager.h"
+	"Line.h"
+	<iostream>
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/Weapon.cpp
+	"Weapon.h"
+	<memory>
+	<iostream>
+	"Assets.h"
+	"Constants.h"
+	"FuncUtils.h"
+	"EntityTags.h"
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/World.cpp
+	"World.h"
+	<iostream>
+	<fstream>
+	<sstream>
+	"Assets.h"
+	"Constants.h"
+	"Direction.h"
+	"EntityTags.h"
+	"Grenade.h"
+	"NPC.h"
+	"WayPoint.h"
+	"CollectibleObject.h"
+	"Turret.h"
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/WorldEditor.cpp
+	"WorldEditor.h"
+	<iostream>
+	<fstream>
+	<sstream>
+	"Assets.h"
+	"FuncUtils.h"
+
+1449132222 /media/lucas/LUCAS/Platformer/include/WorldEditor.h
+	<SFML/Graphics.hpp>
+	<vector>
+	"World.h"
+	"WorldObject.h"
+	"DebugConsole.h"
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/WorldManager.cpp
+	"WorldManager.h"
+	"imgui.h"
+	"imgui-SFML.h"
+	<fstream>
+
+1449132222 /media/lucas/LUCAS/Platformer/include/imgui-SFML.h
+	<vector>
+	<SFML/Window/Keyboard.hpp>
+	<SFML/Window/Event.hpp>
+	<SFML/Graphics/Texture.hpp>
+	<SFML/Graphics/Vertex.hpp>
+	<SFML/Graphics/RenderWindow.hpp>
+	<SFML/OpenGL.hpp>
+	"imconfig.h"
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/WorldObject.cpp
+	"WorldObject.h"
+	"EntityTags.h"
+	<Projectile.h>
+
+1449132222 source:/media/lucas/LUCAS/Platformer/src/WorldRef.cpp
+	"WorldRef.h"
+	"ICollideable.h"
+	"IRenderable.h"
+	"WayPoint.h"
+	"WorldObject.h"
+	"World.h"
+
+1449133968 source:/media/lucas/LUCAS/Platformer/src/WorldSwitcher.cpp
+	"WorldSwitcher.h"
+	"EntityTags.h"
+	"Projectile.h"
+
+1449133772 source:/home/lucas/Desktop/Platformer/main.cpp
+	<SFML/Graphics.hpp>
+	<cstdlib>
+	<ctime>
+	<iostream>
+	"Assets.h"
+	"Constants.h"
+	"MainMenuState.h"
+	"StateMachine.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/Assets.h
+	<map>
+	"SpriteInfo.h"
+	"FontInfo.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/SpriteInfo.h
+	<SFML/Graphics.hpp>
+
+1449132222 /home/lucas/Desktop/Platformer/include/FontInfo.h
+	<SFML/Graphics/Font.hpp>
+
+1449132222 /home/lucas/Desktop/Platformer/include/Constants.h
+	<SFML/System/Time.hpp>
+
+1449135048 /home/lucas/Desktop/Platformer/include/MainMenuState.h
+	"IState.h"
+	"Button.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/IState.h
+	<memory>
+	<SFML/Graphics/RenderTarget.hpp>
+	<SFML/Window/Event.hpp>
+
+1449134574 /home/lucas/Desktop/Platformer/include/Button.h
+	"SpriteObject.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/SpriteObject.h
+	<memory>
+	<SFML/Graphics.hpp>
+	"IRenderable.h"
+	"SpriteInfo.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/IRenderable.h
+	<SFML/Graphics/RenderTarget.hpp>
+	"IObject.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/IObject.h
+	<WorldRef.h>
+
+1449132222 /home/lucas/Desktop/Platformer/include/WorldRef.h
+	<memory>
+	<SFML/Graphics.hpp>
+	"WayPointManager.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/WayPointManager.h
+	<vector>
+	<SFML/Graphics.hpp>
+	"micropather.h"
+	"WayPoint.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/micropather.h
+	<cstring>
+	<cstdint>
+	<vector>
+	<float.h>
+	<assert.h>
+	<stdlib.h>
+	<stdlib.h>
+
+1449132222 /home/lucas/Desktop/Platformer/include/WayPoint.h
+	"SFML/System/Vector2.hpp"
+	<iostream>
+
+1449132222 /home/lucas/Desktop/Platformer/include/StateMachine.h
+	<memory>
+	<stack>
+	<string>
+	<SFML/Graphics/RenderTarget.hpp>
+	<SFML/Window/Event.hpp>
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/AIAttackModule.cpp
+	"AIAttackModule.h"
+	"NPC.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/AIAttackModule.h
+	"IAIModule.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/IAIModule.h
+	"WorldRef.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/NPC.h
+	<memory>
+	"AIModuleProcessor.h"
+	"HealthBar.h"
+	"Weapon.h"
+	"WorldRef.h"
+	"Player.h"
+	"FuncUtils.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/AIModuleProcessor.h
+	<memory>
+	"IAIModule.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/HealthBar.h
+	<SFML/Graphics.hpp>
+
+1449132222 /home/lucas/Desktop/Platformer/include/Weapon.h
+	"Item.h"
+	"Line.h"
+	"Projectile.h"
+	"ICollideable.h"
+	"WorldRef.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/Item.h
+	"SpriteObject.h"
+	"WorldRef.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/Line.h
+	<SFML/Graphics.hpp>
+
+1449132222 /home/lucas/Desktop/Platformer/include/Projectile.h
+	"SpriteObject.h"
+	"ICollideable.h"
+	"Constants.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/ICollideable.h
+	<memory>
+	<SFML/Graphics.hpp>
+	"IObject.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/Player.h
+	<SFML/Graphics.hpp>
+	"HealthBar.h"
+	"Weapon.h"
+	"WorldRef.h"
+	"Inventory.h"
+	"Vehicle.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/Inventory.h
+	<vector>
+	<memory>
+	"Assets.h"
+	"Item.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/Vehicle.h
+	"SpriteObject.h"
+	"ICollideable.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/FuncUtils.h
+	<vector>
+	<string>
+	<memory>
+	<SFML/System/Vector2.hpp>
+	<SFML/Graphics/RenderTarget.hpp>
+	"SpriteInfo.h"
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/AIFollowModule.cpp
+	"AIFollowModule.h"
+	"NPC.h"
+	"Direction.h"
+	"WorldObject.h"
+	"FuncUtils.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/AIFollowModule.h
+	"IAIModule.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/Direction.h
+
+1449132222 /home/lucas/Desktop/Platformer/include/WorldObject.h
+	<tuple>
+	"SpriteObject.h"
+	"ICollideable.h"
+	"EntityTags.h"
+	"HealthBar.h"
+
+1449133340 /home/lucas/Desktop/Platformer/include/EntityTags.h
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/AIModuleProcessor.cpp
+	"AIModuleProcessor.h"
+	"NPC.h"
+	"AIAttackModule.h"
+	"AIFollowModule.h"
+
+1449135860 source:/home/lucas/Desktop/Platformer/src/Assets.cpp
+	"Assets.h"
+
+1449134740 source:/home/lucas/Desktop/Platformer/src/Button.cpp
+	"Button.h"
+	"EntityTags.h"
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/Camera.cpp
+	"Camera.h"
+	<iostream>
+	"Constants.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/Camera.h
+	<SFML/Graphics.hpp>
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/CollectibleObject.cpp
+	"CollectibleObject.h"
+	"Player.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/CollectibleObject.h
+	"WorldObject.h"
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/CollisionResolver.cpp
+	"CollisionResolver.h"
+	<iostream>
+
+1449132222 /home/lucas/Desktop/Platformer/include/CollisionResolver.h
+	<vector>
+	<memory>
+	"ICollideable.h"
+	"QuadTree.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/QuadTree.h
+	<vector>
+	<memory>
+	<SFML/Graphics/Rect.hpp>
+	"ICollideable.h"
+
+1445806030 source:/home/lucas/Desktop/Platformer/src/Controller.cpp
+	"Controller.h"
+
+1445806030 /home/lucas/Desktop/Platformer/include/Controller.h
+	<SFML/Window/Event.hpp>
+	"ICollideable.h"
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/DebugConsole.cpp
+	"DebugConsole.h"
+	<iostream>
+
+1449132222 /home/lucas/Desktop/Platformer/include/DebugConsole.h
+	<map>
+	<vector>
+	<functional>
+	"WorldRef.h"
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/FuncUtils.cpp
+	"FuncUtils.h"
+	<cmath>
+	<sstream>
+	"Constants.h"
+	"SpriteObject.h"
+
+1449133990 source:/home/lucas/Desktop/Platformer/src/GameState.cpp
+	"GameState.h"
+	"imgui.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/GameState.h
+	"IState.h"
+	"WorldManager.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/WorldManager.h
+	<vector>
+	<memory>
+	<SFML/Graphics.hpp>
+	<World.h>
+
+1449132222 /home/lucas/Desktop/Platformer/include/World.h
+	<vector>
+	<memory>
+	<SFML/Graphics.hpp>
+	"Player.h"
+	"NPC.h"
+	"Camera.h"
+	"CollisionResolver.h"
+	"Item.h"
+	"QuadTree.h"
+	"WayPointManager.h"
+	"WorldObject.h"
+	"WorldSwitcher.h"
+	"WorldRef.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/WorldSwitcher.h
+	"SpriteObject.h"
+	"ICollideable.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/imgui.h
+	"imconfig.h"
+	<float.h>
+	<stdarg.h>
+	<stddef.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	"imgui_user.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/imconfig.h
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/Grenade.cpp
+	"Grenade.h"
+	"Assets.h"
+	"EntityTags.h"
+	"Constants.h"
+	"NPC.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/Grenade.h
+	"Projectile.h"
+	"WorldRef.h"
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/GrenadeLauncher.cpp
+	"GrenadeLauncher.h"
+	"Assets.h"
+	"Grenade.h"
+	"EntityTags.h"
+	"FuncUtils.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/GrenadeLauncher.h
+	"Weapon.h"
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/imgui.cpp
+	"imgui.h"
+	<ctype.h>
+	<math.h>
+	<stdint.h>
+	<stdio.h>
+	<new>
+	"stb_rect_pack.h"
+	"stb_truetype.h"
+	"stb_textedit.h"
+	"stb_textedit.h"
+	<windows.h>
+	<windows.h>
+	<Imm.h>
+	"imgui_user.inl"
+
+1449132222 /home/lucas/Desktop/Platformer/include/stb_rect_pack.h
+	<stdlib.h>
+	<assert.h>
+
+1449132222 /home/lucas/Desktop/Platformer/include/stb_truetype.h
+	"stb_truetype.h"
+	<stdio.h>
+	"stb_truetype.h"
+	<stdlib.h>
+	<math.h>
+	<math.h>
+	<stdlib.h>
+	<assert.h>
+	<string.h>
+	<memory.h>
+
+1449132222 /home/lucas/Desktop/Platformer/include/stb_textedit.h
+	<string.h>
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/Inventory.cpp
+	"Inventory.h"
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/Item.cpp
+	"Item.h"
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/Line.cpp
+	"Line.h"
+	"Constants.h"
+	<iostream>
+
+1449135686 source:/home/lucas/Desktop/Platformer/src/MainMenuState.cpp
+	"MainMenuState.h"
+	"imgui.h"
+	"GameState.h"
+	"StateMachine.h"
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/micropather.cpp
+	<vector>
+	<memory.h>
+	<stdio.h>
+	"micropather.h"
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/NPC.cpp
+	"NPC.h"
+	<memory>
+	<cstdlib>
+	"Assets.h"
+	"Constants.h"
+	"Direction.h"
+	"EntityTags.h"
+	"Projectile.h"
+	"AIFollowModule.h"
+	"FuncUtils.h"
+
+1449133252 source:/home/lucas/Desktop/Platformer/src/Player.cpp
+	"Player.h"
+	<iostream>
+	"Assets.h"
+	"Constants.h"
+	"FuncUtils.h"
+	"Direction.h"
+	"EntityTags.h"
+	"Projectile.h"
+	"SpaceShip.h"
+	"GrenadeLauncher.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/SpaceShip.h
+	<vector>
+	"Vehicle.h"
+	"VehicleWeapon.h"
+	"WorldRef.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/VehicleWeapon.h
+	"Weapon.h"
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/Projectile.cpp
+	"Projectile.h"
+	"EntityTags.h"
+	<iostream>
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/QuadTree.cpp
+	"QuadTree.h"
+	<algorithm>
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/SpaceShip.cpp
+	"SpaceShip.h"
+	"Assets.h"
+	"EntityTags.h"
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/SpriteObject.cpp
+	"SpriteObject.h"
+	<iostream>
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/StateMachine.cpp
+	"StateMachine.h"
+	"IState.h"
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/Turret.cpp
+	"Turret.h"
+	"Assets.h"
+	"EntityTags.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/Turret.h
+	"WorldObject.h"
+	"Vehicle.h"
+	"Weapon.h"
+	"WorldRef.h"
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/Vehicle.cpp
+	"Vehicle.h"
+	"EntityTags.h"
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/VehicleWeapon.cpp
+	"VehicleWeapon.h"
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/WayPointManager.cpp
+	"WayPointManager.h"
+	"Line.h"
+	<iostream>
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/Weapon.cpp
+	"Weapon.h"
+	<memory>
+	<iostream>
+	"Assets.h"
+	"Constants.h"
+	"FuncUtils.h"
+	"EntityTags.h"
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/World.cpp
+	"World.h"
+	<iostream>
+	<fstream>
+	<sstream>
+	"Assets.h"
+	"Constants.h"
+	"Direction.h"
+	"EntityTags.h"
+	"Grenade.h"
+	"NPC.h"
+	"WayPoint.h"
+	"CollectibleObject.h"
+	"Turret.h"
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/WorldEditor.cpp
+	"WorldEditor.h"
+	<iostream>
+	<fstream>
+	<sstream>
+	"Assets.h"
+	"FuncUtils.h"
+
+1449132222 /home/lucas/Desktop/Platformer/include/WorldEditor.h
+	<SFML/Graphics.hpp>
+	<vector>
+	"World.h"
+	"WorldObject.h"
+	"DebugConsole.h"
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/WorldManager.cpp
+	"WorldManager.h"
+	"imgui.h"
+	"imgui-SFML.h"
+	<fstream>
+
+1449132222 /home/lucas/Desktop/Platformer/include/imgui-SFML.h
+	<vector>
+	<SFML/Window/Keyboard.hpp>
+	<SFML/Window/Event.hpp>
+	<SFML/Graphics/Texture.hpp>
+	<SFML/Graphics/Vertex.hpp>
+	<SFML/Graphics/RenderWindow.hpp>
+	<SFML/OpenGL.hpp>
+	"imconfig.h"
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/WorldObject.cpp
+	"WorldObject.h"
+	"EntityTags.h"
+	<Projectile.h>
+
+1449132222 source:/home/lucas/Desktop/Platformer/src/WorldRef.cpp
+	"WorldRef.h"
+	"ICollideable.h"
+	"IRenderable.h"
+	"WayPoint.h"
+	"WorldObject.h"
+	"World.h"
+
+1449133968 source:/home/lucas/Desktop/Platformer/src/WorldSwitcher.cpp
+	"WorldSwitcher.h"
+	"EntityTags.h"
+	"Projectile.h"
+
+1445806030 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Controller.cpp
+	"Controller.h"
+
+1445806030 /home/lucas/Desktop/Programming/C++/Platformer/include/Controller.h
+	<SFML/Window/Event.hpp>
+	"ICollideable.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/ICollideable.h
+	<memory>
+	<SFML/Graphics.hpp>
+	"IObject.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/IObject.h
+	<WorldRef.h>
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldRef.h
+	<memory>
+	<SFML/Graphics.hpp>
+	"WayPointManager.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/WayPointManager.h
+	<vector>
+	<SFML/Graphics.hpp>
+	"micropather.h"
+	"WayPoint.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/micropather.h
+	<cstring>
+	<cstdint>
+	<vector>
+	<float.h>
+	<assert.h>
+	<stdlib.h>
+	<stdlib.h>
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/WayPoint.h
+	"SFML/System/Vector2.hpp"
+	<iostream>
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/AIAttackModule.cpp
+	"AIAttackModule.h"
+	"NPC.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/AIAttackModule.h
+	"IAIModule.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/IAIModule.h
+	"WorldRef.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/NPC.h
+	<memory>
+	"AIModuleProcessor.h"
+	"HealthBar.h"
+	"Weapon.h"
+	"WorldRef.h"
+	"Player.h"
+	"FuncUtils.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/AIModuleProcessor.h
+	<memory>
+	"IAIModule.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/HealthBar.h
+	<SFML/Graphics.hpp>
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/Weapon.h
+	"Item.h"
+	"Line.h"
+	"Projectile.h"
+	"ICollideable.h"
+	"WorldRef.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/Item.h
+	"SpriteObject.h"
+	"WorldRef.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/SpriteObject.h
+	<memory>
+	<SFML/Graphics.hpp>
+	"IRenderable.h"
+	"SpriteInfo.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/IRenderable.h
+	<SFML/Graphics/RenderTarget.hpp>
+	"IObject.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/SpriteInfo.h
+	<SFML/Graphics.hpp>
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/Line.h
+	<SFML/Graphics.hpp>
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/Projectile.h
+	"SpriteObject.h"
+	"ICollideable.h"
+	"Constants.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/Constants.h
+	<SFML/System/Time.hpp>
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/Player.h
+	<SFML/Graphics.hpp>
+	"HealthBar.h"
+	"Weapon.h"
+	"WorldRef.h"
+	"Inventory.h"
+	"Vehicle.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/Inventory.h
+	<vector>
+	<memory>
+	"Assets.h"
+	"Item.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/Assets.h
+	<map>
+	"SpriteInfo.h"
+	"FontInfo.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/FontInfo.h
+	<SFML/Graphics/Font.hpp>
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/Vehicle.h
+	"SpriteObject.h"
+	"ICollideable.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/FuncUtils.h
+	<vector>
+	<string>
+	<memory>
+	<SFML/System/Vector2.hpp>
+	<SFML/Graphics/RenderTarget.hpp>
+	"SpriteInfo.h"
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/AIFollowModule.cpp
+	"AIFollowModule.h"
+	"NPC.h"
+	"Direction.h"
+	"WorldObject.h"
+	"FuncUtils.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/AIFollowModule.h
+	"IAIModule.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/Direction.h
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldObject.h
+	<tuple>
+	"SpriteObject.h"
+	"ICollideable.h"
+	"EntityTags.h"
+	"HealthBar.h"
+
+1449133340 /home/lucas/Desktop/Programming/C++/Platformer/include/EntityTags.h
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/AIModuleProcessor.cpp
+	"AIModuleProcessor.h"
+	"NPC.h"
+	"AIAttackModule.h"
+	"AIFollowModule.h"
+
+1449206855 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Assets.cpp
+	"Assets.h"
+
+1449205578 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Button.cpp
+	"Button.h"
+	"EntityTags.h"
+
+1449205002 /home/lucas/Desktop/Programming/C++/Platformer/include/Button.h
+	"SpriteObject.h"
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Camera.cpp
+	"Camera.h"
+	<iostream>
+	"Constants.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/Camera.h
+	<SFML/Graphics.hpp>
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/CollectibleObject.cpp
+	"CollectibleObject.h"
+	"Player.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/CollectibleObject.h
+	"WorldObject.h"
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/CollisionResolver.cpp
+	"CollisionResolver.h"
+	<iostream>
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/CollisionResolver.h
+	<vector>
+	<memory>
+	"ICollideable.h"
+	"QuadTree.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/QuadTree.h
+	<vector>
+	<memory>
+	<SFML/Graphics/Rect.hpp>
+	"ICollideable.h"
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/DebugConsole.cpp
+	"DebugConsole.h"
+	<iostream>
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/DebugConsole.h
+	<map>
+	<vector>
+	<functional>
+	"WorldRef.h"
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/FuncUtils.cpp
+	"FuncUtils.h"
+	<cmath>
+	<sstream>
+	"Constants.h"
+	"SpriteObject.h"
+
+1449133990 source:/home/lucas/Desktop/Programming/C++/Platformer/src/GameState.cpp
+	"GameState.h"
+	"imgui.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/GameState.h
+	"IState.h"
+	"WorldManager.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/IState.h
+	<memory>
+	<SFML/Graphics/RenderTarget.hpp>
+	<SFML/Window/Event.hpp>
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldManager.h
+	<vector>
+	<memory>
+	<SFML/Graphics.hpp>
+	<World.h>
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/World.h
+	<vector>
+	<memory>
+	<SFML/Graphics.hpp>
+	"Player.h"
+	"NPC.h"
+	"Camera.h"
+	"CollisionResolver.h"
+	"Item.h"
+	"QuadTree.h"
+	"WayPointManager.h"
+	"WorldObject.h"
+	"WorldSwitcher.h"
+	"WorldRef.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldSwitcher.h
+	"SpriteObject.h"
+	"ICollideable.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/imgui.h
+	"imconfig.h"
+	<float.h>
+	<stdarg.h>
+	<stddef.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	"imgui_user.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/imconfig.h
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Grenade.cpp
+	"Grenade.h"
+	"Assets.h"
+	"EntityTags.h"
+	"Constants.h"
+	"NPC.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/Grenade.h
+	"Projectile.h"
+	"WorldRef.h"
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/GrenadeLauncher.cpp
+	"GrenadeLauncher.h"
+	"Assets.h"
+	"Grenade.h"
+	"EntityTags.h"
+	"FuncUtils.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/GrenadeLauncher.h
+	"Weapon.h"
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/imgui.cpp
+	"imgui.h"
+	<ctype.h>
+	<math.h>
+	<stdint.h>
+	<stdio.h>
+	<new>
+	"stb_rect_pack.h"
+	"stb_truetype.h"
+	"stb_textedit.h"
+	"stb_textedit.h"
+	<windows.h>
+	<windows.h>
+	<Imm.h>
+	"imgui_user.inl"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/stb_rect_pack.h
+	<stdlib.h>
+	<assert.h>
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/stb_truetype.h
+	"stb_truetype.h"
+	<stdio.h>
+	"stb_truetype.h"
+	<stdlib.h>
+	<math.h>
+	<math.h>
+	<stdlib.h>
+	<assert.h>
+	<string.h>
+	<memory.h>
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/stb_textedit.h
+	<string.h>
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Inventory.cpp
+	"Inventory.h"
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Item.cpp
+	"Item.h"
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Line.cpp
+	"Line.h"
+	"Constants.h"
+	<iostream>
+
+1449206051 source:/home/lucas/Desktop/Programming/C++/Platformer/src/MainMenuState.cpp
+	"MainMenuState.h"
+	"Constants.h"
+	"GameState.h"
+	"StateMachine.h"
+
+1449135048 /home/lucas/Desktop/Programming/C++/Platformer/include/MainMenuState.h
+	"IState.h"
+	"Button.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/StateMachine.h
+	<memory>
+	<stack>
+	<string>
+	<SFML/Graphics/RenderTarget.hpp>
+	<SFML/Window/Event.hpp>
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/micropather.cpp
+	<vector>
+	<memory.h>
+	<stdio.h>
+	"micropather.h"
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/NPC.cpp
+	"NPC.h"
+	<memory>
+	<cstdlib>
+	"Assets.h"
+	"Constants.h"
+	"Direction.h"
+	"EntityTags.h"
+	"Projectile.h"
+	"AIFollowModule.h"
+	"FuncUtils.h"
+
+1449133252 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Player.cpp
+	"Player.h"
+	<iostream>
+	"Assets.h"
+	"Constants.h"
+	"FuncUtils.h"
+	"Direction.h"
+	"EntityTags.h"
+	"Projectile.h"
+	"SpaceShip.h"
+	"GrenadeLauncher.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/SpaceShip.h
+	<vector>
+	"Vehicle.h"
+	"VehicleWeapon.h"
+	"WorldRef.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/VehicleWeapon.h
+	"Weapon.h"
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Projectile.cpp
+	"Projectile.h"
+	"EntityTags.h"
+	<iostream>
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/QuadTree.cpp
+	"QuadTree.h"
+	<algorithm>
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/SpaceShip.cpp
+	"SpaceShip.h"
+	"Assets.h"
+	"EntityTags.h"
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/SpriteObject.cpp
+	"SpriteObject.h"
+	<iostream>
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/StateMachine.cpp
+	"StateMachine.h"
+	"IState.h"
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Turret.cpp
+	"Turret.h"
+	"Assets.h"
+	"EntityTags.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/Turret.h
+	"WorldObject.h"
+	"Vehicle.h"
+	"Weapon.h"
+	"WorldRef.h"
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Vehicle.cpp
+	"Vehicle.h"
+	"EntityTags.h"
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/VehicleWeapon.cpp
+	"VehicleWeapon.h"
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WayPointManager.cpp
+	"WayPointManager.h"
+	"Line.h"
+	<iostream>
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Weapon.cpp
+	"Weapon.h"
+	<memory>
+	<iostream>
+	"Assets.h"
+	"Constants.h"
+	"FuncUtils.h"
+	"EntityTags.h"
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/World.cpp
+	"World.h"
+	<iostream>
+	<fstream>
+	<sstream>
+	"Assets.h"
+	"Constants.h"
+	"Direction.h"
+	"EntityTags.h"
+	"Grenade.h"
+	"NPC.h"
+	"WayPoint.h"
+	"CollectibleObject.h"
+	"Turret.h"
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
+	"WorldEditor.h"
+	<iostream>
+	<fstream>
+	<sstream>
+	"Assets.h"
+	"FuncUtils.h"
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldEditor.h
+	<SFML/Graphics.hpp>
+	<vector>
+	"World.h"
+	"WorldObject.h"
+	"DebugConsole.h"
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldManager.cpp
+	"WorldManager.h"
+	"imgui.h"
+	"imgui-SFML.h"
+	<fstream>
+
+1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/imgui-SFML.h
+	<vector>
+	<SFML/Window/Keyboard.hpp>
+	<SFML/Window/Event.hpp>
+	<SFML/Graphics/Texture.hpp>
+	<SFML/Graphics/Vertex.hpp>
+	<SFML/Graphics/RenderWindow.hpp>
+	<SFML/OpenGL.hpp>
+	"imconfig.h"
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldObject.cpp
+	"WorldObject.h"
+	"EntityTags.h"
+	<Projectile.h>
+
+1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldRef.cpp
+	"WorldRef.h"
+	"ICollideable.h"
+	"IRenderable.h"
+	"WayPoint.h"
+	"WorldObject.h"
+	"World.h"
+
+1449133968 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldSwitcher.cpp
+	"WorldSwitcher.h"
+	"EntityTags.h"
+	"Projectile.h"
+
+1449204691 source:/home/lucas/Desktop/Programming/C++/Platformer/main.cpp
+	<SFML/Graphics.hpp>
+	<cstdlib>
+	<ctime>
+	<iostream>
+	"Assets.h"
+	"Constants.h"
+	"MainMenuState.h"
+	"StateMachine.h"
+

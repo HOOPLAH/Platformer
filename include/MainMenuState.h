@@ -1,6 +1,9 @@
 #ifndef MAINMENUSTATE_H
 #define MAINMENUSTATE_H
 
+#include <vector>
+#include <memory>
+
 #include "IState.h"
 #include "Button.h"
 
@@ -19,10 +22,9 @@ class MainMenuState : public IState
 
     private:
         sf::Vector2f mMousePosition;
-
         Button mPlayButton;
-
         sf::Sprite mBackGround;
+        std::vector<std::unique_ptr<IRenderable>> mRenderables;
 };
 
 #endif // MAINMENUSTATE_H

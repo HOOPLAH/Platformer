@@ -1,7 +1,6 @@
 #include "MainMenuState.h"
 
-#include "imgui.h"
-
+#include "Constants.h"
 #include "GameState.h"
 #include "StateMachine.h"
 
@@ -9,6 +8,7 @@ MainMenuState::MainMenuState(StateMachine& stateMachine, bool replace) : IState(
     mPlayButton(Assets::sprites["playbutton"], sf::Vector2f())
 {
     mBackGround = sf::Sprite(Assets::sprites["background"].mTexture);
+    mPlayButton.setRenderPosition(sf::Vector2f(SCREEN_WIDTH/2 - (mPlayButton.getSpriteInfo().mFrameDim.x/2), SCREEN_HEIGHT/2 - (mPlayButton.getSpriteInfo().mFrameDim.y/2)));
 }
 
 MainMenuState::~MainMenuState()
@@ -21,14 +21,7 @@ void MainMenuState::update(int ticks)
     if (mPlayButton.isPressed())
         mNext = StateMachine::build<GameState>(mMachine, true);
 
-    if (sf::FloatRect(mPlayButton.getRenderPosition(), mPlayButton.getSpriteInfo().mFrameDim).contains(mMousePosition))
-    {
-        //mPlayButton.setState(ButtonStates::Hover);
-    }
-    else
-    {
-        //mPlayButton.setState(ButtonStates::Up);
-    }
+    mPlayButton.update();
 }
 
 void MainMenuState::draw(sf::RenderTarget& target, float alpha)
@@ -40,20 +33,5 @@ void MainMenuState::draw(sf::RenderTarget& target, float alpha)
 
 void MainMenuState::handleEvents(sf::Event& event)
 {
-    if (event.type == sf::Event::MouseMoved)
-    {
-        mMousePosition = sf::Vector2f(event.mouseMove.x, event.mouseMove.y);
-    }
-
-    if (event.type == sf::Event::MouseButtonPressed)
-    {
-        if (event.mouseButton.button == sf::Mouse::Left)
-        {
-            if (sf::FloatRect(mPlayButton.getRenderPosition(), mPlayButton.getSpriteInfo().mFrameDim).contains(mMousePosition))
-            {
-                mPlayButton.setPressed(true);
-                mPlayButton.setState(ButtonStates::Down);
-            }
-        }
-    }
+    mPlayButton.handleEvents(event);
 }
