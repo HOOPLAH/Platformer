@@ -8,7 +8,7 @@ MainMenuState::MainMenuState(StateMachine& stateMachine, bool replace) : IState(
     mPlayButton(Assets::sprites["playbutton"], sf::Vector2f())
 {
     mBackGround = sf::Sprite(Assets::sprites["background"].mTexture);
-    mPlayButton.setRenderPosition(sf::Vector2f(SCREEN_WIDTH/2 - (mPlayButton.getSpriteInfo().mFrameDim.x/2), SCREEN_HEIGHT/2 - (mPlayButton.getSpriteInfo().mFrameDim.y/2)));
+    mPlayButton.setRenderPosition(sf::Vector2f(SCREEN_WIDTH/2 - (mPlayButton.getSpriteInfo().mFrameDim.x/2), 150 - (mPlayButton.getSpriteInfo().mFrameDim.y/2)));
 }
 
 MainMenuState::~MainMenuState()
