@@ -44,7 +44,7 @@ World::~World()
 void World::update(int ticks)
 {
     mTicks = ticks;
-    mQuadTree.setIntRect(sf::IntRect(mCamera.getCenter().x-(SCREEN_WIDTH/2), mCamera.getCenter().y-(SCREEN_HEIGHT/2), SCREEN_WIDTH, SCREEN_HEIGHT));
+    mQuadTree.setIntRect(mBoundaries);
 
     removeDeadObjects(mCollideables);
     removeDeadObjects(mRenderables);
@@ -171,7 +171,15 @@ void World::loadWorld(std::string path)
         {
             auto split_line = splitStringBySpaces(line);
 
-            if (find_key("gravity:", line))
+            if (find_key("boundaries:", line))
+            {
+                float left = std::stof(split_line[1]);
+                float top = std::stof(split_line[2]);
+                float width = std::stof(split_line[3]);
+                float height = std::stof(split_line[4]);
+                mBoundaries = sf::IntRect(left, top, width, height);
+            }
+            else if (find_key("gravity:", line))
             {
                 float x = std::stof(split_line[1]);
                 float y = std::stof(split_line[2]);
@@ -202,8 +210,11 @@ void World::loadWorld(std::string path)
                 float x = std::stof(split_line[2]);
                 float y = std::stof(split_line[3]);
                 auto obj = std::make_shared<CollectibleObject>(Assets::sprites[id], sf::Vector2f(x, y), CollectibleType::AMMOCRATE);
-                mCollideables.push_back(obj);
-                mRenderables.push_back(obj);
+                if (mBoundaries.contains(x, y))
+                {
+                    mCollideables.push_back(obj);
+                    mRenderables.push_back(obj);
+                }
             }
             else if (find_key("platform:", line))
             {
@@ -211,8 +222,11 @@ void World::loadWorld(std::string path)
                 float x = std::stof(split_line[2]);
                 float y = std::stof(split_line[3]);
                 auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y), EntityTags::PLATFORM);
-                mCollideables.push_back(platform);
-                mRenderables.push_back(platform);
+                if (mBoundaries.contains(x, y))
+                {
+                    mCollideables.push_back(platform);
+                    mRenderables.push_back(platform);
+                }
             }
             else if (find_key("tiled_platforms:", line))
             {
@@ -225,8 +239,11 @@ void World::loadWorld(std::string path)
                 {
                     auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(start_x+(i*distApart.x),
                                         start_y+(i*distApart.y)));
-                    mCollideables.push_back(platform);
-                    mRenderables.push_back(platform);
+                    if (mBoundaries.contains(sf::Vector2i(start_x+(i*distApart.x), start_y+(i*distApart.y))))
+                    {
+                        mCollideables.push_back(platform);
+                        mRenderables.push_back(platform);
+                    }
                 }
             }
             else if (find_key("turret:", line))
@@ -234,8 +251,11 @@ void World::loadWorld(std::string path)
                 float x = std::stof(split_line[1]);
                 float y = std::stof(split_line[2]);
                 auto turret = std::make_shared<Turret>(Assets::sprites["turretbody"], sf::Vector2f(x, y));
-                mCollideables.push_back(turret);
-                mRenderables.push_back(turret);
+                if (mBoundaries.contains(x, y))
+                {
+                    mCollideables.push_back(turret);
+                    mRenderables.push_back(turret);
+                }
             }
             else if (find_key("waypoint:", line))
             {

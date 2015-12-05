@@ -20,10 +20,41 @@ void CollisionResolver::update(std::vector<std::shared_ptr<ICollideable>>& colli
         auto returnObjects = mQuadTree.getObjectsAt(obj->getPhysicsPosition());
         for (auto& colObj : returnObjects)
         {
-            if (obj != colObj.lock() && !(obj->isStatic() && colObj.lock()->isStatic()))
+            auto bigger = obj;
+            auto smaller = colObj.lock();
+
+            // check which object is bigger
+
+            if ((obj->getHitBox().width*obj->getHitBox().height) > (colObj.lock()->getHitBox().width*colObj.lock()->getHitBox().height))
             {
-                if (check(obj, colObj) && obj->isCollisionActive() && colObj.lock()->isCollisionActive())
-                    resolve(obj, colObj);
+                bigger = obj;
+                smaller = colObj.lock();
+            }
+            else if ((obj->getHitBox().width*obj->getHitBox().height) < (colObj.lock()->getHitBox().width*colObj.lock()->getHitBox().height))
+            {
+                smaller = obj;
+                bigger = colObj.lock();
+            }
+
+            // check if one of the objects is static - static objects always win
+
+            if (obj->isStatic())
+            {
+                bigger = obj;
+                smaller = colObj.lock();
+            }
+            else if (colObj.lock()->isStatic())
+            {
+                smaller = obj;
+                bigger = colObj.lock();
+            }
+
+            // now check for collisions
+
+            if (bigger != smaller && !(bigger->isStatic() && smaller->isStatic()))
+            {
+                if (check(smaller, bigger) && bigger->isCollisionActive() && smaller->isCollisionActive())
+                    resolve(smaller, bigger);
             }
         }
     }

@@ -53,6 +53,7 @@ class World
 
         sf::Vector2f mGravity;
         sf::Vector2f mSpawnPoint;
+        sf::IntRect mBoundaries;
         std::vector<sf::Vector2f> mNPCSpawnPoints;
         std::size_t mNextNPCSpawnPoint;
         std::size_t mNPCSpawnCount; // how many npcs should be out and about at one time

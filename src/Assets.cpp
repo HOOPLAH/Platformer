@@ -30,7 +30,7 @@ void Assets::loadAssets()
     sprites["playbutton"] = SpriteInfo("Content/Textures/playbutton.png", 3, 1);
 
     sprites["grenade"] = SpriteInfo("Content/Textures/grenade.png");
-    sprites["grenade"].mHitBox = sf::FloatRect(0.f, 5.f, 5.f, 5.f);
+    sprites["grenade"].mHitBox = sf::FloatRect(1.f, 4.f, 4.f, 4.f);
     sprites["bluepeewee"] = SpriteInfo("Content/Textures/bluepeewee.png", 36, 6);
     sprites["bluepeewee"].mHitBox = sf::FloatRect(20.f, 10.f, 24.f, 44.f);
     sprites["pinkpeewee"] = SpriteInfo("Content/Textures/pinkpeewee.png", 36, 6);

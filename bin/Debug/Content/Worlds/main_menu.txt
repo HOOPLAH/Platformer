@@ -1,4 +1,5 @@
-spawnpoint: 0 500
+boundaries: 0 0 800 600
+spawnpoint: 0 400
 
 npc_spawn_point: 400 500
 npc_spawn_count: 0
