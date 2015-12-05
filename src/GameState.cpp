@@ -1,7 +1,5 @@
 #include "GameState.h"
 
-#include "imgui.h"
-
 GameState::GameState(StateMachine& stateMachine, bool replace) : IState(stateMachine, replace)
 {
     //ctor

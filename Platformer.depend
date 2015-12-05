@@ -1724,7 +1724,7 @@
 	"EntityTags.h"
 	"HealthBar.h"
 
-1449133340 /home/lucas/Desktop/Programming/C++/Platformer/include/EntityTags.h
+1449245562 /home/lucas/Desktop/Programming/C++/Platformer/include/EntityTags.h
 
 1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/AIModuleProcessor.cpp
 	"AIModuleProcessor.h"
@@ -1732,7 +1732,7 @@
 	"AIAttackModule.h"
 	"AIFollowModule.h"
 
-1449206855 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Assets.cpp
+1449296905 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Assets.cpp
 	"Assets.h"
 
 1449205578 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Button.cpp
@@ -1790,9 +1790,8 @@
 	"Constants.h"
 	"SpriteObject.h"
 
-1449133990 source:/home/lucas/Desktop/Programming/C++/Platformer/src/GameState.cpp
+1449298209 source:/home/lucas/Desktop/Programming/C++/Platformer/src/GameState.cpp
 	"GameState.h"
-	"imgui.h"
 
 1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/GameState.h
 	"IState.h"
@@ -1907,13 +1906,13 @@
 	"Constants.h"
 	<iostream>
 
-1449216441 source:/home/lucas/Desktop/Programming/C++/Platformer/src/MainMenuState.cpp
+1449298233 source:/home/lucas/Desktop/Programming/C++/Platformer/src/MainMenuState.cpp
 	"MainMenuState.h"
 	"Constants.h"
 	"GameState.h"
 	"StateMachine.h"
 
-1449216403 /home/lucas/Desktop/Programming/C++/Platformer/include/MainMenuState.h
+1449296767 /home/lucas/Desktop/Programming/C++/Platformer/include/MainMenuState.h
 	<vector>
 	<memory>
 	"IState.h"
@@ -1944,7 +1943,7 @@
 	"AIFollowModule.h"
 	"FuncUtils.h"
 
-1449133252 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Player.cpp
+1449296937 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Player.cpp
 	"Player.h"
 	<iostream>
 	"Assets.h"
@@ -2049,10 +2048,8 @@
 	"WorldObject.h"
 	"DebugConsole.h"
 
-1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldManager.cpp
+1449298245 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldManager.cpp
 	"WorldManager.h"
-	"imgui.h"
-	"imgui-SFML.h"
 	<fstream>
 
 1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/imgui-SFML.h
@@ -2078,12 +2075,12 @@
 	"WorldObject.h"
 	"World.h"
 
-1449133968 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldSwitcher.cpp
+1449245562 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldSwitcher.cpp
 	"WorldSwitcher.h"
 	"EntityTags.h"
 	"Projectile.h"
 
-1449204691 source:/home/lucas/Desktop/Programming/C++/Platformer/main.cpp
+1449296890 source:/home/lucas/Desktop/Programming/C++/Platformer/main.cpp
 	<SFML/Graphics.hpp>
 	<cstdlib>
 	<ctime>

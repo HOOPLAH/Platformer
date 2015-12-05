@@ -1,8 +1,5 @@
 #include "WorldManager.h"
 
-#include "imgui.h"
-#include "imgui-SFML.h"
-
 #include <fstream>
 
 WorldManager::WorldManager()
