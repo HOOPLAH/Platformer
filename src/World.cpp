@@ -44,11 +44,10 @@ World::~World()
 void World::update(int ticks)
 {
     mTicks = ticks;
-    //mQuadTree.setIntRect(sf::IntRect(mCamera.getCenter().x-(SCREEN_WIDTH/2), mCamera.getCenter().y-(SCREEN_HEIGHT/2), SCREEN_WIDTH, SCREEN_HEIGHT));
+    mQuadTree.setIntRect(sf::IntRect(mCamera.getCenter().x-(SCREEN_WIDTH/2), mCamera.getCenter().y-(SCREEN_HEIGHT/2), SCREEN_WIDTH, SCREEN_HEIGHT));
 
     removeDeadObjects(mCollideables);
     removeDeadObjects(mRenderables);
-    removeDeadObjects(mButtons);
 
     if (getObjectsWithTag(EntityTags::NPC).size() < mNPCSpawnCount && mNPCSpawnPoints.size() > 0)
     {
@@ -73,12 +72,6 @@ void World::update(int ticks)
             obj->kill();
 
         mQuadTree.addObject(obj);
-    }
-
-    for (auto& button : mButtons)
-    {
-        //button->update();
-        button->setCollisionActive(true);
     }
 
     if (!mHero->isAlive())
@@ -131,11 +124,6 @@ void World::draw(sf::RenderTarget& target, float alpha)
                 obj->draw(target, alpha);
         }
 
-        for (auto& button : mButtons)
-        {
-            if (mWindowCoords.intersects(button->getSprite().getGlobalBounds()))
-                button->draw(target, alpha);
-        }
 
         if (!mHero->inVehicle())
             mHero->draw(target, alpha);
@@ -248,17 +236,6 @@ void World::loadWorld(std::string path)
                 auto turret = std::make_shared<Turret>(Assets::sprites["turretbody"], sf::Vector2f(x, y));
                 mCollideables.push_back(turret);
                 mRenderables.push_back(turret);
-            }
-            else if (find_key("button:", line))
-            {
-                std::string id = split_line[1];
-                float x = std::stof(split_line[2]);
-                float y = std::stof(split_line[3]);
-                int nextWorld = std::stof(split_line[4]);
-                auto button = std::make_shared<WorldSwitcher>(Assets::sprites[id], sf::Vector2f(x, y), nextWorld);
-                button->setCollisionActive(false); // turn off collisions by default until all quests are complete
-                mButtons.push_back(button);
-                mCollideables.push_back(button);
             }
             else if (find_key("waypoint:", line))
             {

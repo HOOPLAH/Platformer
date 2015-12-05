@@ -15,21 +15,21 @@ CollisionResolver::~CollisionResolver()
 
 void CollisionResolver::update(std::vector<std::shared_ptr<ICollideable>>& collideables)
 {
-    /*for (auto& obj : collideables)
+    for (auto& obj : collideables)
     {
         auto returnObjects = mQuadTree.getObjectsAt(obj->getPhysicsPosition());
         for (auto& colObj : returnObjects)
         {
-            if (obj != colObj.lock())
+            if (obj != colObj.lock() && !(obj->isStatic() && colObj.lock()->isStatic()))
             {
-                if (check(obj, colObj))// && dynamic->isCollisionActive() && _static->isCollisionActive())
+                if (check(obj, colObj) && obj->isCollisionActive() && colObj.lock()->isCollisionActive())
                     resolve(obj, colObj);
             }
         }
-    }*/
+    }
 
     // check collisions
-    for (std::size_t x = 0; x < collideables.size(); x++)
+    /*for (std::size_t x = 0; x < collideables.size(); x++)
     {
         for (std::size_t y = x+1; y < collideables.size(); y++)
         {
@@ -49,7 +49,7 @@ void CollisionResolver::update(std::vector<std::shared_ptr<ICollideable>>& colli
             if (check(dynamic, _static) && dynamic->isCollisionActive() && _static->isCollisionActive())
                 resolve(dynamic, _static);
         }
-    }
+    }*/
 }
 
 bool CollisionResolver::check(std::weak_ptr<ICollideable> a, std::weak_ptr<ICollideable> b)

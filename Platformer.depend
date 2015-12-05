@@ -1757,7 +1757,7 @@
 1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/CollectibleObject.h
 	"WorldObject.h"
 
-1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/CollisionResolver.cpp
+1449304880 source:/home/lucas/Desktop/Programming/C++/Platformer/src/CollisionResolver.cpp
 	"CollisionResolver.h"
 	<iostream>
 
@@ -1808,7 +1808,7 @@
 	<SFML/Graphics.hpp>
 	<World.h>
 
-1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/World.h
+1449299290 /home/lucas/Desktop/Programming/C++/Platformer/include/World.h
 	<vector>
 	<memory>
 	<SFML/Graphics.hpp>
@@ -1820,7 +1820,6 @@
 	"QuadTree.h"
 	"WayPointManager.h"
 	"WorldObject.h"
-	"WorldSwitcher.h"
 	"WorldRef.h"
 
 1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldSwitcher.h
@@ -2018,7 +2017,7 @@
 	"FuncUtils.h"
 	"EntityTags.h"
 
-1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/World.cpp
+1449304552 source:/home/lucas/Desktop/Programming/C++/Platformer/src/World.cpp
 	"World.h"
 	<iostream>
 	<fstream>
@@ -2048,7 +2047,7 @@
 	"WorldObject.h"
 	"DebugConsole.h"
 
-1449298245 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldManager.cpp
+1449299420 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldManager.cpp
 	"WorldManager.h"
 	<fstream>
 
@@ -2089,4 +2088,12 @@
 	"Constants.h"
 	"MainMenuState.h"
 	"StateMachine.h"
+
+1449303897 source:/home/lucas/Desktop/Programming/C++/Platformer/LEmain.cpp
+	<SFML/Graphics.hpp>
+	<cstdlib>
+	<ctime>
+	"Assets.h"
+	"WorldEditor.h"
+	"Constants.h"
 

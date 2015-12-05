@@ -14,7 +14,6 @@
 #include "QuadTree.h"
 #include "WayPointManager.h"
 #include "WorldObject.h"
-#include "WorldSwitcher.h"
 #include "WorldRef.h"
 
 class World
@@ -36,7 +35,6 @@ class World
         int getTicks(){return mTicks;}
         sf::Vector2f getGravity(){return mGravity;}
         std::weak_ptr<Player> getHero(){return mHero;}
-        std::vector<std::shared_ptr<WorldSwitcher>>& getButtons(){return mButtons;}
         std::vector<std::shared_ptr<ICollideable>>& getCollideables(){return mCollideables;}
         std::vector<std::shared_ptr<SpriteObject>>& getRenderables(){return mRenderables;}
         WayPointManager& getWayPointManager(){return mWayPointManager;}
@@ -68,7 +66,6 @@ class World
         sf::Sprite mBackground;
 
         std::shared_ptr<Player> mHero; // outlet hero!!
-        std::vector<std::shared_ptr<WorldSwitcher>> mButtons;
         std::vector<std::shared_ptr<ICollideable>> mCollideables;
         std::vector<std::shared_ptr<SpriteObject>> mRenderables;
 };

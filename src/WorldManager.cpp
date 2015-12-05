@@ -18,13 +18,9 @@ void WorldManager::update(int ticks)
 {
     mWorlds[mCurrentWorld]->update(ticks);
 
-    for (auto& button : mWorlds[mCurrentWorld]->getButtons())
-    if (button->isPressed())
-    {
-        mCurrentWorld = button->getNextWorld();
-        loadWorld();
-        button->setPressed(false);
-    }
+    /*mCurrentWorld = button->getNextWorld();
+    loadWorld();
+    button->setPressed(false);*/
 }
 
 void WorldManager::draw(sf::RenderTarget& target, float alpha)
