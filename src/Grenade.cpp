@@ -6,7 +6,7 @@
 #include "NPC.h"
 
 Grenade::Grenade(SpriteInfo& info, sf::Vector2f start, int tag) : Projectile(info, start, 0, 0, tag),
-    mExplosion(Assets::sprites["explosion"], mRenderPosition)
+    mExplosion(Assets::sprites["explosion"], sf::Vector2f(-500.f, -500.f))
 {
     mSpeed = 7.f;
     mTag = EntityTags::GRENADE;
@@ -36,9 +36,15 @@ void Grenade::update(WorldRef& worldRef)
         mExplosionPosition = mRenderPosition;
         mExplosion.setRenderPosition(mExplosionPosition-mExplosion.getCenter());
         for (auto& obj : worldRef.getObjectsWithinArea(EntityTags::NPC,
-            sf::FloatRect(mRenderPosition.x-50.f, mRenderPosition.y-50, 100.f, 100.f)))
+            sf::FloatRect(mRenderPosition.x-25.f, mRenderPosition.y-25, 50.f, 50.f)))
         {
-            static_cast<NPC*>(&*obj.lock())->getHealth().mHP -= 1;
+            static_cast<NPC*>(&*obj.lock())->getHealth().mHP -= 50;
+        }
+
+        for (auto& obj : worldRef.getObjectsWithinArea(EntityTags::PLAYER,
+            sf::FloatRect(mRenderPosition.x-25.f, mRenderPosition.y-25, 50.f, 50.f)))
+        {
+            static_cast<Player*>(&*obj.lock())->getHealth().mHP -= 25;
         }
 
         if (mExplosion.getCurrentFrame() == mExplosion.getEndFrame())

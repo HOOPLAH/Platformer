@@ -12,6 +12,7 @@
 #include "NPC.h"
 #include "WayPoint.h"
 #include "CollectibleObject.h"
+#include "SpaceShip.h"
 #include "Turret.h"
 
 World::World() :
@@ -26,7 +27,7 @@ World::World() :
     mNPCSpawnCount = 0;
     mGravity = sf::Vector2f(0.f, 10.f);
 
-    mBackground = sf::Sprite(Assets::sprites["background"].mTexture);
+    mBackground = sf::Sprite(Assets::sprites["nightbackground"].mTexture);
     mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], mSpawnPoint, mWorldRef);
     //mCollideables.push_back(mHero);
 }
@@ -79,7 +80,7 @@ void World::update(int ticks)
         mHero->respawn(mSpawnPoint);
         //mCollideables.push_back(mHero);
     }
-    if (mHero->getRenderPosition().y > SCREEN_HEIGHT)
+    if (mHero->getRenderPosition().y > mBoundaries.top + mBoundaries.height)
     {
         mHero->kill();
     }
@@ -96,7 +97,7 @@ void World::update(int ticks)
 
     mCollisionResolver.update(mCollideables);
 
-    mCamera.follow(sf::Vector2f(mHero->getRenderPosition().x, SCREEN_HEIGHT/2.f));
+    mCamera.follow(sf::Vector2f(mHero->getRenderPosition().x, (mBoundaries.top + mBoundaries.height)/2));
 }
 
 void World::draw(sf::RenderTarget& target, float alpha)
@@ -124,9 +125,7 @@ void World::draw(sf::RenderTarget& target, float alpha)
                 obj->draw(target, alpha);
         }
 
-
-        if (!mHero->inVehicle())
-            mHero->draw(target, alpha);
+        mHero->draw(target, alpha);
         mWayPointManager.draw(target);
     }
 
@@ -255,6 +254,18 @@ void World::loadWorld(std::string path)
                 {
                     mCollideables.push_back(turret);
                     mRenderables.push_back(turret);
+                }
+            }
+            else if (find_key("spaceship:", line))
+            {
+                float x = std::stof(split_line[1]);
+                float y = std::stof(split_line[2]);
+                auto ship = std::make_shared<SpaceShip>(Assets::sprites["ship"], sf::Vector2f(x, y));
+                ship->setPhysicsPosition(sf::Vector2f(x, y));
+                if (mBoundaries.contains(x, y))
+                {
+                    mCollideables.push_back(ship);
+                    mRenderables.push_back(ship);
                 }
             }
             else if (find_key("waypoint:", line))

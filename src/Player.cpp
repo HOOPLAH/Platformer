@@ -97,11 +97,12 @@ void Player::update(WorldRef& worldRef)
 
 void Player::draw(sf::RenderTarget& target, float alpha)
 {
-    SpriteObject::draw(target, alpha);
+    if (!mInVehicle)
+        SpriteObject::draw(target, alpha);
 
     mRenderPosition = mPhysicsPosition*alpha + mOldPhysicsPosition*(1.f - alpha);
 
-    mHealth.draw(target);
+    //mHealth.draw(target);
 
     //mInventory.getItem(mInventoryHUD.getInventoryIndex())->draw(target, alpha);
     mWeaponTarget = target.mapPixelToCoords(sf::Vector2i(mMousePosition.x, mMousePosition.y));
@@ -173,16 +174,20 @@ void Player::handleEvents(sf::Event& event, WorldRef& worldRef)
             }
             else if (event.key.code == sf::Keyboard::E)
             {
-                if (!worldRef.getClosestObject(EntityTags::VEHICLE, mRenderPosition).expired())
+                if (worldRef.getObjectsWithinArea(EntityTags::VEHICLE, sf::FloatRect(mRenderPosition-sf::Vector2f(300.f, 300.f),
+                sf::Vector2f(600.f, 600.f))).size() > 0)
                 {
-                    auto vehicle = worldRef.getClosestObject(EntityTags::VEHICLE, mRenderPosition);
-                    if (vehicle.lock()->getTag() == EntityTags::VEHICLE);
+                    if (!worldRef.getClosestObject(EntityTags::VEHICLE, mRenderPosition).expired())
                     {
-                        if (length(vehicle.lock()->getPhysicsPosition() - mPhysicsPosition) < 100)
+                        auto vehicle = worldRef.getClosestObject(EntityTags::VEHICLE, mRenderPosition);
+                        if (vehicle.lock()->getTag() == EntityTags::VEHICLE);
                         {
-                            mInVehicle = true;
-                            mVehicle = std::static_pointer_cast<Vehicle>(vehicle.lock());
-                            mVehicle.lock()->setInVehicle(true);
+                            if (length(vehicle.lock()->getPhysicsPosition() - mPhysicsPosition) < 100)
+                            {
+                                mInVehicle = true;
+                                mVehicle = std::static_pointer_cast<Vehicle>(vehicle.lock());
+                                mVehicle.lock()->setInVehicle(true);
+                            }
                         }
                     }
                 }

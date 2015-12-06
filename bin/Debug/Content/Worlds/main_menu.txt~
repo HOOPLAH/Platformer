@@ -1,4 +1,4 @@
-boundaries: 0 800
+boundaries: 0 0 800 600
 spawnpoint: 0 400
 
 npc_spawn_point: 400 500
@@ -9,7 +9,7 @@ renderonly: cloud 320 10 parallax
 renderonly: cloud 128 128 parallax
 renderonly: cloud 512 96 parallax
 
-render.only: commandcenter 630 454 false
+spaceship: 630 420 
 
 platform: tilegrassblock 0 567
 platform: tallrock 172 478

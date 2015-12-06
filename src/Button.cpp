@@ -1,10 +1,14 @@
 #include "Button.h"
 
+#include "Assets.h"
 #include "EntityTags.h"
 
-Button::Button(SpriteInfo& info, sf::Vector2f pos) :
+Button::Button(SpriteInfo& info, sf::Vector2f pos, std::string label) :
     SpriteObject(info, pos),
-    mPressed(false)
+    mState(ButtonStates::Up),
+    mPressed(false),
+    mLabel(label),
+    mText(mLabel, Assets::fonts["8bit"].mFont, 14)
 {
     //ctor
 }
@@ -36,6 +40,12 @@ void Button::draw(sf::RenderTarget& target, float alpha)
         setFrameLoop(1, 1);
     else if (mState == ButtonStates::Hover)
         setFrameLoop(2, 2);
+
+    if (mLabel != "" && mText.getString() != "")
+    {
+        mText.setPosition(mRenderPosition+getCenter() - sf::Vector2f(mText.getGlobalBounds().width/2, mText.getGlobalBounds().height/2));
+        target.draw(mText);
+    }
 }
 
 void Button::handleEvents(sf::Event& event)

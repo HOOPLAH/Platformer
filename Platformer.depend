@@ -1671,7 +1671,7 @@
 1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/Constants.h
 	<SFML/System/Time.hpp>
 
-1449360962 /home/lucas/Desktop/Programming/C++/Platformer/include/Player.h
+1449361718 /home/lucas/Desktop/Programming/C++/Platformer/include/Player.h
 	<SFML/Graphics.hpp>
 	"HealthBar.h"
 	"Weapon.h"
@@ -1732,14 +1732,15 @@
 	"AIAttackModule.h"
 	"AIFollowModule.h"
 
-1449358540 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Assets.cpp
+1449366295 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Assets.cpp
 	"Assets.h"
 
-1449205578 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Button.cpp
+1449368438 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Button.cpp
 	"Button.h"
+	"Assets.h"
 	"EntityTags.h"
 
-1449205002 /home/lucas/Desktop/Programming/C++/Platformer/include/Button.h
+1449368556 /home/lucas/Desktop/Programming/C++/Platformer/include/Button.h
 	"SpriteObject.h"
 
 1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Camera.cpp
@@ -1790,7 +1791,7 @@
 	"Constants.h"
 	"SpriteObject.h"
 
-1449361127 source:/home/lucas/Desktop/Programming/C++/Platformer/src/GameState.cpp
+1449361298 source:/home/lucas/Desktop/Programming/C++/Platformer/src/GameState.cpp
 	"GameState.h"
 	"StateMachine.h"
 
@@ -1798,7 +1799,7 @@
 	"IState.h"
 	"WorldManager.h"
 
-1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/IState.h
+1449371333 /home/lucas/Desktop/Programming/C++/Platformer/include/IState.h
 	<memory>
 	<SFML/Graphics/RenderTarget.hpp>
 	<SFML/Window/Event.hpp>
@@ -1839,7 +1840,7 @@
 
 1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/imconfig.h
 
-1449355071 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Grenade.cpp
+1449366480 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Grenade.cpp
 	"Grenade.h"
 	"Assets.h"
 	"EntityTags.h"
@@ -1906,19 +1907,20 @@
 	"Constants.h"
 	<iostream>
 
-1449358942 source:/home/lucas/Desktop/Programming/C++/Platformer/src/MainMenuState.cpp
+1449371545 source:/home/lucas/Desktop/Programming/C++/Platformer/src/MainMenuState.cpp
 	"MainMenuState.h"
 	"Constants.h"
 	"GameState.h"
+	"MainSettingsState.h"
 	"StateMachine.h"
 
-1449358564 /home/lucas/Desktop/Programming/C++/Platformer/include/MainMenuState.h
+1449371306 /home/lucas/Desktop/Programming/C++/Platformer/include/MainMenuState.h
 	<vector>
 	<memory>
 	"IState.h"
 	"Button.h"
 
-1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/StateMachine.h
+1449371367 /home/lucas/Desktop/Programming/C++/Platformer/include/StateMachine.h
 	<memory>
 	<stack>
 	<string>
@@ -1943,7 +1945,7 @@
 	"AIFollowModule.h"
 	"FuncUtils.h"
 
-1449361078 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Player.cpp
+1449378904 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Player.cpp
 	"Player.h"
 	<iostream>
 	"Assets.h"
@@ -2018,7 +2020,7 @@
 	"FuncUtils.h"
 	"EntityTags.h"
 
-1449344875 source:/home/lucas/Desktop/Programming/C++/Platformer/src/World.cpp
+1449378788 source:/home/lucas/Desktop/Programming/C++/Platformer/src/World.cpp
 	"World.h"
 	<iostream>
 	<fstream>
@@ -2031,6 +2033,7 @@
 	"NPC.h"
 	"WayPoint.h"
 	"CollectibleObject.h"
+	"SpaceShip.h"
 	"Turret.h"
 
 1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
@@ -2105,5 +2108,16 @@
 1449360006 source:/home/lucas/Desktop/Programming/C++/Platformer/src/PauseState.cpp
 	"PauseState.h"
 	"GameState.h"
+	"StateMachine.h"
+
+1449371508 /home/lucas/Desktop/Programming/C++/Platformer/include/MainSettingsState.h
+	"IState.h"
+	"Button.h"
+
+1449371524 source:/home/lucas/Desktop/Programming/C++/Platformer/src/MainSettingsState.cpp
+	"MainSettingsState.h"
+	"Assets.h"
+	"Constants.h"
+	"MainMenuState.h"
 	"StateMachine.h"
 

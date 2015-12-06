@@ -16,7 +16,7 @@ namespace ButtonStates
 class Button : public SpriteObject
 {
     public:
-        Button(SpriteInfo& info, sf::Vector2f pos);
+        Button(SpriteInfo& info, sf::Vector2f pos, std::string label="");
         ~Button();
 
         void update();
@@ -24,14 +24,19 @@ class Button : public SpriteObject
         void handleEvents(sf::Event& event);
 
         void setPressed(bool pressed){mPressed=pressed;}
-        bool isPressed(){return mPressed;}
-
         void setState(int state){mState=state;}
+        void setLabel(std::string label){mLabel=label; mText.setString(label);}
+
+        bool isPressed(){return mPressed;}
         int getState(){return mState;}
+        std::string getLabel(){return mLabel;}
 
     private:
         bool mPressed;
         int mState;
+
+        std::string mLabel;
+        sf::Text mText;
 
         sf::Vector2f mMousePosition;
 };

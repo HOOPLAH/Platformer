@@ -23,7 +23,8 @@ void Assets::loadAssets()
     sprites["grassblock"] = SpriteInfo("Content/Textures/grass_block.png");
     sprites["tilegrassblock"] = SpriteInfo("Content/Textures/grass_block_tileable.png");
     sprites["tallrock"] = SpriteInfo("Content/Textures/tall_rock.png");
-    sprites["background"] = SpriteInfo("Content/Textures/background.png");
+    sprites["daybackground"] = SpriteInfo("Content/Textures/daybackground.png");
+    sprites["nightbackground"] = SpriteInfo("Content/Textures/nightbackground.png");
     sprites["cloud"] = SpriteInfo("Content/Textures/cloud.png");
     sprites["mountain"] = SpriteInfo("Content/Textures/mountain_background.png");
     sprites["sign"] = SpriteInfo("Content/Textures/sign.png");

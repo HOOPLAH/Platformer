@@ -32,6 +32,7 @@ class Player : public SpriteObject, public ICollideable
         bool isGrounded(){return mGrounded;}
         sf::Vector2f getWeaponTarget(){return mWeaponTarget;}
         float getWeaponAngle(){return mWeaponAngle;}
+        HealthBar& getHealth(){return mHealth;}
         Inventory& getInventory(){return mInventory;}
         std::weak_ptr<Vehicle> getVehicle(){return mVehicle;}
         bool inVehicle(){return mInVehicle;}

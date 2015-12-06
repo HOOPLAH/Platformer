@@ -28,7 +28,6 @@ void SpaceShip::update(WorldRef& worldRef)
     {
         sf::Vector2f weapFirePoint = mRenderPosition+weap.getPositionOnVehicle()+weap.getFirePoint();
         mWeaponAngle = atan2(mWeaponTarget.y - weapFirePoint.y, mWeaponTarget.x - weapFirePoint.x);
-
         weap.setFiringAngle(mWeaponAngle);
         weap.setRenderPosition(mRenderPosition+weap.getPositionOnVehicle());
     }
@@ -39,6 +38,8 @@ void SpaceShip::draw(sf::RenderTarget& target, float alpha)
     Vehicle::draw(target, alpha);
 
     mRenderPosition = mPhysicsPosition*alpha + mOldPhysicsPosition*(1.f - alpha);
+
+    mWeaponTarget = target.mapPixelToCoords(sf::Vector2i(mMousePosition.x, mMousePosition.y));
 }
 
 void SpaceShip::handleEvents(sf::Event& event, WorldRef& worldRef)
@@ -109,14 +110,14 @@ bool SpaceShip::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft
 
             proj->kill();
         }
-
-        return false;
+        else
+            return false;
     }
     else if (object.lock()->getTag() == EntityTags::PLAYER || object.lock()->getTag() == EntityTags::NPC ||
              object.lock()->getTag() == EntityTags::TURRET)
-         {
-            return false;
-         }
+     {
+        return false;
+     }
 
     return true;
 }

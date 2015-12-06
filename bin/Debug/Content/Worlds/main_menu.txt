@@ -9,7 +9,7 @@ renderonly: cloud 320 10 parallax
 renderonly: cloud 128 128 parallax
 renderonly: cloud 512 96 parallax
 
-render.only: commandcenter 630 454 false
+spaceship: 630 500 
 
 platform: tilegrassblock 0 567
 platform: tallrock 172 478
