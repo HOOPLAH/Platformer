@@ -28,6 +28,7 @@ void Assets::loadAssets()
     sprites["mountain"] = SpriteInfo("Content/Textures/mountain_background.png");
     sprites["sign"] = SpriteInfo("Content/Textures/sign.png");
     sprites["playbutton"] = SpriteInfo("Content/Textures/playbutton.png", 3, 1);
+    sprites["plainbutton"] = SpriteInfo("Content/Textures/plainbutton.png", 3, 1);
 
     sprites["grenade"] = SpriteInfo("Content/Textures/grenade.png");
     sprites["grenade"].mHitBox = sf::FloatRect(1.f, 4.f, 4.f, 4.f);

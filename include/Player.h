@@ -23,6 +23,7 @@ class Player : public SpriteObject, public ICollideable
         bool onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop);
         void onContactEnd(std::weak_ptr<ICollideable> object);
 
+        void stop();
         void respawn(sf::Vector2f pos);
         void kill(){mAlive=false; mHealth.mHP = -1;}
         void setVehicle(std::weak_ptr<Vehicle> vehicle){mVehicle=vehicle;}

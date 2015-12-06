@@ -23,6 +23,8 @@ class MainMenuState : public IState
     private:
         sf::Vector2f mMousePosition;
         Button mPlayButton;
+        Button mSettingsButton;
+        Button mQuitButton;
         sf::Sprite mBackGround;
         std::vector<std::unique_ptr<IRenderable>> mRenderables;
 };

@@ -31,10 +31,10 @@ void Grenade::update(WorldRef& worldRef)
 
     mExplosion.setRenderPosition(mExplosionPosition-mExplosion.getCenter());
 
-    if (mTimeUntilExplosion.getElapsedTime().asMilliseconds() >= mTime)
+    if (mTimeUntilExplosion.getElapsedTime().asMilliseconds() >= mTime) // explode
     {
-        mExplosion.setRenderPosition(mExplosionPosition-mExplosion.getCenter());
         mExplosionPosition = mRenderPosition;
+        mExplosion.setRenderPosition(mExplosionPosition-mExplosion.getCenter());
         for (auto& obj : worldRef.getObjectsWithinArea(EntityTags::NPC,
             sf::FloatRect(mRenderPosition.x-50.f, mRenderPosition.y-50, 100.f, 100.f)))
         {
@@ -44,7 +44,7 @@ void Grenade::update(WorldRef& worldRef)
         if (mExplosion.getCurrentFrame() == mExplosion.getEndFrame())
             kill();
     }
-    else
+    else // wait for explosion
     {
         mOldPhysicsPosition = mPhysicsPosition;
         mPhysicsPosition += mVelocity;

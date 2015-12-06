@@ -25,7 +25,7 @@ int main()
     sf::Clock clock;
 	sf::Time accumulator = sf::Time::Zero;
 	int ticks = 0;
-    while (window.isOpen())
+    while (statesMachine.isRunning() && window.isOpen())
     {
         //update logic
         sf::Time dt = clock.restart();
@@ -35,9 +35,11 @@ int main()
             sf::Event event;
             while (window.pollEvent(event))
             {
-
                 if (event.type == sf::Event::Closed)
+                {
                     window.close();
+                    statesMachine.quit();
+                }
 
                 statesMachine.handleEvents(event);
             }

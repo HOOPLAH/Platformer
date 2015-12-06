@@ -10,8 +10,8 @@ class GameState : public virtual IState
         GameState(StateMachine& stateMachine, bool replace = true);
         ~GameState();
 
-        void pause(){}
-        void resume(){}
+        void pause();
+        void resume();
 
         void update(int ticks);
         void draw(sf::RenderTarget& target, float alpha);
@@ -19,6 +19,8 @@ class GameState : public virtual IState
 
     private:
         WorldManager mWorldManager;
+
+        bool mPaused;
 };
 
 #endif // GAMESTATE_H

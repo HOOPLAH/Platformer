@@ -20,6 +20,8 @@ class WorldManager
         void draw(sf::RenderTarget& target, float alpha);
         void handleEvents(sf::Event event);
 
+        World& getCurrentWorld(){return *mWorlds[mCurrentWorld];}
+
     private:
         void loadWorld();
         void loadWorldFileNames();

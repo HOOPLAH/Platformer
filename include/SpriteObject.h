@@ -18,7 +18,7 @@ class SpriteObject : public IRenderable
         virtual void draw(sf::RenderTarget& target, float alpha);
 
         // Mutator
-        void setRenderPosition(sf::Vector2f pos){mRenderPosition=pos; mSprite.setPosition(pos);}
+        void setRenderPosition(sf::Vector2f pos){mSprite.setPosition(pos); mRenderPosition=pos;}
         virtual void setRotation(float rot){mRotation=rot; mSprite.setRotation(rot);}
         void setFrameLoop(int start, int stop, bool loop=true);
         void setFrameDelay(float delay){mFrameDelay=delay;}

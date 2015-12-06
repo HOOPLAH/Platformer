@@ -246,6 +246,16 @@ void Player::handleEvents(sf::Event& event, WorldRef& worldRef)
     }
 }
 
+void Player::stop()
+{
+    if (mDirection == Direction::LEFT)
+        mDirection = Direction::STILL_LEFT;
+    else if (mDirection == Direction::RIGHT)
+        mDirection = Direction::STILL_RIGHT;
+
+    mVelocity = sf::Vector2f(0.f, mVelocity.y);
+}
+
 void Player::respawn(sf::Vector2f pos)
 {
     mHealth.mHP = mHealth.mMaxHP;
