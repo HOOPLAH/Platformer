@@ -102,7 +102,7 @@ bool SpaceShip::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft
     {
         auto proj = static_cast<Projectile*>(&*object.lock());
 
-        if (proj->getOwnerTag() != mTag)
+        if (proj->getOwnerTag() != EntityTags::VEHICLE)
         {
             //mHealth.mHP -= proj->getDamage();
             //mHealth.mActive = true;

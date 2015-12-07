@@ -7,7 +7,7 @@
 
 AIFollowModule::AIFollowModule(NPC& npc, std::size_t followerTag) : IAIModule(npc)
 {
-    mFollowDistance = 15.f;
+    mFollowDistance = 20.f;
     mFollowerTag = followerTag;
 
     mIndex = 0;
@@ -22,7 +22,7 @@ void AIFollowModule::update(WorldRef& worldRef)
 {
     WayPoint wayPt = worldRef.getClosestWayPoint(mNPC.getTarget().lock()->getPhysicsPosition());
 
-    if (mNPC.needToUpdatePath())
+    if (mNPC.needToUpdatePath() && std::abs((mNPC.getTarget().lock()->getPhysicsPosition().x-mNPC.getPhysicsPosition().x)) > mFollowDistance)
     {
         int curWayPtIndex = -1;
         if (!mWayPoints.empty())
@@ -53,7 +53,7 @@ void AIFollowModule::update(WorldRef& worldRef)
         {
             auto edge = mWayPoints[mIndex]->getEdge(mWayPoints[mIndex+1]->mIndex);
 
-            if (edge)
+            if (edge) // if there's another waypoint to go to
             {
                 if (edge->mType == WayPointType::JUMP)
                 {
@@ -62,9 +62,18 @@ void AIFollowModule::update(WorldRef& worldRef)
                         int dir = (mNPC.getFeetPosition().x > mWayPoints[mIndex]->mPosition.x) ? Direction::LEFT : Direction::RIGHT;
                         mNPC.jump(dir);
                     }
-                }
 
-                mIndex++;
+                    mIndex++;
+                }
+                else if (edge->mType == WayPointType::WALK)
+                {
+                    mIndex++;
+                }
+                else if (edge->mType == WayPointType::STOP)
+                {
+                    mNPC.stop();
+                    mIndex = mWayPoints.size()-1; // end the path
+                }
             }
             else
                 mNPC.stop();
@@ -73,7 +82,7 @@ void AIFollowModule::update(WorldRef& worldRef)
     else
     {
         if (mNPC.walk(mNPC.getTarget().lock()->getPhysicsPosition()) ||
-            std::abs(length(mNPC.getTarget().lock()->getPhysicsPosition() - mNPC.getRenderPosition())) < mFollowDistance)
+            std::abs((mNPC.getTarget().lock()->getPhysicsPosition().x - mNPC.getRenderPosition().x)) < mFollowDistance)
         {
             mIndex = 0;
             mWayPoints.clear();

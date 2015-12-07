@@ -24,8 +24,10 @@ WorldEditor::WorldEditor(std::string path) :
     mIDs.push_back("tilegrassblock");
     mIDs.push_back("grassblock");
     mIDs.push_back("tallrock");
+    mIDs.push_back("rockbottom");
     mIDs.push_back("commandcenter");
     mIDs.push_back("bridge");
+    mIDs.push_back("blueplatform");
     mCurrentID = 0;
 
     mDebugConsoleActive = false;
@@ -109,7 +111,11 @@ void WorldEditor::draw(sf::RenderTarget& target, float alpha)
 
         for (auto edge : points[i].mEdges)
         {
-            sf::Color color = (edge.mType == WayPointType::WALK ? sf::Color::Red : sf::Color::Cyan);
+            sf::Color color = sf::Color::Red;
+            if (edge.mType == WayPointType::JUMP)
+                color = sf::Color::Cyan;
+            else if (edge.mType == WayPointType::STOP)
+                color = sf::Color::Green;
             Line line(points[i].mPosition, points[edge.mTargetIndex].mPosition, color);
             line.draw(target);
         }
@@ -210,6 +216,14 @@ void WorldEditor::handleEvents(sf::Event& event)
         if (event.key.code == sf::Keyboard::Tab)
         {
             mDebugConsoleActive = !mDebugConsoleActive;
+        }
+        if (mDebugConsoleActive)
+        {
+            if (event.key.code == sf::Keyboard::Up)
+            {
+                if (mDebugConsole.getLogSize() > 0)
+                    mNextCommandText.setString(mDebugConsole.getLog()[mDebugConsole.getLogSize()-1]);
+            }
         }
     }
     else if (event.type == sf::Event::TextEntered && mDebugConsoleActive)

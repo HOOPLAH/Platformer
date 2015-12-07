@@ -20,7 +20,7 @@ void AIModuleProcessor::update(WorldRef& worldRef)
 {
     mCurrentAI->update(worldRef);
 
-    if (length(mNPC.getPhysicsPosition() - mNPC.getTarget().lock()->getPhysicsPosition()) < mNPC.getWeapon().getRange())
+    /*if (length(mNPC.getPhysicsPosition() - mNPC.getTarget().lock()->getPhysicsPosition()) < mNPC.getWeapon().getRange())
     {
         mNPC.stop();
         mCurrentAI = std::make_unique<AIAttackModule>(mNPC, mFollowerTag);
@@ -28,5 +28,5 @@ void AIModuleProcessor::update(WorldRef& worldRef)
     else if (length(mNPC.getPhysicsPosition() - mNPC.getTarget().lock()->getPhysicsPosition()) > mNPC.getWeapon().getRange())
     {
         mCurrentAI = std::make_unique<AIFollowModule>(mNPC, mFollowerTag);
-    }
+    }*/
 }

@@ -10,6 +10,7 @@
 #include "NPC.h"
 #include "Camera.h"
 #include "CollisionResolver.h"
+#include "CommandCenter.h"
 #include "Item.h"
 #include "QuadTree.h"
 #include "WayPointManager.h"
@@ -69,6 +70,7 @@ class World
         std::shared_ptr<Player> mHero; // outlet hero!!
         std::vector<std::shared_ptr<ICollideable>> mCollideables;
         std::vector<std::shared_ptr<SpriteObject>> mRenderables;
+        CommandCenter mCommandCenter;
 };
 
 #endif // WORLD_H

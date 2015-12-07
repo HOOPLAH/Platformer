@@ -13,7 +13,8 @@ namespace EntityTags
         COLLECTIBLE,
         TURRET,
         GRENADE,
-        VEHICLE
+        VEHICLE,
+        LADDER
     };
 }
 

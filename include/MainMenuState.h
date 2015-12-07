@@ -10,7 +10,7 @@
 class MainMenuState : public IState
 {
     public:
-        MainMenuState(StateMachine& stateMachine, bool replace = true, bool dayTime = false);
+        MainMenuState(StateMachine& stateMachine, bool replace = true);
         ~MainMenuState();
 
         void pause(){}
@@ -26,7 +26,6 @@ class MainMenuState : public IState
         Button mSettingsButton;
         Button mQuitButton;
         sf::Sprite mBackGround;
-        bool mDayTime;
         std::vector<std::unique_ptr<IRenderable>> mRenderables;
 };
 

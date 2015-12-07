@@ -12,13 +12,15 @@
 #include "NPC.h"
 #include "WayPoint.h"
 #include "CollectibleObject.h"
+#include "OneWayPlatform.h"
 #include "SpaceShip.h"
 #include "Turret.h"
 
 World::World() :
     mWorldRef(*this),
     mQuadTree(sf::IntRect(0.f, 0.f, SCREEN_WIDTH, SCREEN_HEIGHT), 0, 3),
-    mCollisionResolver(mQuadTree)
+    mCollisionResolver(mQuadTree),
+    mCommandCenter(Assets::sprites["commandcenter"], sf::Vector2f())
 {
     mTicks = 0;
 
@@ -69,7 +71,7 @@ void World::update(int ticks)
 
         if (!obj->isStatic() && obj->getTag() != EntityTags::VEHICLE)
             obj->setVelocity(obj->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
-        if (obj->getPhysicsPosition().y > SCREEN_HEIGHT)
+        if (obj->getPhysicsPosition().y > mBoundaries.top + mBoundaries.height)
             obj->kill();
 
         mQuadTree.addObject(obj);
@@ -79,10 +81,6 @@ void World::update(int ticks)
     {
         mHero->respawn(mSpawnPoint);
         //mCollideables.push_back(mHero);
-    }
-    if (mHero->getRenderPosition().y > mBoundaries.top + mBoundaries.height)
-    {
-        mHero->kill();
     }
 
     for (auto& obj : mRenderables)
@@ -94,6 +92,8 @@ void World::update(int ticks)
                 obj->setRenderPosition(sf::Vector2f(-obj->getSpriteInfo().mHitBox.width, obj->getRenderPosition().y));
         }
     }
+
+    mCommandCenter.update();
 
     mCollisionResolver.update(mCollideables);
 
@@ -119,6 +119,8 @@ void World::draw(sf::RenderTarget& target, float alpha)
     {
         mWindowCoords = sf::FloatRect(mCamera.getCenter().x-(SCREEN_WIDTH/2), mCamera.getCenter().y-(SCREEN_HEIGHT/2), SCREEN_WIDTH, SCREEN_HEIGHT);
 
+        mCommandCenter.draw(target, alpha);
+
         for (auto& obj : mRenderables)
         {
             if (mWindowCoords.intersects(obj->getSprite().getGlobalBounds()) && !obj->isParallaxable())
@@ -126,7 +128,6 @@ void World::draw(sf::RenderTarget& target, float alpha)
         }
 
         mHero->draw(target, alpha);
-        mWayPointManager.draw(target);
     }
 
     target.setView(target.getDefaultView());
@@ -143,6 +144,7 @@ void World::drawStationary(sf::RenderTarget& target)
 void World::handleEvents(sf::Event event)
 {
     mHero->handleEvents(event, mWorldRef);
+    mCommandCenter.handleEvents(event, mWorldRef);
 }
 
 void World::loadWorld(std::string path)
@@ -220,7 +222,7 @@ void World::loadWorld(std::string path)
                 std::string id = split_line[1];
                 float x = std::stof(split_line[2]);
                 float y = std::stof(split_line[3]);
-                auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y), EntityTags::PLATFORM);
+                auto platform = std::make_shared<WorldObject>(Assets::sprites[id], sf::Vector2f(x, y));
                 if (mBoundaries.contains(x, y))
                 {
                     mCollideables.push_back(platform);
@@ -245,11 +247,24 @@ void World::loadWorld(std::string path)
                     }
                 }
             }
+            else if (find_key("onewayPlatform:", line))
+            {
+                std::string id = split_line[1];
+                float x = std::stof(split_line[2]);
+                float y = std::stof(split_line[3]);
+                auto platform = std::make_shared<OneWayPlatform>(Assets::sprites[id], sf::Vector2f(x, y));
+                if (mBoundaries.contains(x, y))
+                {
+                    mCollideables.push_back(platform);
+                    mRenderables.push_back(platform);
+                }
+            }
             else if (find_key("turret:", line))
             {
                 float x = std::stof(split_line[1]);
                 float y = std::stof(split_line[2]);
                 auto turret = std::make_shared<Turret>(Assets::sprites["turretbody"], sf::Vector2f(x, y));
+                turret->setPhysicsPosition(sf::Vector2f(x, y));
                 if (mBoundaries.contains(x, y))
                 {
                     mCollideables.push_back(turret);
@@ -268,6 +283,12 @@ void World::loadWorld(std::string path)
                     mRenderables.push_back(ship);
                 }
             }
+            else if (find_key("commandcenter:", line))
+            {
+                float x = std::stof(split_line[1]);
+                float y = std::stof(split_line[2]);
+                mCommandCenter.setRenderPosition(sf::Vector2f(x, y));
+            }
             else if (find_key("waypoint:", line))
             {
                 float x = std::stof(split_line[1]);
@@ -283,6 +304,8 @@ void World::loadWorld(std::string path)
                 int type = WayPointType::WALK;
                 if (split_line[split_line.size()-2] == "jump")
                     type = WayPointType::JUMP;
+                else if (split_line[split_line.size()-2] == "stop")
+                    type = WayPointType::STOP;
                 mWayPointManager.addWayPointEdge(a, b, type);
             }
             else if (find_key("renderonly:", line))

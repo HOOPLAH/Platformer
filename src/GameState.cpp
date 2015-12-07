@@ -71,5 +71,24 @@ void GameState::handleEvents(sf::Event& event)
             else
                 resume();
         }
+        else
+        {
+            if (mPaused)
+            {
+                mPaused = false;
+                resume();
+            }
+        }
+    }
+    else if (event.type == sf::Event::MouseButtonPressed)
+    {
+        if (event.mouseButton.button == sf::Mouse::Left)
+        {
+            if (mPaused)
+            {
+                mPaused = false;
+                resume();
+            }
+        }
     }
 }

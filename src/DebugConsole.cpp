@@ -10,7 +10,11 @@ DebugConsole::DebugConsole(WorldRef& worldRef) :
     {
         int start = std::stof(param[0]);
         int end = std::stof(param[1]);
-        int type = (param[2] != "jump" ? WayPointType::WALK : WayPointType::JUMP);
+        int type = WayPointType::WALK;
+        if (param[2] == "jump")
+            type = WayPointType::JUMP;
+        else if (param[2] == "stop")
+            type = WayPointType::STOP;
         mWorldRef.getWayPointManager().addWayPointEdge(start, end, type);
     };
 }
