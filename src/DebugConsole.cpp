@@ -13,8 +13,6 @@ DebugConsole::DebugConsole(WorldRef& worldRef) :
         int type = WayPointType::WALK;
         if (param[2] == "jump")
             type = WayPointType::JUMP;
-        else if (param[2] == "stop")
-            type = WayPointType::STOP;
         mWorldRef.getWayPointManager().addWayPointEdge(start, end, type);
     };
 }

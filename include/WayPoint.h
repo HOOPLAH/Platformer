@@ -10,8 +10,7 @@ namespace WayPointType
     enum
     {
         WALK = 0,
-        JUMP = 1,
-        STOP = 2
+        JUMP = 1
     };
 }
 

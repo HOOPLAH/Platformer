@@ -304,8 +304,6 @@ void World::loadWorld(std::string path)
                 int type = WayPointType::WALK;
                 if (split_line[split_line.size()-2] == "jump")
                     type = WayPointType::JUMP;
-                else if (split_line[split_line.size()-2] == "stop")
-                    type = WayPointType::STOP;
                 mWayPointManager.addWayPointEdge(a, b, type);
             }
             else if (find_key("renderonly:", line))
@@ -340,6 +338,7 @@ void World::resetWorld(std::string path)
     mRenderables.clear();
 
     mWayPointManager.getWayPoints().clear();
+    mWayPointManager.getWayPointEdges().clear();
 
     loadWorld(path);
 }

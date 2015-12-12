@@ -63,26 +63,18 @@ void AIFollowModule::update(WorldRef& worldRef)
                         mNPC.jump(dir);
                     }
 
-                    mIndex++;
-                }
-                else if (edge->mType == WayPointType::WALK)
-                {
-                    mIndex++;
-                }
-                else if (edge->mType == WayPointType::STOP)
-                {
-                    mNPC.stop();
-                    mIndex = mWayPoints.size()-1; // end the path
                 }
             }
             else
                 mNPC.stop();
+
+            mIndex++;
         }
     }
     else
     {
         if (mNPC.walk(mNPC.getTarget().lock()->getPhysicsPosition()) ||
-            std::abs((mNPC.getTarget().lock()->getPhysicsPosition().x - mNPC.getRenderPosition().x)) < mFollowDistance)
+            std::abs(length(mNPC.getTarget().lock()->getPhysicsPosition()-mNPC.getPhysicsPosition())) < mFollowDistance)
         {
             mIndex = 0;
             mWayPoints.clear();

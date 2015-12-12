@@ -1,4 +1,4 @@
-boundaries: 0 0 1000 600
+boundaries: -100 0 10000 600
 spawnpoint: 0 400
 
 npc_spawn_point: 400 500
@@ -9,9 +9,9 @@ renderonly: cloud 320 10 parallax
 renderonly: cloud 128 128 parallax
 renderonly: cloud 512 96 parallax
 
-spaceship: 630 500
+spaceship: -30 500
 
-commandcenter: 450 454
+commandcenter: 682 460
 
 platform: tilegrassblock 0 567
 platform: tallrock 172 473
@@ -27,60 +27,53 @@ platform: tilegrassblock 787 567
 platform: tilegrassblock 851 567
 platform: tilegrassblock 915 567
 platform: tilegrassblock 979 567
-platform: commandcenter 682 460
 platform: tallrock 1134 474
 platform: grassblock 1074 567
 platform: tilegrassblock 1042 568
-platform: blueplatform 1141 403
-platform: blueplatform 1140 340.5
-platform: blueplatform 1140.5 281
-platform: blueplatform 1140.5 218.5
-platform: blueplatform 1139 155
-platform: blueplatform 1089 145
-platform: blueplatform 1046 132
-platform: blueplatform 1003 119.5
-platform: grassblock 865 118
-platform: tilegrassblock 825 119
-platform: tallrock 659 25
-platform: grassblock 691 118
-platform: tilegrassblock 761 119
-platform: rockbottom 658 154
-platform: rockbottom 866 154
-platform: rockbottom 818 154
-platform: rockbottom 847 153
-platform: rockbottom 783 153
-platform: rockbottom 721 153
-platform: grassblock 486 141
-platform: tilegrassblock 450 142
-platform: tilegrassblock 388 142
-platform: tilegrassblock 324 142
-platform: tilegrassblock 260 142
-platform: grassblock 128 140
-platform: tilegrassblock 196 141
-waypoint: 11 547
-waypoint: 95 544
-waypoint: 203 446
-waypoint: 317 548
-waypoint: 453 549
-waypoint: 611 541
-waypoint: 758 537
-waypoint: 889 538
-waypoint: 982 537
-waypoint: 1076 545
-waypoint: 1163 452
-waypoint: 1164 366
-waypoint: 1167 313
-waypoint: 1167 248
-waypoint: 1169 192
-waypoint: 1165 130
-waypoint: 1024 99
-waypoint: 906 89
-waypoint: 756 92
-waypoint: 687 2
-waypoint: 527 113
-waypoint: 390 108
-waypoint: 250 114
-waypoint: 144 116
+onewayPlatform: blueplatform 1138.5 426
+onewayPlatform: blueplatform 1140 354.5
+onewayPlatform: blueplatform 1140 280
+onewayPlatform: blueplatform 1041 257.75
+onewayPlatform: blueplatform 998.75 248.75
+onewayPlatform: blueplatform 957.25 239.75
+platform: grassblock 862 239
+platform: tilegrassblock 821 240
+platform: tallrock 657 146
+platform: grassblock 684 239
+platform: tilegrassblock 757 240
+platform: grassblock 486 239
+platform: tilegrassblock 450 240
+platform: tilegrassblock 388 240
+platform: tilegrassblock 324 240
+platform: tilegrassblock 260 240
+platform: grassblock 137 239
+platform: tilegrassblock 196 240
+onewayPlatform: blueplatform 1084 266.5
+
+waypoint: 6 540
+waypoint: 97 540
+waypoint: 205 439
+waypoint: 308 543
+waypoint: 461 547
+waypoint: 585 543
+waypoint: 689 541
+waypoint: 805 544
+waypoint: 909 544
+waypoint: 1086 544
+waypoint: 1162 456
+waypoint: 1141 415
+waypoint: 1187 343
+waypoint: 1140 271
+waypoint: 1064 248
+waypoint: 964 229
+waypoint: 867 227
+waypoint: 750 225
+waypoint: 690 128
+waypoint: 547 225
+waypoint: 421 227
+waypoint: 304 226
+waypoint: 173 223
+
 waypoint_edge: 1 0
 waypoint_edge: 2 1 jump
 waypoint_edge: 3 2 jump
@@ -90,17 +83,16 @@ waypoint_edge: 6 5
 waypoint_edge: 7 6
 waypoint_edge: 8 7
 waypoint_edge: 9 8
-waypoint_edge: 10 9
+waypoint_edge: 10 9 jump
 waypoint_edge: 11 10 jump
 waypoint_edge: 12 11 jump
 waypoint_edge: 13 12 jump
-waypoint_edge: 14 13 jump
-waypoint_edge: 15 14 jump
+waypoint_edge: 14 13
+waypoint_edge: 15 14
 waypoint_edge: 16 15
-waypoint_edge: 17 16 jump
-waypoint_edge: 18 17
+waypoint_edge: 17 16
+waypoint_edge: 18 17 jump
 waypoint_edge: 19 18 jump
-waypoint_edge: 20 19 jump
+waypoint_edge: 20 19
 waypoint_edge: 21 20
 waypoint_edge: 22 21
-waypoint_edge: 23 22

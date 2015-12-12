@@ -4,4 +4,92 @@ tiled_platforms: 5 64 0 ammocrate 0 0      GROUND
 
 button: play_button 128 -100 1
 
-action: kill 6 1 --(kill 3 NPCs)
+platform: tilegrassblock 0 567
+platform: tallrock 172 473
+platform: grassblock 100 566
+platform: tilegrassblock 64 567
+platform: grassblock 300 567
+platform: grassblock 531 567
+platform: bridge 385 531
+platform: tilegrassblock 595 567
+platform: tilegrassblock 659 567
+platform: tilegrassblock 723 567
+platform: tilegrassblock 787 567
+platform: tilegrassblock 851 567
+platform: tilegrassblock 915 567
+platform: tilegrassblock 979 567
+platform: tallrock 1134 474
+platform: grassblock 1074 567
+platform: tilegrassblock 1042 568
+
+onewayPlatform: blueplatform 1140 400
+onewayPlatform: blueplatform 1140 340
+onewayPlatform: blueplatform 1140 280
+
+platform: blueplatform 1089 245
+platform: blueplatform 1046 232
+platform: blueplatform 1003 219.5
+platform: grassblock 865 218
+platform: tilegrassblock 825 219
+platform: tallrock 659 125
+platform: grassblock 691 218
+platform: tilegrassblock 761 219
+
+platform: grassblock 486 240
+platform: tilegrassblock 450 240
+platform: tilegrassblock 388 240
+platform: tilegrassblock 324 240
+platform: tilegrassblock 260 240
+platform: grassblock 128 240
+platform: tilegrassblock 196 240
+
+waypoint: 11 547 -- 0
+waypoint: 95 544
+waypoint: 203 446
+waypoint: 298 549
+waypoint: 453 549
+waypoint: 611 541
+waypoint: 758 537
+waypoint: 889 538
+waypoint: 982 537
+waypoint: 1076 545
+waypoint: 1163 452 -- 9
+
+waypoint: 1140 360 -- 10
+waypoint: 1180 300
+waypoint: 1160 240
+waypoint: 1140 180
+waypoint: 1180 120 -- 15
+
+waypoint: 1024 199 -- 16
+waypoint: 906 189
+waypoint: 756 192
+waypoint: 687 102
+waypoint: 527 213
+waypoint: 390 213
+waypoint: 250 214
+waypoint: 144 216 -- 23
+
+waypoint_edge: 1 0
+waypoint_edge: 2 1 jump
+waypoint_edge: 3 2 jump
+waypoint_edge: 4 3
+waypoint_edge: 5 4
+waypoint_edge: 6 5
+waypoint_edge: 7 6
+waypoint_edge: 8 7
+waypoint_edge: 9 8
+waypoint_edge: 10 9 jump
+waypoint_edge: 11 10 jump
+waypoint_edge: 12 11 jump
+waypoint_edge: 13 12 jump
+waypoint_edge: 14 13 jump
+waypoint_edge: 15 14 jump
+waypoint_edge: 16 15
+waypoint_edge: 17 16 jump
+waypoint_edge: 18 17
+waypoint_edge: 19 18 jump
+waypoint_edge: 20 19 jump
+waypoint_edge: 21 20
+waypoint_edge: 22 21
+waypoint_edge: 23 22

@@ -1606,7 +1606,7 @@
 	<stdlib.h>
 	<stdlib.h>
 
-1449442005 /home/lucas/Desktop/Programming/C++/Platformer/include/WayPoint.h
+1449952549 /home/lucas/Desktop/Programming/C++/Platformer/include/WayPoint.h
 	"SFML/System/Vector2.hpp"
 	<iostream>
 
@@ -1705,7 +1705,7 @@
 	<SFML/Graphics/RenderTarget.hpp>
 	"SpriteInfo.h"
 
-1449464567 source:/home/lucas/Desktop/Programming/C++/Platformer/src/AIFollowModule.cpp
+1449807030 source:/home/lucas/Desktop/Programming/C++/Platformer/src/AIFollowModule.cpp
 	"AIFollowModule.h"
 	"NPC.h"
 	"Direction.h"
@@ -1774,7 +1774,7 @@
 	<SFML/Graphics/Rect.hpp>
 	"ICollideable.h"
 
-1449443245 source:/home/lucas/Desktop/Programming/C++/Platformer/src/DebugConsole.cpp
+1449952571 source:/home/lucas/Desktop/Programming/C++/Platformer/src/DebugConsole.cpp
 	"DebugConsole.h"
 	<iostream>
 
@@ -1976,7 +1976,7 @@
 	"QuadTree.h"
 	<algorithm>
 
-1449437218 source:/home/lucas/Desktop/Programming/C++/Platformer/src/SpaceShip.cpp
+1449942516 source:/home/lucas/Desktop/Programming/C++/Platformer/src/SpaceShip.cpp
 	"SpaceShip.h"
 	"Assets.h"
 	"EntityTags.h"
@@ -2000,7 +2000,7 @@
 	"Weapon.h"
 	"WorldRef.h"
 
-1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Vehicle.cpp
+1449810559 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Vehicle.cpp
 	"Vehicle.h"
 	"EntityTags.h"
 
@@ -2021,7 +2021,7 @@
 	"FuncUtils.h"
 	"EntityTags.h"
 
-1449475825 source:/home/lucas/Desktop/Programming/C++/Platformer/src/World.cpp
+1449952617 source:/home/lucas/Desktop/Programming/C++/Platformer/src/World.cpp
 	"World.h"
 	<iostream>
 	<fstream>
@@ -2038,7 +2038,7 @@
 	"SpaceShip.h"
 	"Turret.h"
 
-1449476430 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
+1449952543 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
 	"WorldEditor.h"
 	<iostream>
 	<fstream>
@@ -2046,7 +2046,7 @@
 	"Assets.h"
 	"FuncUtils.h"
 
-1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldEditor.h
+1449806093 /home/lucas/Desktop/Programming/C++/Platformer/include/WorldEditor.h
 	<SFML/Graphics.hpp>
 	<vector>
 	"World.h"

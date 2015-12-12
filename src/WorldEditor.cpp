@@ -114,8 +114,6 @@ void WorldEditor::draw(sf::RenderTarget& target, float alpha)
             sf::Color color = sf::Color::Red;
             if (edge.mType == WayPointType::JUMP)
                 color = sf::Color::Cyan;
-            else if (edge.mType == WayPointType::STOP)
-                color = sf::Color::Green;
             Line line(points[i].mPosition, points[edge.mTargetIndex].mPosition, color);
             line.draw(target);
         }
@@ -447,19 +445,6 @@ void WorldEditor::loadWorld()
 
                 mWorldObjects.push_back(std::make_shared<WorldEditorObject>(Assets::sprites["waypoint"], sf::Vector2f(x, y), "waypoint"));
             }
-            else if (find_key("waypoint_edge:", line))
-            {
-                int a = std::stof(split_line[1]);
-                int b = std::stof(split_line[2]);
-                int type = WayPointType::WALK;
-                if (split_line[split_line.size()-2] == "jump")
-                    type = WayPointType::JUMP;
-                //mWorld.getWayPointManager().addWayPointEdge(a, b, type);
-                /*sf::Vector2f start = mWorld.getWayPointManager().getWayPoints()[a].mPosition;
-                sf::Vector2f end = mWorld.getWayPointManager().getWayPoints()[b].mPosition;
-                auto edge = std::make_shared<WorldEditorObject>(Assets::sprites["pistol"], sf::Vector2f(0, 0), "waypoint_edge");
-                mWorldObjects.push_back(edge);*/
-            }
         }
 
         file.close();
@@ -501,6 +486,8 @@ void WorldEditor::saveWorld()
 void WorldEditor::refreshWorld()
 {
     mWorld.resetWorld(mDirectoryPath);
+    mWorld.getWayPointManager().getWayPoints().clear();
+    mWorld.getWayPointManager().getWayPointEdges().clear();
     mWorld.loadWorld(mDirectoryPath);
 
     mWorldObjects.clear();

@@ -40,17 +40,13 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
-<<<<<<< HEAD
-=======
 					<Add directory="include" />
->>>>>>> 8301a14c196ff745b490a89fd530e8780e85d3bd
 				</Compiler>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-std=c++14" />
 			<Add option="-Wall" />
-			<Add option="-std=c++1y" />
 			<Add option="-fexceptions" />
 			<Add directory="include" />
 		</Compiler>
@@ -58,11 +54,6 @@
 			<Add library="sfml-graphics" />
 			<Add library="sfml-window" />
 			<Add library="sfml-system" />
-<<<<<<< HEAD
-=======
-			<Add library="glut" />
->>>>>>> 8301a14c196ff745b490a89fd530e8780e85d3bd
-			<Add library="GL" />
 		</Linker>
 		<Unit filename="LEmain.cpp">
 			<Option target="WorldEditor" />
@@ -70,15 +61,13 @@
 		<Unit filename="include/AIAttackModule.h" />
 		<Unit filename="include/AIFollowModule.h" />
 		<Unit filename="include/AIModuleProcessor.h" />
-<<<<<<< HEAD
 		<Unit filename="include/Actions.h" />
-=======
->>>>>>> 8301a14c196ff745b490a89fd530e8780e85d3bd
 		<Unit filename="include/Assets.h" />
 		<Unit filename="include/Button.h" />
 		<Unit filename="include/Camera.h" />
 		<Unit filename="include/CollectibleObject.h" />
 		<Unit filename="include/CollisionResolver.h" />
+		<Unit filename="include/CommandCenter.h" />
 		<Unit filename="include/Constants.h" />
 		<Unit filename="include/Controller.h" />
 		<Unit filename="include/DebugConsole.h" />
@@ -86,10 +75,7 @@
 		<Unit filename="include/EntityTags.h" />
 		<Unit filename="include/FontInfo.h" />
 		<Unit filename="include/FuncUtils.h" />
-<<<<<<< HEAD
 		<Unit filename="include/GameState.h" />
-=======
->>>>>>> 8301a14c196ff745b490a89fd530e8780e85d3bd
 		<Unit filename="include/Grenade.h" />
 		<Unit filename="include/GrenadeLauncher.h" />
 		<Unit filename="include/HealthBar.h" />
@@ -98,29 +84,21 @@
 		<Unit filename="include/ICollideable.h" />
 		<Unit filename="include/IObject.h" />
 		<Unit filename="include/IRenderable.h" />
-<<<<<<< HEAD
 		<Unit filename="include/IState.h" />
 		<Unit filename="include/Inventory.h" />
 		<Unit filename="include/Item.h" />
 		<Unit filename="include/Line.h" />
 		<Unit filename="include/MainMenuState.h" />
-=======
-		<Unit filename="include/Inventory.h" />
-		<Unit filename="include/Item.h" />
-		<Unit filename="include/Line.h" />
->>>>>>> 8301a14c196ff745b490a89fd530e8780e85d3bd
+		<Unit filename="include/MainSettingsState.h" />
 		<Unit filename="include/NPC.h" />
+		<Unit filename="include/OneWayPlatform.h" />
 		<Unit filename="include/Player.h" />
 		<Unit filename="include/Projectile.h" />
 		<Unit filename="include/QuadTree.h" />
-		<Unit filename="include/Quest.h" />
 		<Unit filename="include/SpaceShip.h" />
 		<Unit filename="include/SpriteInfo.h" />
 		<Unit filename="include/SpriteObject.h" />
-<<<<<<< HEAD
 		<Unit filename="include/StateMachine.h" />
-=======
->>>>>>> 8301a14c196ff745b490a89fd530e8780e85d3bd
 		<Unit filename="include/Turret.h" />
 		<Unit filename="include/Vehicle.h" />
 		<Unit filename="include/VehicleWeapon.h" />
@@ -132,15 +110,7 @@
 		<Unit filename="include/WorldManager.h" />
 		<Unit filename="include/WorldObject.h" />
 		<Unit filename="include/WorldRef.h" />
-		<Unit filename="include/WorldSwitcher.h" />
-		<Unit filename="include/imconfig-SFML.h" />
-		<Unit filename="include/imconfig.h" />
-		<Unit filename="include/imgui-SFML.h" />
-		<Unit filename="include/imgui.h" />
 		<Unit filename="include/micropather.h" />
-		<Unit filename="include/stb_rect_pack.h" />
-		<Unit filename="include/stb_textedit.h" />
-		<Unit filename="include/stb_truetype.h" />
 		<Unit filename="main.cpp">
 			<Option target="Debug" />
 			<Option target="Release" />
@@ -153,32 +123,25 @@
 		<Unit filename="src/Camera.cpp" />
 		<Unit filename="src/CollectibleObject.cpp" />
 		<Unit filename="src/CollisionResolver.cpp" />
-		<Unit filename="src/Controller.cpp" />
+		<Unit filename="src/CommandCenter.cpp" />
 		<Unit filename="src/DebugConsole.cpp" />
 		<Unit filename="src/FuncUtils.cpp" />
-<<<<<<< HEAD
 		<Unit filename="src/GameState.cpp" />
-=======
->>>>>>> 8301a14c196ff745b490a89fd530e8780e85d3bd
 		<Unit filename="src/Grenade.cpp" />
 		<Unit filename="src/GrenadeLauncher.cpp" />
 		<Unit filename="src/Inventory.cpp" />
 		<Unit filename="src/Item.cpp" />
 		<Unit filename="src/Line.cpp" />
-<<<<<<< HEAD
 		<Unit filename="src/MainMenuState.cpp" />
-=======
->>>>>>> 8301a14c196ff745b490a89fd530e8780e85d3bd
+		<Unit filename="src/MainSettingsState.cpp" />
 		<Unit filename="src/NPC.cpp" />
+		<Unit filename="src/OneWayPlatform.cpp" />
 		<Unit filename="src/Player.cpp" />
 		<Unit filename="src/Projectile.cpp" />
 		<Unit filename="src/QuadTree.cpp" />
 		<Unit filename="src/SpaceShip.cpp" />
 		<Unit filename="src/SpriteObject.cpp" />
-<<<<<<< HEAD
 		<Unit filename="src/StateMachine.cpp" />
-=======
->>>>>>> 8301a14c196ff745b490a89fd530e8780e85d3bd
 		<Unit filename="src/Turret.cpp" />
 		<Unit filename="src/Vehicle.cpp" />
 		<Unit filename="src/VehicleWeapon.cpp" />
@@ -189,8 +152,6 @@
 		<Unit filename="src/WorldManager.cpp" />
 		<Unit filename="src/WorldObject.cpp" />
 		<Unit filename="src/WorldRef.cpp" />
-		<Unit filename="src/WorldSwitcher.cpp" />
-		<Unit filename="src/imgui.cpp" />
 		<Unit filename="src/micropather.cpp" />
 		<Extensions>
 			<code_completion />
