@@ -28,6 +28,9 @@ WorldEditor::WorldEditor(std::string path) :
     mIDs.push_back("commandcenter");
     mIDs.push_back("bridge");
     mIDs.push_back("blueplatform");
+    mIDs.push_back("turret");
+    mIDs.push_back("tree");
+    mIDs.push_back("leaves");
     mCurrentID = 0;
 
     mDebugConsoleActive = false;
@@ -436,7 +439,18 @@ void WorldEditor::loadWorld()
                 float x = std::stof(split_line[1]);
                 float y = std::stof(split_line[2]);
 
-                mWorldObjects.push_back(std::make_shared<WorldEditorObject>(Assets::sprites["turret"], sf::Vector2f(x, y), "turret"));
+                auto obj = std::make_shared<WorldEditorObject>(Assets::sprites["turret"], sf::Vector2f(x, y), "turret");
+                obj->setCollisionActive(false);
+                mWorldObjects.push_back(obj);
+            }
+            else if (find_key("commandcenter:", line))
+            {
+                float x = std::stof(split_line[1]);
+                float y = std::stof(split_line[2]);
+
+                auto obj = std::make_shared<WorldEditorObject>(Assets::sprites["commandcenter"], sf::Vector2f(x, y), "commandcenter");
+                obj->setCollisionActive(false);
+                mWorldObjects.push_back(obj);
             }
             else if (find_key("waypoint:", line))
             {
@@ -463,6 +477,8 @@ void WorldEditor::saveWorld()
             file << "waypoint: " << obj->getRenderPosition().x << " " << obj->getRenderPosition().y << "\n";
         else if (obj->getID() == "turret")
             file << "turret: " << obj->getRenderPosition().x << " " << obj->getRenderPosition().y << "\n";
+        else if (obj->getID() == "commandcenter")
+            file << "commandcenter: " << obj->getRenderPosition().x << " " << obj->getRenderPosition().y << "\n";
         else
             file << "platform: " << obj->getID() << " " << obj->getRenderPosition().x << " " << obj->getRenderPosition().y << "\n";
     }

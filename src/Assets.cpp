@@ -24,14 +24,17 @@ void Assets::loadAssets()
     sprites["tilegrassblock"] = SpriteInfo("Content/Textures/grass_block_tileable.png");
     sprites["rockbottom"] = SpriteInfo("Content/Textures/rock_bottom.png");
     sprites["tallrock"] = SpriteInfo("Content/Textures/tall_rock.png");
-    sprites["daybackground"] = SpriteInfo("Content/Textures/daybackground.png");
+    sprites["daybackground"] = SpriteInfo("Content/Textures/nosun-daybackground.png");
     sprites["nightbackground"] = SpriteInfo("Content/Textures/nightbackground.png");
     sprites["cloud"] = SpriteInfo("Content/Textures/cloud.png");
     sprites["mountain"] = SpriteInfo("Content/Textures/mountain_background.png");
     sprites["sign"] = SpriteInfo("Content/Textures/sign.png");
     sprites["plainbutton"] = SpriteInfo("Content/Textures/plainbutton.png", 3, 1);
     sprites["ladder"] = SpriteInfo("Content/Textures/ladder.png");
+    sprites["tree"] = SpriteInfo("Content/Textures/tree.png");
+    sprites["leaves"] = SpriteInfo("Content/Textures/leaves.png");
 
+    sprites["tree"].mHitBox = sf::FloatRect(0, 58, 256, 17);
     sprites["grenade"] = SpriteInfo("Content/Textures/grenade.png");
     sprites["grenade"].mHitBox = sf::FloatRect(1.f, 4.f, 4.f, 4.f);
     sprites["bluepeewee"] = SpriteInfo("Content/Textures/bluepeewee.png", 36, 6);

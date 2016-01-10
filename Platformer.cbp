@@ -69,7 +69,6 @@
 		<Unit filename="include/CollisionResolver.h" />
 		<Unit filename="include/CommandCenter.h" />
 		<Unit filename="include/Constants.h" />
-		<Unit filename="include/Controller.h" />
 		<Unit filename="include/DebugConsole.h" />
 		<Unit filename="include/Direction.h" />
 		<Unit filename="include/EntityTags.h" />

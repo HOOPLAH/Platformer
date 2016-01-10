@@ -1,50 +1,68 @@
-spawn_point: 200 -100
-npc_spawn_count: 0
-npc_spawnpoint: 706 -100
-npc_spawnpoint: 320 -100
-
-quest_action: collect 3 6 -- collect 3 boxes
-collectible: waypoint -288 68
-collectible: waypoint 125 -45
-collectible: waypoint 480 -10
-
-button: play_button 96 -128 2
-
-tiled_platforms: 5 64 0 ammocrate -320 100      GROUND
-tiled_platforms: 15 64 0 ammocrate 0 100        GROUND
-tiled_platforms: 4 50 -12 blueplatform 236 88   LEFT STAIRS
-platform: ammocrate 448 36                      BETWEEN STAIRS
-tiled_platforms: 4 50 12 blueplatform 524 52    RIGHT STAIRS
-tiled_platforms: 3 50  0 blueplatform 50 0      TOP PLATFORM
-platform: blueplatform -10 88
-
-waypoint: 906 80 -- 0
-waypoint: 706 78 -- 1
-waypoint: 480 26 -- 2
-waypoint: 311 66 -- 3 
-
-// top platform
-waypoint: 236 78  -- 4
-waypoint: 196 -10 -- 5
-waypoint: 125 -10 -- 6
-waypoint:  54 -10 -- 7
-
-// straight off left stairs
-waypoint:  123 80 -- 8
-waypoint:   54 80 -- 9
-waypoint:  -10 80 -- 10
-waypoint: -320 80 -- 11
-
-waypoint_edge: 0 1
-waypoint_edge: 1 2
-waypoint_edge: 2 3
-waypoint_edge: 3 4
-waypoint_edge: 4 5 jump
-waypoint_edge: 5 6
-waypoint_edge: 6 7
-waypoint_edge: 7 10 jump
-
-waypoint_edge: 4 8
-waypoint_edge: 8 9
-waypoint_edge: 9 10
-waypoint_edge: 10 11
+platform: tilegrassblock 9 19
+waypoint: 14 -3
+waypoint: 104 -3
+platform: tallrock 186 -75
+platform: grassblock 115 18
+platform: tilegrassblock 73 19
+platform: bridge 240 -112.5
+platform: tallrock 387 -75
+platform: grassblock 425.5 18
+platform: tilegrassblock 495 19
+platform: tilegrassblock 558.5 19
+platform: grassblock 624.5 18
+platform: tilegrassblock 603 19
+platform: bridge 1083 -154
+platform: tallrock 1228 -116
+platform: grassblock 1264 -22
+platform: tilegrassblock 1333 -21
+platform: grassblock 1433 -22
+platform: tilegrassblock 1396 -21
+platform: blueplatform 1479.1 -89.404
+platform: blueplatform 1480.1 -147.404
+platform: blueplatform 1478.6 -204.904
+platform: grassblock 1626.1 -275.404
+platform: tilegrassblock 1682.1 -274.404
+platform: tilegrassblock 1746.1 -274.404
+platform: tilegrassblock 1809.1 -274.404
+platform: grassblock 1912.1 -275.404
+platform: tilegrassblock 1873.1 -274.404
+turret: 1942 -330
+waypoint: 211 -106.5
+waypoint: 315 -103.5
+waypoint: 414 -105.5
+waypoint: 500 -14.5
+waypoint: 676 -15.5
+waypoint: 1160 -141.5
+waypoint: 1265 -142.5
+waypoint: 1357 -35.5
+waypoint: 1481 -35.5
+waypoint: 1512 -100.5
+waypoint: 1481 -157.5
+waypoint: 1510 -217.5
+waypoint: 1636 -309.5
+waypoint: 1739 -310.5
+waypoint: 1821 -309.5
+waypoint: 1908 -308.5
+commandcenter: 1634.5 -384
+platform: grassblock 998 -115.5
+platform: grassblock 689.5 188
+platform: tilegrassblock 760 189
+platform: grassblock 923.5 188
+platform: tilegrassblock 824 189
+platform: tilegrassblock 887.25 189
+renderonly: tree 726.5 -64
+platform: leaves 826 -112
+platform: leaves 786 -80
+platform: leaves 714 -70
+platform: leaves 735 -2
+platform: leaves 758 -88
+platform: leaves 794 -105
+platform: leaves 943 -2
+platform: leaves 938 -56
+platform: leaves 883 -64
+platform: leaves 907 -11
+platform: leaves 910 -94
+platform: leaves 883 -117
+platform: leaves 763 -22
+platform: leaves 830 -54
+platform: leaves 863 -5

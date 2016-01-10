@@ -17,6 +17,15 @@
 #include "WorldObject.h"
 #include "WorldRef.h"
 
+// time of day
+enum
+{
+    DAY,
+    DAWN,
+    NIGHT,
+    SUNSET
+};
+
 class World
 {
     public:
@@ -66,6 +75,8 @@ class World
         sf::FloatRect mWindowCoords;
         QuadTree mQuadTree;
         sf::Sprite mBackground;
+        int8_t mTimeOfDay;
+        int mTimeSpeed; // how fast does the game world's time go by
 
         std::shared_ptr<Player> mHero; // outlet hero!!
         std::vector<std::shared_ptr<ICollideable>> mCollideables;

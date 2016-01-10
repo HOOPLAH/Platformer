@@ -44,7 +44,7 @@ std::weak_ptr<ICollideable> WorldRef::getClosestObject(int tag, sf::Vector2f pos
 
     for (auto& obj : mWorld.getCollideables())
     {
-        if (obj->getTag() == tag)
+        if ((obj->getTag()&tag) == tag)
         {
             sf::Vector2f objPos = obj->getPhysicsPosition();
             float dist = std::abs(sqrt(pow(objPos.x - pos.x , 2) + pow(objPos.y - pos.y, 2)));

@@ -1,98 +1,80 @@
-boundaries: -100 0 10000 600
-spawnpoint: 0 400
-
-npc_spawn_point: 400 500
-npc_spawn_count: 1
+boundaries: -500 -500 10000 10000
+spawnpoint: 0 -100
 
 renderonly: cloud -64 64 parallax
 renderonly: cloud 320 10 parallax
 renderonly: cloud 128 128 parallax
 renderonly: cloud 512 96 parallax
 
-spaceship: -30 500
+spaceship: -50 -100
 
-commandcenter: 682 460
+turret: 1942 -351
 
-platform: tilegrassblock 0 567
-platform: tallrock 172 473
-platform: grassblock 100 566
-platform: tilegrassblock 64 567
-platform: grassblock 300 567
-platform: grassblock 531 567
-platform: bridge 385 531
-platform: tilegrassblock 595 567
-platform: tilegrassblock 659 567
-platform: tilegrassblock 723 567
-platform: tilegrassblock 787 567
-platform: tilegrassblock 851 567
-platform: tilegrassblock 915 567
-platform: tilegrassblock 979 567
-platform: tallrock 1134 474
-platform: grassblock 1074 567
-platform: tilegrassblock 1042 568
-onewayPlatform: blueplatform 1138.5 426
-onewayPlatform: blueplatform 1140 354.5
-onewayPlatform: blueplatform 1140 280
-onewayPlatform: blueplatform 1041 257.75
-onewayPlatform: blueplatform 998.75 248.75
-onewayPlatform: blueplatform 957.25 239.75
-platform: grassblock 862 239
-platform: tilegrassblock 821 240
-platform: tallrock 657 146
-platform: grassblock 684 239
-platform: tilegrassblock 757 240
-platform: grassblock 486 239
-platform: tilegrassblock 450 240
-platform: tilegrassblock 388 240
-platform: tilegrassblock 324 240
-platform: tilegrassblock 260 240
-platform: grassblock 137 239
-platform: tilegrassblock 196 240
-onewayPlatform: blueplatform 1084 266.5
+commandcenter: 1634 -384
 
-waypoint: 6 540
-waypoint: 97 540
-waypoint: 205 439
-waypoint: 308 543
-waypoint: 461 547
-waypoint: 585 543
-waypoint: 689 541
-waypoint: 805 544
-waypoint: 909 544
-waypoint: 1086 544
-waypoint: 1162 456
-waypoint: 1141 415
-waypoint: 1187 343
-waypoint: 1140 271
-waypoint: 1064 248
-waypoint: 964 229
-waypoint: 867 227
-waypoint: 750 225
-waypoint: 690 128
-waypoint: 547 225
-waypoint: 421 227
-waypoint: 304 226
-waypoint: 173 223
-
-waypoint_edge: 1 0
-waypoint_edge: 2 1 jump
-waypoint_edge: 3 2 jump
-waypoint_edge: 4 3
-waypoint_edge: 5 4
-waypoint_edge: 6 5
-waypoint_edge: 7 6
-waypoint_edge: 8 7
-waypoint_edge: 9 8
-waypoint_edge: 10 9 jump
-waypoint_edge: 11 10 jump
-waypoint_edge: 12 11 jump
-waypoint_edge: 13 12 jump
-waypoint_edge: 14 13
-waypoint_edge: 15 14
-waypoint_edge: 16 15
-waypoint_edge: 17 16
-waypoint_edge: 18 17 jump
-waypoint_edge: 19 18 jump
-waypoint_edge: 20 19
-waypoint_edge: 21 20
-waypoint_edge: 22 21
+waypoint: 14 -3
+waypoint: 104 -3
+platform: tallrock 186 -75
+platform: grassblock 115 18
+platform: tilegrassblock 73 19
+platform: bridge 240 -112.5
+platform: tallrock 387 -75
+platform: grassblock 425.5 18
+platform: tilegrassblock 495 19
+platform: tilegrassblock 558.5 19
+platform: grassblock 624.5 18
+platform: tilegrassblock 603 19
+platform: bridge 1083 -154
+platform: tallrock 1228 -116
+platform: grassblock 1264 -22
+platform: tilegrassblock 1333 -21
+platform: grassblock 1504 -22
+platform: tilegrassblock 1396 -21
+platform: grassblock 1626.1 -275.404
+platform: tilegrassblock 1682.1 -274.404
+platform: tilegrassblock 1746.1 -274.404
+platform: tilegrassblock 1809.1 -274.404
+platform: grassblock 1912.1 -275.404
+platform: tilegrassblock 1873.1 -274.404
+waypoint: 211 -106.5
+waypoint: 315 -103.5
+waypoint: 414 -105.5
+waypoint: 500 -14.5
+waypoint: 676 -15.5
+waypoint: 1160 -141.5
+waypoint: 1265 -142.5
+waypoint: 1357 -35.5
+waypoint: 1481 -35.5
+waypoint: 1512 -100.5
+waypoint: 1481 -157.5
+waypoint: 1510 -217.5
+waypoint: 1636 -309.5
+waypoint: 1739 -310.5
+waypoint: 1821 -309.5
+waypoint: 1908 -308.5
+commandcenter: 1634.5 -384
+platform: grassblock 998 -115.5
+platform: grassblock 689.5 188
+platform: tilegrassblock 760 189
+platform: grassblock 923.5 188
+platform: tilegrassblock 824 189
+platform: tilegrassblock 887.25 189
+platform: tree 726.5 -64
+platform: leaves 826 -112
+platform: leaves 786 -80
+platform: leaves 714 -70
+platform: leaves 735 -2
+platform: leaves 758 -88
+platform: leaves 794 -105
+platform: leaves 943 -2
+platform: leaves 938 -56
+platform: leaves 883 -64
+platform: leaves 907 -11
+platform: leaves 910 -94
+platform: leaves 883 -117
+platform: leaves 763 -22
+platform: leaves 830 -54
+platform: leaves 863 -5
+platform: grassblock -63.5 18
+platform: tilegrassblock 8.99999 19
+platform: tilegrassblock 1460 -21

@@ -10,12 +10,13 @@
 class ICollideable : virtual public IObject
 {
     public:
-        ICollideable(sf::FloatRect hitbox, sf::Vector2f dim, int tag, bool _static=false) : IObject()
+        ICollideable(sf::FloatRect hitbox, sf::Vector2f dim, int tag, bool _static=false, bool fallWGrav=true) : IObject()
         {
             mHitBox = hitbox;
             mDimensions = dim;
             mTag = tag;
             mStatic = _static;
+            mFallWithGravity = fallWGrav;
             mCollisionActive = true;
         }
         virtual ~ICollideable(){}
@@ -38,6 +39,7 @@ class ICollideable : virtual public IObject
         sf::Vector2f getPhysicsPosition(){return mPhysicsPosition;}
         sf::Vector2f getVelocity(){return mVelocity;}
         bool isStatic(){return mStatic;}
+        bool fallsWithGravity(){return mFallWithGravity;}
         bool isCollisionActive(){return mCollisionActive;}
         int getTag(){return mTag;}
 
@@ -49,6 +51,7 @@ class ICollideable : virtual public IObject
         sf::Vector2f mVelocity;
         bool mStatic;
         bool mCollisionActive;
+        bool mFallWithGravity;
         int mTag;
 };
 

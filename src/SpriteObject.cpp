@@ -2,11 +2,12 @@
 
 #include <iostream>
 
-SpriteObject::SpriteObject(SpriteInfo& info, sf::Vector2f pos, bool parallax) : IRenderable(),
+SpriteObject::SpriteObject(SpriteInfo& info, sf::Vector2f pos, bool parallax, bool stationary) : IRenderable(),
     mSpriteInfo(info),
     mCurrentFrame(0), mFrameDelay(100.f), mLoopAnim(true), mStartFrame(0), mEndFrame(0), mFrameDir(1),
     mRenderPosition(pos),
-    mParallaxable(parallax)
+    mParallaxable(parallax),
+    mStationary(stationary)
 {
     mSprite = sf::Sprite(info.mTexture);
     mSprite.setPosition(pos);

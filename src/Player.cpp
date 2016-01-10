@@ -102,7 +102,7 @@ void Player::draw(sf::RenderTarget& target, float alpha)
 
     mRenderPosition = mPhysicsPosition*alpha + mOldPhysicsPosition*(1.f - alpha);
 
-    //mHealth.draw(target);
+    mHealth.draw(target);
 
     //mInventory.getItem(mInventoryHUD.getInventoryIndex())->draw(target, alpha);
     mWeaponTarget = target.mapPixelToCoords(sf::Vector2i(mMousePosition.x, mMousePosition.y));

@@ -11,7 +11,7 @@
 class SpriteObject : public IRenderable
 {
     public:
-        SpriteObject(SpriteInfo& info, sf::Vector2f pos, bool parallax=false);
+        SpriteObject(SpriteInfo& info, sf::Vector2f pos, bool parallax=false, bool stationary=false);
         virtual ~SpriteObject();
 
         virtual void update();
@@ -30,6 +30,7 @@ class SpriteObject : public IRenderable
         sf::Vector2f getOldRenderPosition(){return mOldRenderPosition;}
         sf::Vector2f getCenter(){return sf::Vector2f(mSpriteInfo.mFrameDim.x/2, mSpriteInfo.mFrameDim.y/2);}
         bool isParallaxable(){return mParallaxable;}
+        bool isStationary(){return mStationary;}
         int getCurrentFrame(){return mCurrentFrame;}
         int getEndFrame(){return mEndFrame;}
 
@@ -40,6 +41,7 @@ class SpriteObject : public IRenderable
         sf::Vector2f mOldRenderPosition;
         float mRotation;
         bool mParallaxable; // is this meant for parallax
+        bool mStationary; // just a background object that doesn't move with camera
 
         int mCurrentFrame;
         sf::Clock mAnimClock;

@@ -29,9 +29,12 @@ World::World() :
     mNPCSpawnCount = 0;
     mGravity = sf::Vector2f(0.f, 10.f);
 
-    mBackground = sf::Sprite(Assets::sprites["nightbackground"].mTexture);
+    mBackground = sf::Sprite(Assets::sprites["daybackground"].mTexture);
     mHero = std::make_shared<Player>(Assets::sprites["bluepeewee"], mSpawnPoint, mWorldRef);
     //mCollideables.push_back(mHero);
+
+    mTimeOfDay = DAWN;
+    mTimeSpeed = 30;
 }
 
 World::World(std::string path) : World()
@@ -52,7 +55,112 @@ void World::update(int ticks)
     removeDeadObjects(mCollideables);
     removeDeadObjects(mRenderables);
 
-    if (getObjectsWithTag(EntityTags::NPC).size() < mNPCSpawnCount && mNPCSpawnPoints.size() > 0)
+    // update time of day
+    if (mTicks%mTimeSpeed == 0)
+    {
+        sf::Color color = mBackground.getColor();
+
+        switch (mTimeOfDay)
+        {
+            case DAWN:
+            {
+                int r_ratio = (color.r - 200)/mTimeSpeed;
+                int g_ratio = (color.g - 130)/mTimeSpeed;
+                int b_ratio = (color.b - 130)/mTimeSpeed;
+
+                color.r -= r_ratio;
+                color.g -= g_ratio;
+                color.b -= b_ratio;
+
+                mBackground.setColor(color);
+
+                for (auto& obj : mRenderables)
+                {
+                    obj->getSprite().setColor(color);
+                }
+
+                if (std::abs(200-color.r) < mTimeSpeed && std::abs(130-color.g) < mTimeSpeed && std::abs(130-color.b) < mTimeSpeed)
+                    mTimeOfDay = DAY;
+
+                break;
+            }
+
+            case DAY:
+            {
+                int r_ratio = (color.r - 255)/mTimeSpeed;
+                int g_ratio = (color.g - 255)/mTimeSpeed;
+                int b_ratio = (color.b - 255)/mTimeSpeed;
+
+                color.r -= r_ratio;
+                color.g -= g_ratio;
+                color.b -= b_ratio;
+
+                mBackground.setColor(color);
+
+                for (auto& obj : mRenderables)
+                {
+                    obj->getSprite().setColor(color);
+                }
+
+                if (std::abs(255-color.r) < mTimeSpeed && std::abs(255-color.g) < mTimeSpeed && std::abs(255-color.b) < mTimeSpeed)
+                    mTimeOfDay = SUNSET;
+
+                break;
+            }
+
+            case SUNSET:
+            {
+                int r_ratio = (color.r - 244)/mTimeSpeed;
+                int g_ratio = (color.g - 129)/mTimeSpeed;
+                int b_ratio = (color.b - 116)/mTimeSpeed;
+
+                color.r -= r_ratio;
+                color.g -= g_ratio;
+                color.b -= b_ratio;
+
+                mBackground.setColor(color);
+
+                for (auto& obj : mRenderables)
+                {
+                    obj->getSprite().setColor(color);
+                }
+
+                if (std::abs(244-color.r) < mTimeSpeed && std::abs(129-color.g) < mTimeSpeed && std::abs(116-color.b) < mTimeSpeed)
+                    mTimeOfDay = NIGHT;
+
+                break;
+            }
+
+            case NIGHT:
+            {
+                int r_ratio = (color.r - 80)/mTimeSpeed;
+                int g_ratio = (color.g - 80)/mTimeSpeed;
+                int b_ratio = (color.b - 130)/mTimeSpeed;
+
+                color.r -= r_ratio;
+                color.g -= g_ratio;
+                color.b -= b_ratio;
+
+                mBackground.setColor(color);
+
+                for (auto& obj : mRenderables)
+                {
+                    obj->getSprite().setColor(color);
+                }
+
+                if (std::abs(80-color.r) < mTimeSpeed && std::abs(80-color.g) < mTimeSpeed && std::abs(130-color.b) < mTimeSpeed)
+                    mTimeOfDay = DAWN;
+
+                break;
+            }
+
+            default:
+                break;
+        }
+
+    }
+
+    /*if (getObjectsWithTag(EntityTags::NPC).size() < mNPCSpawnCount && mNPCSpawnPoints.size() > 0)
     {
         auto npc = std::make_shared<NPC>(Assets::sprites["pinkpeewee"], mNPCSpawnPoints[mNextNPCSpawnPoint], mWorldRef);
         mRenderables.push_back(npc);
@@ -62,14 +170,14 @@ void World::update(int ticks)
             mNextNPCSpawnPoint++;
         else if (mNextNPCSpawnPoint >= mNPCSpawnPoints.size() || mNPCSpawnCount == 1)
             mNextNPCSpawnPoint = 0;
-    }
+    }*/
 
     mQuadTree.clear();
     for (auto& obj : mCollideables)
     {
         obj->update(mWorldRef);
 
-        if (!obj->isStatic() && obj->getTag() != EntityTags::VEHICLE)
+        if (obj->fallsWithGravity())// && obj->getTag() != EntityTags::VEHICLE)
             obj->setVelocity(obj->getVelocity() + mGravity*UPDATE_STEP.asSeconds());
         if (obj->getPhysicsPosition().y > mBoundaries.top + mBoundaries.height)
             obj->kill();
@@ -97,7 +205,7 @@ void World::update(int ticks)
 
     mCollisionResolver.update(mCollideables);
 
-    mCamera.follow(sf::Vector2f(mHero->getRenderPosition().x, (mBoundaries.top + mBoundaries.height)/2));
+    mCamera.follow(mHero->getRenderPosition());
 }
 
 void World::draw(sf::RenderTarget& target, float alpha)
@@ -123,7 +231,7 @@ void World::draw(sf::RenderTarget& target, float alpha)
 
         for (auto& obj : mRenderables)
         {
-            if (mWindowCoords.intersects(obj->getSprite().getGlobalBounds()) && !obj->isParallaxable())
+            if (mWindowCoords.intersects(obj->getSprite().getGlobalBounds()) && !obj->isParallaxable() && !obj->isStationary())
                 obj->draw(target, alpha);
         }
 
@@ -138,6 +246,12 @@ void World::draw(sf::RenderTarget& target, float alpha)
 
 void World::drawStationary(sf::RenderTarget& target)
 {
+    for (auto& obj : mRenderables)
+    {
+        if (mWindowCoords.intersects(obj->getSprite().getGlobalBounds()) && !obj->isParallaxable() && obj->isStationary())
+            obj->draw(target, 1.f);
+    }
+
     mHero->drawStationary(target);
 }
 
@@ -312,11 +426,14 @@ void World::loadWorld(std::string path)
                 float x = std::stof(split_line[2]);
                 float y = std::stof(split_line[3]);
                 bool parallax = false;
+                bool stationary = false;
 
                 if (split_line[4] == "parallax")
                     parallax = true;
+                else if (split_line[4] == "stationary")
+                    stationary = true;
 
-                auto obj = std::make_shared<SpriteObject>(Assets::sprites[id], sf::Vector2f(x, y), parallax);
+                auto obj = std::make_shared<SpriteObject>(Assets::sprites[id], sf::Vector2f(x, y), parallax, stationary);
                 mRenderables.push_back(obj);
             }
         }

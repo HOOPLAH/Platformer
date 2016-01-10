@@ -7,7 +7,7 @@ Turret::Turret(SpriteInfo& info, sf::Vector2f pos) : Vehicle(info, pos),
     mWeapon(Assets::sprites["turrethead"], EntityTags::TURRET),
     mHealth(100.f, sf::Vector2f(30.f, 2.f), false)
 {
-    mAutoAim = true;
+    mAutoAim = false;
 
     mWeapon.setUnlimitedAmmo(true);
     mWeapon.setRange(300.f);
@@ -16,7 +16,7 @@ Turret::Turret(SpriteInfo& info, sf::Vector2f pos) : Vehicle(info, pos),
     mWeapon.getSprite().setOrigin(mWeapon.getCenter());
     mWeaponAngle = 0.f;
 
-    mTag = EntityTags::VEHICLE;
+    mTag = (EntityTags::VEHICLE|EntityTags::TURRET);
     mOwnerTag = EntityTags::TURRET;
 }
 
@@ -29,14 +29,14 @@ void Turret::update(WorldRef& worldRef)
 {
     Vehicle::update(worldRef);
 
-    if (!mInVehicle)
+    if (!mInVehicle && mAutoAim)
     {
         auto obj = worldRef.getClosestObject(EntityTags::NPC, mRenderPosition);
         mWeaponTarget = obj.lock()->getPhysicsPosition();// + (obj.lock()->getDimensions()/2);
         mWeapon.update();
         mWeapon.fire(worldRef);
     }
-    else
+    else if (mInVehicle)
     {
         sf::Vector2f weapFirePoint = (mWeapon.getRenderPosition()+mWeapon.getFirePoint());
         mWeaponAngle = atan2(mWeaponTarget.y - weapFirePoint.y, mWeaponTarget.x - weapFirePoint.x);
@@ -77,7 +77,7 @@ void Turret::handleEvents(sf::Event& event, WorldRef& worldRef)
 
 bool Turret::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft, bool fromTop)
 {
-    if (object.lock()->getTag() == EntityTags::TURRET || object.lock()->getTag() == EntityTags::PLAYER ||
+    if (object.lock()->getTag() == EntityTags::PLAYER ||
         object.lock()->getTag() == EntityTags::NPC || object.lock()->getTag() == EntityTags::GRENADE)
         return false;
     else if (object.lock()->getTag() == EntityTags::PROJECTILE)

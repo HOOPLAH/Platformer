@@ -1578,7 +1578,7 @@
 	<SFML/Window/Event.hpp>
 	"ICollideable.h"
 
-1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/ICollideable.h
+1451949468 /home/lucas/Desktop/Programming/C++/Platformer/include/ICollideable.h
 	<memory>
 	<SFML/Graphics.hpp>
 	"IObject.h"
@@ -1647,7 +1647,7 @@
 	"SpriteObject.h"
 	"WorldRef.h"
 
-1449354936 /home/lucas/Desktop/Programming/C++/Platformer/include/SpriteObject.h
+1452149732 /home/lucas/Desktop/Programming/C++/Platformer/include/SpriteObject.h
 	<memory>
 	<SFML/Graphics.hpp>
 	"IRenderable.h"
@@ -1724,7 +1724,7 @@
 	"EntityTags.h"
 	"HealthBar.h"
 
-1449431953 /home/lucas/Desktop/Programming/C++/Platformer/include/EntityTags.h
+1452328885 /home/lucas/Desktop/Programming/C++/Platformer/include/EntityTags.h
 
 1449463371 source:/home/lucas/Desktop/Programming/C++/Platformer/src/AIModuleProcessor.cpp
 	"AIModuleProcessor.h"
@@ -1732,7 +1732,7 @@
 	"AIAttackModule.h"
 	"AIFollowModule.h"
 
-1449476418 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Assets.cpp
+1452149467 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Assets.cpp
 	"Assets.h"
 
 1449368438 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Button.cpp
@@ -1751,7 +1751,7 @@
 1449132222 /home/lucas/Desktop/Programming/C++/Platformer/include/Camera.h
 	<SFML/Graphics.hpp>
 
-1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/CollectibleObject.cpp
+1452328889 source:/home/lucas/Desktop/Programming/C++/Platformer/src/CollectibleObject.cpp
 	"CollectibleObject.h"
 	"Player.h"
 
@@ -1810,7 +1810,7 @@
 	<SFML/Graphics.hpp>
 	<World.h>
 
-1449438221 /home/lucas/Desktop/Programming/C++/Platformer/include/World.h
+1452150850 /home/lucas/Desktop/Programming/C++/Platformer/include/World.h
 	<vector>
 	<memory>
 	<SFML/Graphics.hpp>
@@ -1946,7 +1946,7 @@
 	"AIFollowModule.h"
 	"FuncUtils.h"
 
-1449475679 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Player.cpp
+1451949257 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Player.cpp
 	"Player.h"
 	<iostream>
 	"Assets.h"
@@ -1976,12 +1976,12 @@
 	"QuadTree.h"
 	<algorithm>
 
-1449942516 source:/home/lucas/Desktop/Programming/C++/Platformer/src/SpaceShip.cpp
+1451961781 source:/home/lucas/Desktop/Programming/C++/Platformer/src/SpaceShip.cpp
 	"SpaceShip.h"
 	"Assets.h"
 	"EntityTags.h"
 
-1449358524 source:/home/lucas/Desktop/Programming/C++/Platformer/src/SpriteObject.cpp
+1452149684 source:/home/lucas/Desktop/Programming/C++/Platformer/src/SpriteObject.cpp
 	"SpriteObject.h"
 	<iostream>
 
@@ -1989,7 +1989,7 @@
 	"StateMachine.h"
 	"IState.h"
 
-1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Turret.cpp
+1452371096 source:/home/lucas/Desktop/Programming/C++/Platformer/src/Turret.cpp
 	"Turret.h"
 	"Assets.h"
 	"EntityTags.h"
@@ -2021,7 +2021,7 @@
 	"FuncUtils.h"
 	"EntityTags.h"
 
-1449952617 source:/home/lucas/Desktop/Programming/C++/Platformer/src/World.cpp
+1452231152 source:/home/lucas/Desktop/Programming/C++/Platformer/src/World.cpp
 	"World.h"
 	<iostream>
 	<fstream>
@@ -2038,7 +2038,7 @@
 	"SpaceShip.h"
 	"Turret.h"
 
-1449952543 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
+1449969377 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldEditor.cpp
 	"WorldEditor.h"
 	<iostream>
 	<fstream>
@@ -2072,7 +2072,7 @@
 	"EntityTags.h"
 	<Projectile.h>
 
-1449132222 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldRef.cpp
+1452329497 source:/home/lucas/Desktop/Programming/C++/Platformer/src/WorldRef.cpp
 	"WorldRef.h"
 	"ICollideable.h"
 	"IRenderable.h"
@@ -2094,7 +2094,7 @@
 	"MainMenuState.h"
 	"StateMachine.h"
 
-1449442578 source:/home/lucas/Desktop/Programming/C++/Platformer/LEmain.cpp
+1449960821 source:/home/lucas/Desktop/Programming/C++/Platformer/LEmain.cpp
 	<SFML/Graphics.hpp>
 	<cstdlib>
 	<ctime>

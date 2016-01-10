@@ -13,6 +13,9 @@ SpaceShip::SpaceShip(SpriteInfo& info, sf::Vector2f pos) : Vehicle(info, pos)
 
     mWeapons.push_back(weap1);
     mWeapons.push_back(weap2);
+
+    mFallWithGravity = false;
+    mStatic = false;
 }
 
 SpaceShip::~SpaceShip()
@@ -113,11 +116,11 @@ bool SpaceShip::onContactBegin(std::weak_ptr<ICollideable> object, bool fromLeft
         else
             return false;
     }
-    else if (object.lock()->getTag() == EntityTags::PLAYER || object.lock()->getTag() == EntityTags::NPC ||
-             object.lock()->getTag() == EntityTags::TURRET)
-     {
+    else if (object.lock()->getTag() == EntityTags::PLAYER || object.lock()->getTag()== EntityTags::NPC ||
+            (object.lock()->getTag()&EntityTags::VEHICLE) == EntityTags::VEHICLE)
+    {
         return false;
-     }
+    }
 
     return true;
 }
